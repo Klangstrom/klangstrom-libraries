@@ -1430,7 +1430,7 @@ Text Label 4500 9050 0    50   ~ 0
 GPIO_00
 Text Label 4500 8650 0    50   ~ 0
 GPIO_01
-Text Label 4500 8750 0    50   ~ 0
+Text Label 4500 8350 0    50   ~ 0
 GPIO_02
 Text Label 4500 8850 0    50   ~ 0
 SDCARD_MISO
@@ -1440,7 +1440,7 @@ Text Label 4500 8550 0    50   ~ 0
 SDCARD_SCK
 Text Label 4500 8450 0    50   ~ 0
 SDCARD_DETECT_SDIO
-Text Label 4500 8350 0    50   ~ 0
+Text Label 4500 8750 0    50   ~ 0
 SDCARD_CS
 Text Label 1700 8850 2    50   ~ 0
 ADC_00
