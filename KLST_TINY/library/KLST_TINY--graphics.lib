@@ -1,0 +1,15 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# KLST_TINY--graphics
+#
+DEF KLST_TINY--graphics X 0 0 N N 1 F N
+F0 "X" 0 0 100 H V C CNN
+F1 "KLST_TINY--graphics" 0 0 100 H V C CNN
+F2 "" 0 0 100 H I C CNN
+F3 "" 0 0 100 H I C CNN
+DRAW
+ENDDRAW
+ENDDEF
+#
+#End Library
