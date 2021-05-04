@@ -1,3 +1,3 @@
 (fp_lib_table
-  (lib (name KLST_TINY)(type KiCad)(uri /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/git/klangstrom/hardware/KLST_TINY/library)(options "")(descr ""))
+  (lib (name KLST_TINY)(type KiCad)(uri ${KIPRJMOD}/library)(options "")(descr ""))
 )
