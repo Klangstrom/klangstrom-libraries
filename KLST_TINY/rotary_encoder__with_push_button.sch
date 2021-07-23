@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 7
 Title "KLST_TINY"
-Date "2021-03-19"
-Rev "0.1"
+Date "2021-05-01"
+Rev "0.2"
 Comp ""
 Comment1 ""
 Comment2 ""

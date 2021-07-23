@@ -4,9 +4,9 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 7 7
-Title ""
-Date ""
-Rev ""
+Title "KLST_TINY"
+Date "2021-05-01"
+Rev "0.2"
 Comp ""
 Comment1 ""
 Comment2 ""
