@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name STX-3680-5NB)(type Legacy)(uri ${KIPRJMOD}/library/STX-3680-5NB.lib)(options "")(descr ""))
+  (lib (name G-107-0513)(type Legacy)(uri ${KIPRJMOD}/library/G-107-0513.lib)(options "")(descr ""))
+  (lib (name KLST_SHEEP--graphics)(type Legacy)(uri ${KIPRJMOD}/library/KLST_SHEEP--graphics.lib)(options "")(descr ""))
+  (lib (name USB_B_Micro_MICROXNJ)(type Legacy)(uri ${KIPRJMOD}/library/MICROXNJ.lib)(options "")(descr ""))
+)
