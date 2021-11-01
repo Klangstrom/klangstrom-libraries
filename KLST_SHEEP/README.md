@@ -25,3 +25,18 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 - 1× JTAG/SWD interface + Serial Debug ( 14-pin )
 - programmer + reset + boot flash buttons
 - 4× Mounting Holes
+
+## technical details
+
+### timers
+
+- TIM1–3   :: ENCODER_00–02
+- TIM4     :: GPIO_04–07 PWM
+- TIM8     :: GPIO_00–03 PWM
+- TIM13–15 :: LED_00–02 PWM
+
+### SPI
+
+- SPI2 :: SD-CARD
+- SPI3 :: DISPLAY
+- SPI6 :: SPI_00
