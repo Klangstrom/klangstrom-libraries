@@ -28,10 +28,12 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 
 ## technical details
 
+@note(encoder buttons are on input capture pins ENCODER_00_BUTTON :: TIM1:CH3 + ENCODER_01_BUTTON :: TIM2:CH4 + TIM5:CH4 + TIM15:CH2 )
+
 ### timers
 
-- TIM1–3   :: ENCODER_00–02
-- TIM4     :: GPIO_04–07 PWM
+- TIM1+2   :: ENCODER_00–01
+- TIM4     :: GPIO_04–07 PWM ( NOTE TIM3 could be used fo PWM as well )
 - TIM8     :: GPIO_00–03 PWM
 - TIM13–15 :: LED_00–02 PWM
 
@@ -40,3 +42,9 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 - SPI2 :: SD-CARD
 - SPI3 :: DISPLAY
 - SPI6 :: SPI_00
+
+### UART
+
+- UART7  :: SERIAL_00
+- UART8  :: SERIAL_01
+- USART2 :: SERIAL_DEBUG
