@@ -1,4 +1,4 @@
-# KLANGSTROM / KLST_TINY
+# KLANGSTROM / KLST_SHEEP
 
 KLST_SHEEP is a small version of the KLST_SHEEP board:
 
@@ -13,13 +13,13 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 - 2× ADC ( 12BIT, opt 6 extra channels )
 - 2× DAC ( 12BIT )
 - 3× UART ( serial )
-- 8× GPIO
+- 8× GPIO ( with PWM )
 - 1× USB Host
 - 1× USB Device ( + Power Supply )
 - 1× I2C 
 - 1× SPI 
-- detachable 3× rotary encoders with push buttons
-- detachable 3× programmable LEDs + 1× power LED
+- 2× rotary encoders with push buttons
+- 3× programmable LEDs + 1× power LED
 - 11× timers
 - 1× SD card reader
 - 1× JTAG/SWD interface + Serial Debug ( 14-pin )
@@ -32,10 +32,16 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 
 ### timers
 
-- TIM1+2   :: ENCODER_00–01
-- TIM4     :: GPIO_04–07 PWM ( NOTE TIM3 could be used fo PWM as well )
-- TIM8     :: GPIO_00–03 PWM
-- TIM13–15 :: LED_00–02 PWM
+- TIM1+2     :: ENCODER_00–01
+- TIM4:CH1–4 :: GPIO_04–07 PWM
+- TIM8:CH1–4 :: GPIO_00–03 PWM
+- TIM13–15   :: LED_00–02 PWM
+
+#### GPIO_EXT
+
+- TIM17:CH1  :: GPIO_EXT PWM
+- TIM16:CH1  :: GPIO_EXT PWM
+- TIM3:CH1–4 :: GPIO_EXT PWM
 
 ### SPI
 
@@ -47,4 +53,4 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 
 - UART7  :: SERIAL_00
 - UART8  :: SERIAL_01
-- USART2 :: SERIAL_DEBUG
+    - USART2 :: SERIAL_DEBUG
