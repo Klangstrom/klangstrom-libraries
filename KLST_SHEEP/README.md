@@ -33,15 +33,15 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 ### timers
 
 - TIM1+2     :: ENCODER_00–01
+
+#### GPIO PWM
+
+- TIM3:CH1–4 :: GPIO_EXT PWM
 - TIM4:CH1–4 :: GPIO_04–07 PWM
 - TIM8:CH1–4 :: GPIO_00–03 PWM
 - TIM13–15   :: LED_00–02 PWM
-
-#### GPIO_EXT
-
 - TIM17:CH1  :: GPIO_EXT PWM
 - TIM16:CH1  :: GPIO_EXT PWM
-- TIM3:CH1–4 :: GPIO_EXT PWM
 
 ### SPI
 
