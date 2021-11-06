@@ -28,29 +28,116 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 
 ## technical details
 
-@note(encoder buttons are on input capture pins ENCODER_00_BUTTON :: TIM1:CH3 + ENCODER_01_BUTTON :: TIM2:CH4 + TIM5:CH4 + TIM15:CH2 )
-
 ### timers
 
-- TIM1+2     :: ENCODER_00–01
+- TIM1       :: ENCODER_00_A+B
+- TIM1:CH3   :: ENCODER_00_BUTTON
+- TIM2       :: ENCODER_01_A+B
+- TIM2:CH4   :: ENCODER_01_BUTTON
 
-#### GPIO PWM
+### GPIO PWM
 
-- TIM3:CH1–4 :: GPIO_EXT PWM
-- TIM4:CH1–4 :: GPIO_04–07 PWM
-- TIM8:CH1–4 :: GPIO_00–03 PWM
-- TIM13–15   :: LED_00–02 PWM
-- TIM17:CH1  :: GPIO_EXT PWM
-- TIM16:CH1  :: GPIO_EXT PWM
+- TIM3:CH1–4 :: LED / PWM
+- TIM4:CH1–4 :: LED / PWM
+- TIM8:CH1–4 :: LED / PWM
+- TIM13:CH1  :: LED / PWM
+- TIM14:CH1  :: LED / PWM
+- TIM15:CH1  :: LED / PWM
+- TIM16:CH1  :: LED / PWM
 
 ### SPI
 
 - SPI2 :: SD-CARD
 - SPI3 :: DISPLAY
-- SPI6 :: SPI_00
+- SPI6 :: SPI_USR
 
 ### UART
 
 - UART7  :: SERIAL_00
 - UART8  :: SERIAL_01
-    - USART2 :: SERIAL_DEBUG
+- USART2 :: SERIAL_DEBUG
+
+## PIN assignment
+
+| PIN  | LABEL                       |
+|------|-----------------------------|
+| PA0  | ENCODER_01_A                |
+| PA1  | ENCODER_01_B                |
+| PA2  | LED_15                      |
+| PA3  | ENCODER_01_BUTTON           |
+| PA4  | DAC_00                      |
+| PA5  | DAC_01                      |
+| PA6  | LED_14                      |
+| PA7  | LED_13                      |
+| PA8  | ENCODER_00_A                |
+| PA9  | ENCODER_00_B                |
+| PA10 | ENCODER_00_BUTTON           |
+| PA11 | USB_DEVICE-                 |
+| PA12 | USB_DEVICE+                 |
+| PA13 | SWD_SWDIO                   |
+| PA14 | SWD_SWCLK                   |
+| PA15 | SPI_DISPLAY_CS              |
+| PB0  | LED_12                      |
+| PB1  | LED_11                      |
+| PB2  | GPIO_11                     |
+| PB3  | SWD_SWO                     |
+| PB4  | LED_02                      |
+| PB5  | LED_01                      |
+| PB6  | I2C_USR_SCL                 |
+| PB7  | I2C_USR_SDA                 |
+| PB8  | LED_00                      |
+| PB9  | BUTTON_PRG                  |
+| PB10 | AUDIOCODEC_I2C_SCL          |
+| PB11 | AUDIOCODEC_I2C_SDA          |
+| PB12 | SD_CARD_CS                  |
+| PB13 | SD_CARD_SCK                 |
+| PB14 | USB_HOST-                   |
+| PB15 | USB_HOST+                   |
+| PC0  | GPIO_12                     |
+| PC1  | SDCARD_CARD_DETECT          |
+| PC2  | SD_CARD_MISO                |
+| PC3  | SD_CARD_MOSI                |
+| PC4  | ADC_00                      |
+| PC5  | ADC_01                      |
+| PC6  | LED_06                      |
+| PC7  | LED_05                      |
+| PC8  | LED_04                      |
+| PC9  | LED_03                      |
+| PC10 | SPI_DISPLAY_SCK             |
+| PC11 | SPI_DISPLAY_MISO            |
+| PC12 | SPI_DISPLAY_MOSI            |
+| PC13 | GPIO_15                     |
+| PC14 | GPIO_14                     |
+| PC15 | GPIO_13                     |
+| PD0  | SPI_DISPLAY_REGISTER_SELECT |
+| PD1  | SPI_DISPLAY_RESET           |
+| PD2  | GPIO_03                     |
+| PD3  | GPIO_02                     |
+| PD4  | GPIO_01                     |
+| PD5  | SERIAL_DEBUG_TX             |
+| PD6  | SERIAL_DEBUG_RX             |
+| PD7  | GPIO_00                     |
+| PD8  | GPIO_07                     |
+| PD9  | GPIO_06                     |
+| PD10 | GPIO_05                     |
+| PD11 | GPIO_04                     |
+| PD12 | LED_10                      |
+| PD13 | LED_09                      |
+| PD14 | LED_08                      |
+| PD15 | LED_07                      |
+| PE0  | SERIAL_01_RX                |
+| PE1  | SERIAL_01_TX                |
+| PE2  | AUDIOCODEC_SAI1_MCLK_A      |
+| PE3  | AUDIOCODEC_SAI1_SD_B        |
+| PE4  | AUDIOCODEC_SAI1_FS_A        |
+| PE5  | AUDIOCODEC_SAI1_SCK_A       |
+| PE6  | AUDIOCODEC_SAI1_SD_A        |
+| PE7  | SERIAL_00_RX                |
+| PE8  | SERIAL_00_TX                |
+| PE9  | GPIO_10                     |
+| PE10 | GPIO_09                     |
+| PE11 | SPI_USR_CS                  |
+| PE12 | SPI_USR_SCK                 |
+| PE13 | SPI_USR_MISO                |
+| PE14 | SPI_USR_MOSI                |
+| PE15 | GPIO_08                     |
