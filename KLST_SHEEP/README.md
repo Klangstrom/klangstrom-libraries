@@ -1,28 +1,30 @@
 # KLANGSTROM / KLST_SHEEP
 
-KLST_SHEEP is a small version of the KLST_SHEEP board:
+KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however comes with a stronger MCU and a screen:
 
 - featuring *KLANGSTROM* library
 - programmable in Arduino IDE via USB ( *DFUse Mode* )
 - debugging + communication via *virtual USB Serial Port*
 
-## feature list (20210322)
+## feature list
 
 - STM32H743 MCU with 480MHz, 864KB RAM, 2048KB Flash
 - WM8731 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
+- 1× LINE OUT ( stereo )
+- 1× LINE IN ( stereo )
+- 1× HEADPHONE + MIC ( mono )
 - 2× ADC ( 12BIT, opt 6 extra channels )
 - 2× DAC ( 12BIT )
-- 3× UART ( serial )
-- 8× GPIO ( with PWM )
+- 2× UART ( serial )
+- 16× GPIO
 - 1× USB Host
 - 1× USB Device ( + Power Supply )
 - 1× I2C 
 - 1× SPI 
 - 2× rotary encoders with push buttons
-- 3× programmable LEDs + 1× power LED
-- 11× timers
+- 16× programmable LEDs with PWM + 1× power LED
 - 1× SD card reader
-- 1× JTAG/SWD interface + Serial Debug ( 14-pin )
+- 1× JTAG/SWD interface + serial debug ( 14-pin )
 - programmer + reset + boot flash buttons
 - 4× Mounting Holes
 
@@ -30,32 +32,68 @@ KLST_SHEEP is a small version of the KLST_SHEEP board:
 
 ### timers
 
-- TIM1       :: ENCODER_00_A+B
-- TIM1:CH3   :: ENCODER_00_BUTTON
-- TIM2       :: ENCODER_01_A+B
-- TIM2:CH4   :: ENCODER_01_BUTTON
+timers `TIM5` + `TIM6` + `TIM7` + `TIM12` can be used for internal interrupts.
 
-### GPIO PWM
+#### encoders
 
-- TIM3:CH1–4 :: LED / PWM
-- TIM4:CH1–4 :: LED / PWM
-- TIM8:CH1–4 :: LED / PWM
-- TIM13:CH1  :: LED / PWM
-- TIM14:CH1  :: LED / PWM
-- TIM15:CH1  :: LED / PWM
-- TIM16:CH1  :: LED / PWM
+timers `TIM1` + `TIM2` are used to handle encoder events.
+
+| FUNCTION          | TIMER:CHANNEL |
+|-------------------|---------------|
+| ENCODER_00_A+B    | TIM1          |
+| ENCODER_00_BUTTON | TIM1:CH3      |
+| ENCODER_01_A+B    | TIM2          |
+| ENCODER_01_BUTTON | TIM2:CH4      |
+
+#### timers for LEDs with PWM
+
+timers `TIM3` + `TIM4` + `TIM8` + `TIM13` + `TIM14` + `TIM15` + `TIM16` are used for PWM signal generation for LEDs.
+
+| TIMER | CHANNEL |
+|-------|---------|
+| TIM3  | CH1–4   |
+| TIM4  | CH1–4   |
+| TIM8  | CH1–4   |
+| TIM13 | CH1     |
+| TIM14 | CH1     |
+| TIM15 | CH1     |
+| TIM16 | CH1     |
+
+#### programmer button
+
+timer `TIM17` is used for `BUTTON_PRG`.
+
+#### timer-based PWM alternative PINs
+
+there are no GPIO pins with assigned PWM capabilities. however, the following peripheral pins can be reconfigured to produce PWM signals ( at the expanse of other peripherals ):
+
+| FUNCTION       | PIN  | TIMER                |
+|----------------|------|----------------------|
+| DAC_01         | PA5  | TIM2:CH1 / TIM8:CH1N |
+| USB_DEVICE-    | PA11 | TIM1_CH4             |
+| SPI_DISPLAY_CS | PA15 | TIM2_CH1             |
+| I2C_USR_SCL    | PB6  | TIM4_CH1             |
+| I2C_USR_SDA    | PB7  | TIM4_CH2             |
+| GPIO_10        | PE9  | TIM1_CH1             |
+| SPI_USR_CS     | PE11 | TIM1_CH2             |
+| SPI_USR_MISO   | PE13 | TIM1_CH3             |
+| SPI_USR_MOSI   | PE14 | TIM1_CH4             |
 
 ### SPI
 
-- SPI2 :: SD-CARD
-- SPI3 :: DISPLAY
-- SPI6 :: SPI_USR
+| FUNCTION | PERIPHERAL |
+|----------|------------|
+| SD-CARD  | SPI2       |
+| DISPLAY  | SPI3       |
+| SPI_USR  | SPI6       |
 
 ### UART
 
-- UART7  :: SERIAL_00
-- UART8  :: SERIAL_01
-- USART2 :: SERIAL_DEBUG
+| FUNCTION     | PERIPHERAL |
+|--------------|------------|
+| SERIAL_00    | UART7      |
+| SERIAL_01    | UART8      |
+| SERIAL_DEBUG | USART2     |
 
 ## PIN assignment
 

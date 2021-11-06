@@ -304,22 +304,6 @@ Wire Notes Line
 	800  7400 800  9150
 Text Notes 800  7400 0    50   ~ 0
 XTAL
-Text Label 13850 3550 2    50   ~ 0
-ENCODER_00_B
-Text Label 13850 3450 2    50   ~ 0
-ENCODER_00_A
-Text Label 13850 3650 2    50   ~ 0
-ENCODER_00_BUTTON
-Text Label 13850 4450 2    50   ~ 0
-ENCODER_01_B
-Text Label 13850 4350 2    50   ~ 0
-ENCODER_01_A
-Text Label 13850 4550 2    50   ~ 0
-ENCODER_01_BUTTON
-Wire Notes Line
-	15850 3150 12850 3150
-Text Notes 12850 3150 0    50   ~ 0
-ENCODER
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 6001237C
@@ -431,67 +415,10 @@ F10 "LINE_OUT_RIGHT" O R 11250 6850 50
 F11 "LINE_IN_LEFT" I R 11250 6950 50 
 F12 "LINE_IN_RIGHT" I R 11250 7050 50 
 $EndSheet
-$Comp
-L Device:R R3
-U 1 1 60CD6B29
-P 11550 4200
-F 0 "R3" V 11343 4200 50  0000 C CNN
-F 1 "22R" V 11434 4200 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 11480 4200 50  0001 C CNN
-F 3 "~" H 11550 4200 50  0001 C CNN
-F 4 "0402WGF220JTCE" V 11550 4200 50  0001 C CNN "MFR.Part #"
-F 5 "C25092" H 11550 4200 50  0001 C CNN "LCSC Part #"
-F 6 "-" H 11550 4200 50  0001 C CNN "Extended Part"
-	1    11550 4200
-	0    1    -1   0   
-$EndComp
-$Comp
-L Device:R R1
-U 1 1 60CD6AFB
-P 11550 4100
-F 0 "R1" V 11343 4100 50  0000 C CNN
-F 1 "22R" V 11434 4100 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 11480 4100 50  0001 C CNN
-F 3 "~" H 11550 4100 50  0001 C CNN
-F 4 "0402WGF220JTCE" V 11550 4100 50  0001 C CNN "MFR.Part #"
-F 5 "C25092" H 11550 4100 50  0001 C CNN "LCSC Part #"
-F 6 "-" H 11550 4100 50  0001 C CNN "Extended Part"
-	1    11550 4100
-	0    1    1    0   
-$EndComp
-$Comp
-L power:+5V #PWR05
-U 1 1 60C8DC40
-P 9650 3850
-F 0 "#PWR05" H 9650 3700 50  0001 C CNN
-F 1 "+5V" H 9650 4000 50  0000 C CNN
-F 2 "" H 9650 3850 50  0001 C CNN
-F 3 "" H 9650 3850 50  0001 C CNN
-	1    9650 3850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9650 4000 9650 3850
-Wire Wire Line
-	9600 4000 9650 4000
 Wire Notes Line
 	8550 3150 8550 5250
 Text Notes 8550 3150 0    50   ~ 0
 USB
-$Comp
-L Connector:USB_A J3
-U 1 1 5F892FFD
-P 9300 4200
-F 0 "J3" H 9357 4667 50  0000 C CNN
-F 1 "USB_A" H 9357 4576 50  0000 C CNN
-F 2 "Connector_USB:USB_A_Molex_67643_Horizontal" H 9450 4150 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_MOLEX-676432911_C293351.pdf" H 9450 4150 50  0001 C CNN
-F 4 "676432911" H 9300 4200 50  0001 C CNN "MFR.Part #"
-F 5 "C293351" H 9300 4200 50  0001 C CNN "LCSC Part #"
-F 6 "x" H 9300 4200 50  0001 C CNN "Extended Part"
-	1    9300 4200
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	9950 6000 10100 6000
 Wire Wire Line
@@ -570,8 +497,8 @@ Wire Notes Line
 	800  7400 3250 7400
 Wire Notes Line
 	800  9150 3250 9150
-Text Notes 17500 4000 0    100  ~ 0
------------------------------------------------\nKLST_SHEEP\nFEATURES\n-----------------------------------------------\n- STM32H743 MCU with 480MHz, 864KB RAM, 2048KB Flash\n- WM8731 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )\n- 2× ADC ( 12BIT, opt 6 extra channels )\n- 2× DAC ( 12BIT )\n- 3× UART ( serial )\n- 8× GPIO\n- 1× USB Host\n- 1× USB Device ( + Power Supply )\n- 1× I2C \n- 1× SPI \n- detachable 3× rotary encoders with push buttons\n- detachable 3× programmable LEDs + 1× power LED\n- 11× timers\n- 1× SD card reader\n- 1× JTAG/SWD interface + Serial Debug ( 14-pin )\n- programmer + reset + boot flash buttons\n- 4× Mounting Holes\n-----------------------------------------------\n
+Text Notes 15800 4300 0    100  ~ 0
+-----------------------------------------------\nKLST_SHEEP\nFEATURES\n-----------------------------------------------\n- STM32H743 MCU with 480MHz, 864KB RAM, 2048KB Flash\n- WM8731 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )\n- 1× LINE OUT ( stereo )\n- 1× LINE IN ( stereo )\n- 1× HEADPHONE + MIC ( mono )\n- 2× ADC ( 12BIT, opt 6 extra channels )\n- 2× DAC ( 12BIT )\n- 2× UART ( serial )\n- 16× GPIO\n- 1× USB Host\n- 1× USB Device ( + Power Supply )\n- 1× I2C \n- 1× SPI \n- 2× rotary encoders with push buttons\n- 16× programmable LEDs with PWM + 1× power LED\n- 1× SD card reader\n- 1× JTAG/SWD interface + serial debug ( 14-pin )\n- programmer + reset + boot flash buttons\n- 4× Mounting Holes\n-----------------------------------------------\n
 Wire Notes Line
 	15650 5400 8550 5400
 Text Notes 8550 5400 0    50   ~ 0
@@ -639,36 +566,6 @@ F 6 "-" H 12250 8950 50  0001 C CNN "Extended Part"
 	1    12250 8950
 	-1   0    0    1   
 $EndComp
-$Sheet
-S 14000 3400 1650 650 
-U 60628872
-F0 "ENCODER_00" 50
-F1 "rotary_encoder__with_push_button.sch" 50
-F2 "ENCODER_BUTTON" I L 14000 3650 50 
-F3 "ENCODER_B" I L 14000 3550 50 
-F4 "ENCODER_A" I L 14000 3450 50 
-$EndSheet
-$Sheet
-S 14000 4300 1650 650 
-U 6075A95B
-F0 "ENCODER_01" 50
-F1 "rotary_encoder__with_push_button.sch" 50
-F2 "ENCODER_BUTTON" I L 14000 4550 50 
-F3 "ENCODER_B" I L 14000 4450 50 
-F4 "ENCODER_A" I L 14000 4350 50 
-$EndSheet
-Wire Wire Line
-	13850 3450 14000 3450
-Wire Wire Line
-	13850 3550 14000 3550
-Wire Wire Line
-	13850 3650 14000 3650
-Wire Wire Line
-	13850 4350 14000 4350
-Wire Wire Line
-	13850 4450 14000 4450
-Wire Wire Line
-	13850 4550 14000 4550
 Text Notes 800  9300 0    50   ~ 0
 VOLTAGE REGULATORS
 Wire Notes Line
@@ -735,12 +632,6 @@ Text Label 1250 12550 0    50   ~ 0
 VDDA
 Wire Wire Line
 	1250 12700 1650 12700
-Wire Notes Line
-	12900 5250 15900 5250
-Wire Notes Line
-	15900 5250 15900 3150
-Wire Notes Line
-	12850 3150 12850 5250
 Text Label 4050 1850 0    50   ~ 0
 DAC_00
 Text Label 4050 1950 0    50   ~ 0
@@ -1052,16 +943,10 @@ F 3 "~" H 3200 10400 50  0001 C CNN
 	1    3200 10400
 	1    0    0    -1  
 $EndComp
-Text Notes 10700 3300 0    50   ~ 0
+Text Notes 10600 3300 0    50   ~ 0
 USB_CLIENT + POWER_INPUT
-Text Notes 9100 3300 0    50   ~ 0
+Text Notes 9000 3300 0    50   ~ 0
 USB_HOST
-Wire Notes Line
-	8550 3150 12700 3150
-Wire Notes Line
-	12700 3150 12700 5250
-Wire Notes Line
-	8550 5250 12700 5250
 $Comp
 L Device:C_Small C11
 U 1 1 60F272CE
@@ -1076,28 +961,6 @@ F 6 "-" H 4150 11050 50  0001 C CNN "Extended Part"
 	1    4150 11050
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:GND #PWR08
-U 1 1 6136A160
-P 9250 4700
-F 0 "#PWR08" H 9250 4450 50  0001 C CNN
-F 1 "GND" H 9250 4550 50  0000 C CNN
-F 2 "" H 9250 4700 50  0001 C CNN
-F 3 "" H 9250 4700 50  0001 C CNN
-	1    9250 4700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9200 4600 9200 4650
-Wire Wire Line
-	9200 4650 9250 4650
-Wire Wire Line
-	9250 4650 9250 4700
-Wire Wire Line
-	9300 4600 9300 4650
-Wire Wire Line
-	9300 4650 9250 4650
-Connection ~ 9250 4650
 $Comp
 L power:GND #PWR04
 U 1 1 63020713
@@ -1427,10 +1290,6 @@ Wire Notes Line
 	800  7250 5450 7250
 Wire Notes Line
 	5450 7250 5450 650 
-Text Label 10100 4200 0    50   ~ 0
-USB_HOST+
-Text Label 10100 4300 0    50   ~ 0
-USB_HOST-
 Wire Wire Line
 	12250 8600 12250 8750
 Wire Wire Line
@@ -1529,60 +1388,6 @@ F 6 "x" H 10800 1900 50  0001 C CNN "Extended Part"
 	1    10800 1900
 	1    0    0    -1  
 $EndComp
-$Comp
-L USB_B_Micro_MICROXNJ:MICROXNJ J5
-U 1 1 605E8095
-P 10900 4300
-F 0 "J5" H 10793 4867 50  0000 C CNN
-F 1 "USB_B_Micro" H 10793 4776 50  0000 C CNN
-F 2 "KLST_SHEEP:SHOUHAN_MICROXNJ" H 11150 4100 50  0001 L BNN
-F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_SHOU-HAN-MicroXNJ_C404969.pdf" H 10900 4300 50  0001 L BNN
-F 4 "MicroXNJ" H 10900 4300 50  0001 C CNN "MFR.Part #"
-F 5 "C404969" H 10900 4300 50  0001 C CNN "LCSC Part #"
-F 6 "x" H 10900 4300 50  0001 C CNN "Extended Part"
-	1    10900 4300
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	11300 4000 11350 4000
-Wire Wire Line
-	11350 3850 11350 4000
-$Comp
-L power:+5V #PWR06
-U 1 1 605E9C56
-P 11350 3850
-F 0 "#PWR06" H 11350 3700 50  0001 C CNN
-F 1 "+5V" H 11350 4000 50  0000 C CNN
-F 2 "" H 11350 3850 50  0001 C CNN
-F 3 "" H 11350 3850 50  0001 C CNN
-	1    11350 3850
-	1    0    0    -1  
-$EndComp
-Text Label 11800 4200 0    50   ~ 0
-USB_DEVICE+
-Text Label 11800 4100 0    50   ~ 0
-USB_DEVICE-
-NoConn ~ 11300 4300
-$Comp
-L power:GND #PWR07
-U 1 1 606161EF
-P 11350 4650
-F 0 "#PWR07" H 11350 4400 50  0001 C CNN
-F 1 "GND" H 11350 4500 50  0000 C CNN
-F 2 "" H 11350 4650 50  0001 C CNN
-F 3 "" H 11350 4650 50  0001 C CNN
-	1    11350 4650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	11300 4400 11350 4400
-Wire Wire Line
-	11350 4400 11350 4600
-Wire Wire Line
-	11300 4600 11350 4600
-Connection ~ 11350 4600
-Wire Wire Line
-	11350 4600 11350 4650
 Wire Wire Line
 	16650 6400 16650 6650
 $Comp
@@ -1952,50 +1757,6 @@ Text Label 2250 3550 2    50   ~ 0
 AUDIOCODEC_SAI_FS_A
 Text Label 2250 3650 2    50   ~ 0
 AUDIOCODEC_SAI_SCK_A
-Wire Wire Line
-	11700 4100 11800 4100
-Wire Wire Line
-	11800 4200 11700 4200
-Wire Wire Line
-	11400 4200 11300 4200
-Wire Wire Line
-	11300 4100 11400 4100
-$Comp
-L Device:R R4
-U 1 1 61986A3A
-P 9850 4300
-F 0 "R4" V 9643 4300 50  0000 C CNN
-F 1 "22R" V 9734 4300 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 9780 4300 50  0001 C CNN
-F 3 "~" H 9850 4300 50  0001 C CNN
-F 4 "0402WGF220JTCE" V 9850 4300 50  0001 C CNN "MFR.Part #"
-F 5 "C25092" H 9850 4300 50  0001 C CNN "LCSC Part #"
-F 6 "-" H 9850 4300 50  0001 C CNN "Extended Part"
-	1    9850 4300
-	0    1    -1   0   
-$EndComp
-$Comp
-L Device:R R2
-U 1 1 61986A43
-P 9850 4200
-F 0 "R2" V 9643 4200 50  0000 C CNN
-F 1 "22R" V 9734 4200 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 9780 4200 50  0001 C CNN
-F 3 "~" H 9850 4200 50  0001 C CNN
-F 4 "0402WGF220JTCE" V 9850 4200 50  0001 C CNN "MFR.Part #"
-F 5 "C25092" H 9850 4200 50  0001 C CNN "LCSC Part #"
-F 6 "-" H 9850 4200 50  0001 C CNN "Extended Part"
-	1    9850 4200
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	10000 4200 10100 4200
-Wire Wire Line
-	10100 4300 10000 4300
-Wire Wire Line
-	9700 4300 9600 4300
-Wire Wire Line
-	9600 4200 9700 4200
 Text Label 4050 4650 0    50   ~ 0
 USB_HOST+
 Text Label 4050 4550 0    50   ~ 0
@@ -3458,4 +3219,243 @@ F 3 "~" H 6950 4000 50  0001 C CNN
 	1    6950 4000
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	9500 4250 9600 4250
+Wire Wire Line
+	9600 4350 9500 4350
+Wire Wire Line
+	10000 4350 9900 4350
+Wire Wire Line
+	9900 4250 10000 4250
+$Comp
+L Device:R R2
+U 1 1 61986A43
+P 9750 4250
+F 0 "R2" V 9543 4250 50  0000 C CNN
+F 1 "22R" V 9634 4250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 9680 4250 50  0001 C CNN
+F 3 "~" H 9750 4250 50  0001 C CNN
+F 4 "0402WGF220JTCE" V 9750 4250 50  0001 C CNN "MFR.Part #"
+F 5 "C25092" H 9750 4250 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 9750 4250 50  0001 C CNN "Extended Part"
+	1    9750 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 61986A3A
+P 9750 4350
+F 0 "R4" V 9543 4350 50  0000 C CNN
+F 1 "22R" V 9634 4350 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 9680 4350 50  0001 C CNN
+F 3 "~" H 9750 4350 50  0001 C CNN
+F 4 "0402WGF220JTCE" V 9750 4350 50  0001 C CNN "MFR.Part #"
+F 5 "C25092" H 9750 4350 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 9750 4350 50  0001 C CNN "Extended Part"
+	1    9750 4350
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	11200 4150 11300 4150
+Wire Wire Line
+	11300 4250 11200 4250
+Wire Wire Line
+	11700 4250 11600 4250
+Wire Wire Line
+	11600 4150 11700 4150
+Wire Wire Line
+	11250 4650 11250 4700
+Connection ~ 11250 4650
+Wire Wire Line
+	11200 4650 11250 4650
+Wire Wire Line
+	11250 4450 11250 4650
+Wire Wire Line
+	11200 4450 11250 4450
+$Comp
+L power:GND #PWR07
+U 1 1 606161EF
+P 11250 4700
+F 0 "#PWR07" H 11250 4450 50  0001 C CNN
+F 1 "GND" H 11250 4550 50  0000 C CNN
+F 2 "" H 11250 4700 50  0001 C CNN
+F 3 "" H 11250 4700 50  0001 C CNN
+	1    11250 4700
+	1    0    0    -1  
+$EndComp
+NoConn ~ 11200 4350
+Text Label 11700 4150 0    50   ~ 0
+USB_DEVICE-
+Text Label 11700 4250 0    50   ~ 0
+USB_DEVICE+
+$Comp
+L power:+5V #PWR06
+U 1 1 605E9C56
+P 11250 3900
+F 0 "#PWR06" H 11250 3750 50  0001 C CNN
+F 1 "+5V" H 11250 4050 50  0000 C CNN
+F 2 "" H 11250 3900 50  0001 C CNN
+F 3 "" H 11250 3900 50  0001 C CNN
+	1    11250 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	11250 3900 11250 4050
+Wire Wire Line
+	11200 4050 11250 4050
+$Comp
+L USB_B_Micro_MICROXNJ:MICROXNJ J5
+U 1 1 605E8095
+P 10800 4350
+F 0 "J5" H 10693 4917 50  0000 C CNN
+F 1 "USB_B_Micro" H 10693 4826 50  0000 C CNN
+F 2 "KLST_SHEEP:SHOUHAN_MICROXNJ" H 11050 4150 50  0001 L BNN
+F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_SHOU-HAN-MicroXNJ_C404969.pdf" H 10800 4350 50  0001 L BNN
+F 4 "MicroXNJ" H 10800 4350 50  0001 C CNN "MFR.Part #"
+F 5 "C404969" H 10800 4350 50  0001 C CNN "LCSC Part #"
+F 6 "x" H 10800 4350 50  0001 C CNN "Extended Part"
+	1    10800 4350
+	-1   0    0    -1  
+$EndComp
+Text Label 10000 4350 0    50   ~ 0
+USB_HOST-
+Text Label 10000 4250 0    50   ~ 0
+USB_HOST+
+Connection ~ 9150 4700
+Wire Wire Line
+	9200 4700 9150 4700
+Wire Wire Line
+	9200 4650 9200 4700
+Wire Wire Line
+	9150 4700 9150 4750
+Wire Wire Line
+	9100 4700 9150 4700
+Wire Wire Line
+	9100 4650 9100 4700
+$Comp
+L power:GND #PWR08
+U 1 1 6136A160
+P 9150 4750
+F 0 "#PWR08" H 9150 4500 50  0001 C CNN
+F 1 "GND" H 9150 4600 50  0000 C CNN
+F 2 "" H 9150 4750 50  0001 C CNN
+F 3 "" H 9150 4750 50  0001 C CNN
+	1    9150 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:USB_A J3
+U 1 1 5F892FFD
+P 9200 4250
+F 0 "J3" H 9257 4717 50  0000 C CNN
+F 1 "USB_A" H 9257 4626 50  0000 C CNN
+F 2 "Connector_USB:USB_A_Molex_67643_Horizontal" H 9350 4200 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_MOLEX-676432911_C293351.pdf" H 9350 4200 50  0001 C CNN
+F 4 "676432911" H 9200 4250 50  0001 C CNN "MFR.Part #"
+F 5 "C293351" H 9200 4250 50  0001 C CNN "LCSC Part #"
+F 6 "x" H 9200 4250 50  0001 C CNN "Extended Part"
+	1    9200 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9500 4050 9550 4050
+Wire Wire Line
+	9550 4050 9550 3900
+$Comp
+L power:+5V #PWR05
+U 1 1 60C8DC40
+P 9550 3900
+F 0 "#PWR05" H 9550 3750 50  0001 C CNN
+F 1 "+5V" H 9550 4050 50  0000 C CNN
+F 2 "" H 9550 3900 50  0001 C CNN
+F 3 "" H 9550 3900 50  0001 C CNN
+	1    9550 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 60CD6AFB
+P 11450 4150
+F 0 "R1" V 11243 4150 50  0000 C CNN
+F 1 "22R" V 11334 4150 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 11380 4150 50  0001 C CNN
+F 3 "~" H 11450 4150 50  0001 C CNN
+F 4 "0402WGF220JTCE" V 11450 4150 50  0001 C CNN "MFR.Part #"
+F 5 "C25092" H 11450 4150 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 11450 4150 50  0001 C CNN "Extended Part"
+	1    11450 4150
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 60CD6B29
+P 11450 4250
+F 0 "R3" V 11243 4250 50  0000 C CNN
+F 1 "22R" V 11334 4250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 11380 4250 50  0001 C CNN
+F 3 "~" H 11450 4250 50  0001 C CNN
+F 4 "0402WGF220JTCE" V 11450 4250 50  0001 C CNN "MFR.Part #"
+F 5 "C25092" H 11450 4250 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 11450 4250 50  0001 C CNN "Extended Part"
+	1    11450 4250
+	0    1    -1   0   
+$EndComp
+Text Label 13650 3550 2    50   ~ 0
+ENCODER_00_B
+Text Label 13650 3450 2    50   ~ 0
+ENCODER_00_A
+Text Label 13650 3650 2    50   ~ 0
+ENCODER_00_BUTTON
+Text Label 13650 4450 2    50   ~ 0
+ENCODER_01_B
+Text Label 13650 4350 2    50   ~ 0
+ENCODER_01_A
+Text Label 13650 4550 2    50   ~ 0
+ENCODER_01_BUTTON
+Wire Notes Line
+	15650 3150 12650 3150
+Text Notes 12650 3150 0    50   ~ 0
+ENCODER
+$Sheet
+S 13800 3400 1650 650 
+U 60628872
+F0 "ENCODER_00" 50
+F1 "rotary_encoder__with_push_button.sch" 50
+F2 "ENCODER_BUTTON" I L 13800 3650 50 
+F3 "ENCODER_B" I L 13800 3550 50 
+F4 "ENCODER_A" I L 13800 3450 50 
+$EndSheet
+$Sheet
+S 13800 4300 1650 650 
+U 6075A95B
+F0 "ENCODER_01" 50
+F1 "rotary_encoder__with_push_button.sch" 50
+F2 "ENCODER_BUTTON" I L 13800 4550 50 
+F3 "ENCODER_B" I L 13800 4450 50 
+F4 "ENCODER_A" I L 13800 4350 50 
+$EndSheet
+Wire Wire Line
+	13650 3450 13800 3450
+Wire Wire Line
+	13650 3550 13800 3550
+Wire Wire Line
+	13650 3650 13800 3650
+Wire Wire Line
+	13650 4350 13800 4350
+Wire Wire Line
+	13650 4450 13800 4450
+Wire Wire Line
+	13650 4550 13800 4550
+Wire Notes Line
+	12650 5250 15650 5250
+Wire Notes Line
+	15650 5250 15650 3150
+Wire Notes Line
+	12650 3150 12650 5250
+Wire Notes Line
+	8550 3150 12500 3150
+Wire Notes Line
+	12500 3150 12500 5250
+Wire Notes Line
+	8550 5250 12500 5250
 $EndSCHEMATC
