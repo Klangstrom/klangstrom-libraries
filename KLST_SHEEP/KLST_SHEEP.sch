@@ -637,15 +637,13 @@ DAC_00
 Text Label 4050 1950 0    50   ~ 0
 DAC_01
 Text Label 4050 2350 0    50   ~ 0
-ENCODER_00_B
-Text Label 4050 3750 0    50   ~ 0
-I2C_USR_SCL
+ENCODER_01_B
 Text Label 4050 2150 0    50   ~ 0
-LED_13
+LED_02
 Text Label 4050 1650 0    50   ~ 0
-LED_15
+LED_00
 Text Label 4050 2250 0    50   ~ 0
-ENCODER_00_A
+ENCODER_01_A
 Text Label 2250 4350 2    50   ~ 0
 SPI_USR_SCK
 Text Label 4050 5250 0    50   ~ 0
@@ -653,19 +651,19 @@ ADC_00
 Text Label 4050 5350 0    50   ~ 0
 ADC_01
 Text Label 2250 6150 2    50   ~ 0
-LED_09
-Text Label 4050 5550 0    50   ~ 0
-LED_05
-Text Label 4050 5450 0    50   ~ 0
 LED_06
+Text Label 4050 5550 0    50   ~ 0
+LED_10
+Text Label 4050 5450 0    50   ~ 0
+LED_09
 Text Label 2250 6350 2    50   ~ 0
-LED_07
+LED_08
 Text Label 4050 2450 0    50   ~ 0
-ENCODER_00_BUTTON
-Text Label 4050 1750 0    50   ~ 0
 ENCODER_01_BUTTON
+Text Label 4050 1750 0    50   ~ 0
+ENCODER_00_BUTTON
 Text Label 4050 2050 0    50   ~ 0
-LED_14
+LED_01
 Text Notes 800  650  0    50   ~ 0
 MCU
 Wire Notes Line
@@ -1203,9 +1201,9 @@ BUTTON_BOOT_FLASH
 Text Notes 8650 7750 0    50   ~ 0
 BUTTON_RESET
 Text Label 4050 5650 0    50   ~ 0
-LED_04
+LED_11
 Text Label 4050 5750 0    50   ~ 0
-LED_03
+LED_12
 Wire Notes Line
 	8550 650  13650 650 
 Wire Notes Line
@@ -1249,9 +1247,9 @@ MCLK
 Text Label 13350 6200 2    50   ~ 0
 AUDIOCODEC_I2S_WS
 Text Label 2250 6250 2    50   ~ 0
-LED_08
+LED_07
 Text Label 2250 6050 2    50   ~ 0
-LED_10
+LED_05
 $Sheet
 S 6700 1150 650  550 
 U 692BDA67
@@ -1814,9 +1812,9 @@ Wire Wire Line
 	2850 6800 2950 6800
 Connection ~ 2850 6800
 Text Label 4050 1450 0    50   ~ 0
-ENCODER_01_A
+ENCODER_00_A
 Text Label 4050 1550 0    50   ~ 0
-ENCODER_01_B
+ENCODER_00_B
 Text Label 2250 3150 2    50   ~ 0
 SERIAL_01_RX
 Text Label 2250 3250 2    50   ~ 0
@@ -1849,9 +1847,9 @@ Text Label 4050 4450 0    50   ~ 0
 SDCARD_SCK
 Text Label 4050 4950 0    50   ~ 0
 SDCARD_CARD_DETECT
-Text Label 4050 4250 0    50   ~ 0
+Text Label 4050 3850 0    50   ~ 0
 AUDIOCODEC_I2C_SDA
-Text Label 4050 4150 0    50   ~ 0
+Text Label 4050 3750 0    50   ~ 0
 AUDIOCODEC_I2C_SCL
 Wire Wire Line
 	3250 1150 3250 1000
@@ -1881,10 +1879,8 @@ Text Label 2250 4150 2    50   ~ 0
 GPIO_09
 Text Label 2250 4050 2    50   ~ 0
 GPIO_10
-Text Label 4050 3250 0    50   ~ 0
-LED_11
 Text Label 4050 3150 0    50   ~ 0
-LED_12
+LED_03
 Text Label 4050 4850 0    50   ~ 0
 GPIO_12
 Text Label 4050 6350 0    50   ~ 0
@@ -2952,15 +2948,13 @@ F 6 "STM32H743VIT6" H 3150 3850 50  0001 C CNN "MFR.Part #"
 	1    0    0    -1  
 $EndComp
 Text Label 4050 3550 0    50   ~ 0
-LED_02
+LED_13
 Text Label 4050 3650 0    50   ~ 0
-LED_01
+LED_14
 Text Label 4050 3950 0    50   ~ 0
-LED_00
+LED_15
 Text Label 2250 5250 2    50   ~ 0
 GPIO_01
-Text Label 4050 3850 0    50   ~ 0
-I2C_USR_SDA
 Text Label 6550 5100 2    50   ~ 0
 SERIAL_DEBUG_RX
 Text Label 6550 5000 2    50   ~ 0
@@ -3458,4 +3452,10 @@ Wire Notes Line
 	12500 3150 12500 5250
 Wire Notes Line
 	8550 5250 12500 5250
+Text Label 4050 3250 0    50   ~ 0
+LED_04
+Text Label 4050 4150 0    50   ~ 0
+I2C_USR_SCL
+Text Label 4050 4250 0    50   ~ 0
+I2C_USR_SDA
 $EndSCHEMATC
