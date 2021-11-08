@@ -7,4 +7,5 @@
   (lib (name KLST_SHEEP--icon)(type Legacy)(uri ${KIPRJMOD}/library/KLST_SHEEP--icon.lib)(options "")(descr ""))
   (lib (name KLST_SHEEP--wolf)(type Legacy)(uri ${KIPRJMOD}/library/KLST_SHEEP--wolf.lib)(options "")(descr ""))
   (lib (name KLST--icon)(type Legacy)(uri ${KIPRJMOD}/library/KLST--icon.lib)(options "")(descr ""))
+  (lib (name KLST_SHEEP--arrow)(type Legacy)(uri ${KIPRJMOD}/library/KLST_SHEEP--arrow.lib)(options "")(descr ""))
 )
