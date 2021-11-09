@@ -67,8 +67,9 @@ F 1 "UART_01" H 8250 5900 50  0000 C CNN
 F 2 "Connector_IDC:IDC-Header_2x03_P2.54mm_Horizontal" H 8200 6150 50  0001 C CNN
 F 3 "~" H 8200 6150 50  0001 C CNN
 F 4 "300R-6P" H 8200 6150 50  0001 C CNN "MFR.Part #"
-F 5 "C146629" H 8200 6150 50  0001 C CNN "LCSC Part #"
+F 5 "" H 8200 6150 50  0001 C CNN "LCSC Part #"
 F 6 "-" H 8200 6150 50  0001 C CNN "Extended Part"
+F 7 "C146629" H 8200 6150 50  0001 C CNN "JLCPCB Part #"
 	1    8200 6150
 	1    0    0    1   
 $EndComp
@@ -117,8 +118,9 @@ F 1 "UART_00" H 8250 5200 50  0000 C CNN
 F 2 "Connector_IDC:IDC-Header_2x03_P2.54mm_Horizontal" H 8200 5450 50  0001 C CNN
 F 3 "~" H 8200 5450 50  0001 C CNN
 F 4 "300R-6P" H 8200 5450 50  0001 C CNN "MFR.Part #"
-F 5 "C146629" H 8200 5450 50  0001 C CNN "LCSC Part #"
+F 5 "" H 8200 5450 50  0001 C CNN "LCSC Part #"
 F 6 "-" H 8200 5450 50  0001 C CNN "Extended Part"
+F 7 "C146629" H 8200 5450 50  0001 C CNN "JLCPCB Part #"
 	1    8200 5450
 	1    0    0    1   
 $EndComp
@@ -144,8 +146,9 @@ F 1 "D_Schottky" H 7300 5566 50  0000 C CNN
 F 2 "Diode_SMD:D_SOD-123" V 7300 5450 50  0001 C CNN
 F 3 "https://datasheet.lcsc.com/szlcsc/Changjiang-Electronics-Tech-CJ-B5819W_C8598.pdf" V 7300 5450 50  0001 C CNN
 F 4 "B5819W" H 7300 5450 50  0001 C CNN "MFR.Part #"
-F 5 "C8598" H 7300 5450 50  0001 C CNN "LCSC Part #"
+F 5 "" H 7300 5450 50  0001 C CNN "LCSC Part #"
 F 6 "-" H 7300 5450 50  0001 C CNN "Extended Part"
+F 7 "C8598" H 7300 5450 50  0001 C CNN "JLCPCB Part #"
 	1    7300 5450
 	1    0    0    1   
 $EndComp
@@ -173,8 +176,9 @@ F 1 "D_Schottky" H 7300 6266 50  0000 C CNN
 F 2 "Diode_SMD:D_SOD-123" V 7300 6150 50  0001 C CNN
 F 3 "https://datasheet.lcsc.com/szlcsc/Changjiang-Electronics-Tech-CJ-B5819W_C8598.pdf" V 7300 6150 50  0001 C CNN
 F 4 "B5819W" H 7300 6150 50  0001 C CNN "MFR.Part #"
-F 5 "C8598" H 7300 6150 50  0001 C CNN "LCSC Part #"
+F 5 "" H 7300 6150 50  0001 C CNN "LCSC Part #"
 F 6 "-" H 7300 6150 50  0001 C CNN "Extended Part"
+F 7 "C8598" H 7300 6150 50  0001 C CNN "JLCPCB Part #"
 	1    7300 6150
 	1    0    0    1   
 $EndComp
