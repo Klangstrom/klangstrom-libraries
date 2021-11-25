@@ -6,4 +6,5 @@
   (lib (name KLST_GRASS--arrow)(type Legacy)(uri ${KIPRJMOD}/library/KLST_GRASS--arrow.lib)(options "")(descr ""))
   (lib (name KLST_GRASS-rescue)(type Legacy)(uri ${KIPRJMOD}/KLST_GRASS-rescue.lib)(options "")(descr ""))
   (lib (name TP4056)(type Legacy)(uri ${KIPRJMOD}/library/TP4056.lib)(options "")(descr ""))
+  (lib (name TPS61027DRCR)(type Legacy)(uri ${KIPRJMOD}/library/TPS61027DRCR.lib)(options "")(descr ""))
 )
