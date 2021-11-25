@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name KLST_GRASS)(type KiCad)(uri ${KIPRJMOD}/library)(options "")(descr ""))
+  (lib (name tp4056)(type Legacy)(uri /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/git/klangstrom-hardware/KLST_GRASS/library)(options "")(descr ""))
+)

@@ -1,0 +1,959 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A2 23386 16535
+encoding utf-8
+Sheet 1 1
+Title "KLST_GRASS"
+Date "2021-10-11"
+Rev "0.1"
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 6001237C
+P 1250 5400
+F 0 "H1" H 1350 5446 50  0000 L CNN
+F 1 "MountingHole" H 1350 5355 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 1250 5400 50  0001 C CNN
+F 3 "~" H 1250 5400 50  0001 C CNN
+F 4 "DNF" H 1250 5400 50  0001 C CNN "MFR.Part #"
+F 5 "-" H 1250 5400 50  0001 C CNN "Extended Part"
+F 6 "" H 1250 5400 50  0001 C CNN "LCSC Part #"
+F 7 "DNF" H 1250 5400 50  0001 C CNN "JLCPCB Part #"
+	1    1250 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 60012762
+P 1250 5600
+F 0 "H2" H 1350 5646 50  0000 L CNN
+F 1 "MountingHole" H 1350 5555 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 1250 5600 50  0001 C CNN
+F 3 "~" H 1250 5600 50  0001 C CNN
+F 4 "DNF" H 1250 5600 50  0001 C CNN "MFR.Part #"
+F 5 "-" H 1250 5600 50  0001 C CNN "Extended Part"
+F 6 "" H 1250 5600 50  0001 C CNN "LCSC Part #"
+F 7 "DNF" H 1250 5600 50  0001 C CNN "JLCPCB Part #"
+	1    1250 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 600144A9
+P 1250 5800
+F 0 "H3" H 1350 5846 50  0000 L CNN
+F 1 "MountingHole" H 1350 5755 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 1250 5800 50  0001 C CNN
+F 3 "~" H 1250 5800 50  0001 C CNN
+F 4 "DNF" H 1250 5800 50  0001 C CNN "MFR.Part #"
+F 5 "-" H 1250 5800 50  0001 C CNN "Extended Part"
+F 6 "" H 1250 5800 50  0001 C CNN "LCSC Part #"
+F 7 "DNF" H 1250 5800 50  0001 C CNN "JLCPCB Part #"
+	1    1250 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 600144BB
+P 1250 6000
+F 0 "H4" H 1350 6046 50  0000 L CNN
+F 1 "MountingHole" H 1350 5955 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_Pad_Via" H 1250 6000 50  0001 C CNN
+F 3 "~" H 1250 6000 50  0001 C CNN
+F 4 "DNF" H 1250 6000 50  0001 C CNN "MFR.Part #"
+F 5 "-" H 1250 6000 50  0001 C CNN "Extended Part"
+F 6 "" H 1250 6000 50  0001 C CNN "LCSC Part #"
+F 7 "DNF" H 1250 6000 50  0001 C CNN "JLCPCB Part #"
+	1    1250 6000
+	1    0    0    -1  
+$EndComp
+Text Notes 650  6700 0    50   ~ 0
+GRAPHICS
+Wire Notes Line
+	650  9400 3450 9400
+Wire Notes Line
+	3450 9400 3450 6700
+Wire Notes Line
+	650  6700 3450 6700
+Wire Notes Line
+	650  9400 650  6700
+Wire Notes Line
+	650  9550 650  11650
+Text Notes 650  9550 0    50   ~ 0
+USB
+Text Notes 16950 1800 0    100  ~ 0
+-----------------------------------------------\nKLST_GRASS\nFEATURES\n-----------------------------------------------\n- 18650 battery holder\n- prototyping area\n-----------------------------------------------\n
+Text Notes 2700 9700 0    50   ~ 0
+USB_CLIENT + POWER_INPUT
+Text Notes 1100 9700 0    50   ~ 0
+USB_HOST
+Text Label 2300 2000 2    50   ~ 0
+GPIO_00
+Text Label 2300 1900 2    50   ~ 0
+GPIO_02
+Text Label 2300 1800 2    50   ~ 0
+GPIO_04
+Text Label 2300 1700 2    50   ~ 0
+GPIO_06
+Text Label 3200 1800 0    50   ~ 0
+GPIO_05
+Text Label 3200 2000 0    50   ~ 0
+GPIO_01
+Text Label 3200 1900 0    50   ~ 0
+GPIO_03
+Text Label 3200 1700 0    50   ~ 0
+GPIO_07
+Text Label 2300 2100 2    50   ~ 0
+ADC_00
+Text Label 3200 2100 0    50   ~ 0
+DAC_00
+Text Label 3200 2200 0    50   ~ 0
+DAC_01
+Text Label 2300 2200 2    50   ~ 0
+ADC_01
+Text Notes 650  650  0    50   ~ 0
+GPIO+ANALOG_IO_PINS
+Wire Notes Line
+	650  650  650  4650
+Wire Notes Line
+	5050 650  650  650 
+Wire Notes Line
+	650  4650 5050 4650
+Wire Notes Line
+	5050 4650 5050 650 
+Text Label 2300 2400 2    50   ~ 0
+LINE_OUT_LEFT
+Text Label 2300 2300 2    50   ~ 0
+LINE_OUT_RIGHT
+Text Label 3200 2400 0    50   ~ 0
+LINE_IN_LEFT
+Text Label 3200 2300 0    50   ~ 0
+LINE_IN_RIGHT
+Text Label 3200 2600 0    50   ~ 0
+SPI_DISPLAY_MOSI
+Text Label 3200 2800 0    50   ~ 0
+SPI_DISPLAY_SCK
+Text Label 3200 2900 0    50   ~ 0
+SPI_DISPLAY_CS
+Text Label 3200 2700 0    50   ~ 0
+SPI_DISPLAY_MISO
+$Comp
+L KLST_GRASS--icon:LOGO #G1
+U 1 1 6183E666
+P 1450 7900
+F 0 "#G1" H 1450 7589 60  0001 C CNN
+F 1 "LOGO" H 1450 8211 60  0001 C CNN
+F 2 "" H 1450 7900 100 0001 C CNN
+F 3 "" H 1450 7900 100 0001 C CNN
+	1    1450 7900
+	1    0    0    -1  
+$EndComp
+$Comp
+L KLST_GRASS--wolf:LOGO #G2
+U 1 1 61874C59
+P 1450 8450
+F 0 "#G2" H 1450 8172 60  0001 C CNN
+F 1 "LOGO" H 1450 8728 60  0001 C CNN
+F 2 "" H 1450 8450 100 0001 C CNN
+F 3 "" H 1450 8450 100 0001 C CNN
+	1    1450 8450
+	1    0    0    -1  
+$EndComp
+$Comp
+L KLST_GRASS-rescue:KLST_GRASS--graphics-KLST_GRASS--graphics X2
+U 1 1 61845AB5
+P 1950 7900
+F 0 "X2" H 1975 7946 50  0000 L CNN
+F 1 "KLST_GRASS--icon" H 1975 7855 50  0000 L CNN
+F 2 "KLST_GRASS:KLST_GRASS--icon" H 1950 7900 100 0001 C CNN
+F 3 "" H 1950 7900 100 0001 C CNN
+	1    1950 7900
+	1    0    0    -1  
+$EndComp
+$Comp
+L KLST_GRASS-rescue:KLST_GRASS--graphics-KLST_GRASS--graphics X3
+U 1 1 618A7C5A
+P 1950 8450
+F 0 "X3" H 1975 8496 50  0000 L CNN
+F 1 "KLST_GRASS--wolf" H 1975 8405 50  0000 L CNN
+F 2 "KLST_GRASS:KLST_GRASS--wolf" H 1950 8450 100 0001 C CNN
+F 3 "" H 1950 8450 100 0001 C CNN
+	1    1950 8450
+	1    0    0    -1  
+$EndComp
+$Comp
+L KLST--icon:LOGO #G3
+U 1 1 61A1E17C
+P 1450 7400
+F 0 "#G3" H 1450 7129 60  0001 C CNN
+F 1 "LOGO" H 1450 7671 60  0001 C CNN
+F 2 "" H 1450 7400 100 0001 C CNN
+F 3 "" H 1450 7400 100 0001 C CNN
+	1    1450 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L KLST_GRASS-rescue:KLST_GRASS--graphics-KLST_GRASS--graphics X1
+U 1 1 61A23960
+P 1950 7350
+F 0 "X1" H 1975 7396 50  0000 L CNN
+F 1 "KLST_GRASS--graphics" H 1975 7305 50  0000 L CNN
+F 2 "KLST_GRASS:KLST--icon" H 1950 7350 100 0001 C CNN
+F 3 "" H 1950 7350 100 0001 C CNN
+	1    1950 7350
+	1    0    0    -1  
+$EndComp
+Text Label 2300 1600 2    50   ~ 0
+GPIO_08
+Text Label 2300 1500 2    50   ~ 0
+GPIO_10
+Text Label 2300 1400 2    50   ~ 0
+GPIO_12
+Text Label 2300 1300 2    50   ~ 0
+GPIO_14
+Text Label 3200 1600 0    50   ~ 0
+GPIO_09
+Text Label 3200 1500 0    50   ~ 0
+GPIO_11
+Text Label 3200 1400 0    50   ~ 0
+GPIO_13
+Text Label 3200 1300 0    50   ~ 0
+GPIO_15
+Text Label 2300 3300 2    50   ~ 0
+SERIAL_DEBUG_RX
+Text Label 2300 3200 2    50   ~ 0
+SERIAL_DEBUG_TX
+$Comp
+L power:GND #PWR079
+U 1 1 61C46030
+P 2050 4150
+F 0 "#PWR079" H 2050 3900 50  0001 C CNN
+F 1 "GND" H 2050 4000 50  0000 C CNN
+F 2 "" H 2050 4150 50  0001 C CNN
+F 3 "" H 2050 4150 50  0001 C CNN
+	1    2050 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR070
+U 1 1 61C465D5
+P 3250 1000
+F 0 "#PWR070" H 3250 850 50  0001 C CNN
+F 1 "+5V" H 3250 1150 50  0000 C CNN
+F 2 "" H 3250 1000 50  0001 C CNN
+F 3 "" H 3250 1000 50  0001 C CNN
+	1    3250 1000
+	1    0    0    -1  
+$EndComp
+Text Label 2300 2900 2    50   ~ 0
+SPI_USR_CS
+Text Label 3200 3200 0    50   ~ 0
+I2C_USR_SCL
+Text Label 3200 3300 0    50   ~ 0
+I2C_USR_SDA
+Text Label 2300 2700 2    50   ~ 0
+SPI_USR_MISO
+Text Label 2300 2600 2    50   ~ 0
+SPI_USR_MOSI
+Text Label 2300 2800 2    50   ~ 0
+SPI_USR_SCK
+Wire Wire Line
+	2300 1200 2500 1200
+Wire Wire Line
+	2300 1100 2500 1100
+Wire Wire Line
+	2300 1400 2500 1400
+Wire Wire Line
+	2300 1300 2500 1300
+Wire Wire Line
+	2300 1600 2500 1600
+Wire Wire Line
+	2300 1500 2500 1500
+Wire Wire Line
+	2300 1800 2500 1800
+Wire Wire Line
+	2300 1700 2500 1700
+Wire Wire Line
+	2300 2000 2500 2000
+Wire Wire Line
+	2300 1900 2500 1900
+Wire Wire Line
+	2300 2200 2500 2200
+Wire Wire Line
+	2300 2100 2500 2100
+Wire Wire Line
+	2300 2400 2500 2400
+Wire Wire Line
+	2300 2300 2500 2300
+Wire Wire Line
+	2300 2600 2500 2600
+Wire Wire Line
+	2300 2500 2500 2500
+Wire Wire Line
+	2300 2800 2500 2800
+Wire Wire Line
+	2300 2700 2500 2700
+Wire Wire Line
+	2300 3000 2500 3000
+Wire Wire Line
+	2300 2900 2500 2900
+Wire Wire Line
+	2300 3200 2500 3200
+Wire Wire Line
+	2300 3100 2500 3100
+Wire Wire Line
+	2300 3300 2500 3300
+Wire Wire Line
+	3000 1200 3200 1200
+Wire Wire Line
+	3000 1400 3200 1400
+Wire Wire Line
+	3000 1300 3200 1300
+Wire Wire Line
+	3000 1600 3200 1600
+Wire Wire Line
+	3000 1500 3200 1500
+Wire Wire Line
+	3000 1800 3200 1800
+Wire Wire Line
+	3000 1700 3200 1700
+Wire Wire Line
+	3000 2000 3200 2000
+Wire Wire Line
+	3000 1900 3200 1900
+Wire Wire Line
+	3000 2200 3200 2200
+Wire Wire Line
+	3000 2100 3200 2100
+Wire Wire Line
+	3000 2400 3200 2400
+Wire Wire Line
+	3000 2300 3200 2300
+Wire Wire Line
+	3000 2600 3200 2600
+Wire Wire Line
+	3000 2500 3200 2500
+Wire Wire Line
+	3000 2800 3200 2800
+Wire Wire Line
+	3000 2700 3200 2700
+Wire Wire Line
+	3000 3000 3200 3000
+Wire Wire Line
+	3000 2900 3200 2900
+Wire Wire Line
+	3000 3200 3200 3200
+Wire Wire Line
+	3000 3100 3200 3100
+Wire Wire Line
+	3000 3400 3200 3400
+Wire Wire Line
+	3000 3300 3200 3300
+Text Label 3200 2500 0    50   ~ 0
+PIN_GND
+Text Label 3200 3100 0    50   ~ 0
+PIN_GND
+Text Label 3200 3000 0    50   ~ 0
+PIN_3V3
+Text Label 3200 3400 0    50   ~ 0
+PIN_3V3
+Text Label 2300 2500 2    50   ~ 0
+PIN_GND
+Text Label 2300 3100 2    50   ~ 0
+PIN_GND
+Text Label 2300 3000 2    50   ~ 0
+PIN_3V3
+Text Label 2300 3400 2    50   ~ 0
+PIN_3V3
+Text Label 2100 4050 0    50   ~ 0
+PIN_GND
+Wire Wire Line
+	2050 4050 2050 4150
+Text Label 1900 4050 2    50   ~ 0
+PIN_3V3
+$Comp
+L power:+3V3 #PWR078
+U 1 1 62459B0A
+P 1950 3900
+F 0 "#PWR078" H 1950 3750 50  0001 C CNN
+F 1 "+3V3" H 1950 4050 50  0000 C CNN
+F 2 "" H 1950 3900 50  0001 C CNN
+F 3 "" H 1950 3900 50  0001 C CNN
+	1    1950 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 4050 1950 3900
+Wire Wire Line
+	1950 4050 1900 4050
+Wire Wire Line
+	2050 4050 2100 4050
+Text Label 2300 1200 2    50   ~ 0
+PIN_GND
+Text Label 2300 1100 2    50   ~ 0
+PIN_GND
+Text Label 3200 1200 0    50   ~ 0
+PIN_3V3
+Wire Wire Line
+	3250 1100 3250 1000
+Wire Wire Line
+	3000 1100 3250 1100
+Wire Wire Line
+	2300 3400 2500 3400
+$Comp
+L Connector_Generic:Conn_02x24_Odd_Even J2
+U 1 1 625BAA9F
+P 2700 2200
+F 0 "J2" H 2750 3517 50  0000 C CNN
+F 1 "PERIPHERALS" H 2750 3426 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x24_P2.54mm_Vertical_SMD" H 2700 2200 50  0001 C CNN
+F 3 "~" H 2700 2200 50  0001 C CNN
+F 4 "DNF" H 2700 2200 50  0001 C CNN "JLCPCB Part #"
+F 5 "DNF" H 2700 2200 50  0001 C CNN "MFR.Part #"
+	1    2700 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 10650 1700 10650
+Wire Wire Line
+	1700 10750 1600 10750
+Wire Wire Line
+	3350 11050 3350 11100
+Connection ~ 3350 11050
+Wire Wire Line
+	3300 11050 3350 11050
+Wire Wire Line
+	3350 10850 3350 11050
+Wire Wire Line
+	3300 10850 3350 10850
+$Comp
+L power:GND #PWR07
+U 1 1 606161EF
+P 3350 11100
+F 0 "#PWR07" H 3350 10850 50  0001 C CNN
+F 1 "GND" H 3350 10950 50  0000 C CNN
+F 2 "" H 3350 11100 50  0001 C CNN
+F 3 "" H 3350 11100 50  0001 C CNN
+	1    3350 11100
+	1    0    0    -1  
+$EndComp
+NoConn ~ 3300 10750
+$Comp
+L USB_B_Micro_MICROXNJ:MICROXNJ J5
+U 1 1 605E8095
+P 2900 10750
+F 0 "J5" H 2793 11317 50  0000 C CNN
+F 1 "USB_B_Micro" H 2793 11226 50  0000 C CNN
+F 2 "KLST_GRASS:SHOUHAN_MICROXNJ" H 3150 10550 50  0001 L BNN
+F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_SHOU-HAN-MicroXNJ_C404969.pdf" H 2900 10750 50  0001 L BNN
+F 4 "MicroXNJ" H 2900 10750 50  0001 C CNN "MFR.Part #"
+F 5 "" H 2900 10750 50  0001 C CNN "LCSC Part #"
+F 6 "x" H 2900 10750 50  0001 C CNN "Extended Part"
+F 7 "C404969" H 2900 10750 50  0001 C CNN "JLCPCB Part #"
+	1    2900 10750
+	-1   0    0    -1  
+$EndComp
+Connection ~ 1250 11100
+Wire Wire Line
+	1300 11100 1250 11100
+Wire Wire Line
+	1300 11050 1300 11100
+Wire Wire Line
+	1250 11100 1250 11150
+Wire Wire Line
+	1200 11100 1250 11100
+Wire Wire Line
+	1200 11050 1200 11100
+$Comp
+L power:GND #PWR08
+U 1 1 6136A160
+P 1250 11150
+F 0 "#PWR08" H 1250 10900 50  0001 C CNN
+F 1 "GND" H 1250 11000 50  0000 C CNN
+F 2 "" H 1250 11150 50  0001 C CNN
+F 3 "" H 1250 11150 50  0001 C CNN
+	1    1250 11150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:USB_A J3
+U 1 1 5F892FFD
+P 1300 10650
+F 0 "J3" H 1357 11117 50  0000 C CNN
+F 1 "USB_A" H 1357 11026 50  0000 C CNN
+F 2 "Connector_USB:USB_A_Molex_67643_Horizontal" H 1450 10600 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/1912111437_MOLEX-676432911_C293351.pdf" H 1450 10600 50  0001 C CNN
+F 4 "AF 90° WJDG" H 1300 10650 50  0001 C CNN "MFR.Part #"
+F 5 "" H 1300 10650 50  0001 C CNN "LCSC Part #"
+F 6 "x" H 1300 10650 50  0001 C CNN "Extended Part"
+F 7 "C456018" H 1300 10650 50  0001 C CNN "JLCPCB Part #"
+	1    1300 10650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 10450 1650 10450
+Wire Wire Line
+	1650 10450 1650 10300
+$Comp
+L power:+5V #PWR05
+U 1 1 60C8DC40
+P 1650 10300
+F 0 "#PWR05" H 1650 10150 50  0001 C CNN
+F 1 "+5V" H 1650 10450 50  0000 C CNN
+F 2 "" H 1650 10300 50  0001 C CNN
+F 3 "" H 1650 10300 50  0001 C CNN
+	1    1650 10300
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	650  9550 4600 9550
+Wire Notes Line
+	4600 9550 4600 11650
+Wire Notes Line
+	650  11650 4600 11650
+Text Notes 650  4800 0    50   ~ 0
+MOUNTING HOLES
+Wire Notes Line
+	2700 6550 2700 4800
+Wire Notes Line
+	650  4800 2700 4800
+Wire Notes Line
+	650  6550 650  4800
+Wire Notes Line
+	650  6550 2700 6550
+Text Label 4150 1400 0    50   ~ 0
+GPIO_05
+Text Label 4150 1000 0    50   ~ 0
+GPIO_01
+Text Label 4150 1200 0    50   ~ 0
+GPIO_03
+Text Label 4150 1600 0    50   ~ 0
+GPIO_07
+Text Label 4150 2500 0    50   ~ 0
+DAC_00
+Text Label 4150 2600 0    50   ~ 0
+DAC_01
+Text Label 4150 3000 0    50   ~ 0
+LINE_IN_LEFT
+Text Label 4150 2900 0    50   ~ 0
+LINE_IN_RIGHT
+Text Label 4150 3300 0    50   ~ 0
+SPI_DISPLAY_MOSI
+Text Label 4150 3500 0    50   ~ 0
+SPI_DISPLAY_SCK
+Text Label 4150 3600 0    50   ~ 0
+SPI_DISPLAY_CS
+Text Label 4150 3400 0    50   ~ 0
+SPI_DISPLAY_MISO
+Text Label 4150 1800 0    50   ~ 0
+GPIO_09
+Text Label 4150 2000 0    50   ~ 0
+GPIO_11
+Text Label 4150 2200 0    50   ~ 0
+GPIO_13
+Text Label 4150 2400 0    50   ~ 0
+GPIO_15
+Text Label 4150 4100 0    50   ~ 0
+I2C_USR_SCL
+Text Label 4150 4200 0    50   ~ 0
+I2C_USR_SDA
+Text Label 4150 900  0    50   ~ 0
+GPIO_00
+Text Label 4150 1100 0    50   ~ 0
+GPIO_02
+Text Label 4150 1300 0    50   ~ 0
+GPIO_04
+Text Label 4150 1500 0    50   ~ 0
+GPIO_06
+Text Label 4150 2700 0    50   ~ 0
+ADC_00
+Text Label 4150 2800 0    50   ~ 0
+ADC_01
+Text Label 4150 3200 0    50   ~ 0
+LINE_OUT_LEFT
+Text Label 4150 3100 0    50   ~ 0
+LINE_OUT_RIGHT
+Text Label 4150 1700 0    50   ~ 0
+GPIO_08
+Text Label 4150 1900 0    50   ~ 0
+GPIO_10
+Text Label 4150 2100 0    50   ~ 0
+GPIO_12
+Text Label 4150 2300 0    50   ~ 0
+GPIO_14
+Text Label 4150 4000 0    50   ~ 0
+SPI_USR_CS
+Text Label 4150 3800 0    50   ~ 0
+SPI_USR_MISO
+Text Label 4150 3700 0    50   ~ 0
+SPI_USR_MOSI
+Text Label 4150 3900 0    50   ~ 0
+SPI_USR_SCK
+Text Label 4150 4300 0    50   ~ 0
+SERIAL_DEBUG_TX
+Text Label 4150 4400 0    50   ~ 0
+SERIAL_DEBUG_RX
+NoConn ~ 4150 900 
+NoConn ~ 4150 1000
+NoConn ~ 4150 1100
+NoConn ~ 4150 1200
+NoConn ~ 4150 1300
+NoConn ~ 4150 1400
+NoConn ~ 4150 1500
+NoConn ~ 4150 1600
+NoConn ~ 4150 1700
+NoConn ~ 4150 1800
+NoConn ~ 4150 1900
+NoConn ~ 4150 2000
+NoConn ~ 4150 2100
+NoConn ~ 4150 2200
+NoConn ~ 4150 2300
+NoConn ~ 4150 2400
+NoConn ~ 4150 2500
+NoConn ~ 4150 2600
+NoConn ~ 4150 2700
+NoConn ~ 4150 2800
+NoConn ~ 4150 2900
+NoConn ~ 4150 3000
+NoConn ~ 4150 3100
+NoConn ~ 4150 3200
+NoConn ~ 4150 3300
+NoConn ~ 4150 3400
+NoConn ~ 4150 3500
+NoConn ~ 4150 3600
+NoConn ~ 4150 3700
+NoConn ~ 4150 3800
+NoConn ~ 4150 3900
+NoConn ~ 4150 4000
+NoConn ~ 4150 4100
+NoConn ~ 4150 4200
+NoConn ~ 4150 4300
+NoConn ~ 4150 4400
+$Comp
+L power:+3V3 #PWR0101
+U 1 1 61C71A08
+P 1000 1000
+F 0 "#PWR0101" H 1000 850 50  0001 C CNN
+F 1 "+3V3" H 1000 1150 50  0000 C CNN
+F 2 "" H 1000 1000 50  0001 C CNN
+F 3 "" H 1000 1000 50  0001 C CNN
+	1    1000 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0102
+U 1 1 61C724ED
+P 1000 1500
+F 0 "#PWR0102" H 1000 1350 50  0001 C CNN
+F 1 "+5V" H 1000 1650 50  0000 C CNN
+F 2 "" H 1000 1500 50  0001 C CNN
+F 3 "" H 1000 1500 50  0001 C CNN
+	1    1000 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 61C73172
+P 1000 1000
+F 0 "#FLG0101" H 1000 1075 50  0001 C CNN
+F 1 "PWR_FLAG" H 1000 1173 50  0000 C CNN
+F 2 "" H 1000 1000 50  0001 C CNN
+F 3 "~" H 1000 1000 50  0001 C CNN
+	1    1000 1000
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 61C73B75
+P 1000 1500
+F 0 "#FLG0102" H 1000 1575 50  0001 C CNN
+F 1 "PWR_FLAG" H 1000 1673 50  0000 C CNN
+F 2 "" H 1000 1500 50  0001 C CNN
+F 3 "~" H 1000 1500 50  0001 C CNN
+	1    1000 1500
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 61C819EE
+P 1000 2050
+F 0 "#PWR0103" H 1000 1800 50  0001 C CNN
+F 1 "GND" H 1000 1900 50  0000 C CNN
+F 2 "" H 1000 2050 50  0001 C CNN
+F 3 "" H 1000 2050 50  0001 C CNN
+	1    1000 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0103
+U 1 1 61C820B4
+P 1000 2050
+F 0 "#FLG0103" H 1000 2125 50  0001 C CNN
+F 1 "PWR_FLAG" H 1000 2223 50  0000 C CNN
+F 2 "" H 1000 2050 50  0001 C CNN
+F 3 "~" H 1000 2050 50  0001 C CNN
+	1    1000 2050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 1700 10650
+NoConn ~ 1700 10750
+NoConn ~ 3300 10550
+NoConn ~ 3300 10650
+Wire Wire Line
+	3300 10450 3400 10450
+Text Label 3400 10450 0    50   ~ 0
+5V_INPUT+
+Text Label 4000 9950 0    50   ~ 0
+5V_INPUT+
+$Comp
+L power:PWR_FLAG #FLG0104
+U 1 1 61E58B3E
+P 4000 9950
+F 0 "#FLG0104" H 4000 10025 50  0001 C CNN
+F 1 "PWR_FLAG" H 4000 10123 50  0000 C CNN
+F 2 "" H 4000 9950 50  0001 C CNN
+F 3 "~" H 4000 9950 50  0001 C CNN
+	1    4000 9950
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:Battery_Cell BT1
+U 1 1 619F4415
+P 8700 8250
+F 0 "BT1" H 8818 8346 50  0000 L CNN
+F 1 "Battery_Cell" H 8818 8255 50  0000 L CNN
+F 2 "Battery:BatteryHolder_MPD_BH-18650-PC2" V 8700 8310 50  0001 C CNN
+F 3 "~" V 8700 8310 50  0001 C CNN
+	1    8700 8250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8700 8350 8700 8900
+Wire Wire Line
+	8700 8900 8350 8900
+$Comp
+L power:GND #PWR01
+U 1 1 619F90C7
+P 6650 9000
+F 0 "#PWR01" H 6650 8750 50  0001 C CNN
+F 1 "GND" H 6650 8850 50  0000 C CNN
+F 2 "" H 6650 9000 50  0001 C CNN
+F 3 "" H 6650 9000 50  0001 C CNN
+	1    6650 9000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 9000 6650 8900
+Connection ~ 6650 8900
+Wire Wire Line
+	6650 8900 6000 8900
+Wire Wire Line
+	7250 7950 8350 7950
+Wire Wire Line
+	8700 7950 8700 8050
+Wire Wire Line
+	7250 7750 7250 7250
+Wire Wire Line
+	7250 7250 6650 7250
+Wire Wire Line
+	5900 7250 5900 8050
+Wire Wire Line
+	5900 8050 6050 8050
+Text Label 6650 7050 0    50   ~ 0
+5V_INPUT+
+Wire Wire Line
+	6650 7050 6650 7250
+Connection ~ 6650 7250
+Wire Wire Line
+	6650 7250 5900 7250
+Wire Wire Line
+	6050 7950 6000 7950
+Wire Wire Line
+	6000 7950 6000 8900
+Text Notes 5600 8550 2    39   ~ 0
+1000mA
+$Comp
+L Device:R_Small R3
+U 1 1 61A10352
+P 5650 8550
+F 0 "R3" H 5591 8504 50  0000 R CNN
+F 1 "1.2K" H 5591 8595 50  0000 R CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 5650 8550 50  0001 C CNN
+F 3 "~" H 5650 8550 50  0001 C CNN
+F 4 "0805W8F1001T5E" H 5650 8550 50  0001 C CNN "MFR.Part #"
+F 5 "" H 5650 8550 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 5650 8550 50  0001 C CNN "Extended Part"
+F 7 "C17513" H 5650 8550 50  0001 C CNN "JLCPCB Part #"
+	1    5650 8550
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6050 8250 5650 8250
+Wire Wire Line
+	5650 8250 5650 8450
+Wire Wire Line
+	5650 8650 5650 8900
+Wire Wire Line
+	5650 8900 6000 8900
+Wire Wire Line
+	7250 8550 7350 8550
+Wire Wire Line
+	7350 8550 7350 8900
+Connection ~ 7350 8900
+Wire Wire Line
+	7350 8900 6650 8900
+$Comp
+L Device:R_Small R1
+U 1 1 61A29D42
+P 7600 7750
+F 0 "R1" H 7541 7704 50  0000 R CNN
+F 1 "1K" H 7541 7795 50  0000 R CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 7600 7750 50  0001 C CNN
+F 3 "~" H 7600 7750 50  0001 C CNN
+F 4 "0805W8F1001T5E" H 7600 7750 50  0001 C CNN "MFR.Part #"
+F 5 "" H 7600 7750 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 7600 7750 50  0001 C CNN "Extended Part"
+F 7 "C17513" H 7600 7750 50  0001 C CNN "JLCPCB Part #"
+	1    7600 7750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7600 7600 7600 7650
+$Comp
+L Device:LED D1
+U 1 1 61A29D7D
+P 7600 7450
+F 0 "D1" V 7639 7332 50  0000 R CNN
+F 1 "LED" V 7548 7332 50  0000 R CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 7600 7450 50  0001 C CNN
+F 3 "~" H 7600 7450 50  0001 C CNN
+F 4 "C34499" V 7600 7450 50  0001 C CNN "MFR.Part #"
+F 5 "" H 7600 7450 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 7600 7450 50  0001 C CNN "Extended Part"
+F 7 "C34499" H 7600 7450 50  0001 C CNN "JLCPCB Part #"
+	1    7600 7450
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	7600 7300 7600 7250
+Wire Wire Line
+	7600 7250 7250 7250
+Connection ~ 7250 7250
+Wire Wire Line
+	7600 7850 7600 8050
+Wire Wire Line
+	7600 8050 7250 8050
+$Comp
+L Device:R_Small R2
+U 1 1 61A41496
+P 8000 7750
+F 0 "R2" H 7941 7704 50  0000 R CNN
+F 1 "1K" H 7941 7795 50  0000 R CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 8000 7750 50  0001 C CNN
+F 3 "~" H 8000 7750 50  0001 C CNN
+F 4 "0805W8F1001T5E" H 8000 7750 50  0001 C CNN "MFR.Part #"
+F 5 "" H 8000 7750 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 8000 7750 50  0001 C CNN "Extended Part"
+F 7 "C17513" H 8000 7750 50  0001 C CNN "JLCPCB Part #"
+	1    8000 7750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8000 7600 8000 7650
+$Comp
+L Device:LED D2
+U 1 1 61A414D1
+P 8000 7450
+F 0 "D2" V 8039 7332 50  0000 R CNN
+F 1 "LED" V 7948 7332 50  0000 R CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 8000 7450 50  0001 C CNN
+F 3 "~" H 8000 7450 50  0001 C CNN
+F 4 "C34499" V 8000 7450 50  0001 C CNN "MFR.Part #"
+F 5 "" H 8000 7450 50  0001 C CNN "LCSC Part #"
+F 6 "-" H 8000 7450 50  0001 C CNN "Extended Part"
+F 7 "C34499" H 8000 7450 50  0001 C CNN "JLCPCB Part #"
+	1    8000 7450
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	7250 8150 8000 8150
+Wire Wire Line
+	8000 8150 8000 7850
+Wire Wire Line
+	8000 7300 8000 7250
+Wire Wire Line
+	8000 7250 7600 7250
+Connection ~ 7600 7250
+Connection ~ 6000 8900
+$Comp
+L TP4056:TP4056 U1
+U 1 1 619EED21
+P 6650 8150
+F 0 "U1" H 6650 8817 50  0000 C CNN
+F 1 "TP4056" H 6650 8726 50  0000 C CNN
+F 2 "KLST_GRASS:SOP127P600X175-9N" H 6650 8150 50  0001 L BNN
+F 3 "" H 6650 8150 50  0001 L BNN
+F 4 "NanJing Top Power ASIC Corp." H 6650 8150 50  0001 L BNN "MANUFACTURER"
+F 5 "1.75mm" H 6650 8150 50  0001 L BNN "MAXIMUM_PACKAGE_HEIGHT"
+F 6 "IPC 7351B" H 6650 8150 50  0001 L BNN "STANDARD"
+	1    6650 8150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7250 8350 7500 8350
+Wire Wire Line
+	7500 8350 7500 8900
+Connection ~ 7500 8900
+Wire Wire Line
+	7500 8900 7350 8900
+$Comp
+L Device:CP_Small C?
+U 1 1 61A9480A
+P 5050 8000
+F 0 "C?" H 5138 8046 50  0000 L CNN
+F 1 "10uF" H 5138 7955 50  0000 L CNN
+F 2 "" H 5050 8000 50  0001 C CNN
+F 3 "~" H 5050 8000 50  0001 C CNN
+	1    5050 8000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 7900 5050 7250
+Wire Wire Line
+	5050 7250 5900 7250
+Connection ~ 5900 7250
+Wire Wire Line
+	5050 8100 5050 8900
+Wire Wire Line
+	5050 8900 5650 8900
+Connection ~ 5650 8900
+$Comp
+L Device:CP_Small C?
+U 1 1 61A9E1A8
+P 8350 8650
+F 0 "C?" H 8438 8696 50  0000 L CNN
+F 1 "10uF" H 8438 8605 50  0000 L CNN
+F 2 "" H 8350 8650 50  0001 C CNN
+F 3 "~" H 8350 8650 50  0001 C CNN
+	1    8350 8650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8350 8550 8350 7950
+Connection ~ 8350 7950
+Wire Wire Line
+	8350 7950 8700 7950
+Wire Wire Line
+	8350 8750 8350 8900
+Connection ~ 8350 8900
+Wire Wire Line
+	8350 8900 7500 8900
+Text Notes 9100 7400 0    39   ~ 0
+BOOST UP:\n\n- XC9142A50 https://datasheet.lcsc.com/lcsc/2009231004_Torex-Semicon-XC9142A50CER-G_C793248.pdf\n- TPS61027DRCR \n- TPS61256YFFR
+$EndSCHEMATC
