@@ -468,7 +468,7 @@ Wire Notes Line
 Wire Notes Line
 	8550 3000 8550 650 
 Text Label 16150 5700 0    50   ~ 0
-LED_00
+LED_15
 $Comp
 L Device:LED D1
 U 1 1 63E99E67
@@ -656,9 +656,9 @@ DAC_01
 Text Label 4050 2350 0    50   ~ 0
 ENCODER_01_B
 Text Label 4050 2150 0    50   ~ 0
-LED_02
+LED_13
 Text Label 4050 1650 0    50   ~ 0
-LED_00
+LED_15
 Text Label 4050 2250 0    50   ~ 0
 ENCODER_01_A
 Text Label 2250 4350 2    50   ~ 0
@@ -668,19 +668,19 @@ ADC_00
 Text Label 4050 5350 0    50   ~ 0
 ADC_01
 Text Label 2250 6150 2    50   ~ 0
-LED_06
-Text Label 4050 5550 0    50   ~ 0
-LED_10
-Text Label 4050 5450 0    50   ~ 0
 LED_09
+Text Label 4050 5550 0    50   ~ 0
+LED_05
+Text Label 4050 5450 0    50   ~ 0
+LED_06
 Text Label 2250 6350 2    50   ~ 0
-LED_08
+LED_07
 Text Label 4050 2450 0    50   ~ 0
 ENCODER_01_BUTTON
 Text Label 4050 1750 0    50   ~ 0
 ENCODER_00_BUTTON
 Text Label 4050 2050 0    50   ~ 0
-LED_01
+LED_14
 Text Notes 800  650  0    50   ~ 0
 MCU
 Wire Notes Line
@@ -1231,9 +1231,9 @@ BUTTON_BOOT_FLASH
 Text Notes 8650 7750 0    50   ~ 0
 BUTTON_RESET
 Text Label 4050 5650 0    50   ~ 0
-LED_11
+LED_04
 Text Label 4050 5750 0    50   ~ 0
-LED_12
+LED_03
 Wire Notes Line
 	8550 650  13650 650 
 Wire Notes Line
@@ -1277,9 +1277,9 @@ MCLK
 Text Label 13350 6200 2    50   ~ 0
 AUDIOCODEC_I2S_WS
 Text Label 2250 6250 2    50   ~ 0
-LED_07
+LED_08
 Text Label 2250 6050 2    50   ~ 0
-LED_05
+LED_10
 $Sheet
 S 6700 1150 650  550 
 U 692BDA67
@@ -1323,7 +1323,7 @@ Wire Wire Line
 Wire Wire Line
 	12250 8050 12250 8200
 Text Label 17150 5700 0    50   ~ 0
-LED_02
+LED_13
 $Comp
 L Device:R_Small R6
 U 1 1 607A9493
@@ -1344,7 +1344,7 @@ Wire Wire Line
 Wire Wire Line
 	16650 5700 16650 6100
 Text Label 16650 5700 0    50   ~ 0
-LED_01
+LED_14
 $Comp
 L Device:LED D3
 U 1 1 607B3E8D
@@ -1921,7 +1921,7 @@ GPIO_09
 Text Label 2250 4050 2    50   ~ 0
 GPIO_10
 Text Label 4050 3150 0    50   ~ 0
-LED_03
+LED_12
 Text Label 4050 4850 0    50   ~ 0
 GPIO_12
 Text Label 4050 6350 0    50   ~ 0
@@ -2384,7 +2384,7 @@ SPI_DISPLAY_RESET
 Text Label 4050 5950 0    50   ~ 0
 SPI_DISPLAY_MISO
 Text Label 17650 5700 0    50   ~ 0
-LED_03
+LED_12
 $Comp
 L Device:LED D4
 U 1 1 619011CD
@@ -2422,7 +2422,7 @@ Wire Wire Line
 Wire Wire Line
 	17650 6400 17650 6650
 Text Label 18150 5700 0    50   ~ 0
-LED_04
+LED_11
 $Comp
 L Device:LED D5
 U 1 1 61914ACF
@@ -2460,7 +2460,7 @@ Wire Wire Line
 Wire Wire Line
 	18150 6400 18150 6650
 Text Label 18650 5700 0    50   ~ 0
-LED_05
+LED_10
 $Comp
 L Device:LED D6
 U 1 1 619288A8
@@ -2498,7 +2498,7 @@ Wire Wire Line
 Wire Wire Line
 	18650 6400 18650 6650
 Text Label 19150 5700 0    50   ~ 0
-LED_06
+LED_09
 $Comp
 L Device:LED D7
 U 1 1 6193CB73
@@ -2536,7 +2536,7 @@ Wire Wire Line
 Wire Wire Line
 	19150 6400 19150 6650
 Text Label 19650 5700 0    50   ~ 0
-LED_07
+LED_08
 $Comp
 L Device:LED D8
 U 1 1 6195134B
@@ -2603,7 +2603,7 @@ Connection ~ 19150 7050
 Wire Wire Line
 	19150 7050 18650 7050
 Text Label 16150 7450 0    50   ~ 0
-LED_08
+LED_07
 $Comp
 L Device:LED D10
 U 1 1 61A2DF0E
@@ -2624,7 +2624,7 @@ Wire Wire Line
 Wire Wire Line
 	16150 7450 16150 7850
 Text Label 17150 7450 0    50   ~ 0
-LED_10
+LED_05
 $Comp
 L Device:R_Small R17
 U 1 1 61A2DF32
@@ -2645,7 +2645,7 @@ Wire Wire Line
 Wire Wire Line
 	16650 7450 16650 7850
 Text Label 16650 7450 0    50   ~ 0
-LED_09
+LED_06
 $Comp
 L Device:LED D12
 U 1 1 61A2DF4E
@@ -2722,7 +2722,7 @@ F 7 "DNF" H 16650 8000 50  0001 C CNN "JLCPCB Part #"
 	0    1    -1   0   
 $EndComp
 Text Label 17650 7450 0    50   ~ 0
-LED_11
+LED_04
 $Comp
 L Device:LED D13
 U 1 1 61A2DFCB
@@ -2760,7 +2760,7 @@ Wire Wire Line
 Wire Wire Line
 	17650 8150 17650 8400
 Text Label 18150 7450 0    50   ~ 0
-LED_12
+LED_03
 $Comp
 L Device:LED D14
 U 1 1 61A2E009
@@ -2798,7 +2798,7 @@ Wire Wire Line
 Wire Wire Line
 	18150 8150 18150 8400
 Text Label 18650 7450 0    50   ~ 0
-LED_13
+LED_02
 $Comp
 L Device:LED D15
 U 1 1 61A2E047
@@ -2836,7 +2836,7 @@ Wire Wire Line
 Wire Wire Line
 	18650 8150 18650 8400
 Text Label 19150 7450 0    50   ~ 0
-LED_14
+LED_01
 $Comp
 L Device:LED D16
 U 1 1 61A2E085
@@ -2874,7 +2874,7 @@ Wire Wire Line
 Wire Wire Line
 	19150 8150 19150 8400
 Text Label 19650 7450 0    50   ~ 0
-LED_15
+LED_00
 $Comp
 L Device:LED D17
 U 1 1 61A2E0C3
@@ -3031,11 +3031,11 @@ F 7 "C114409" H 3150 3850 50  0001 C CNN "JLCPCB Part #"
 	1    0    0    -1  
 $EndComp
 Text Label 4050 3550 0    50   ~ 0
-LED_13
+LED_02
 Text Label 4050 3650 0    50   ~ 0
-LED_14
+LED_01
 Text Label 4050 3950 0    50   ~ 0
-LED_15
+LED_00
 Text Label 2250 5250 2    50   ~ 0
 GPIO_01
 Text Label 6550 5100 2    50   ~ 0
@@ -3546,7 +3546,7 @@ Wire Notes Line
 Wire Notes Line
 	8550 5250 12500 5250
 Text Label 4050 3250 0    50   ~ 0
-LED_04
+LED_11
 Text Label 4050 4150 0    50   ~ 0
 I2C_USR_SCL
 Text Label 4050 4250 0    50   ~ 0
