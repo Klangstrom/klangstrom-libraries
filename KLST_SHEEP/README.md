@@ -32,7 +32,25 @@ KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however co
 
 ### timers
 
-timers `TIM5` + `TIM6` + `TIM7` + `TIM12` can be used for internal interrupts.
+| TIMER | FUNCTION                         |
+|-------|----------------------------------|
+| TIM1  | ENCODER_00                       |
+| TIM2  | ENCODER_01                       |
+| TIM3  | LED_PWM                          |
+| TIM4  | LED_PWM                          |
+| TIM5  | (UNUSED)                         |
+| TIM6  | BEAT_CALLBACK                    |
+| TIM7  | TIMER_SERVO                      |
+| TIM8  | LED_PWM                          |
+| TIM9  | (nA)                             |
+| TIM10 | (nA)                             |
+| TIM11 | (nA)                             |
+| TIM12 | TIMER_TONE                       |
+| TIM13 | LED_PWM                          |
+| TIM14 | LED_PWM                          |
+| TIM15 | LED_PWM                          |
+| TIM16 | LED_PWM                          |
+| TIM17 | BUTTON_PRG_IT                    |
 
 #### encoders
 
@@ -59,13 +77,9 @@ timers `TIM3` + `TIM4` + `TIM8` + `TIM13` + `TIM14` + `TIM15` + `TIM16` are used
 | TIM15 | CH1     |
 | TIM16 | CH1     |
 
-#### programmer button
-
-timer `TIM17` is used for `BUTTON_PRG`.
-
 #### timer-based PWM alternative PINs
 
-there are no GPIO pins with assigned PWM capabilities. however, the following peripheral pins can be reconfigured to produce PWM signals ( at the expanse of other peripherals ):
+most GPIO pins do not have PWM capabilities. however, the following peripheral pins can be reconfigured to produce PWM signals ( at the expanse of other peripherals ):
 
 | FUNCTION       | PIN  | TIMER                |
 |----------------|------|----------------------|
@@ -78,6 +92,13 @@ there are no GPIO pins with assigned PWM capabilities. however, the following pe
 | SPI_USR_CS     | PE11 | TIM1_CH2             |
 | SPI_USR_MISO   | PE13 | TIM1_CH3             |
 | SPI_USR_MOSI   | PE14 | TIM1_CH4             |
+
+### I2C
+
+| FUNCTION   | PERIPHERAL |
+|------------|------------|
+| AUDIOCODEC | I2C1       |
+| I2C_USR    | I2C2       |
 
 ### SPI
 
