@@ -77,6 +77,28 @@ timers `TIM3` + `TIM4` + `TIM8` + `TIM13` + `TIM14` + `TIM15` + `TIM16` are used
 | TIM15 | CH1     |
 | TIM16 | CH1     |
 
+LEDs are mapped to the following timers:
+
+| LED    | PIN   | TIMER     |
+|--------|-------|-----------|
+| LED_00 | PB8   | TIM16:CH1 |
+| LED_01 | PB5   | TIM3:CH2  |
+| LED_02 | PB4   | TIM3:CH1  |
+| LED_03 | PC9   | TIM8:CH4  |
+| LED_04 | PC8   | TIM8:CH3  |
+| LED_05 | PC7*  | TIM8:CH2  |
+| LED_06 | PC6*  | TIM8:CH1  |
+| LED_07 | PD15  | TIM4:CH4  |
+| LED_08 | PD14  | TIM4:CH3  |
+| LED_09 | PD13  | TIM4:CH2  |
+| LED_10 | PD12  | TIM4:CH1  |
+| LED_11 | PB1   | TIM3:CH4  |
+| LED_12 | PB0   | TIM3:CH3  |
+| LED_13 | PA7   | TIM14:CH1 |
+| LED_14 | PA6*  | TIM13:CH1 |
+| LED_15 | PA2   | TIM15:CH1 |
+
+
 #### timer-based PWM alternative PINs
 
 most GPIO pins do not have PWM capabilities. however, the following peripheral pins can be reconfigured to produce PWM signals ( at the expanse of other peripherals ):
