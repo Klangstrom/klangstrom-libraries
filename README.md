@@ -1,17 +1,10 @@
 # Klangstrom Hardware 
 
-a list of the following modules is realized ( indicated by version number ) or planned:
+![KLST_SHEEP](./assets/KLST_SHEEP.jpg)    
+KLST_SHEEP (v0.1) :: handheld-style development board with 16 LEDs, 2 encoders, display ( based on STM32H743VI )
 
-- KLST_SHEEP (v0.1) :: handheld-style development board designed including a screen
-- KLST_CORE (v0.1) :: chunky development board designed to evaluate features like connectivity to peripherals and eurorack modules, based on STM32H743 MCU
-- KLST_TINY (v0.1) :: pocket-calculator-sized development board with 3 push-button encoders, 3 LEDs and 2 serial ports, based on STM32F446 MCU
-- KLST_LUA :: KLST_TINY with electret microphone, speaker + battery
-- KLST_WIGGLE :: KLST_TINY with battery + stepper motor
+![KLST_TINY](./assets/KLST_TINY.jpg)    
+KLST_TINY (v0.1) :: pocket-calculator-sized development board with 3 LEDs, 3 encoders ( based on STM32F446RE )
 
-## extensions
-
-- KLST_PWR :: extension with USB-rechargeable battery power
-- KLST_SPKR :: extension with speaker audio output 
-- KLST_INTERFACE :: collection of encoders, sliders, and knobs + USB-MIDI
-- KLST_MIDI :: UART to MIDI converter
-- KLST_MODULAR :: modular synthesizer adapter 
+![KLST_CORE](./assets/KLST_CORE.jpg)    
+KLST_CORE (v0.1) :: chunky development board designed to evaluate features like connectivity to peripherals and eurorack modules ( based on STM32H743II )
