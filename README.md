@@ -1,4 +1,4 @@
-# klangstrom / hardware 
+# Klangstrom Hardware 
 
 a list of the following modules is realized ( indicated by version number ) or planned:
 
