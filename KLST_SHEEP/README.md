@@ -79,41 +79,40 @@ timers `TIM3` + `TIM4` + `TIM8` + `TIM13` + `TIM14` + `TIM15` + `TIM16` are used
 
 LEDs are mapped to the following timers:
 
-| LED    | PIN   | TIMER     |
-|--------|-------|-----------|
-| LED_00 | PB8   | TIM16:CH1 |
-| LED_01 | PB5   | TIM3:CH2  |
-| LED_02 | PB4   | TIM3:CH1  |
-| LED_03 | PC9   | TIM8:CH4  |
-| LED_04 | PC8   | TIM8:CH3  |
-| LED_05 | PC7*  | TIM8:CH2  |
-| LED_06 | PC6*  | TIM8:CH1  |
-| LED_07 | PD15  | TIM4:CH4  |
-| LED_08 | PD14  | TIM4:CH3  |
-| LED_09 | PD13  | TIM4:CH2  |
-| LED_10 | PD12  | TIM4:CH1  |
-| LED_11 | PB1   | TIM3:CH4  |
-| LED_12 | PB0   | TIM3:CH3  |
-| LED_13 | PA7   | TIM14:CH1 |
-| LED_14 | PA6*  | TIM13:CH1 |
-| LED_15 | PA2   | TIM15:CH1 |
-
+| LED    | PIN   | TIMER:CHANNEL |
+|--------|-------|---------------|
+| LED_00 | PB8   | TIM16:CH1     |
+| LED_01 | PB5   | TIM3:CH2      |
+| LED_02 | PB4   | TIM3:CH1      |
+| LED_03 | PC9   | TIM8:CH4      |
+| LED_04 | PC8   | TIM8:CH3      |
+| LED_05 | PC7*  | TIM8:CH2      |
+| LED_06 | PC6*  | TIM8:CH1      |
+| LED_07 | PD15  | TIM4:CH4      |
+| LED_08 | PD14  | TIM4:CH3      |
+| LED_09 | PD13  | TIM4:CH2      |
+| LED_10 | PD12  | TIM4:CH1      |
+| LED_11 | PB1   | TIM3:CH4      |
+| LED_12 | PB0   | TIM3:CH3      |
+| LED_13 | PA7   | TIM14:CH1     |
+| LED_14 | PA6*  | TIM13:CH1     |
+| LED_15 | PA2   | TIM15:CH1     |
 
 #### timer-based PWM alternative PINs
 
 most GPIO pins do not have PWM capabilities. however, the following peripheral pins can be reconfigured to produce PWM signals ( at the expanse of other peripherals ):
 
-| FUNCTION       | PIN  | TIMER                |
+| FUNCTION       | PIN  | TIMER:CHANNEL        |
 |----------------|------|----------------------|
 | DAC_01         | PA5  | TIM2:CH1 / TIM8:CH1N |
-| USB_DEVICE-    | PA11 | TIM1_CH4             |
-| SPI_DISPLAY_CS | PA15 | TIM2_CH1             |
-| I2C_USR_SCL    | PB6  | TIM4_CH1             |
-| I2C_USR_SDA    | PB7  | TIM4_CH2             |
-| GPIO_10        | PE9  | TIM1_CH1             |
-| SPI_USR_CS     | PE11 | TIM1_CH2             |
-| SPI_USR_MISO   | PE13 | TIM1_CH3             |
-| SPI_USR_MOSI   | PE14 | TIM1_CH4             |
+| USB_DEVICE-    | PA11 | TIM1:CH4             |
+| SPI_DISPLAY_CS | PA15 | TIM2:CH1             |
+| I2C_USR_SCL    | PB6  | TIM4:CH1             |
+| I2C_USR_SDA    | PB7  | TIM4:CH2             |
+| GPIO_10        | PE9  | TIM1:CH1             |
+| SPI_USR_CS     | PE11 | TIM1:CH2             |
+| SPI_USR_MISO   | PE13 | TIM1:CH3             |
+| SPI_USR_MOSI   | PE14 | TIM1:CH4             |
 
 ### I2C
 
@@ -194,10 +193,10 @@ most GPIO pins do not have PWM capabilities. however, the following peripheral p
 | PA7  | LED_13                      |
 | PA6  | LED_14                      |
 | PA2  | LED_15                      |
-| PB12 | SD_CARD_CS                  |
-| PC2  | SD_CARD_MISO                |
-| PC3  | SD_CARD_MOSI                |
-| PB13 | SD_CARD_SCK                 |
+| PB12 | SDCARD_CS                   |
+| PC2  | SDCARD_MISO                 |
+| PC3  | SDCARD_MOSI                 |
+| PB13 | SDCARD_SCK                  |
 | PC1  | SDCARD_CARD_DETECT          |
 | PE7  | SERIAL_00_RX                |
 | PE8  | SERIAL_00_TX                |
