@@ -389,7 +389,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PF14     ------> I2C4_SCL
     PF15     ------> I2C4_SDA
     */
-    GPIO_InitStruct.Pin = I2C_01_SCL_Pin|I2C_01_SDA_Pin;
+    GPIO_InitStruct.Pin = _AUDIOCODEC_00_I2C_SCL_Pin|_AUDIOCODEC_00_I2C_SDA_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -445,9 +445,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
     PF14     ------> I2C4_SCL
     PF15     ------> I2C4_SDA
     */
-    HAL_GPIO_DeInit(I2C_01_SCL_GPIO_Port, I2C_01_SCL_Pin);
+    HAL_GPIO_DeInit(_AUDIOCODEC_00_I2C_SCL_GPIO_Port, _AUDIOCODEC_00_I2C_SCL_Pin);
 
-    HAL_GPIO_DeInit(I2C_01_SDA_GPIO_Port, I2C_01_SDA_Pin);
+    HAL_GPIO_DeInit(_AUDIOCODEC_00_I2C_SDA_GPIO_Port, _AUDIOCODEC_00_I2C_SDA_Pin);
 
   /* USER CODE BEGIN I2C4_MspDeInit 1 */
 
@@ -863,20 +863,20 @@ void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
     PC12     ------> SDMMC1_CK
     PD2     ------> SDMMC1_CMD
     */
-    GPIO_InitStruct.Pin = CARD_SDMMC_D0_Pin|CARD_SDMMC_D1_Pin|CARD_SDMMC_D2_Pin|CARD_SDMMC_D3_Pin
-                          |CARD_SDMMC_CK_Pin;
+    GPIO_InitStruct.Pin = _CARD_SDMMC_D0_Pin|_CARD_SDMMC_D1_Pin|_CARD_SDMMC_D2_Pin|_CARD_SDMMC_D3_Pin
+                          |_CARD_SDMMC_CK_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF12_SDMMC1;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = CARD_SDMMC_CMD_Pin;
+    GPIO_InitStruct.Pin = _CARD_SDMMC_CMD_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF12_SDMMC1;
-    HAL_GPIO_Init(CARD_SDMMC_CMD_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_CARD_SDMMC_CMD_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN SDMMC1_MspInit 1 */
 
@@ -909,10 +909,10 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* hsd)
     PC12     ------> SDMMC1_CK
     PD2     ------> SDMMC1_CMD
     */
-    HAL_GPIO_DeInit(GPIOC, CARD_SDMMC_D0_Pin|CARD_SDMMC_D1_Pin|CARD_SDMMC_D2_Pin|CARD_SDMMC_D3_Pin
-                          |CARD_SDMMC_CK_Pin);
+    HAL_GPIO_DeInit(GPIOC, _CARD_SDMMC_D0_Pin|_CARD_SDMMC_D1_Pin|_CARD_SDMMC_D2_Pin|_CARD_SDMMC_D3_Pin
+                          |_CARD_SDMMC_CK_Pin);
 
-    HAL_GPIO_DeInit(CARD_SDMMC_CMD_GPIO_Port, CARD_SDMMC_CMD_Pin);
+    HAL_GPIO_DeInit(_CARD_SDMMC_CMD_GPIO_Port, _CARD_SDMMC_CMD_Pin);
 
   /* USER CODE BEGIN SDMMC1_MspDeInit 1 */
 
@@ -1099,19 +1099,19 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
     PE11     ------> TIM1_CH2
     PA10     ------> TIM1_CH3
     */
-    GPIO_InitStruct.Pin = ENCODER_00_A_Pin|ENCODER_00_B_Pin;
+    GPIO_InitStruct.Pin = _ENCODER_00_A_Pin|_ENCODER_00_B_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF1_TIM1;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = ENCODER_00_BUTTON_Pin;
+    GPIO_InitStruct.Pin = _ENCODER_00_BUTTON_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF1_TIM1;
-    HAL_GPIO_Init(ENCODER_00_BUTTON_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_ENCODER_00_BUTTON_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM1_MspInit 1 */
 
@@ -1132,14 +1132,14 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
     PB11     ------> TIM2_CH4
     PB3(JTDO/TRACESWO)     ------> TIM2_CH2
     */
-    GPIO_InitStruct.Pin = ENCODER_01_A_Pin;
+    GPIO_InitStruct.Pin = _ENCODER_01_A_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
-    HAL_GPIO_Init(ENCODER_01_A_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_ENCODER_01_A_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = ENCODER_01_BUTTON_Pin|ENCODER_01_B_Pin;
+    GPIO_InitStruct.Pin = _ENCODER_01_BUTTON_Pin|_ENCODER_01_B_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1312,9 +1312,9 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
     PE11     ------> TIM1_CH2
     PA10     ------> TIM1_CH3
     */
-    HAL_GPIO_DeInit(GPIOE, ENCODER_00_A_Pin|ENCODER_00_B_Pin);
+    HAL_GPIO_DeInit(GPIOE, _ENCODER_00_A_Pin|_ENCODER_00_B_Pin);
 
-    HAL_GPIO_DeInit(ENCODER_00_BUTTON_GPIO_Port, ENCODER_00_BUTTON_Pin);
+    HAL_GPIO_DeInit(_ENCODER_00_BUTTON_GPIO_Port, _ENCODER_00_BUTTON_Pin);
 
   /* USER CODE BEGIN TIM1_MspDeInit 1 */
 
@@ -1333,9 +1333,9 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
     PB11     ------> TIM2_CH4
     PB3(JTDO/TRACESWO)     ------> TIM2_CH2
     */
-    HAL_GPIO_DeInit(ENCODER_01_A_GPIO_Port, ENCODER_01_A_Pin);
+    HAL_GPIO_DeInit(_ENCODER_01_A_GPIO_Port, _ENCODER_01_A_Pin);
 
-    HAL_GPIO_DeInit(GPIOB, ENCODER_01_BUTTON_Pin|ENCODER_01_B_Pin);
+    HAL_GPIO_DeInit(GPIOB, _ENCODER_01_BUTTON_Pin|_ENCODER_01_B_Pin);
 
   /* USER CODE BEGIN TIM2_MspDeInit 1 */
 
@@ -1506,7 +1506,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PD5     ------> USART2_TX
     PD6     ------> USART2_RX
     */
-    GPIO_InitStruct.Pin = SERIAL_DEBUG_TX_Pin|SERIAL_DEBUG_RX_Pin;
+    GPIO_InitStruct.Pin = _SERIAL_DEBUG_TX_Pin|_SERIAL_DEBUG_RX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1610,7 +1610,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PD5     ------> USART2_TX
     PD6     ------> USART2_RX
     */
-    HAL_GPIO_DeInit(GPIOD, SERIAL_DEBUG_TX_Pin|SERIAL_DEBUG_RX_Pin);
+    HAL_GPIO_DeInit(GPIOD, _SERIAL_DEBUG_TX_Pin|_SERIAL_DEBUG_RX_Pin);
 
   /* USER CODE BEGIN USART2_MspDeInit 1 */
 
@@ -1670,10 +1670,10 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef* hhcd)
     /**USB_OTG_HS GPIO Configuration
     PA9     ------> USB_OTG_HS_VBUS
     */
-    GPIO_InitStruct.Pin = USB_DEVICE_HOST_VBUS_Pin;
+    GPIO_InitStruct.Pin = _USB_DEVICE_HOST_VBUS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(USB_DEVICE_HOST_VBUS_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_USB_DEVICE_HOST_VBUS_GPIO_Port, &GPIO_InitStruct);
 
     /* Peripheral clock enable */
     __HAL_RCC_USB_OTG_HS_CLK_ENABLE();
@@ -1703,7 +1703,7 @@ void HAL_HCD_MspDeInit(HCD_HandleTypeDef* hhcd)
     /**USB_OTG_HS GPIO Configuration
     PA9     ------> USB_OTG_HS_VBUS
     */
-    HAL_GPIO_DeInit(USB_DEVICE_HOST_VBUS_GPIO_Port, USB_DEVICE_HOST_VBUS_Pin);
+    HAL_GPIO_DeInit(_USB_DEVICE_HOST_VBUS_GPIO_Port, _USB_DEVICE_HOST_VBUS_Pin);
 
   /* USER CODE BEGIN USB_OTG_HS_MspDeInit 1 */
 
@@ -1732,12 +1732,12 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_IN_Pin;
+    GPIO_InitStruct.Pin = _AUDIOCODEC_00_SD_IN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
-    HAL_GPIO_Init(AUDIOCODEC_00_SD_IN_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_AUDIOCODEC_00_SD_IN_GPIO_Port, &GPIO_InitStruct);
 
     }
     if(hsai->Instance==SAI1_Block_B)
@@ -1755,14 +1755,14 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PF8     ------> SAI1_SCK_B
     PF9     ------> SAI1_FS_B
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_OUT_Pin;
+    GPIO_InitStruct.Pin = _AUDIOCODEC_00_SD_OUT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
-    HAL_GPIO_Init(AUDIOCODEC_00_SD_OUT_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_AUDIOCODEC_00_SD_OUT_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_MCLK_Pin|AUDIOCODEC_00_SCK_Pin|AUDIOCODEC_00_FS_Pin;
+    GPIO_InitStruct.Pin = _AUDIOCODEC_00_MCLK_Pin|_AUDIOCODEC_00_SCK_Pin|_AUDIOCODEC_00_FS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1838,7 +1838,7 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_IN_GPIO_Port, AUDIOCODEC_00_SD_IN_Pin);
+    HAL_GPIO_DeInit(_AUDIOCODEC_00_SD_IN_GPIO_Port, _AUDIOCODEC_00_SD_IN_Pin);
 
     }
     if(hsai->Instance==SAI1_Block_B)
@@ -1856,9 +1856,9 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     PF8     ------> SAI1_SCK_B
     PF9     ------> SAI1_FS_B
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_OUT_GPIO_Port, AUDIOCODEC_00_SD_OUT_Pin);
+    HAL_GPIO_DeInit(_AUDIOCODEC_00_SD_OUT_GPIO_Port, _AUDIOCODEC_00_SD_OUT_Pin);
 
-    HAL_GPIO_DeInit(GPIOF, AUDIOCODEC_00_MCLK_Pin|AUDIOCODEC_00_SCK_Pin|AUDIOCODEC_00_FS_Pin);
+    HAL_GPIO_DeInit(GPIOF, _AUDIOCODEC_00_MCLK_Pin|_AUDIOCODEC_00_SCK_Pin|_AUDIOCODEC_00_FS_Pin);
 
     }
 /* SAI4 */
