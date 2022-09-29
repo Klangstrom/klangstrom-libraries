@@ -1732,12 +1732,12 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_A_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_IN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
-    HAL_GPIO_Init(AUDIOCODEC_00_SD_A_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(AUDIOCODEC_00_SD_IN_GPIO_Port, &GPIO_InitStruct);
 
     }
     if(hsai->Instance==SAI1_Block_B)
@@ -1755,14 +1755,14 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PF8     ------> SAI1_SCK_B
     PF9     ------> SAI1_FS_B
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_B_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_00_SD_OUT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
-    HAL_GPIO_Init(AUDIOCODEC_00_SD_B_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(AUDIOCODEC_00_SD_OUT_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = AUDIOCODEC_00_MCLK_B_Pin|AUDIOCODEC_00_SCK_B_Pin|AUDIOCODEC_00_FS_B_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_00_MCLK_Pin|AUDIOCODEC_00_SCK_Pin|AUDIOCODEC_00_FS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1786,14 +1786,14 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PD12     ------> SAI4_FS_A
     PD13     ------> SAI4_SCK_A
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_01_MCLK_A_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_01_MCLK_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF8_SAI4;
-    HAL_GPIO_Init(AUDIOCODEC_01_MCLK_A_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(AUDIOCODEC_01_MCLK_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = AUDIOCODEC_01_SD_A_Pin|AUDIOCODEC_01_FS_A_Pin|AUDIOCODEC_01_SCK_A_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_01_SD_OUT_Pin|AUDIOCODEC_01_FS_Pin|AUDIOCODEC_01_SCK_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1813,12 +1813,12 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     /**SAI4_B_Block_B GPIO Configuration
     PF11     ------> SAI4_SD_B
     */
-    GPIO_InitStruct.Pin = AUDIOCODEC_01_SD_B_Pin;
+    GPIO_InitStruct.Pin = AUDIOCODEC_01_SD_IN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF10_SAI4;
-    HAL_GPIO_Init(AUDIOCODEC_01_SD_B_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(AUDIOCODEC_01_SD_IN_GPIO_Port, &GPIO_InitStruct);
 
     }
 }
@@ -1838,7 +1838,7 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_A_GPIO_Port, AUDIOCODEC_00_SD_A_Pin);
+    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_IN_GPIO_Port, AUDIOCODEC_00_SD_IN_Pin);
 
     }
     if(hsai->Instance==SAI1_Block_B)
@@ -1856,9 +1856,9 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     PF8     ------> SAI1_SCK_B
     PF9     ------> SAI1_FS_B
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_B_GPIO_Port, AUDIOCODEC_00_SD_B_Pin);
+    HAL_GPIO_DeInit(AUDIOCODEC_00_SD_OUT_GPIO_Port, AUDIOCODEC_00_SD_OUT_Pin);
 
-    HAL_GPIO_DeInit(GPIOF, AUDIOCODEC_00_MCLK_B_Pin|AUDIOCODEC_00_SCK_B_Pin|AUDIOCODEC_00_FS_B_Pin);
+    HAL_GPIO_DeInit(GPIOF, AUDIOCODEC_00_MCLK_Pin|AUDIOCODEC_00_SCK_Pin|AUDIOCODEC_00_FS_Pin);
 
     }
 /* SAI4 */
@@ -1877,9 +1877,9 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     PD12     ------> SAI4_FS_A
     PD13     ------> SAI4_SCK_A
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_01_MCLK_A_GPIO_Port, AUDIOCODEC_01_MCLK_A_Pin);
+    HAL_GPIO_DeInit(AUDIOCODEC_01_MCLK_GPIO_Port, AUDIOCODEC_01_MCLK_Pin);
 
-    HAL_GPIO_DeInit(GPIOD, AUDIOCODEC_01_SD_A_Pin|AUDIOCODEC_01_FS_A_Pin|AUDIOCODEC_01_SCK_A_Pin);
+    HAL_GPIO_DeInit(GPIOD, AUDIOCODEC_01_SD_OUT_Pin|AUDIOCODEC_01_FS_Pin|AUDIOCODEC_01_SCK_Pin);
 
     }
     if(hsai->Instance==SAI4_Block_B)
@@ -1894,7 +1894,7 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     /**SAI4_B_Block_B GPIO Configuration
     PF11     ------> SAI4_SD_B
     */
-    HAL_GPIO_DeInit(AUDIOCODEC_01_SD_B_GPIO_Port, AUDIOCODEC_01_SD_B_Pin);
+    HAL_GPIO_DeInit(AUDIOCODEC_01_SD_IN_GPIO_Port, AUDIOCODEC_01_SD_IN_Pin);
 
     }
 }
