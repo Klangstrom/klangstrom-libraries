@@ -1,15 +1,23 @@
-# KLANGSTROM / KLST_SHEEP
+# KLANGSTROM / KLST_PANDA
 
-KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however comes with a stronger MCU and a screen:
+- STM32H723ZG MCU with 550MHz, 564KB RAM, 1024KB Flash
+- WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
 
-- featuring *KLANGSTROM* library
-- programmable in Arduino IDE via USB ( *DFUse Mode* )
-- debugging + communication via *virtual USB Serial Port*
+
+---
+
+==@TODO(add modular circuitry at least as IDC extension plug)==
+
+    KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however comes with a stronger MCU and a screen:
+    
+    - featuring *KLANGSTROM* library
+    - programmable in Arduino IDE via USB ( *DFUse Mode* )
+    - debugging + communication via *virtual USB Serial Port*
 
 ## feature list
 
 - [x] STM32H723ZG MCU with 550MHz, 564KB RAM, 1024KB Flash
-- [ ] WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
+- [x] WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
 - [ ] 1× LINE OUT ( stereo )
 - [ ] 1× LINE IN ( stereo )
 - [ ] 1× HEADPHONE + MIC ( mono )
