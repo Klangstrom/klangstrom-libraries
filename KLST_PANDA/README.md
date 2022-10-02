@@ -2,7 +2,7 @@
 
 - STM32H723ZG MCU with 550MHz, 564KB RAM, 1024KB Flash
 - WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
-
+- external memory
 
 ---
 

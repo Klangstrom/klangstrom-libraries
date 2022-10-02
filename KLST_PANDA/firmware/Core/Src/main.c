@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -183,6 +184,7 @@ int main(void)
   MX_UART8_Init();
   MX_SAI4_Init();
   MX_UART9_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -998,10 +1000,6 @@ static void MX_SDMMC1_SD_Init(void)
   hsd1.Init.BusWide = SDMMC_BUS_WIDE_4B;
   hsd1.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
   hsd1.Init.ClockDiv = 0;
-  if (HAL_SD_Init(&hsd1) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN SDMMC1_Init 2 */
 
   /* USER CODE END SDMMC1_Init 2 */
@@ -1702,11 +1700,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, GPIO_01_Pin|GPIO_00_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, GPIO_13_Pin|GPIO_12_Pin|GPIO_11_Pin|GPIO_09_Pin
+  HAL_GPIO_WritePin(GPIOG, GPIO_12_Pin|GPIO_11_Pin|GPIO_10_Pin|GPIO_09_Pin
                           |GPIO_06_Pin|GPIO_05_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_10_Pin|GPIO_08_Pin|GPIO_07_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_08_Pin|GPIO_07_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : GPIO_04_Pin GPIO_03_Pin GPIO_02_Pin */
   GPIO_InitStruct.Pin = GPIO_04_Pin|GPIO_03_Pin|GPIO_02_Pin;
@@ -1722,17 +1720,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPIO_13_Pin GPIO_12_Pin GPIO_11_Pin GPIO_09_Pin
+  /*Configure GPIO pins : GPIO_12_Pin GPIO_11_Pin GPIO_10_Pin GPIO_09_Pin
                            GPIO_06_Pin GPIO_05_Pin */
-  GPIO_InitStruct.Pin = GPIO_13_Pin|GPIO_12_Pin|GPIO_11_Pin|GPIO_09_Pin
+  GPIO_InitStruct.Pin = GPIO_12_Pin|GPIO_11_Pin|GPIO_10_Pin|GPIO_09_Pin
                           |GPIO_06_Pin|GPIO_05_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPIO_10_Pin GPIO_08_Pin GPIO_07_Pin */
-  GPIO_InitStruct.Pin = GPIO_10_Pin|GPIO_08_Pin|GPIO_07_Pin;
+  /*Configure GPIO pin : _CARD_SDMMC_CHIP_DETECT_Pin */
+  GPIO_InitStruct.Pin = _CARD_SDMMC_CHIP_DETECT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(_CARD_SDMMC_CHIP_DETECT_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : GPIO_08_Pin GPIO_07_Pin */
+  GPIO_InitStruct.Pin = GPIO_08_Pin|GPIO_07_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

@@ -150,12 +150,12 @@ void Error_Handler(void);
 #define GPIO_PWM_01_GPIO_Port GPIOD
 #define GPIO_PWM_00_Pin GPIO_PIN_15
 #define GPIO_PWM_00_GPIO_Port GPIOD
-#define GPIO_13_Pin GPIO_PIN_2
-#define GPIO_13_GPIO_Port GPIOG
-#define GPIO_12_Pin GPIO_PIN_3
+#define GPIO_12_Pin GPIO_PIN_2
 #define GPIO_12_GPIO_Port GPIOG
-#define GPIO_11_Pin GPIO_PIN_4
+#define GPIO_11_Pin GPIO_PIN_3
 #define GPIO_11_GPIO_Port GPIOG
+#define GPIO_10_Pin GPIO_PIN_4
+#define GPIO_10_GPIO_Port GPIOG
 #define GPIO_09_Pin GPIO_PIN_5
 #define GPIO_09_GPIO_Port GPIOG
 #define _CARD_SDMMC_D0_Pin GPIO_PIN_8
@@ -180,8 +180,8 @@ void Error_Handler(void);
 #define _CARD_SDMMC_D3_GPIO_Port GPIOC
 #define _CARD_SDMMC_CK_Pin GPIO_PIN_12
 #define _CARD_SDMMC_CK_GPIO_Port GPIOC
-#define GPIO_10_Pin GPIO_PIN_1
-#define GPIO_10_GPIO_Port GPIOD
+#define _CARD_SDMMC_CHIP_DETECT_Pin GPIO_PIN_1
+#define _CARD_SDMMC_CHIP_DETECT_GPIO_Port GPIOD
 #define _CARD_SDMMC_CMD_Pin GPIO_PIN_2
 #define _CARD_SDMMC_CMD_GPIO_Port GPIOD
 #define SPI_01_SCK_Pin GPIO_PIN_3
