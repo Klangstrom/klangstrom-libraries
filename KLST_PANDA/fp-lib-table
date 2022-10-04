@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name "STM32H723ZGT6")(type "KiCad")(uri "${KIPRJMOD}/library/STM32H723ZGT6")(options "")(descr ""))
+  (lib (name "S70KL1281DABHI023")(type "KiCad")(uri "${KIPRJMOD}/library/S70KL1281DABHI023")(options "")(descr ""))
 )
