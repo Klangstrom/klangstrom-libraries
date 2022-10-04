@@ -1,4 +1,6 @@
 (sym_lib_table
   (lib (name "STM32H723ZGT6")(type "Legacy")(uri "${KIPRJMOD}/library/STM32H723ZGT6/STM32H723ZGT6.lib")(options "")(descr ""))
   (lib (name "S70KL1281DABHI023")(type "Legacy")(uri "${KIPRJMOD}/library/S70KL1281DABHI023/S70KL1281DABHI023.lib")(options "")(descr ""))
+  (lib (name "WM8904CGEFL")(type "Legacy")(uri "${KIPRJMOD}/library/WM8904CGEFL/WM8904CGEFL_V.lib")(options "")(descr ""))
+  (lib (name "DM3AT-SF-PEJM5")(type "Legacy")(uri "${KIPRJMOD}/library/DM3AT-SF-PEJM5/DM3AT-SF-PEJM5.lib")(options "")(descr ""))
 )
