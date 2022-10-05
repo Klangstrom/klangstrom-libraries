@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fatfs.h"
+#include "usb_host.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -61,7 +62,7 @@ SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
 SAI_HandleTypeDef hsai_BlockB4;
 
-SD_HandleTypeDef hsd1;
+SD_HandleTypeDef hsd2;
 
 SPI_HandleTypeDef hspi2;
 SPI_HandleTypeDef hspi4;
@@ -78,8 +79,6 @@ UART_HandleTypeDef huart9;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
-HCD_HandleTypeDef hhcd_USB_OTG_HS;
-
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -92,8 +91,6 @@ static void MX_GPIO_Init(void);
 static void MX_LTDC_Init(void);
 static void MX_OCTOSPI1_Init(void);
 static void MX_SAI1_Init(void);
-static void MX_SDMMC1_SD_Init(void);
-static void MX_USB_OTG_HS_HCD_Init(void);
 static void MX_DAC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C4_Init(void);
@@ -115,6 +112,9 @@ static void MX_TIM24_Init(void);
 static void MX_UART8_Init(void);
 static void MX_SAI4_Init(void);
 static void MX_UART9_Init(void);
+static void MX_SDMMC2_SD_Init(void);
+void MX_USB_HOST_Process(void);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -161,8 +161,6 @@ int main(void)
   MX_LTDC_Init();
   MX_OCTOSPI1_Init();
   MX_SAI1_Init();
-  MX_SDMMC1_SD_Init();
-  MX_USB_OTG_HS_HCD_Init();
   MX_DAC1_Init();
   MX_I2C1_Init();
   MX_I2C4_Init();
@@ -185,6 +183,8 @@ int main(void)
   MX_SAI4_Init();
   MX_UART9_Init();
   MX_FATFS_Init();
+  MX_SDMMC2_SD_Init();
+  MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -194,6 +194,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
   }
@@ -980,29 +981,29 @@ static void MX_SAI4_Init(void)
 }
 
 /**
-  * @brief SDMMC1 Initialization Function
+  * @brief SDMMC2 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_SDMMC1_SD_Init(void)
+static void MX_SDMMC2_SD_Init(void)
 {
 
-  /* USER CODE BEGIN SDMMC1_Init 0 */
+  /* USER CODE BEGIN SDMMC2_Init 0 */
 
-  /* USER CODE END SDMMC1_Init 0 */
+  /* USER CODE END SDMMC2_Init 0 */
 
-  /* USER CODE BEGIN SDMMC1_Init 1 */
+  /* USER CODE BEGIN SDMMC2_Init 1 */
 
-  /* USER CODE END SDMMC1_Init 1 */
-  hsd1.Instance = SDMMC1;
-  hsd1.Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
-  hsd1.Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
-  hsd1.Init.BusWide = SDMMC_BUS_WIDE_4B;
-  hsd1.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
-  hsd1.Init.ClockDiv = 0;
-  /* USER CODE BEGIN SDMMC1_Init 2 */
+  /* USER CODE END SDMMC2_Init 1 */
+  hsd2.Instance = SDMMC2;
+  hsd2.Init.ClockEdge = SDMMC_CLOCK_EDGE_RISING;
+  hsd2.Init.ClockPowerSave = SDMMC_CLOCK_POWER_SAVE_DISABLE;
+  hsd2.Init.BusWide = SDMMC_BUS_WIDE_4B;
+  hsd2.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
+  hsd2.Init.ClockDiv = 0;
+  /* USER CODE BEGIN SDMMC2_Init 2 */
 
-  /* USER CODE END SDMMC1_Init 2 */
+  /* USER CODE END SDMMC2_Init 2 */
 
 }
 
@@ -1625,39 +1626,6 @@ static void MX_USART3_UART_Init(void)
 }
 
 /**
-  * @brief USB_OTG_HS Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USB_OTG_HS_HCD_Init(void)
-{
-
-  /* USER CODE BEGIN USB_OTG_HS_Init 0 */
-
-  /* USER CODE END USB_OTG_HS_Init 0 */
-
-  /* USER CODE BEGIN USB_OTG_HS_Init 1 */
-
-  /* USER CODE END USB_OTG_HS_Init 1 */
-  hhcd_USB_OTG_HS.Instance = USB_OTG_HS;
-  hhcd_USB_OTG_HS.Init.Host_channels = 16;
-  hhcd_USB_OTG_HS.Init.speed = HCD_SPEED_FULL;
-  hhcd_USB_OTG_HS.Init.dma_enable = DISABLE;
-  hhcd_USB_OTG_HS.Init.phy_itface = USB_OTG_EMBEDDED_PHY;
-  hhcd_USB_OTG_HS.Init.Sof_enable = DISABLE;
-  hhcd_USB_OTG_HS.Init.low_power_enable = DISABLE;
-  hhcd_USB_OTG_HS.Init.use_external_vbus = DISABLE;
-  if (HAL_HCD_Init(&hhcd_USB_OTG_HS) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USB_OTG_HS_Init 2 */
-
-  /* USER CODE END USB_OTG_HS_Init 2 */
-
-}
-
-/**
   * Enable MDMA controller clock
   */
 static void MX_MDMA_Init(void)
@@ -1694,20 +1662,20 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_04_Pin|GPIO_03_Pin|GPIO_02_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_04_Pin|GPIO_03_Pin|GPIO_02_Pin|GPIO_08_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, GPIO_01_Pin|GPIO_00_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, GPIO_12_Pin|GPIO_11_Pin|GPIO_10_Pin|GPIO_09_Pin
-                          |GPIO_06_Pin|GPIO_05_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, GPIO_11_Pin|GPIO_06_Pin|GPIO_10_Pin|GPIO_09_Pin
+                          |GPIO_07_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_08_Pin|GPIO_07_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIO_05_GPIO_Port, GPIO_05_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : GPIO_04_Pin GPIO_03_Pin GPIO_02_Pin */
-  GPIO_InitStruct.Pin = GPIO_04_Pin|GPIO_03_Pin|GPIO_02_Pin;
+  /*Configure GPIO pins : GPIO_04_Pin GPIO_03_Pin GPIO_02_Pin GPIO_08_Pin */
+  GPIO_InitStruct.Pin = GPIO_04_Pin|GPIO_03_Pin|GPIO_02_Pin|GPIO_08_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1720,27 +1688,27 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPIO_12_Pin GPIO_11_Pin GPIO_10_Pin GPIO_09_Pin
-                           GPIO_06_Pin GPIO_05_Pin */
-  GPIO_InitStruct.Pin = GPIO_12_Pin|GPIO_11_Pin|GPIO_10_Pin|GPIO_09_Pin
-                          |GPIO_06_Pin|GPIO_05_Pin;
+  /*Configure GPIO pins : GPIO_11_Pin GPIO_06_Pin GPIO_10_Pin GPIO_09_Pin
+                           GPIO_07_Pin */
+  GPIO_InitStruct.Pin = GPIO_11_Pin|GPIO_06_Pin|GPIO_10_Pin|GPIO_09_Pin
+                          |GPIO_07_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : GPIO_05_Pin */
+  GPIO_InitStruct.Pin = GPIO_05_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIO_05_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : _CARD_SDMMC_CHIP_DETECT_Pin */
   GPIO_InitStruct.Pin = _CARD_SDMMC_CHIP_DETECT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(_CARD_SDMMC_CHIP_DETECT_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : GPIO_08_Pin GPIO_07_Pin */
-  GPIO_InitStruct.Pin = GPIO_08_Pin|GPIO_07_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 }
 

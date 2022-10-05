@@ -18,11 +18,11 @@
 
 - [x] STM32H723ZG MCU with 550MHz, 564KB RAM, 1024KB Flash
 - [x] WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
-- [ ] 1× LINE OUT ( stereo )
-- [ ] 1× LINE IN ( stereo )
-- [ ] 1× HEADPHONE + MIC ( mono )
-- [ ] 2× ADC ( 12BIT, opt 6 extra channels )
-- [ ] 2× DAC ( 12BIT )
+- [x] 1× LINE OUT ( stereo )
+- [x] 1× LINE IN ( stereo )
+- [x] 1× HEADPHONE + MIC ( stereo )
+- [ ] 3× ADC ( 12BIT, opt 6 extra channels )
+- [ ] 1× DAC ( 12BIT )
 - [ ] 2× UART ( serial )
 - [?] 16× GPIO
 - [ ] 1× USB Host
