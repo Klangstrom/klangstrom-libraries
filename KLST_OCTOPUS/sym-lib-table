@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name "din-5_180degree_with_eaerth")(type "KiCad")(uri "${KIPRJMOD}/library/din-5_180degree_with_eaerth.kicad_sym")(options "")(descr ""))
+  (lib (name "KLST-ICON")(type "Legacy")(uri "${KIPRJMOD}/library/KLST--icon.lib")(options "")(descr ""))
 )

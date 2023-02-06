@@ -32,7 +32,7 @@ fp-info-cache
 *.xml
 KLST_SHEEP/KLST_SHEEP-backups/
 KLST_PANDA/KLST_PANDA-backups/
-
+KLST_OCTOPUS/KLST_OCTOPUS-backups/
 
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
@@ -107,5 +107,3 @@ local.properties
 
 [Rr]elease
 [Dd]ebug
-
-KLST_SPIDER/KLST_SPIDER-backups/
