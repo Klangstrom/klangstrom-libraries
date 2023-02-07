@@ -3699,31 +3699,31 @@
       (reference "D1") (unit 1) (value "1N914WT") (footprint "Diode_SMD:D_SOD-523")
     )
     (path "/d8e2a12b-31be-47f1-8115-76d754dc9bd2/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D2") (unit 1) (value "Schottky") (footprint "")
+      (reference "D2") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/f3531ba1-f7e9-41d2-a32e-05e17fbdb6b6/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D3") (unit 1) (value "Schottky") (footprint "")
+      (reference "D3") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/27ca45b9-c275-4628-856d-ae0261f758e0/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D4") (unit 1) (value "Schottky") (footprint "")
+      (reference "D4") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/a1718a90-de27-4640-8a78-6c2834ef780e/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D5") (unit 1) (value "Schottky") (footprint "")
+      (reference "D5") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/c7cce935-268b-4ca7-bcc6-d4c3407696e4/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D6") (unit 1) (value "Schottky") (footprint "")
+      (reference "D6") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/739ea1f8-cdea-420a-8d3a-4b30fb9859c1/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D7") (unit 1) (value "Schottky") (footprint "")
+      (reference "D7") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/12e2e5c2-f4b0-4246-b746-b5954e2505f0/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D8") (unit 1) (value "Schottky") (footprint "")
+      (reference "D8") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/9ff9e472-5d9b-4cd1-ae9f-d409e958cd01/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D9") (unit 1) (value "Schottky") (footprint "")
+      (reference "D9") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/feed83e7-fe35-45c3-b938-143fa9d139d9/56b7259e-6208-4e67-ad75-da378c45e298"
-      (reference "D10") (unit 1) (value "Schottky") (footprint "")
+      (reference "D10") (unit 1) (value "Schottky") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/ce631169-40e5-44ad-95a8-46fd5f8c17a5"
       (reference "H1") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_3.2mm_M3_Pad_Via")

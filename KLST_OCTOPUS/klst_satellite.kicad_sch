@@ -208,7 +208,7 @@
     (uuid 2440c9b4-1f8b-4e73-aad4-0527961b14d8)
     (property "Reference" "J13" (id 0) (at 142.24 88.9 0))
     (property "Value" "UART" (id 1) (at 142.24 91.44 0))
-    (property "Footprint" "" (id 2) (at 143.51 96.52 0)
+    (property "Footprint" "Connector_IDC:IDC-Header_2x03_P2.54mm_Horizontal" (id 2) (at 143.51 96.52 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 143.51 96.52 0)
