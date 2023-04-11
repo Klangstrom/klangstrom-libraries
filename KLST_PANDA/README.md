@@ -6,6 +6,7 @@
 
 ---
 
+==@TODO(align with /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/hardware/KLST_PANDA/KLST_PANDA--specs.md)==
 ==@TODO(add modular circuitry at least as IDC extension plug)==
 
     KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however comes with a stronger MCU and a screen:
