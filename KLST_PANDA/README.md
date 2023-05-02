@@ -1,13 +1,18 @@
 # KLANGSTROM / KLST_PANDA
 
+    KLST_PANDA is a *black and white* grumpy old animal 
+
+- ==@TODO(*badger* versus *panda*)==
+- ==@TODO(align with /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/hardware/KLST_PANDA/KLST_PANDA--specs.md)==
+- ==@TODO(add modular circuitry at least as IDC extension plug)==
+
+---
+
 - STM32H723ZG MCU with 550MHz, 564KB RAM, 1024KB Flash
 - WM8904 audio codec with 2× audio DAC + 2× audio ADC ( 16/24BIT )
 - external memory
 
 ---
-
-==@TODO(align with /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/hardware/KLST_PANDA/KLST_PANDA--specs.md)==
-==@TODO(add modular circuitry at least as IDC extension plug)==
 
     KLST_SHEEP is a *wolf in sheep's clothing* it is similar to KLST_TINY however comes with a stronger MCU and a screen:
     
