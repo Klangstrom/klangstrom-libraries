@@ -1,0 +1,6 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+C1,100nF,C_0402_1005Metric,132.7,-94.4,180.0,top
+C2,100nF,C_0402_1005Metric,127.6,-100.5,90.0,top
+C3,100nF,C_0402_1005Metric,132.7,-105.8,0.0,top
+J1,CN1,PinSocket_2x08_P2.54mm_Vertical,140.71,-99.975,0.0,top
+U2,APS12808L-3OBM-BA,APS12808L-3OBM-BA,132.1,-100.0,0.0,top

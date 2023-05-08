@@ -21,6 +21,9 @@ _autosave-*
 *-save.kicad_pcb
 fp-info-cache
 
+*-backups
+*_old
+
 # Netlist files (exported from Eeschema)
 *.net
 
@@ -30,9 +33,6 @@ fp-info-cache
 
 # Exported BOM files
 *.xml
-KLST_SHEEP/KLST_SHEEP-backups/
-KLST_PANDA/KLST_PANDA-backups/
-KLST_OCTOPUS/KLST_OCTOPUS-backups/
 
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
