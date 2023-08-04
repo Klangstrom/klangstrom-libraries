@@ -336,6 +336,22 @@
     [
       "b4513875-4c57-4720-bcc5-43ead67fe18f",
       ""
+    ],
+    [
+      "f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd",
+      "external_memory"
+    ],
+    [
+      "88042be3-8ae4-47d6-9c31-0a9af833bdb2",
+      "audio_codec"
+    ],
+    [
+      "52cda7d1-da0e-43fc-963f-d09ac6e0ff74",
+      "sd_card"
+    ],
+    [
+      "e5470bb0-cacd-4f1d-9ba6-63c7432dbe78",
+      "display"
     ]
   ],
   "text_variables": {}
