@@ -6189,6 +6189,23 @@
     )
   )
 
+  (sheet (at 369.57 201.93) (size 35.56 3.81) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 82e35567-f058-4d94-a9b9-5b3354666c47)
+    (property "Sheetname" "battery" (at 369.57 201.2184 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "battery.kicad_sch" (at 369.57 206.3246 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f" (page "6"))
+      )
+    )
+  )
+
   (sheet (at 369.57 222.25) (size 35.56 3.81) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))

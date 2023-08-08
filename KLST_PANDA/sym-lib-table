@@ -5,4 +5,5 @@
   (lib (name "WM8904CGEFL")(type "KiCad")(uri "${KIPRJMOD}/library/WM8904CGEFL/WM8904CGEFL_V.kicad_sym")(options "")(descr ""))
   (lib (name "DM3AT-SF-PEJM5")(type "KiCad")(uri "${KIPRJMOD}/library/DM3AT-SF-PEJM5/DM3AT-SF-PEJM5.kicad_sym")(options "")(descr ""))
   (lib (name "ADS7843E_2K5")(type "KiCad")(uri "${KIPRJMOD}/library/ADS7843E_2K5/ADS7843E_2K5.kicad_sym")(options "")(descr ""))
+  (lib (name "TP5400")(type "KiCad")(uri "${KIPRJMOD}/library/TP5400/TP5400.kicad_sym")(options "")(descr ""))
 )

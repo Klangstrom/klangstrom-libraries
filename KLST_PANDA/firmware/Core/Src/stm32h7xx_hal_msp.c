@@ -1183,7 +1183,7 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
     PD14     ------> TIM4_CH3
     PD15     ------> TIM4_CH4
     */
-    GPIO_InitStruct.Pin = _MECH_BUTTON_01_Pin|_MECH_BUTTON_00_Pin;
+    GPIO_InitStruct.Pin = _MECH_BUTTON_00_Pin|_MECH_BUTTON_01_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1397,7 +1397,7 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
     PD14     ------> TIM4_CH3
     PD15     ------> TIM4_CH4
     */
-    HAL_GPIO_DeInit(GPIOD, _MECH_BUTTON_01_Pin|_MECH_BUTTON_00_Pin);
+    HAL_GPIO_DeInit(GPIOD, _MECH_BUTTON_00_Pin|_MECH_BUTTON_01_Pin);
 
   /* USER CODE BEGIN TIM4_MspDeInit 1 */
 

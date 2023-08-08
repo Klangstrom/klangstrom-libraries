@@ -37,6 +37,7 @@ the display is a 4.3" TFT LCD with a resolution of 480×272px, 24Bit colors, a c
 - capacitive touch ( ADS7843 )
 - dimmable backlight ( PWM+FAN5333 )
 - LTDC interface ( parallel ) 
+- see /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/hardware/KLST_PANDA/research.KLST_PANDA--TFTs/research.KLST_PANDA--TFTs.md
 ```
 
 ## On-Board Microphone
@@ -61,16 +62,12 @@ two USB-C connectors. one that acts as *USB Device* and takes care of the power 
 
 the battery is a 18650 cell fitted into an on-board battery holder, which allows to easily replace the battery. the battery can be charged via the USB-C connector.
 
-- on/off switch(?)
 ==@TODO==
 ```
-    - type 18650
+    - battery type 18650
+    - TP5400 ( all-in-one battery charger + boost converter IC )
     - with PCB mounted holder e.g [MY-18650-01](https://jlcpcb.com/partdetail/Myoung-MY_1865001/C2979183)
-    - recharging circuit? 
-    - see `KLST_GRASS`
-- on/off switch(?) "just thought that when we have a battery on board there might be the need to be able to switch the power supply on or off"
-
-see https://klangstrom.dennisppaul.de/2021/11/26/KLST_GRASS-preview.html
+    - on/off switch
 ```
 
 ## Rotary Encoder

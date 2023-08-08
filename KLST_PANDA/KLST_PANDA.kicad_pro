@@ -352,6 +352,10 @@
     [
       "e5470bb0-cacd-4f1d-9ba6-63c7432dbe78",
       "display"
+    ],
+    [
+      "82e35567-f058-4d94-a9b9-5b3354666c47",
+      "battery"
     ]
   ],
   "text_variables": {}
