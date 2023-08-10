@@ -6,4 +6,5 @@
   (lib (name "DM3AT-SF-PEJM5")(type "KiCad")(uri "${KIPRJMOD}/library/DM3AT-SF-PEJM5/DM3AT-SF-PEJM5.kicad_sym")(options "")(descr ""))
   (lib (name "ADS7843E_2K5")(type "KiCad")(uri "${KIPRJMOD}/library/ADS7843E_2K5/ADS7843E_2K5.kicad_sym")(options "")(descr ""))
   (lib (name "TP5400")(type "KiCad")(uri "${KIPRJMOD}/library/TP5400/TP5400.kicad_sym")(options "")(descr ""))
+  (lib (name "CAT4139TD-GT3")(type "KiCad")(uri "${KIPRJMOD}/library/CAT4139TD-GT3/CAT4139TD-GT3.kicad_sym")(options "")(descr ""))
 )

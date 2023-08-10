@@ -29,16 +29,12 @@ the audio codec can be interface via a stereo line-in, a stereo line-out or a 3-
 
 ## Display
 
-the display is a 4.3" TFT LCD with a resolution of 480×272px, 24Bit colors, a capacitive touch surface and dimmable backlight.
+the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272px, 24Bit colors which is connected via a 40-pin FPC connector, a capacitive touch surface ( `ADS7843` ) and dimmable backlight ( via PWM ).
 
-==@TODO==
-```
-- 4.3" 480×272 ( ==which?== 40-pin FPC connector )
-- capacitive touch ( ADS7843 )
-- dimmable backlight ( PWM+FAN5333 )
-- LTDC interface ( parallel ) 
-- see /Users/dennisppaul/Documents/dennisppaul/projects/klangstrom/hardware/KLST_PANDA/research.KLST_PANDA--TFTs/research.KLST_PANDA--TFTs.md
-```
+the display is interfaced with the CPU via a parallel LTDC interface.
+
+- [ER-TFT043A2-3 4.3 inch TFT LCD 480x270 Pixels Display Datasheet](https://www.buydisplay.com/download/manual/ER-TFT043A2-3_Datasheet.pdf)
+- [ADS7843](https://www.ti.com/product/ADS7843)
 
 ## On-Board Microphone
 

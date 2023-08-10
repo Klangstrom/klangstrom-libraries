@@ -5,4 +5,5 @@
   (lib (name "WM8904CGEFL")(type "KiCad")(uri "${KIPRJMOD}/library/WM8904CGEFL")(options "")(descr ""))
   (lib (name "DM3AT-SF-PEJM5")(type "KiCad")(uri "${KIPRJMOD}/library/DM3AT-SF-PEJM5")(options "")(descr ""))
   (lib (name "ADS7843E_2K5")(type "KiCad")(uri "${KIPRJMOD}/library/ADS7843E_2K5")(options "")(descr ""))
+  (lib (name "CAT4139TD-GT3")(type "KiCad")(uri "${KIPRJMOD}/library/CAT4139TD-GT3")(options "")(descr ""))
 )
