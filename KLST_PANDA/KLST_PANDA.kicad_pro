@@ -356,6 +356,18 @@
     [
       "82e35567-f058-4d94-a9b9-5b3354666c47",
       "battery"
+    ],
+    [
+      "b123f5e9-cc72-42aa-83b5-20f52795babc",
+      "rotary_encoders"
+    ],
+    [
+      "87cd59e0-a7cb-4402-bde3-1e8396956bda",
+      "ENCODER_00"
+    ],
+    [
+      "ed61e32f-240e-4d2b-b2a8-d00b0710740e",
+      "ENCODER_01"
     ]
   ],
   "text_variables": {}
