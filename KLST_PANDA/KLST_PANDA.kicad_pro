@@ -396,6 +396,10 @@
     [
       "1f0020ca-bef6-4e88-99dd-cc88d8a9362c",
       "MIDI_analog"
+    ],
+    [
+      "c1368b5a-3c14-4f80-b962-228aee9202ba",
+      "USB"
     ]
   ],
   "text_variables": {}

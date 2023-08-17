@@ -135,6 +135,7 @@ the power pins are used as follows:
     - 2×
     - just below encoders?
     - with interrupts
+    - https://github.com/daprice/keyswitches.pretty
 ```
 
 - 2× programmable buttons ( ==@TODO(mechanical keybord keys?)== )
