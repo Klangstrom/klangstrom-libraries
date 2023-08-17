@@ -368,6 +368,18 @@
     [
       "ed61e32f-240e-4d2b-b2a8-d00b0710740e",
       "ENCODER_01"
+    ],
+    [
+      "8093d0e6-fdc1-46b4-b622-445b9f3a15e0",
+      "IDC_serials"
+    ],
+    [
+      "8f837d10-8dfd-4ab5-9b60-26a38e53480d",
+      "IDC_SERIAL_00"
+    ],
+    [
+      "91fd47dd-a581-4f6b-aa29-abb0b8099e11",
+      "IDC_SERIAL_01"
     ]
   ],
   "text_variables": {}

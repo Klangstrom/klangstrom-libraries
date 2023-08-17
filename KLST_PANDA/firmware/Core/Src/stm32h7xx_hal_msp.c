@@ -1504,7 +1504,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PE0     ------> UART8_RX
     PE1     ------> UART8_TX
     */
-    GPIO_InitStruct.Pin = _IDC_SERIAL_01_RX_Pin|_IDC_SERIAL_01_TX_Pin;
+    GPIO_InitStruct.Pin = _IDC_SERIAL_00_RX_Pin|_IDC_SERIAL_00_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1538,7 +1538,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PG0     ------> UART9_RX
     PG1     ------> UART9_TX
     */
-    GPIO_InitStruct.Pin = _IDC_SERIAL_02_RX_Pin|_IDC_SERIAL_02_TX_Pin;
+    GPIO_InitStruct.Pin = _IDC_SERIAL_01_RX_Pin|_IDC_SERIAL_01_TX_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1668,7 +1668,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PE0     ------> UART8_RX
     PE1     ------> UART8_TX
     */
-    HAL_GPIO_DeInit(GPIOE, _IDC_SERIAL_01_RX_Pin|_IDC_SERIAL_01_TX_Pin);
+    HAL_GPIO_DeInit(GPIOE, _IDC_SERIAL_00_RX_Pin|_IDC_SERIAL_00_TX_Pin);
 
   /* USER CODE BEGIN UART8_MspDeInit 1 */
 
@@ -1686,7 +1686,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
     PG0     ------> UART9_RX
     PG1     ------> UART9_TX
     */
-    HAL_GPIO_DeInit(GPIOG, _IDC_SERIAL_02_RX_Pin|_IDC_SERIAL_02_TX_Pin);
+    HAL_GPIO_DeInit(GPIOG, _IDC_SERIAL_01_RX_Pin|_IDC_SERIAL_01_TX_Pin);
 
   /* USER CODE BEGIN UART9_MspDeInit 1 */
 

@@ -6195,6 +6195,23 @@
     )
   )
 
+  (sheet (at 369.57 181.61) (size 35.56 3.81) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 8093d0e6-fdc1-46b4-b622-445b9f3a15e0)
+    (property "Sheetname" "IDC_serials" (at 369.57 180.8984 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "IDC_serials.kicad_sch" (at 369.57 186.0046 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f" (page "10"))
+      )
+    )
+  )
+
   (sheet (at 369.57 201.93) (size 35.56 3.81) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))
