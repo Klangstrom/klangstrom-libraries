@@ -380,6 +380,22 @@
     [
       "91fd47dd-a581-4f6b-aa29-abb0b8099e11",
       "IDC_SERIAL_01"
+    ],
+    [
+      "f08ee185-46fd-4c64-8c0d-73017bc497ee",
+      "buttons"
+    ],
+    [
+      "7936a5e0-5a04-43e4-aa84-42432289d154",
+      "BUTTON_PROGRAMMER"
+    ],
+    [
+      "1de475bd-0e17-4802-9721-941bfddbd8b4",
+      "I2C"
+    ],
+    [
+      "1f0020ca-bef6-4e88-99dd-cc88d8a9362c",
+      "MIDI_analog"
     ]
   ],
   "text_variables": {}
