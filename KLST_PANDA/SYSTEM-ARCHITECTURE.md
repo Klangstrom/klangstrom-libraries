@@ -23,7 +23,7 @@ the audio codec is a `‌WM8904` by Cirrus Logic. it features stereo headphone a
 
 ## Display
 
-the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272px, 24Bit colors. it is connected via a 40-pin FPC connector and features a capacitive touch surface ( interfaced via an `‌FT5206 ` I2C-based controller ) and dimmable a backlight ( via `CAT4139‌` + PWM ).
+the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272px, 24Bit colors. it is connected via a 40-pin FPC connector and features a capacitive touch surface ( interfaced via an `‌FT5206` I2C-based controller ) and dimmable a backlight ( via `CAT4139‌` + PWM ).
 
 the display is interfaced with the CPU via a parallel LTDC interface.
 
@@ -54,6 +54,7 @@ the charging mechanism is realized via a `TP5400` an all-in-one battery charger 
 the board also features an on-off switch.
 
 - with PCB mounted holder e.g [MY-18650-01](https://jlcpcb.com/partdetail/Myoung-MY_1865001/C2979183)
+- 
 
 ## Rotary Encoder
 

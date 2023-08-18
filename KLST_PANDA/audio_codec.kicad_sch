@@ -1772,6 +1772,11 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 2c28cb62-f9e3-45b7-b053-c45aa5dd1286)
   )
+  (text "@TODO( consider merging microphone+headphone into a single CTIA/AHJ connector )"
+    (at 342.9 120.65 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 5cb27894-80b5-496f-993a-2e1872bcd9d3)
+  )
   (text "TANTALUM" (at 107.95 184.15 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 7686d5c2-fddb-4db3-81c6-04ef9ae62e5e)

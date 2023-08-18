@@ -1268,7 +1268,7 @@
     (uuid f54e08d5-6b2b-450f-bd88-6b6203725b1b)
   )
   (text "DISPLAY\nWITH CAPACITIVE TOUCH\nAND CONTROLLABLE BACKLIGHT"
-    (at 22.86 27.94 0)
+    (at 16.51 22.86 0)
     (effects (font (face "KiCad Font") (size 1.27 1.27)) (justify left bottom))
     (uuid f5593deb-e2a1-4a12-ae00-9a9963944d28)
   )
