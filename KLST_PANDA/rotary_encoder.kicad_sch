@@ -547,6 +547,11 @@
     (uuid f6233b3e-5ca6-4aa1-839b-83af7435aecf)
   )
 
+  (text "@TOOD(spec encoder e.g Bourns PEC11R-4015F-S0024 or PEC12R-4015F-S0024 )"
+    (at 184.15 101.6 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 3b6d0078-06dc-4e49-95cb-a2055376f802)
+  )
   (text "@NOTE(instead of fitting a rotary encoder \non the board directly a pin header can be\nused to allow a connection to a remote \ninterface rotary encoder)"
     (at 149.86 146.05 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -593,7 +598,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "#PWR029") (unit 1)
+          (reference "#PWR?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "#PWR029") (unit 1)
@@ -645,7 +650,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R52") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R52") (unit 1)
@@ -697,7 +702,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R55") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R55") (unit 1)
@@ -749,7 +754,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R54") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R54") (unit 1)
@@ -801,7 +806,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R46") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R46") (unit 1)
@@ -853,7 +858,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C50") (unit 1)
+          (reference "C?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C50") (unit 1)
@@ -905,7 +910,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R47") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R47") (unit 1)
@@ -957,7 +962,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C51") (unit 1)
+          (reference "C?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C51") (unit 1)
@@ -1009,7 +1014,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R53") (unit 1)
+          (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R53") (unit 1)
@@ -1061,7 +1066,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C47") (unit 1)
+          (reference "C?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C47") (unit 1)
@@ -1116,7 +1121,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "SW4") (unit 1)
+          (reference "SW?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "SW4") (unit 1)
@@ -1155,7 +1160,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "#PWR028") (unit 1)
+          (reference "#PWR?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "#PWR028") (unit 1)

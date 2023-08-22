@@ -400,6 +400,18 @@
     [
       "c1368b5a-3c14-4f80-b962-228aee9202ba",
       "USB"
+    ],
+    [
+      "98dcce4c-cc8c-420d-bfb6-73762da3b881",
+      "ADC_DAC"
+    ],
+    [
+      "6bb3f144-c620-4528-bce8-cfaf92f97449",
+      "GPIO"
+    ],
+    [
+      "47e8e77e-c64e-4c44-bfd8-2073580a3d85",
+      "on-board_mic"
     ]
   ],
   "text_variables": {}

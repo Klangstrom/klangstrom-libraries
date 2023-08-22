@@ -89,7 +89,7 @@
 "88","PG3","Output","GPIO_Output","GPIO_15"
 "89","PG4","Output","GPIO_Output","GPIO_14"
 "90","PG5","Output","GPIO_Output","GPIO_13"
-"91","PG6","I/O","OCTOSPIM_P1_NCS","_EXT_MEMORY_RESET"
+"91","PG6","I/O","OCTOSPIM_P1_NCS","_EXT_MEMORY_CHIP_SELECT"
 "92","PG7","I/O","LTDC_CLK","_DISPLAY_LTDC_CLK"
 "93","PG8","I/O","LTDC_G7","_DISPLAY_LTDC_G7"
 "94","VSS","Power","",""

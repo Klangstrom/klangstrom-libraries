@@ -198,6 +198,12 @@ the power pins are used as follows:
 
 @NOTE(`‌AUDIO_CODEC_I2C` and `DISPLAY_TOUCH‌` are both interfaced via `‌I2C4`, however, `I2C5` could be an alternative for one of them. `I2C5` pins are currently used for `GPIO_02+03_PWM+GPIO_03_PWM`. )
 
+### SPI
+
+| SPI     | DESCRIPTION        |
+|---------|--------------------|
+| SPI2    | SPI_USR            |
+
 ### ADC+DAC
 
 | ADC/DAC | DESCRIPTION        |
