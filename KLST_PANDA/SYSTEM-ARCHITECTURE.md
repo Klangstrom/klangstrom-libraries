@@ -168,10 +168,11 @@ one Digital-Analog-Converter (DAC) and one ADC are
 | TIM1  | CH1+CH2+CH3     | ENCODER_00(+BUTTON)     |
 | TIM2  | CH1+CH2+CH4     | ENCODER_01(+BUTTON)     |
 | TIM3  | CH3             | DISPLAY_BACKLIGHT_PWM   |
+| TIM4  | CH2             | DISPLAY_TOUCH_INTERRUPT |
 | TIM4  | CH3+CH4         | MECH_BUTTON_00*01       |
 | TIM12 | CH1+CH2         | LED_00+01               |
-| TIM15 | CH1             | DISPLAY_TOUCH_INTERRUPT |
-| TIM23 | CH1+CH2+CH3+CH4 | GPIO_PWM_00+01+02+03    |
+| TIM15 | CH1             | GPIO_19_INT             |
+| TIM23 | CH1+CH2+CH3+CH4 | GPIO_00+01+02+03_PWM    |
 | TIM24 | CH2             | BUTTON_PROGRAMMER       |
 
 ## Buses

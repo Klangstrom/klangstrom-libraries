@@ -847,7 +847,7 @@ static void MX_SAI1_Init(void)
   hsai_BlockA1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockA1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
   hsai_BlockA1.Init.PdmInit.Activation = DISABLE;
-  hsai_BlockA1.Init.PdmInit.MicPairsNbr = 0;
+  hsai_BlockA1.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA1.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
   hsai_BlockA1.FrameInit.FrameLength = 8;
   hsai_BlockA1.FrameInit.ActiveFrameLength = 1;
@@ -878,7 +878,7 @@ static void MX_SAI1_Init(void)
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
   hsai_BlockB1.Init.PdmInit.Activation = DISABLE;
-  hsai_BlockB1.Init.PdmInit.MicPairsNbr = 0;
+  hsai_BlockB1.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockB1.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
   hsai_BlockB1.FrameInit.FrameLength = 8;
   hsai_BlockB1.FrameInit.ActiveFrameLength = 1;
@@ -924,12 +924,11 @@ static void MX_SAI4_Init(void)
   hsai_BlockA4.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
   hsai_BlockA4.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
   hsai_BlockA4.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_192K;
-  hsai_BlockA4.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+  hsai_BlockA4.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
   hsai_BlockA4.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA4.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockA4.Init.PdmInit.Activation = DISABLE;
-  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 0;
+  hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
+  hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
   hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
   hsai_BlockA4.FrameInit.FrameLength = 8;
   hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
@@ -1238,6 +1237,10 @@ static void MX_TIM4_Init(void)
   sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
   sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
   sConfigIC.ICFilter = 0;
+  if (HAL_TIM_IC_ConfigChannel(&htim4, &sConfigIC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
   if (HAL_TIM_IC_ConfigChannel(&htim4, &sConfigIC, TIM_CHANNEL_3) != HAL_OK)
   {
     Error_Handler();
@@ -1751,10 +1754,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIO_07_GPIO_Port, GPIO_07_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, GPIO_16_Pin|GPIO_15_Pin|GPIO_14_Pin|GPIO_13_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_20_Pin|GPIO_12_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIO_12_GPIO_Port, GPIO_12_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, GPIO_16_Pin|GPIO_15_Pin|GPIO_14_Pin|GPIO_13_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : GPIO_11_Pin GPIO_17_Pin */
   GPIO_InitStruct.Pin = GPIO_11_Pin|GPIO_17_Pin;
@@ -1777,19 +1780,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIO_07_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : GPIO_20_Pin GPIO_12_Pin */
+  GPIO_InitStruct.Pin = GPIO_20_Pin|GPIO_12_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
   /*Configure GPIO pins : GPIO_16_Pin GPIO_15_Pin GPIO_14_Pin GPIO_13_Pin */
   GPIO_InitStruct.Pin = GPIO_16_Pin|GPIO_15_Pin|GPIO_14_Pin|GPIO_13_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : GPIO_12_Pin */
-  GPIO_InitStruct.Pin = GPIO_12_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIO_12_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : _CARD_SDMMC_CHIP_DETECT_Pin */
   GPIO_InitStruct.Pin = _CARD_SDMMC_CHIP_DETECT_Pin;
