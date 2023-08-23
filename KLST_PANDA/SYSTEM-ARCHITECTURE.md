@@ -63,20 +63,21 @@ buttons and pulse channels are debounced in hardware.
 
 ## GPIO
 
-a 32-pin port hosts 27 General Purpose Inputs and Outputs (GPIO) and 5 power pins. the GPIO can either be used as standard input or output pins or can have the following extra functionalities:
+a 32-pin port hosts 29 General Purpose Inputs and Outputs (GPIO) and 3 power pins. the GPIO can either be used as standard input or output pins or can have the following extra functionalities:
 
-- 19× GPIO pins including
+- 21× GPIO pins including
     - 4× programmable PWM pins
     - 2× ADC pins
+    - 1× external interrupt pin
 - 1× USART ( 2 pins )
 - 1× SPI ( 4 pins )
 - 1× I2C ( 2 pins )
 
 the power pins are available as follows:
 
-- GND ( 3 pins )
-- 5.0V
+- GND
 - 3.3V
+- 5.0V
 
 ==@TODO(maybe encase with fake shrouded connectors ( see IDC housing ))==
 

@@ -7,4 +7,5 @@
   (lib (name "ADS7843E_2K5")(type "KiCad")(uri "${KIPRJMOD}/library/ADS7843E_2K5")(options "")(descr ""))
   (lib (name "CAT4139TD-GT3")(type "KiCad")(uri "${KIPRJMOD}/library/CAT4139TD-GT3")(options "")(descr ""))
   (lib (name "THD0525-40CL-GF")(type "KiCad")(uri "${KIPRJMOD}/library/THD0525-40CL-GF")(options "")(descr ""))
+  (lib (name "MP34DT05TR-A")(type "KiCad")(uri "${KIPRJMOD}/library/MP34DT05TR-A")(options "")(descr ""))
 )
