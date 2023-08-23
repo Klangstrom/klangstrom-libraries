@@ -185,7 +185,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "R64") (unit 1)
+          (reference "R61") (unit 1)
         )
       )
     )
@@ -215,7 +215,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "#PWR040") (unit 1)
+          (reference "#PWR073") (unit 1)
         )
       )
     )
@@ -258,7 +258,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "R65") (unit 1)
+          (reference "R62") (unit 1)
         )
       )
     )

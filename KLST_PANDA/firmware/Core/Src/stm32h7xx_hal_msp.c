@@ -746,12 +746,12 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* hospi)
     GPIO_InitStruct.Alternate = GPIO_AF12_OCTOSPIM_P1;
     HAL_GPIO_Init(_EXT_MEMORY_A0_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _EXT_MEMORY_RESET_Pin;
+    GPIO_InitStruct.Pin = _EXT_MEMORY_CHIP_SELECT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF10_OCTOSPIM_P1;
-    HAL_GPIO_Init(_EXT_MEMORY_RESET_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(_EXT_MEMORY_CHIP_SELECT_GPIO_Port, &GPIO_InitStruct);
 
     /* OCTOSPI1 MDMA Init */
     /* OCTOSPI1_FIFO_TH Init */
@@ -827,7 +827,7 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* hospi)
 
     HAL_GPIO_DeInit(GPIOE, _EXT_MEMORY_A4_Pin|_EXT_MEMORY_A5_Pin|_EXT_MEMORY_A6_Pin|_EXT_MEMORY_A7_Pin);
 
-    HAL_GPIO_DeInit(_EXT_MEMORY_RESET_GPIO_Port, _EXT_MEMORY_RESET_Pin);
+    HAL_GPIO_DeInit(_EXT_MEMORY_CHIP_SELECT_GPIO_Port, _EXT_MEMORY_CHIP_SELECT_Pin);
 
     /* OCTOSPI1 MDMA DeInit */
     HAL_MDMA_DeInit(hospi->hmdma);

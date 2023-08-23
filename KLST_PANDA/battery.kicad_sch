@@ -1442,7 +1442,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR023") (unit 1)
+          (reference "#PWR057") (unit 1)
         )
       )
     )
@@ -1491,7 +1491,7 @@
   (symbol (lib_id "TP5400:TP5400") (at 135.89 113.03 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 272bbfaa-f547-4846-834d-331eaa09788b)
-    (property "Reference" "U7" (at 135.89 101.6 0)
+    (property "Reference" "U4" (at 135.89 101.6 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TP5400" (at 135.89 104.14 0)
@@ -1517,7 +1517,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "U7") (unit 1)
+          (reference "U4") (unit 1)
         )
       )
     )
@@ -1557,7 +1557,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C53") (unit 1)
+          (reference "C59") (unit 1)
         )
       )
     )
@@ -1600,7 +1600,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R50") (unit 1)
+          (reference "R46") (unit 1)
         )
       )
     )
@@ -1709,7 +1709,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR018") (unit 1)
+          (reference "#PWR058") (unit 1)
         )
       )
     )
@@ -1778,7 +1778,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R51") (unit 1)
+          (reference "R45") (unit 1)
         )
       )
     )
@@ -1787,7 +1787,7 @@
   (symbol (lib_id "Device:D_Schottky_Small") (at 166.37 100.33 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 86040c9f-b639-4e4d-9470-612926293c2d)
-    (property "Reference" "D5" (at 168.91 99.441 90)
+    (property "Reference" "D7" (at 168.91 99.441 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "SS32" (at 168.91 101.981 90)
@@ -1807,7 +1807,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "D5") (unit 1)
+          (reference "D7") (unit 1)
         )
       )
     )
@@ -1847,7 +1847,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C54") (unit 1)
+          (reference "C61") (unit 1)
         )
       )
     )
@@ -1924,7 +1924,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "D6") (unit 1)
+          (reference "D5") (unit 1)
         )
       )
     )
@@ -1954,7 +1954,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR024") (unit 1)
+          (reference "#PWR060") (unit 1)
         )
       )
     )
@@ -1963,7 +1963,7 @@
   (symbol (lib_id "Device:C_Polarized_Small") (at 191.77 100.33 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a64f73f0-0c67-44a3-a2e3-476749bef448)
-    (property "Reference" "C56" (at 194.31 99.1489 0)
+    (property "Reference" "C62" (at 194.31 99.1489 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "47uF" (at 194.31 101.6889 0)
@@ -1980,7 +1980,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C56") (unit 1)
+          (reference "C62") (unit 1)
         )
       )
     )
@@ -2020,7 +2020,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C55") (unit 1)
+          (reference "C60") (unit 1)
         )
       )
     )
@@ -2063,7 +2063,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R49") (unit 1)
+          (reference "R43") (unit 1)
         )
       )
     )
@@ -2148,7 +2148,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C52") (unit 1)
+          (reference "C58") (unit 1)
         )
       )
     )
@@ -2178,7 +2178,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR019") (unit 1)
+          (reference "#PWR059") (unit 1)
         )
       )
     )
@@ -2208,7 +2208,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR021") (unit 1)
+          (reference "#PWR056") (unit 1)
         )
       )
     )
@@ -2251,7 +2251,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "D8") (unit 1)
+          (reference "D6") (unit 1)
         )
       )
     )
@@ -2294,7 +2294,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R48") (unit 1)
+          (reference "R44") (unit 1)
         )
       )
     )

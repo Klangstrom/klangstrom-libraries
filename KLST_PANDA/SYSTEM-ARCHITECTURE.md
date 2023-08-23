@@ -33,9 +33,7 @@ the display is interfaced with the CPU via a parallel LTDC interface.
 
 ## On-Board Microphone
 
-the on-board microphone is a mono MEMS microphone fitted directly onto the board and interfaced via a second I2S interface. it can be used in parallel with an external microphone or line-in signals.
-
-- e.g [GMA4030H11-F26](https://jlcpcb.com/partdetail/Inghai-GMA4030H11F26/C498193)
+the on-board microphones are two mono MEMS microphone fitted directly onto the board and interfaced via a second I2S interface. they can be used in parallel with an external microphone or line-in signals from the audio codec.
 
 ## SD Card
 
@@ -54,39 +52,35 @@ the charging mechanism is realized via a `TP5400` an all-in-one battery charger 
 the board also features an on-off switch.
 
 - with PCB mounted holder e.g [MY-18650-01](https://jlcpcb.com/partdetail/Myoung-MY_1865001/C2979183)
-- 
 
 ## Rotary Encoder
 
-the rotary encoders 
+two rotary encoders `‌PEC11R-4015F-S0024` by Bourns feature a 6mm diameter metal shaft, a metal case, a push button and 24 pulses per 360° rotation but no detents.
+
+the encoder body is 6.5mm high, the shaft is 15mm long of which 5mm feature an M7 thread and the top 7mm are D-shaped.
+
+buttons and pulse channels are debounced in hardware.
 
 ## GPIO
 
-==@TODO check te 27 pins … they might not be correct anymore ==
-
 a 32-pin port hosts 27 General Purpose Inputs and Outputs (GPIO) and 5 power pins. the GPIO can either be used as standard input or output pins or can have the following extra functionalities:
 
-- 4× programmable PWM pins
-- 1× I2C ( 2 pins )
+- 19× GPIO pins including
+    - 4× programmable PWM pins
+    - 2× ADC pins
+- 1× USART ( 2 pins )
 - 1× SPI ( 4 pins )
-- 1× USART ( 2 pins ) ( ==@TODO also or exclusively map out as MIDI IN/OUT see KLST_OCTOPUS== )
-- 1× DAC ( ==m@TODO also map out via audio connector== )
-- 4× ADC ( ==@TODO also map out at least one via audio connector== )
-- 10× standard digital in-/output pins
+- 1× I2C ( 2 pins )
 
-the power pins are used as follows:
+the power pins are available as follows:
 
 - GND ( 3 pins )
 - 5.0V
 - 3.3V
 
-```
-    - maybe case with fake shrouded connectors ( see IDC housing )
-```
+==@TODO(maybe encase with fake shrouded connectors ( see IDC housing ))==
 
-## MIDI 
-
-==@TODO==
+## MIDI analog
 
 - analog MIDI: 3.5mm mono audio jack ( TS )
 - ==@TODO also or exclusively map out as MIDI IN/OUT see KLST_OCTOPUS==
@@ -94,6 +88,10 @@ the power pins are used as follows:
     - interfaced via 3.5mm stereo audio connector ( TRS with `Type A` allocation ) ==@TODO(decide on the Type see https://minimidi.world)==
 
 ## DAC + ADC
+
+one Digital-Analog-Converter (DAC) and one ADC are 
+
+- with 3.5mm audio connector ( TS )
 
 ==@TODO==
 
