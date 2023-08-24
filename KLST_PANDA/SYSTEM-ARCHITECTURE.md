@@ -212,3 +212,10 @@ one Digital-Analog-Converter (DAC) and one ADC are
 | ADC2    | GPIO_04_ADC        |
 | ADC3    | ADC_USR            |
 | DAC1    | DAC_USR            |
+
+### SAI
+
+| SAI     | DESCRIPTION        |
+|---------|--------------------|
+| SAI1    | AUDIO_CODEC        |
+| SAI4    | AUDIO_MIC          |
