@@ -162,7 +162,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
@@ -214,7 +214,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0)
@@ -366,7 +366,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR067") (unit 1)
+          (reference "#PWR068") (unit 1)
         )
       )
     )
@@ -378,7 +378,7 @@
     (property "Reference" "#PWR080" (at 138.43 92.71 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3V3" (at 138.811 84.5058 0)
+    (property "Value" "+3V3" (at 138.43 85.344 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 138.43 88.9 0)
@@ -396,7 +396,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR066") (unit 1)
+          (reference "#PWR067") (unit 1)
         )
       )
     )

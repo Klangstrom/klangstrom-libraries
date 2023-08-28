@@ -57,7 +57,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
@@ -197,7 +197,7 @@
     (property "Reference" "#PWR077" (at 143.51 97.79 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3V3" (at 143.51 90.17 0)
+    (property "Value" "+3V3" (at 143.51 90.424 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 143.51 93.98 0)
@@ -215,7 +215,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "#PWR068") (unit 1)
+          (reference "#PWR069") (unit 1)
         )
       )
     )

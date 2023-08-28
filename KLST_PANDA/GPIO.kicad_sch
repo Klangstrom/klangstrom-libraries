@@ -319,7 +319,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
@@ -423,7 +423,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0)
@@ -451,6 +451,7 @@
       )
     )
   )
+
 
   (junction (at 63.5 78.105) (diameter 0) (color 0 0 0 0)
     (uuid 1c12d74a-5fe0-4acf-93c2-e92fcfd5d90f)
@@ -811,7 +812,7 @@
           (reference "#PWR0129") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR086") (unit 1)
+          (reference "#PWR087") (unit 1)
         )
       )
     )
@@ -839,7 +840,7 @@
           (reference "#PWR0121") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR087") (unit 1)
+          (reference "#PWR088") (unit 1)
         )
       )
     )
@@ -851,7 +852,7 @@
     (property "Reference" "#PWR0127" (at 52.07 34.29 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3V3" (at 52.07 26.67 0)
+    (property "Value" "+3V3" (at 52.07 26.924 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 52.07 30.48 0)
@@ -867,7 +868,7 @@
           (reference "#PWR0127") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR085") (unit 1)
+          (reference "#PWR086") (unit 1)
         )
       )
     )

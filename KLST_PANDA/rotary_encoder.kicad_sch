@@ -287,7 +287,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
@@ -339,7 +339,7 @@
       (property "Datasheet" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
+      (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Power symbol creates a global label with name \"GND\" , ground" (at 0 0 0)
@@ -367,6 +367,7 @@
       )
     )
   )
+
 
   (junction (at 149.86 73.66) (diameter 0) (color 0 0 0 0)
     (uuid 5cadbe98-7708-4817-a98a-d273701066bd)
@@ -604,10 +605,10 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
-          (reference "#PWR057") (unit 1)
+          (reference "#PWR058") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/ed61e32f-240e-4d2b-b2a8-d00b0710740e"
-          (reference "#PWR059") (unit 1)
+          (reference "#PWR060") (unit 1)
         )
       )
     )
@@ -1142,7 +1143,7 @@
     (property "Reference" "#PWR066" (at 149.86 74.93 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3V3" (at 150.241 66.7258 0)
+    (property "Value" "+3V3" (at 149.86 67.564 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 149.86 71.12 0)
@@ -1166,10 +1167,10 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
-          (reference "#PWR056") (unit 1)
+          (reference "#PWR057") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/ed61e32f-240e-4d2b-b2a8-d00b0710740e"
-          (reference "#PWR058") (unit 1)
+          (reference "#PWR059") (unit 1)
         )
       )
     )
