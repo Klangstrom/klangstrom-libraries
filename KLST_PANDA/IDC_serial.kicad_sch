@@ -349,10 +349,10 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "#PWR066") (unit 1)
+          (reference "#PWR061") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "#PWR069") (unit 1)
+          (reference "#PWR064") (unit 1)
         )
       )
     )
@@ -382,10 +382,10 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "#PWR065") (unit 1)
+          (reference "#PWR060") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "#PWR068") (unit 1)
+          (reference "#PWR063") (unit 1)
         )
       )
     )
@@ -432,10 +432,10 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "J8") (unit 1)
+          (reference "J7") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "J9") (unit 1)
+          (reference "J8") (unit 1)
         )
       )
     )
@@ -465,10 +465,10 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "#PWR067") (unit 1)
+          (reference "#PWR062") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "#PWR070") (unit 1)
+          (reference "#PWR065") (unit 1)
         )
       )
     )

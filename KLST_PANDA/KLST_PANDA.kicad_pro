@@ -338,8 +338,8 @@
       ""
     ],
     [
-      "f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd",
-      "external_memory"
+      "d68846c2-d235-4363-b980-eab3c53b4a55",
+      "core"
     ],
     [
       "88042be3-8ae4-47d6-9c31-0a9af833bdb2",
@@ -424,6 +424,10 @@
     [
       "2ad43130-8b99-4527-817e-e6414020b242",
       "programmer"
+    ],
+    [
+      "f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd",
+      "external_memory"
     ]
   ],
   "text_variables": {}
