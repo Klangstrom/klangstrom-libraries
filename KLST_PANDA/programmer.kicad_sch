@@ -186,7 +186,6 @@
     )
   )
 
-
   (junction (at 99.695 66.04) (diameter 0) (color 0 0 0 0)
     (uuid 027ca480-8aa7-43da-8707-716e43cd2633)
   )
@@ -469,7 +468,7 @@
           (reference "J1") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "J16") (unit 1)
+          (reference "J18") (unit 1)
         )
       )
     )
@@ -547,7 +546,7 @@
           (reference "J1") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "J17") (unit 1)
+          (reference "J19") (unit 1)
         )
       )
     )

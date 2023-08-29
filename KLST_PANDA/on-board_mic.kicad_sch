@@ -375,7 +375,6 @@
     )
   )
 
-
   (junction (at 73.025 65.405) (diameter 0) (color 0 0 0 0)
     (uuid 0b4b8321-5e62-4003-8ea1-94e9869f78ed)
   )
@@ -629,7 +628,7 @@
     (property "Value" "MP34DT05TR-A" (at 49.53 33.02 0)
       (effects (font (size 1.524 1.524)))
     )
-    (property "Footprint" "MP34DT05TR-A_STM" (at 29.21 40.64 0)
+    (property "Footprint" "MP34DT05TR-A:MP34DT05TR-A_STM" (at 29.21 40.64 0)
       (effects (font (size 1.27 1.27) italic) hide)
     )
     (property "Datasheet" "MP34DT05TR-A" (at 29.21 40.64 0)
@@ -712,7 +711,7 @@
     (property "Value" "MP34DT05TR-A" (at 49.53 57.785 0)
       (effects (font (size 1.524 1.524)))
     )
-    (property "Footprint" "MP34DT05TR-A_STM" (at 29.21 65.405 0)
+    (property "Footprint" "MP34DT05TR-A:MP34DT05TR-A_STM" (at 29.21 65.405 0)
       (effects (font (size 1.27 1.27) italic) hide)
     )
     (property "Datasheet" "MP34DT05TR-A" (at 29.21 65.405 0)

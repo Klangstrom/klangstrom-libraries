@@ -1264,7 +1264,7 @@
   (symbol (lib_id "Connector:USB_C_Receptacle_USB2.0") (at 127 55.88 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 56805e25-b769-46aa-b491-db3ebf03fbbb)
-    (property "Reference" "J11" (at 127 34.29 0)
+    (property "Reference" "J13" (at 127 34.29 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "DEVICE+CHARGE(UFP)" (at 127 36.83 0)
@@ -1296,7 +1296,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "J11") (unit 1)
+          (reference "J13") (unit 1)
         )
       )
     )
@@ -1472,7 +1472,7 @@
   (symbol (lib_id "Connector:USB_C_Receptacle_USB2.0") (at 160.02 55.88 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid b5f775dd-08ef-49f2-a894-213f7a33fd1b)
-    (property "Reference" "J12" (at 160.02 34.29 0)
+    (property "Reference" "J14" (at 160.02 34.29 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "HOST(DFP)" (at 160.02 36.83 0)
@@ -1504,7 +1504,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "J12") (unit 1)
+          (reference "J14") (unit 1)
         )
       )
     )

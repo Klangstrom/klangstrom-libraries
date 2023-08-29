@@ -452,7 +452,6 @@
     )
   )
 
-
   (junction (at 63.5 78.105) (diameter 0) (color 0 0 0 0)
     (uuid 1c12d74a-5fe0-4acf-93c2-e92fcfd5d90f)
   )
@@ -743,7 +742,7 @@
   (symbol (lib_id "Connector_Generic:Conn_02x17_Odd_Even") (at 62.23 54.61 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0a92c07b-557f-42a7-b099-89d63c3fe2e9)
-    (property "Reference" "J15" (at 63.5 28.575 0)
+    (property "Reference" "J17" (at 63.5 28.575 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "GPIO" (at 63.5 31.115 0)
@@ -792,7 +791,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "J15") (unit 1)
+          (reference "J17") (unit 1)
         )
       )
     )
