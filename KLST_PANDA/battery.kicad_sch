@@ -920,14 +920,14 @@
     )
   )
 
-  (junction (at 47.625 34.29) (diameter 0) (color 0 0 0 0)
-    (uuid 00792532-0bcf-45d2-81dc-0963952d2883)
-  )
   (junction (at 218.44 40.64) (diameter 0) (color 0 0 0 0)
     (uuid 1d5e08e7-ff65-47c3-9188-9d76f05d1113)
   )
   (junction (at 223.52 73.66) (diameter 0) (color 0 0 0 0)
     (uuid 21fff0a7-ab3d-49e6-9348-bd2030b09b75)
+  )
+  (junction (at 52.705 34.29) (diameter 0) (color 0 0 0 0)
+    (uuid 23fe27c5-02f4-4736-a919-3a6ce33a5e18)
   )
   (junction (at 156.21 78.74) (diameter 0) (color 0 0 0 0)
     (uuid 27bfea02-62c4-4003-a2e7-6d1653b5abfd)
@@ -1105,6 +1105,10 @@
     (stroke (width 0) (type default))
     (uuid 5230f481-a6ab-468c-af4f-46aea4f0bddb)
   )
+  (wire (pts (xy 45.72 34.29) (xy 52.705 34.29))
+    (stroke (width 0) (type default))
+    (uuid 589c8408-827d-4746-8b98-0e2f135f453b)
+  )
   (wire (pts (xy 101.6 71.12) (xy 101.6 81.915))
     (stroke (width 0) (type default))
     (uuid 5c32a880-237d-4c49-b458-edcd69179223)
@@ -1148,10 +1152,6 @@
   (wire (pts (xy 149.86 49.53) (xy 149.86 53.34))
     (stroke (width 0) (type default))
     (uuid 8172708e-9858-49cf-bf1d-3e5e21f04995)
-  )
-  (wire (pts (xy 45.72 34.29) (xy 47.625 34.29))
-    (stroke (width 0) (type default))
-    (uuid 81d883ef-a9dd-4252-9f01-65643f2eeb4c)
   )
   (wire (pts (xy 105.41 63.5) (xy 101.6 63.5))
     (stroke (width 0) (type default))
@@ -1205,10 +1205,6 @@
     (stroke (width 0) (type default))
     (uuid a262d304-9bcb-436f-b7ae-fcc096720bd2)
   )
-  (wire (pts (xy 47.625 31.115) (xy 47.625 34.29))
-    (stroke (width 0) (type default))
-    (uuid a5a2a27d-b3c7-40e0-af22-e930fd7ea4fe)
-  )
   (wire (pts (xy 156.21 78.74) (xy 156.21 80.01))
     (stroke (width 0) (type default))
     (uuid a71c3583-9653-45a9-bf0e-0557367f14a8)
@@ -1220,6 +1216,10 @@
   (wire (pts (xy 228.6 63.5) (xy 228.6 66.04))
     (stroke (width 0) (type default))
     (uuid abfb5a26-f2d7-413b-aa3b-fcbab6e3f88d)
+  )
+  (wire (pts (xy 52.705 34.29) (xy 59.055 34.29))
+    (stroke (width 0) (type default))
+    (uuid ae74d0e9-39db-4928-898d-9c294c4195f9)
   )
   (wire (pts (xy 119.38 71.12) (xy 119.38 81.915))
     (stroke (width 0) (type default))
@@ -1321,10 +1321,6 @@
     (stroke (width 0) (type default))
     (uuid ee1bb4ab-7128-4e8e-9df4-15e2b388535b)
   )
-  (wire (pts (xy 47.625 34.29) (xy 49.53 34.29))
-    (stroke (width 0) (type default))
-    (uuid f35318d1-7709-4955-920f-082d08f27ed4)
-  )
   (wire (pts (xy 83.82 46.99) (xy 83.82 45.72))
     (stroke (width 0) (type default))
     (uuid fa8c76fb-70bf-43bd-b561-b6a482f37349)
@@ -1406,7 +1402,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 38041d78-64d4-483c-bcd5-c1d1b5e5f068)
   )
-  (label "VBUS" (at 49.53 34.29 0) (fields_autoplaced)
+  (label "VBUS" (at 59.055 34.29 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 487d4b9f-4062-4393-b48f-3dbd0959e010)
   )
@@ -1471,7 +1467,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR053") (unit 1)
+          (reference "#PWR048") (unit 1)
         )
       )
     )
@@ -1520,7 +1516,7 @@
   (symbol (lib_id "TP5400:TP5400") (at 119.38 59.69 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 272bbfaa-f547-4846-834d-331eaa09788b)
-    (property "Reference" "U4" (at 119.38 48.26 0)
+    (property "Reference" "U3" (at 119.38 48.26 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TP5400" (at 119.38 50.8 0)
@@ -1546,7 +1542,32 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "U4") (unit 1)
+          (reference "U3") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:PWR_FLAG") (at 52.705 34.29 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 3a95a524-341f-4d2d-91ad-0997e806f019)
+    (property "Reference" "#FLG09" (at 52.705 32.385 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "PWR_FLAG" (at 52.705 31.115 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 52.705 34.29 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 52.705 34.29 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 99f77057-9284-4b35-9e2e-5eb4751ec76b))
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
+          (reference "#FLG09") (unit 1)
         )
       )
     )
@@ -1586,7 +1607,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C56") (unit 1)
+          (reference "C32") (unit 1)
         )
       )
     )
@@ -1629,7 +1650,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R35") (unit 1)
+          (reference "R21") (unit 1)
         )
       )
     )
@@ -1704,7 +1725,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR054") (unit 1)
+          (reference "#PWR049") (unit 1)
         )
       )
     )
@@ -1773,7 +1794,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R34") (unit 1)
+          (reference "R20") (unit 1)
         )
       )
     )
@@ -1842,7 +1863,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C58") (unit 1)
+          (reference "C34") (unit 1)
         )
       )
     )
@@ -1851,7 +1872,7 @@
   (symbol (lib_id "Connector:Conn_01x01_Pin") (at 180.34 73.66 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 8d8ea965-2d50-4ac5-9c7f-30a5a7487077)
-    (property "Reference" "J8" (at 179.705 78.105 0)
+    (property "Reference" "J4" (at 179.705 78.105 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "Battery_18650_Minus" (at 179.705 75.565 0)
@@ -1867,7 +1888,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "J8") (unit 1)
+          (reference "J4") (unit 1)
         )
       )
     )
@@ -1940,7 +1961,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR056") (unit 1)
+          (reference "#PWR051") (unit 1)
         )
       )
     )
@@ -1949,7 +1970,7 @@
   (symbol (lib_id "Device:C_Polarized_Small") (at 175.26 46.99 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a64f73f0-0c67-44a3-a2e3-476749bef448)
-    (property "Reference" "C59" (at 177.8 45.8089 0)
+    (property "Reference" "C35" (at 177.8 45.8089 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "47uF" (at 177.8 48.3489 0)
@@ -1966,7 +1987,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C59") (unit 1)
+          (reference "C35") (unit 1)
         )
       )
     )
@@ -2006,7 +2027,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C57") (unit 1)
+          (reference "C33") (unit 1)
         )
       )
     )
@@ -2049,7 +2070,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R32") (unit 1)
+          (reference "R18") (unit 1)
         )
       )
     )
@@ -2058,7 +2079,7 @@
   (symbol (lib_id "Connector:Conn_01x01_Pin") (at 180.34 69.215 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid aff9d2f9-b538-409f-9632-49c44b5a81d3)
-    (property "Reference" "J7" (at 179.705 64.77 0)
+    (property "Reference" "J3" (at 179.705 64.77 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "Battery_18650_Plus" (at 179.705 67.31 0)
@@ -2074,7 +2095,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "J7") (unit 1)
+          (reference "J3") (unit 1)
         )
       )
     )
@@ -2159,7 +2180,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "C55") (unit 1)
+          (reference "C31") (unit 1)
         )
       )
     )
@@ -2189,7 +2210,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR055") (unit 1)
+          (reference "#PWR050") (unit 1)
         )
       )
     )
@@ -2219,32 +2240,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR052") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:PWR_FLAG") (at 47.625 31.115 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid d8cb1e4d-29aa-4791-bc56-e6d35f71ecc3)
-    (property "Reference" "#FLG08" (at 47.625 29.21 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "PWR_FLAG" (at 47.625 27.94 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 47.625 31.115 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 47.625 31.115 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid aa489d68-fac7-4e31-8680-f8e1213ddd22))
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#FLG08") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -2330,7 +2326,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "R33") (unit 1)
+          (reference "R19") (unit 1)
         )
       )
     )

@@ -44,11 +44,11 @@
         )
       )
     )
-    (symbol "power:+3V3" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+    (symbol "power:+3.3V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "Value" "+3V3" (at 0 3.556 0)
+      (property "Value" "+3.3V" (at 0 3.556 0)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -60,10 +60,10 @@
       (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
+      (property "ki_description" "Power symbol creates a global label with name \"+3.3V\"" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (symbol "+3V3_0_1"
+      (symbol "+3.3V_0_1"
         (polyline
           (pts
             (xy -0.762 1.27)
@@ -89,9 +89,9 @@
           (fill (type none))
         )
       )
-      (symbol "+3V3_1_1"
+      (symbol "+3.3V_1_1"
         (pin power_in line (at 0 0 90) (length 0) hide
-          (name "+3V3" (effects (font (size 1.27 1.27))))
+          (name "+3.3V" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
       )
@@ -114,7 +114,7 @@
     (stroke (width 0) (type default))
     (uuid 4b0af786-2f9d-4456-bd9e-711df69c97e7)
   )
-  (wire (pts (xy 143.51 93.98) (xy 143.51 95.25))
+  (wire (pts (xy 143.51 93.345) (xy 143.51 95.25))
     (stroke (width 0) (type default))
     (uuid 5449cea4-2c68-4fb4-afbe-0aefce544fae)
   )
@@ -185,37 +185,35 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "R50") (unit 1)
+          (reference "R36") (unit 1)
         )
       )
     )
   )
 
-  (symbol (lib_id "power:+3V3") (at 143.51 93.98 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 48141a49-8621-4034-90ba-b45a7c9f6770)
-    (property "Reference" "#PWR077" (at 143.51 97.79 0)
+  (symbol (lib_id "power:+3.3V") (at 143.51 93.345 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 7d20deca-4006-49dc-bf8c-70a82c17b11b)
+    (property "Reference" "#PWR077" (at 143.51 97.155 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3V3" (at 143.51 90.424 0)
+    (property "Value" "+3.3V" (at 143.51 88.265 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 143.51 93.98 0)
+    (property "Footprint" "" (at 143.51 93.345 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "" (at 143.51 93.98 0)
+    (property "Datasheet" "" (at 143.51 93.345 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 67ce1f9e-4be1-48e4-abcc-2b63a515d94e))
+    (pin "1" (uuid acf0d489-9832-47d4-8fc0-e8db63fcb86d))
     (instances
-      (project "KLST_SHEEP"
-        (path "/7c1fd6fc-5c53-4ccb-a456-46fe6fc0bc71"
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
           (reference "#PWR077") (unit 1)
         )
-      )
-      (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "#PWR069") (unit 1)
+          (reference "#PWR062") (unit 1)
         )
       )
     )
@@ -258,7 +256,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1de475bd-0e17-4802-9721-941bfddbd8b4"
-          (reference "R51") (unit 1)
+          (reference "R37") (unit 1)
         )
       )
     )

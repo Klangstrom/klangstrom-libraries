@@ -32,7 +32,13 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      "pin_to_pin|1136650|393700|8a0ff92e-9d58-47a2-8c70-d1fa67fe66b1|11121fe2-1206-4d77-bbf0-eca46a806c38|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242",
+      "pin_to_pin|1136650|571500|2de43c59-0f71-49ba-be20-383ce5927851|8ddea17e-843b-4eaa-ae84-13163bf2516a|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242",
+      "pin_to_pin|444500|393700|11121fe2-1206-4d77-bbf0-eca46a806c38|8a0ff92e-9d58-47a2-8c70-d1fa67fe66b1|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242",
+      "pin_to_pin|444500|571500|8ddea17e-843b-4eaa-ae84-13163bf2516a|2de43c59-0f71-49ba-be20-383ce5927851|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242|/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242",
+      "pin_to_pin|698500|431800|7d865926-5056-4c90-b930-04d1afe6f062|8e1c8762-4e25-4125-935c-dbedc8218c19|/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85|/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85|/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
+    ],
     "meta": {
       "version": 0
     },
@@ -226,7 +232,7 @@
       "missing_input_pin": "warning",
       "missing_power_pin": "error",
       "missing_unit": "warning",
-      "multiple_net_names": "warning",
+      "multiple_net_names": "ignore",
       "net_not_bus_member": "warning",
       "no_connect_connected": "warning",
       "no_connect_dangling": "warning",
@@ -338,12 +344,12 @@
       ""
     ],
     [
-      "d68846c2-d235-4363-b980-eab3c53b4a55",
-      "core"
+      "efc23d99-04cc-4530-a8d8-9c096b510f30",
+      "power"
     ],
     [
-      "88042be3-8ae4-47d6-9c31-0a9af833bdb2",
-      "audio_codec"
+      "d68846c2-d235-4363-b980-eab3c53b4a55",
+      "core"
     ],
     [
       "52cda7d1-da0e-43fc-963f-d09ac6e0ff74",
@@ -428,6 +434,10 @@
     [
       "f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd",
       "external_memory"
+    ],
+    [
+      "88042be3-8ae4-47d6-9c31-0a9af833bdb2",
+      "audio_codec"
     ]
   ],
   "text_variables": {}

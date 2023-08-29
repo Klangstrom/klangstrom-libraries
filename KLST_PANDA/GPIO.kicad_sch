@@ -5,6 +5,58 @@
   (paper "A4")
 
   (lib_symbols
+    (symbol "+5V_1" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "#PWR" (at 0 -3.81 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Value" "+5V_1" (at 0 3.556 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "global power" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Power symbol creates a global label with name \"+5V\"" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "+5V_1_0_1"
+        (polyline
+          (pts
+            (xy -0.762 1.27)
+            (xy 0 2.54)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 2.54)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 2.54)
+            (xy 0.762 1.27)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "+5V_1_1_1"
+        (pin power_in line (at 0 0 90) (length 0) hide
+          (name "+5V" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "Connector_Generic:Conn_02x17_Odd_Even" (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (at 1.27 22.86 0)
         (effects (font (size 1.27 1.27)))
@@ -306,11 +358,11 @@
         )
       )
     )
-    (symbol "power:+3V3" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+    (symbol "power:+3.3V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "Value" "+3V3" (at 0 3.556 0)
+      (property "Value" "+3.3V" (at 0 3.556 0)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -322,10 +374,10 @@
       (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
+      (property "ki_description" "Power symbol creates a global label with name \"+3.3V\"" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (symbol "+3V3_0_1"
+      (symbol "+3.3V_0_1"
         (polyline
           (pts
             (xy -0.762 1.27)
@@ -351,61 +403,9 @@
           (fill (type none))
         )
       )
-      (symbol "+3V3_1_1"
+      (symbol "+3.3V_1_1"
         (pin power_in line (at 0 0 90) (length 0) hide
-          (name "+3V3" (effects (font (size 1.27 1.27))))
-          (number "1" (effects (font (size 1.27 1.27))))
-        )
-      )
-    )
-    (symbol "power:+5V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
-      (property "Reference" "#PWR" (at 0 -3.81 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Value" "+5V" (at 0 3.556 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (property "Footprint" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Datasheet" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_keywords" "power-flag" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_description" "Power symbol creates a global label with name \"+5V\"" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (symbol "+5V_0_1"
-        (polyline
-          (pts
-            (xy -0.762 1.27)
-            (xy 0 2.54)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 0 0)
-            (xy 0 2.54)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy 0 2.54)
-            (xy 0.762 1.27)
-          )
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-      )
-      (symbol "+5V_1_1"
-        (pin power_in line (at 0 0 90) (length 0) hide
-          (name "+5V" (effects (font (size 1.27 1.27))))
+          (name "+3.3V" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
       )
@@ -742,7 +742,7 @@
   (symbol (lib_id "Connector_Generic:Conn_02x17_Odd_Even") (at 62.23 54.61 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0a92c07b-557f-42a7-b099-89d63c3fe2e9)
-    (property "Reference" "J17" (at 63.5 28.575 0)
+    (property "Reference" "J13" (at 63.5 28.575 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "GPIO" (at 63.5 31.115 0)
@@ -791,7 +791,35 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "J17") (unit 1)
+          (reference "J13") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 52.07 30.48 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 1e8b1542-1bd8-43fa-81d3-71412565a5c7)
+    (property "Reference" "#PWR077" (at 52.07 34.29 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 52.07 25.4 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 52.07 30.48 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 52.07 30.48 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 85b1410a-923d-455d-9280-6acb68afcb14))
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
+          (reference "#PWR077") (unit 1)
+        )
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
+          (reference "#PWR077") (unit 1)
         )
       )
     )
@@ -819,19 +847,19 @@
           (reference "#PWR0129") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR087") (unit 1)
+          (reference "#PWR078") (unit 1)
         )
       )
     )
   )
 
-  (symbol (lib_id "power:+5V") (at 73.66 30.48 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid c4d59ecc-5d2e-42da-9d21-fffb1fea44e4)
-    (property "Reference" "#PWR0121" (at 73.66 34.29 0)
+  (symbol (lib_name "+5V_1") (lib_id "power:+5V") (at 73.66 30.48 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid ac928ae3-c23a-407a-b980-f4e2ce0d8665)
+    (property "Reference" "#PWR079" (at 73.66 34.29 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+5V" (at 73.66 26.67 0)
+    (property "Value" "+5V" (at 73.66 26.035 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 73.66 30.48 0)
@@ -840,42 +868,11 @@
     (property "Datasheet" "" (at 73.66 30.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 5554b80d-5b85-4506-a316-a9ce2e9b4200))
+    (pin "1" (uuid 34e8b8f3-e33a-4797-b15b-0d087cb2bbaa))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR0121") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR088") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:+3V3") (at 52.07 30.48 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid da39f5b9-6280-425a-8023-970cb5a857fc)
-    (property "Reference" "#PWR0127" (at 52.07 34.29 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+3V3" (at 52.07 26.924 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 52.07 30.48 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 52.07 30.48 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid f0192c85-720d-4c11-969b-31015ff4dbf4))
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR0127") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR086") (unit 1)
+          (reference "#PWR079") (unit 1)
         )
       )
     )

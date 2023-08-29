@@ -336,11 +336,11 @@
         )
       )
     )
-    (symbol "power:+3V3" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+    (symbol "power:+3.3V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "Value" "+3V3" (at 0 3.556 0)
+      (property "Value" "+3.3V" (at 0 3.556 0)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -352,10 +352,10 @@
       (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
+      (property "ki_description" "Power symbol creates a global label with name \"+3.3V\"" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (symbol "+3V3_0_1"
+      (symbol "+3.3V_0_1"
         (polyline
           (pts
             (xy -0.762 1.27)
@@ -381,9 +381,9 @@
           (fill (type none))
         )
       )
-      (symbol "+3V3_1_1"
+      (symbol "+3.3V_1_1"
         (pin power_in line (at 0 0 90) (length 0) hide
-          (name "+3V3" (effects (font (size 1.27 1.27))))
+          (name "+3.3V" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
       )
@@ -676,7 +676,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR085") (unit 1)
+          (reference "#PWR076") (unit 1)
         )
       )
     )
@@ -707,7 +707,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR083") (unit 1)
+          (reference "#PWR074") (unit 1)
         )
       )
     )
@@ -738,7 +738,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR082") (unit 1)
+          (reference "#PWR073") (unit 1)
         )
       )
     )
@@ -747,7 +747,7 @@
   (symbol (lib_id "Device:R_Small") (at 87.63 78.105 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 26d30be3-d079-46a3-aa5f-a88d88ed0c46)
-    (property "Reference" "R65" (at 87.63 74.295 90)
+    (property "Reference" "R51" (at 87.63 74.295 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "20K" (at 87.63 76.2 90)
@@ -764,7 +764,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R65") (unit 1)
+          (reference "R51") (unit 1)
         )
       )
     )
@@ -773,7 +773,7 @@
   (symbol (lib_id "Amplifier_Operational:TLV9001IDCK") (at 98.425 80.645 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 293aadf5-9357-4eb5-8bc5-532330ce68d3)
-    (property "Reference" "U7" (at 114.3 77.2161 0)
+    (property "Reference" "U6" (at 114.3 77.2161 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TLV9001IDCK" (at 114.3 79.7561 0)
@@ -793,7 +793,32 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "U7") (unit 1)
+          (reference "U6") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 98.425 66.04 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 2cd54f68-8991-446a-afe0-6407ed693c92)
+    (property "Reference" "#PWR075" (at 98.425 69.85 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 98.425 61.595 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 98.425 66.04 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 98.425 66.04 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 5d5e4a1e-130a-4a58-a4fa-f4414fa28913))
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
+          (reference "#PWR075") (unit 1)
         )
       )
     )
@@ -848,34 +873,6 @@
     )
   )
 
-  (symbol (lib_id "power:+3V3") (at 98.425 66.04 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 6a6c88e3-dcde-4a00-a4ae-3741f17b9fd5)
-    (property "Reference" "#PWR012" (at 98.425 69.85 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+3V3" (at 98.425 62.484 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 98.425 66.04 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 98.425 66.04 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 64505433-5753-40de-ac77-5a7ead0dd8ea))
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR012") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR084") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "Connector_Audio:AudioJack4_SwitchTR1") (at 29.845 83.185 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 777a4804-2cf3-4861-a594-2c8503499ca9)
@@ -906,7 +903,7 @@
           (reference "J3") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "J16") (unit 1)
+          (reference "J12") (unit 1)
         )
       )
     )
@@ -942,7 +939,7 @@
           (reference "J3") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "J15") (unit 1)
+          (reference "J11") (unit 1)
         )
       )
     )
@@ -951,7 +948,7 @@
   (symbol (lib_id "Device:R_Small") (at 81.915 85.09 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 84bb65c1-02b6-4881-ba85-43f31711f8d4)
-    (property "Reference" "R64" (at 80.645 83.82 0)
+    (property "Reference" "R50" (at 80.645 83.82 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100K" (at 80.645 86.36 0)
@@ -968,7 +965,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R64") (unit 1)
+          (reference "R50") (unit 1)
         )
       )
     )
@@ -977,7 +974,7 @@
   (symbol (lib_id "Device:R_Small") (at 106.68 69.85 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid fc381537-1184-42e0-beef-ba80bfe1b26a)
-    (property "Reference" "R66" (at 106.68 66.04 90)
+    (property "Reference" "R52" (at 106.68 66.04 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "20K" (at 106.68 67.945 90)
@@ -994,7 +991,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R66") (unit 1)
+          (reference "R52") (unit 1)
         )
       )
     )

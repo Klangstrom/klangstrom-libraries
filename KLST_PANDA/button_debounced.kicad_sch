@@ -149,11 +149,11 @@
         )
       )
     )
-    (symbol "power:+3V3" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+    (symbol "power:+3.3V" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -3.81 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "Value" "+3V3" (at 0 3.556 0)
+      (property "Value" "+3.3V" (at 0 3.556 0)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -165,10 +165,10 @@
       (property "ki_keywords" "global power" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_description" "Power symbol creates a global label with name \"+3V3\"" (at 0 0 0)
+      (property "ki_description" "Power symbol creates a global label with name \"+3.3V\"" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (symbol "+3V3_0_1"
+      (symbol "+3.3V_0_1"
         (polyline
           (pts
             (xy -0.762 1.27)
@@ -194,9 +194,9 @@
           (fill (type none))
         )
       )
-      (symbol "+3V3_1_1"
+      (symbol "+3.3V_1_1"
         (pin power_in line (at 0 0 90) (length 0) hide
-          (name "+3V3" (effects (font (size 1.27 1.27))))
+          (name "+3.3V" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
       )
@@ -244,7 +244,7 @@
   )
 
   (junction (at 147.32 118.11) (diameter 0) (color 0 0 0 0)
-    (uuid 09554bdf-e408-461c-99f6-f9a72b8efde0)
+    (uuid 204636d9-9314-47b9-80c9-786fb28dd5f6)
   )
   (junction (at 138.43 99.06) (diameter 0) (color 0 0 0 0)
     (uuid 6dda8694-fb57-4157-adaf-acaac0269c3a)
@@ -253,6 +253,10 @@
     (uuid 9f67be89-1d6b-459a-9cf4-f6dcdb3714bc)
   )
 
+  (wire (pts (xy 138.43 86.995) (xy 138.43 88.9))
+    (stroke (width 0) (type default))
+    (uuid 0375ab82-092c-4438-895c-413b30c57162)
+  )
   (wire (pts (xy 138.43 99.06) (xy 138.43 105.41))
     (stroke (width 0) (type default))
     (uuid 15cc477a-440d-4a7e-a4a5-4c5757c2481f)
@@ -264,6 +268,10 @@
   (wire (pts (xy 140.97 99.06) (xy 138.43 99.06))
     (stroke (width 0) (type default))
     (uuid 35e9a88d-953f-46c4-876c-22e9acd44d83)
+  )
+  (wire (pts (xy 147.32 118.11) (xy 147.32 120.015))
+    (stroke (width 0) (type default))
+    (uuid 45174793-5ebf-4589-9813-9434329eec28)
   )
   (wire (pts (xy 138.43 96.52) (xy 138.43 99.06))
     (stroke (width 0) (type default))
@@ -285,11 +293,11 @@
     (stroke (width 0) (type default))
     (uuid bc5e5e70-8f52-4996-b9b8-dcbcca0cf59d)
   )
-  (wire (pts (xy 138.43 118.11) (xy 147.32 118.11))
-    (stroke (width 0) (type default))
-    (uuid ebcc2c8c-af83-481f-bde6-7bdc854139aa)
-  )
   (wire (pts (xy 147.32 118.11) (xy 156.21 118.11))
+    (stroke (width 0) (type default))
+    (uuid e7416adc-f58f-40ff-942c-f008bd2364c8)
+  )
+  (wire (pts (xy 138.43 118.11) (xy 147.32 118.11))
     (stroke (width 0) (type default))
     (uuid fa0f0d4d-7b74-4caf-892d-c68d216ddb90)
   )
@@ -336,67 +344,35 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "R49") (unit 1)
+          (reference "R35") (unit 1)
         )
       )
     )
   )
 
-  (symbol (lib_id "power:GND") (at 147.32 118.11 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 8d5c6a78-ee21-4c66-a022-eb47d137b0ff)
-    (property "Reference" "#PWR081" (at 147.32 124.46 0)
+  (symbol (lib_id "power:+3.3V") (at 138.43 86.995 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 700f9307-4acd-4353-9cff-c515144d6383)
+    (property "Reference" "#PWR077" (at 138.43 90.805 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "GND" (at 147.32 121.92 0)
+    (property "Value" "+3.3V" (at 138.43 81.915 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 147.32 118.11 0)
+    (property "Footprint" "" (at 138.43 86.995 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "" (at 147.32 118.11 0)
+    (property "Datasheet" "" (at 138.43 86.995 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 96d9bca9-f31c-4125-b471-d2f1cdbda0a8))
+    (pin "1" (uuid 25b8d711-51ce-4e1b-9b8c-46a445bd7635))
     (instances
-      (project "KLST_SHEEP"
-        (path "/7c1fd6fc-5c53-4ccb-a456-46fe6fc0bc71/00000000-0000-0000-0000-00006058fda0"
-          (reference "#PWR081") (unit 1)
-        )
-      )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR068") (unit 1)
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
+          (reference "#PWR077") (unit 1)
         )
-      )
-    )
-  )
-
-  (symbol (lib_id "power:+3V3") (at 138.43 88.9 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 9ad79d2d-6fdc-4cbd-8aa9-f6172d867910)
-    (property "Reference" "#PWR080" (at 138.43 92.71 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "+3V3" (at 138.43 85.344 0)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 138.43 88.9 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "" (at 138.43 88.9 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 68cc6c35-51a5-458d-baaa-4025d78734eb))
-    (instances
-      (project "KLST_SHEEP"
-        (path "/7c1fd6fc-5c53-4ccb-a456-46fe6fc0bc71/00000000-0000-0000-0000-00006058fda0"
-          (reference "#PWR080") (unit 1)
-        )
-      )
-      (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR067") (unit 1)
+          (reference "#PWR060") (unit 1)
         )
       )
     )
@@ -439,7 +415,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "C66") (unit 1)
+          (reference "C42") (unit 1)
         )
       )
     )
@@ -482,7 +458,32 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "R48") (unit 1)
+          (reference "R34") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:GND") (at 147.32 120.015 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid cc65fb48-994c-4109-8769-6eb16d102c40)
+    (property "Reference" "#PWR061" (at 147.32 126.365 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (at 147.32 124.46 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 147.32 120.015 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 147.32 120.015 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 0e0d5850-b5bd-458a-a1c2-b9e813026f34))
+    (instances
+      (project "KLST_PANDA"
+        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
+          (reference "#PWR061") (unit 1)
         )
       )
     )
