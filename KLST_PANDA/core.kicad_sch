@@ -3151,7 +3151,7 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "GPIO_20" (shape input) (at 150.495 136.525 0) (fields_autoplaced)
+  (global_label "GPIO_06" (shape input) (at 150.495 136.525 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid c1d85c6a-dccf-45c8-bb81-b96c141ef348)
     (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 161.2627 136.525 0)

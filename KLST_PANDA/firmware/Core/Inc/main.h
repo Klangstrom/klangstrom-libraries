@@ -186,8 +186,8 @@ void Error_Handler(void);
 #define _SERIAL_DEBUG_RX_GPIO_Port GPIOD
 #define _DISPLAY_LTDC_B3_Pin GPIO_PIN_10
 #define _DISPLAY_LTDC_B3_GPIO_Port GPIOD
-#define GPIO_20_Pin GPIO_PIN_11
-#define GPIO_20_GPIO_Port GPIOD
+#define GPIO_06_Pin GPIO_PIN_11
+#define GPIO_06_GPIO_Port GPIOD
 #define _EXT_MEMORY_A1_Pin GPIO_PIN_12
 #define _EXT_MEMORY_A1_GPIO_Port GPIOD
 #define _DISPLAY_TOUCH_INTERRUPT_Pin GPIO_PIN_13
