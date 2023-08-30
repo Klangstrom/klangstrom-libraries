@@ -395,10 +395,6 @@
       "BUTTON_PROGRAMMER"
     ],
     [
-      "1de475bd-0e17-4802-9721-941bfddbd8b4",
-      "I2C"
-    ],
-    [
       "1f0020ca-bef6-4e88-99dd-cc88d8a9362c",
       "MIDI_analog"
     ],

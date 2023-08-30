@@ -1772,7 +1772,7 @@
   (symbol (lib_id "power:+5V") (at 104.14 29.21 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 241d4489-60af-4cb3-9175-db26fd8ce669)
-    (property "Reference" "#PWR043" (at 104.14 33.02 0)
+    (property "Reference" "#PWR044" (at 104.14 33.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 104.14 24.13 0)
@@ -1788,7 +1788,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR043") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
@@ -1819,7 +1819,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR045") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -1857,7 +1857,7 @@
   (symbol (lib_id "Device:R_Small") (at 66.04 45.72 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ba9a81d8-2b10-4463-a9c2-7082268049cc)
-    (property "Reference" "R17" (at 66.04 40.64 90)
+    (property "Reference" "R19" (at 66.04 40.64 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "1K" (at 66.04 43.18 90)
@@ -1874,7 +1874,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R17") (unit 1)
+          (reference "R19") (unit 1)
         )
       )
     )
@@ -2023,7 +2023,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR044") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -2032,7 +2032,7 @@
   (symbol (lib_id "Device:R_Small") (at 55.88 49.53 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid d6466c7c-bfa9-4123-9f06-cbb6b531aafb)
-    (property "Reference" "R16" (at 53.34 48.895 0)
+    (property "Reference" "R18" (at 53.34 48.895 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "20R" (at 53.34 51.435 0)
@@ -2049,7 +2049,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R16") (unit 1)
+          (reference "R18") (unit 1)
         )
       )
     )
@@ -2109,7 +2109,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR042") (unit 1)
+          (reference "#PWR043") (unit 1)
         )
       )
     )

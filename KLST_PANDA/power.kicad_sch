@@ -994,7 +994,7 @@
           (reference "#PWR05") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR010") (unit 1)
+          (reference "#PWR011") (unit 1)
         )
       )
     )
@@ -1104,7 +1104,7 @@
           (reference "#PWR036") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR07") (unit 1)
+          (reference "#PWR08") (unit 1)
         )
       )
     )
@@ -1135,7 +1135,7 @@
           (reference "#PWR01") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR03") (unit 1)
+          (reference "#PWR04") (unit 1)
         )
       )
     )
@@ -1168,8 +1168,8 @@
     (property "JLCPCB Part #" "C15195" (at 135.89 34.29 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 72e8b1de-1d22-4887-a8c0-b0eec540b0e9))
-    (pin "2" (uuid e92d3005-999f-4ff6-8ac7-9827a51472de))
+    (pin "1" (uuid 1bbd87dc-5131-4cba-ab08-92e7d0ebe577))
+    (pin "2" (uuid 2f1051c9-e27f-49e8-9086-bcdc52d9cf5e))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1243,8 +1243,8 @@
     (property "JLCPCB Part #" "C52923" (at 125.73 34.29 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 2fae9ca5-2c89-41c5-a82a-7cede1e716c4))
-    (pin "2" (uuid e806f68e-c73c-46e5-8db0-896f4874473e))
+    (pin "1" (uuid 05bf8a41-3f28-47b5-bd23-1d492dc13051))
+    (pin "2" (uuid e893f342-e346-4635-9d72-81f2f38bba19))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1316,7 +1316,7 @@
           (reference "#PWR032") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR08") (unit 1)
+          (reference "#PWR09") (unit 1)
         )
       )
     )
@@ -1368,7 +1368,7 @@
     (property "Datasheet" "" (at 158.115 26.67 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 80482c47-ec0a-45d1-a4fb-5ff7f412e7ec))
+    (pin "1" (uuid 31fdfbb8-efe6-4cc6-b8ee-337edf33a6c0))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1378,7 +1378,7 @@
           (reference "#PWR034") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR014") (unit 1)
+          (reference "#PWR015") (unit 1)
         )
       )
     )
@@ -1399,7 +1399,7 @@
     (property "Datasheet" "" (at 111.76 24.13 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 6750f4d7-63b1-4a01-a528-e42eb74d7155))
+    (pin "1" (uuid c542cd31-668c-4b45-bf07-09045361b2fa))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
@@ -1412,7 +1412,7 @@
           (reference "#PWR016") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR011") (unit 1)
+          (reference "#PWR012") (unit 1)
         )
       )
     )
@@ -1477,7 +1477,7 @@
           (reference "#PWR06") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR04") (unit 1)
+          (reference "#PWR05") (unit 1)
         )
       )
     )
@@ -1529,7 +1529,7 @@
     (property "Datasheet" "" (at 125.73 39.37 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid f3ead384-795a-46f0-a746-1d97d5b99841))
+    (pin "1" (uuid 94c7343f-66d3-46fd-95e1-8c29aec515d4))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1539,7 +1539,7 @@
           (reference "#PWR032") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR012") (unit 1)
+          (reference "#PWR013") (unit 1)
         )
       )
     )
@@ -1570,7 +1570,7 @@
           (reference "#PWR03") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR09") (unit 1)
+          (reference "#PWR010") (unit 1)
         )
       )
     )
@@ -1601,7 +1601,7 @@
           (reference "#PWR010") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR06") (unit 1)
+          (reference "#PWR07") (unit 1)
         )
       )
     )
@@ -1634,8 +1634,8 @@
     (property "JLCPCB Part #" "C26443" (at 120.65 30.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid ccd2672d-fc47-40d4-9eac-a92768ebe5e1))
-    (pin "2" (uuid 48674bb2-d743-436b-b64b-b05ad934b68f))
+    (pin "1" (uuid 1fcc88ea-3bdd-46e2-a4e5-687ba46f5dc2))
+    (pin "2" (uuid 451d27f7-59de-4688-af08-4e5052a4a74c))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1678,8 +1678,8 @@
     (property "JLCPCB Part #" "C15850" (at 62.23 45.085 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 5c648448-50db-4aa9-bcc3-8ea95b4c62bc))
-    (pin "2" (uuid 1ef957e9-aec3-4133-9550-5bcf064986ac))
+    (pin "1" (uuid 55bf064a-bd64-464d-a6ee-720a8dd3acb4))
+    (pin "2" (uuid 1c212d7d-103a-4402-987e-f6f4d4c4dbae))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1765,7 +1765,7 @@
           (reference "#PWR09") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR05") (unit 1)
+          (reference "#PWR06") (unit 1)
         )
       )
     )
@@ -1786,7 +1786,7 @@
     (property "Datasheet" "" (at 135.89 24.13 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid ccf84ad4-c1b8-4062-89a7-ac5df7f2c028))
+    (pin "1" (uuid e98ac419-cbb7-4a88-a348-8bc1c4709909))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
@@ -1796,7 +1796,7 @@
           (reference "#PWR018") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR013") (unit 1)
+          (reference "#PWR014") (unit 1)
         )
       )
     )
@@ -1817,8 +1817,8 @@
     (property "Datasheet" "~" (at 158.115 31.115 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 0bc5d4e5-06dc-42e7-afee-1195c5e192a0))
-    (pin "2" (uuid efb4320b-1fad-4c24-b771-59efaf3da9f8))
+    (pin "1" (uuid 506802b2-eba3-41c9-9237-255b0b233eb9))
+    (pin "2" (uuid 10f35edf-a2dd-426b-b1cc-71e1ef703c77))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
@@ -1891,7 +1891,7 @@
     (property "Datasheet" "" (at 158.115 35.56 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 0ebddf61-f7e9-4ae7-90a3-719198417f24))
+    (pin "1" (uuid ca17b76b-d779-45e8-a2e1-c7e80e31e18a))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -1901,7 +1901,7 @@
           (reference "#PWR035") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR015") (unit 1)
+          (reference "#PWR016") (unit 1)
         )
       )
     )
