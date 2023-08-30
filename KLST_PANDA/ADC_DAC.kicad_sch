@@ -613,11 +613,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6452a123-3768-4e20-b386-280725358654)
   )
-  (text "@TODO(also check 1N4148 https://www.allaboutcircuits.com/technical-articles/how-to-protect-your-circuits-using-only-a-diode/)"
-    (at 78.74 26.035 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid cfd1b46b-a451-408a-9370-27a69fab90e2)
-  )
 
   (label "INPUT_SIGNAL" (at 38.735 78.105 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -676,7 +671,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR076") (unit 1)
+          (reference "#PWR075") (unit 1)
         )
       )
     )
@@ -707,7 +702,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR074") (unit 1)
+          (reference "#PWR073") (unit 1)
         )
       )
     )
@@ -738,7 +733,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR073") (unit 1)
+          (reference "#PWR072") (unit 1)
         )
       )
     )
@@ -802,7 +797,7 @@
   (symbol (lib_id "power:+3.3V") (at 98.425 66.04 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2cd54f68-8991-446a-afe0-6407ed693c92)
-    (property "Reference" "#PWR075" (at 98.425 69.85 0)
+    (property "Reference" "#PWR074" (at 98.425 69.85 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 98.425 61.595 0)
@@ -818,7 +813,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR075") (unit 1)
+          (reference "#PWR074") (unit 1)
         )
       )
     )
@@ -867,7 +862,7 @@
           (reference "D9") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "D13") (unit 1)
+          (reference "D14") (unit 1)
         )
       )
     )

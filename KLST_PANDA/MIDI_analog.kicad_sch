@@ -1049,7 +1049,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR065") (unit 1)
+          (reference "#PWR064") (unit 1)
         )
       )
     )
@@ -1267,7 +1267,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR069") (unit 1)
+          (reference "#PWR068") (unit 1)
         )
       )
     )
@@ -1297,7 +1297,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR067") (unit 1)
+          (reference "#PWR066") (unit 1)
         )
       )
     )
@@ -1325,7 +1325,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR063") (unit 1)
+          (reference "#PWR062") (unit 1)
         )
       )
     )
@@ -1353,7 +1353,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR068") (unit 1)
+          (reference "#PWR067") (unit 1)
         )
       )
     )
@@ -1383,7 +1383,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR066") (unit 1)
+          (reference "#PWR065") (unit 1)
         )
       )
     )
@@ -1450,7 +1450,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "#PWR064") (unit 1)
+          (reference "#PWR063") (unit 1)
         )
       )
     )
@@ -1488,7 +1488,7 @@
   (symbol (lib_id "Device:D_Small") (at 100.33 36.83 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid faebead6-0b9a-47e7-a1c2-7bcd8ada3bed)
-    (property "Reference" "D10" (at 97.79 36.195 90)
+    (property "Reference" "D11" (at 97.79 36.195 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "1N914WT" (at 97.79 38.735 90)
@@ -1514,7 +1514,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "D10") (unit 1)
+          (reference "D11") (unit 1)
         )
       )
     )

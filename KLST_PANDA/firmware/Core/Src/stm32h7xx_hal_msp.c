@@ -398,7 +398,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PF14     ------> I2C4_SCL
     PF15     ------> I2C4_SDA
     */
-    GPIO_InitStruct.Pin = _AUDIO_CODEC_I2C_SCL_Pin|_AUDIO_CODEC_I2C_SDA_Pin;
+    GPIO_InitStruct.Pin = _I2C_PERIPHERAL_SCL_Pin|_I2C_PERIPHERAL_SDA_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -454,9 +454,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
     PF14     ------> I2C4_SCL
     PF15     ------> I2C4_SDA
     */
-    HAL_GPIO_DeInit(_AUDIO_CODEC_I2C_SCL_GPIO_Port, _AUDIO_CODEC_I2C_SCL_Pin);
+    HAL_GPIO_DeInit(_I2C_PERIPHERAL_SCL_GPIO_Port, _I2C_PERIPHERAL_SCL_Pin);
 
-    HAL_GPIO_DeInit(_AUDIO_CODEC_I2C_SDA_GPIO_Port, _AUDIO_CODEC_I2C_SDA_Pin);
+    HAL_GPIO_DeInit(_I2C_PERIPHERAL_SDA_GPIO_Port, _I2C_PERIPHERAL_SDA_Pin);
 
   /* USER CODE BEGIN I2C4_MspDeInit 1 */
 
