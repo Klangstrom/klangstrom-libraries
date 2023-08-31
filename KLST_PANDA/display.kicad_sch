@@ -1772,7 +1772,7 @@
   (symbol (lib_id "power:+5V") (at 104.14 29.21 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 241d4489-60af-4cb3-9175-db26fd8ce669)
-    (property "Reference" "#PWR045" (at 104.14 33.02 0)
+    (property "Reference" "#PWR042" (at 104.14 33.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 104.14 24.13 0)
@@ -1788,7 +1788,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR045") (unit 1)
+          (reference "#PWR042") (unit 1)
         )
       )
     )
@@ -1819,7 +1819,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR047") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
@@ -2023,7 +2023,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR046") (unit 1)
+          (reference "#PWR043") (unit 1)
         )
       )
     )
@@ -2109,7 +2109,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR044") (unit 1)
+          (reference "#PWR041") (unit 1)
         )
       )
     )

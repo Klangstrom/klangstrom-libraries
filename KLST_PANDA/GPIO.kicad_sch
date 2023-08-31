@@ -823,7 +823,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR077") (unit 1)
+          (reference "#PWR075") (unit 1)
         )
       )
     )
@@ -851,7 +851,7 @@
           (reference "#PWR0129") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR078") (unit 1)
+          (reference "#PWR076") (unit 1)
         )
       )
     )
@@ -860,7 +860,7 @@
   (symbol (lib_name "+5V_1") (lib_id "power:+5V") (at 73.66 30.48 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ac928ae3-c23a-407a-b980-f4e2ce0d8665)
-    (property "Reference" "#PWR079" (at 73.66 34.29 0)
+    (property "Reference" "#PWR077" (at 73.66 34.29 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 73.66 26.035 0)
@@ -876,7 +876,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/6bb3f144-c620-4528-bce8-cfaf92f97449"
-          (reference "#PWR079") (unit 1)
+          (reference "#PWR077") (unit 1)
         )
       )
     )

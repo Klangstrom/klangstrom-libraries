@@ -1401,7 +1401,7 @@
   (symbol (lib_id "Power_Protection:ECMF02-2AMX6") (at 64.135 130.175 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1d3809b9-1a44-4ee8-a50a-d8f29299ed1b)
-    (property "Reference" "U10" (at 64.135 120.015 0)
+    (property "Reference" "U6" (at 64.135 120.015 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "ECMF02-2AMX6" (at 64.135 122.555 0)
@@ -1425,7 +1425,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "U10") (unit 1)
+          (reference "U6") (unit 1)
         )
       )
     )
@@ -1434,7 +1434,7 @@
   (symbol (lib_id "Device:R_Small") (at 208.28 40.64 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2047335f-34bf-4ba5-afef-2427b352d4fd)
-    (property "Reference" "R49" (at 209.55 40.005 0)
+    (property "Reference" "R45" (at 209.55 40.005 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "56K" (at 209.55 41.91 0)
@@ -1451,7 +1451,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R49") (unit 1)
+          (reference "R45") (unit 1)
         )
       )
     )
@@ -1553,7 +1553,7 @@
   (symbol (lib_id "Power_Protection:SP0503BAHT") (at 198.12 72.39 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 83e65dad-f983-4bb4-8140-c82044cf2858)
-    (property "Reference" "D15" (at 204.47 71.755 0)
+    (property "Reference" "D13" (at 204.47 71.755 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "SP0503BAHT" (at 204.47 74.295 0)
@@ -1575,7 +1575,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "D15") (unit 1)
+          (reference "D13") (unit 1)
         )
       )
     )
@@ -1603,7 +1603,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR071") (unit 1)
+          (reference "#PWR069") (unit 1)
         )
       )
     )
@@ -1662,7 +1662,7 @@
           (reference "#PWR023") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR072") (unit 1)
+          (reference "#PWR070") (unit 1)
         )
       )
     )
@@ -1671,7 +1671,7 @@
   (symbol (lib_id "Device:R_Small") (at 205.74 40.64 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid af338ca8-dabf-4f06-81b8-c50316de8c9e)
-    (property "Reference" "R48" (at 204.47 40.005 0)
+    (property "Reference" "R44" (at 204.47 40.005 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "56K" (at 204.47 41.91 0)
@@ -1688,7 +1688,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R48") (unit 1)
+          (reference "R44") (unit 1)
         )
       )
     )
@@ -1809,7 +1809,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR0101") (unit 1)
+          (reference "#PWR067") (unit 1)
         )
       )
     )
@@ -1868,7 +1868,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR070") (unit 1)
+          (reference "#PWR068") (unit 1)
         )
       )
     )

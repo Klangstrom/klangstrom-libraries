@@ -372,7 +372,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR061") (unit 1)
+          (reference "#PWR058") (unit 1)
         )
       )
     )
@@ -467,7 +467,7 @@
   (symbol (lib_id "power:GND") (at 147.32 120.015 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid cc65fb48-994c-4109-8769-6eb16d102c40)
-    (property "Reference" "#PWR062" (at 147.32 126.365 0)
+    (property "Reference" "#PWR059" (at 147.32 126.365 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 147.32 124.46 0)
@@ -483,7 +483,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR062") (unit 1)
+          (reference "#PWR059") (unit 1)
         )
       )
     )

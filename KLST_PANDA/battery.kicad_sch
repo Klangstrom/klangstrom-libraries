@@ -1511,7 +1511,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR049") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -1744,7 +1744,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR050") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -1980,7 +1980,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR052") (unit 1)
+          (reference "#PWR049") (unit 1)
         )
       )
     )
@@ -2229,7 +2229,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR051") (unit 1)
+          (reference "#PWR048") (unit 1)
         )
       )
     )
@@ -2259,7 +2259,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#PWR048") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -2268,7 +2268,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 52.705 34.29 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d98be654-d991-426d-9ba7-c463d0439f30)
-    (property "Reference" "#FLG07" (at 52.705 32.385 0)
+    (property "Reference" "#FLG06" (at 52.705 32.385 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 52.705 29.845 0)
@@ -2284,7 +2284,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-          (reference "#FLG07") (unit 1)
+          (reference "#FLG06") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
           (reference "#FLG07") (unit 1)

@@ -490,7 +490,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 36.83 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 25bb7dba-42fc-4f70-b581-b9686ae2e81a)
-    (property "Reference" "R82" (at 191.135 33.02 90)
+    (property "Reference" "R54" (at 191.135 33.02 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 34.925 90)
@@ -507,7 +507,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R82") (unit 1)
+          (reference "R54") (unit 1)
         )
       )
     )
@@ -535,7 +535,7 @@
           (reference "#PWR025") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "#PWR088") (unit 1)
+          (reference "#PWR086") (unit 1)
         )
       )
     )
@@ -544,7 +544,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 55.88 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 381f116f-6426-4a73-9426-246db249ed35)
-    (property "Reference" "R85" (at 191.135 52.07 90)
+    (property "Reference" "R57" (at 191.135 52.07 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 53.975 90)
@@ -561,7 +561,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R85") (unit 1)
+          (reference "R57") (unit 1)
         )
       )
     )
@@ -639,7 +639,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "#PWR089") (unit 1)
+          (reference "#PWR087") (unit 1)
         )
       )
     )
@@ -648,7 +648,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 43.18 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 48d8e34e-6521-413c-b787-e563c7217bde)
-    (property "Reference" "R83" (at 191.135 39.37 90)
+    (property "Reference" "R55" (at 191.135 39.37 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 41.275 90)
@@ -665,7 +665,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R83") (unit 1)
+          (reference "R55") (unit 1)
         )
       )
     )
@@ -674,7 +674,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 49.53 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5643da31-7b45-4ffb-9c1e-9197e483f4c3)
-    (property "Reference" "R84" (at 191.135 45.72 90)
+    (property "Reference" "R56" (at 191.135 45.72 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 47.625 90)
@@ -691,7 +691,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R84") (unit 1)
+          (reference "R56") (unit 1)
         )
       )
     )
@@ -719,7 +719,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "#PWR087") (unit 1)
+          (reference "#PWR085") (unit 1)
         )
       )
     )
@@ -728,7 +728,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 62.23 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9219d8c4-7c5b-4f26-a9a9-c6731a3dd4f8)
-    (property "Reference" "R86" (at 191.135 58.42 90)
+    (property "Reference" "R58" (at 191.135 58.42 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 60.325 90)
@@ -745,7 +745,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R86") (unit 1)
+          (reference "R58") (unit 1)
         )
       )
     )
@@ -804,7 +804,7 @@
   (symbol (lib_id "Device:R_Small") (at 191.135 30.48 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9e712e19-e024-419b-ae64-cf565536698b)
-    (property "Reference" "R81" (at 191.135 26.67 90)
+    (property "Reference" "R53" (at 191.135 26.67 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "22R" (at 191.135 28.575 90)
@@ -821,7 +821,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "R81") (unit 1)
+          (reference "R53") (unit 1)
         )
       )
     )
@@ -849,7 +849,7 @@
           (reference "#PWR025") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
-          (reference "#PWR086") (unit 1)
+          (reference "#PWR084") (unit 1)
         )
       )
     )
