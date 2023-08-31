@@ -138,5 +138,11 @@
         (fill (type none))
       )
     )
+    (symbol "S70KL1282_1_1"
+      (rectangle (start 5.08 2.54) (end 27.94 -30.48)
+        (stroke (width -0.0001) (type default))
+        (fill (type background))
+      )
+    )
   )
 )

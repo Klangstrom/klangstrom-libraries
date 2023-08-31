@@ -1201,7 +1201,7 @@
       )
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "U4") (unit 1)
+          (reference "U5") (unit 1)
         )
       )
     )
@@ -1459,7 +1459,7 @@
   (symbol (lib_name "74AHC1G125_1") (lib_id "74xGxx:74AHC1G125") (at 119.38 92.71 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid e87548c8-488e-4f65-a2c0-849332fe4eac)
-    (property "Reference" "U5" (at 133.985 97.6631 0)
+    (property "Reference" "U6" (at 133.985 97.6631 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "74AHC1G125" (at 133.985 95.1231 0)
@@ -1479,7 +1479,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
-          (reference "U5") (unit 1)
+          (reference "U6") (unit 1)
         )
       )
     )

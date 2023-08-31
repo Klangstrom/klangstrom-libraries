@@ -1401,7 +1401,7 @@
   (symbol (lib_id "Power_Protection:ECMF02-2AMX6") (at 64.135 130.175 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1d3809b9-1a44-4ee8-a50a-d8f29299ed1b)
-    (property "Reference" "U6" (at 64.135 120.015 0)
+    (property "Reference" "U7" (at 64.135 120.015 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "ECMF02-2AMX6" (at 64.135 122.555 0)
@@ -1425,7 +1425,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "U6") (unit 1)
+          (reference "U7") (unit 1)
         )
       )
     )

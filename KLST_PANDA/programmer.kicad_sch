@@ -358,9 +358,9 @@
     (uuid 2da9450c-180b-423f-8f41-66a877a37fac)
   )
 
-  (text "@TODO(do we need the 22R on the data lines?)" (at 172.72 66.675 0)
+  (text "DATA LINE RESISTORS" (at 154.305 15.24 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid a743cd9c-d332-4fb1-b4c1-5aeae5caff16)
+    (uuid 3998a128-d7f0-47ed-92bb-25425b2ad100)
   )
   (text "ARM_JTAG_SWD(STDC14)" (at 15.24 15.24 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))

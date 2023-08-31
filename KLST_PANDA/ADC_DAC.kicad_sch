@@ -768,7 +768,7 @@
   (symbol (lib_id "Amplifier_Operational:TLV9001IDCK") (at 98.425 80.645 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 293aadf5-9357-4eb5-8bc5-532330ce68d3)
-    (property "Reference" "U7" (at 114.3 77.2161 0)
+    (property "Reference" "U8" (at 114.3 77.2161 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TLV9001IDCK" (at 114.3 79.7561 0)
@@ -788,7 +788,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "U7") (unit 1)
+          (reference "U8") (unit 1)
         )
       )
     )
