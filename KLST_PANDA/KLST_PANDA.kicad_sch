@@ -445,7 +445,7 @@
     (uuid f68b83e2-2f06-4393-86a5-06dc9c5d91d4)
   )
 
-  (text_box "# TODO\n\n- maybe move global pins out of sheets\n- consult Nucelo boards as reference designs\n- resolve all @TODOs"
+  (text_box "# TODO\n\n- consult Nucelo boards as reference designs\n- resolve all @TODOs"
     (at 15.24 125.73 0) (size 100.33 17.78)
     (stroke (width 0) (type default))
     (fill (type none))

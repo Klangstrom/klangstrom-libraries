@@ -1720,7 +1720,7 @@
   (symbol (lib_id "Device:C_Small") (at 104.14 48.26 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0486c8d5-72c0-4895-bce6-0873efe992ca)
-    (property "Reference" "C30" (at 106.68 47.6313 0)
+    (property "Reference" "C31" (at 106.68 47.6313 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "4.7uF" (at 106.68 50.1713 0)
@@ -1737,7 +1737,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "C30") (unit 1)
+          (reference "C31") (unit 1)
         )
       )
     )
@@ -1746,7 +1746,7 @@
   (symbol (lib_id "Device:C_Small") (at 59.69 36.83 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 053edb5e-8d58-4931-b080-a7cd2252eba6)
-    (property "Reference" "C29" (at 57.15 36.2013 0)
+    (property "Reference" "C30" (at 57.15 36.2013 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 57.15 38.7413 0)
@@ -1763,7 +1763,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "C29") (unit 1)
+          (reference "C30") (unit 1)
         )
       )
     )
@@ -1772,7 +1772,7 @@
   (symbol (lib_id "power:+5V") (at 104.14 29.21 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 241d4489-60af-4cb3-9175-db26fd8ce669)
-    (property "Reference" "#PWR044" (at 104.14 33.02 0)
+    (property "Reference" "#PWR045" (at 104.14 33.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 104.14 24.13 0)
@@ -1788,7 +1788,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR044") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -1819,7 +1819,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR046") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -2023,7 +2023,7 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR045") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -2109,7 +2109,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR043") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
