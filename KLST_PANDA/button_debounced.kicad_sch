@@ -460,6 +460,9 @@
     (property "JLCPCB" "C25744" (at 138.43 92.71 0)
       (effects (font (size 1.27 1.27)) hide)
     )
+    (property "Description" "62.5mW" (at 138.43 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
     (pin "1" (uuid ad7bfa59-3dcc-418f-ac31-3bd8aba96a3f))
     (pin "2" (uuid fec9cd8b-e615-439c-b680-88e2fef0ce2f))
     (instances

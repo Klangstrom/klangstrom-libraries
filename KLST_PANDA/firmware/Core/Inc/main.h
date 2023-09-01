@@ -66,8 +66,8 @@ void Error_Handler(void);
 #define _AUDIO_CODEC_SAI_SD_OUT_GPIO_Port GPIOE
 #define GPIO_11_Pin GPIO_PIN_4
 #define GPIO_11_GPIO_Port GPIOE
-#define GPIO_19_INT_Pin GPIO_PIN_5
-#define GPIO_19_INT_GPIO_Port GPIOE
+#define GPIO_18_INT_Pin GPIO_PIN_5
+#define GPIO_18_INT_GPIO_Port GPIOE
 #define _AUDIO_MIC_DATA_Pin GPIO_PIN_6
 #define _AUDIO_MIC_DATA_GPIO_Port GPIOE
 #define GPIO_10_Pin GPIO_PIN_13
