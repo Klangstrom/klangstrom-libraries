@@ -13,4 +13,5 @@
   (lib (name "PJ-316A-6A")(type "KiCad")(uri "${KIPRJMOD}/library/PJ-316A-6A")(options "")(descr ""))
   (lib (name "MY-18650-01")(type "KiCad")(uri "${KIPRJMOD}/library/MY-18650-01")(options "")(descr ""))
   (lib (name "PEC11R-4015F-S0024")(type "KiCad")(uri "${KIPRJMOD}/library/PEC11R-4015F-S0024")(options "")(descr ""))
+  (lib (name "MK-12F03-G015")(type "KiCad")(uri "${KIPRJMOD}/library/MK-12F03-G015")(options "")(descr ""))
 )
