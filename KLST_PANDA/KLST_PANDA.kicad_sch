@@ -528,10 +528,10 @@
     (uuid bee1ba75-63e4-42be-aa07-c001a3e2129a)
   )
 
-  (global_label "_LED_00" (shape input) (at 38.735 79.375 0) (fields_autoplaced)
+  (global_label "_LED_01" (shape input) (at 38.735 79.375 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 069fdead-3295-4279-bbc6-d1d234a32dc6)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 49.4421 79.375 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 49.5215 79.375 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
@@ -563,10 +563,10 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "_LED_01" (shape input) (at 26.035 79.375 0) (fields_autoplaced)
+  (global_label "_LED_00" (shape input) (at 26.035 79.375 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid abde40a4-5755-4164-a706-13aee3547259)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 36.7421 79.375 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 36.8215 79.375 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
@@ -743,8 +743,8 @@
     (property "Description" "WHITE" (at 26.035 89.535 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 5c2eeb0d-d318-469d-a7bf-c12fb0bcac6b))
-    (pin "2" (uuid 91e40d62-1c6b-4f61-bbf8-645a6d033e8d))
+    (pin "1" (uuid 88a77842-c0b3-4e3e-b8b9-83381e67dd4c))
+    (pin "2" (uuid 86e08ae4-59eb-4c72-b45f-6ac1f2e72ca8))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"

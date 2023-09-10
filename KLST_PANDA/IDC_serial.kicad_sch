@@ -309,6 +309,12 @@
     (uuid eaa913ac-028c-4a47-b2eb-392a208b4f27)
   )
 
+  (text "@TODO(maybe replace THT with SMD connector e.g C720733 )"
+    (at 121.92 123.19 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 2ee354f6-6941-435c-92be-396cde405362)
+  )
+
   (hierarchical_label "UART_TX" (shape input) (at 156.21 104.14 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 64901b65-e98c-4ab8-af72-d1d8d540a6ae)

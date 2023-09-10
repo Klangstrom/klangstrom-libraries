@@ -548,6 +548,11 @@
     (uuid 70bdbbf1-85ec-43cd-8e7a-fd1a4c49be8e)
   )
 
+  (text "@TODO(maybe replace THT with SMD connector e.g C601974 or C2829932)"
+    (at 26.67 88.9 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 07913df7-922e-4b7c-abae-6c60fac1f7f6)
+  )
   (text "GPIO" (at 15.24 15.24 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid d3223dc8-7c65-4705-8b94-38bbe6733844)

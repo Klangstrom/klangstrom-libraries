@@ -3022,6 +3022,10 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 3ad82338-1b63-4da9-80d5-10c76a8df29f)
   )
+  (label "(PWR_LED)" (at 246.38 121.285 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 4a93bc78-9ca7-4a0d-b862-04482746f3c0)
+  )
   (label "_VDDA" (at 102.87 29.21 90) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 65ba8e00-cc88-44fa-bdef-17d012ace974)
@@ -5128,8 +5132,8 @@
     (property "Description" "50V" (at 176.53 121.92 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid f96734b1-4c41-4a2b-8433-35e97b3d3807))
-    (pin "2" (uuid 1c9b921f-278c-467c-94d3-42c4eb445a33))
+    (pin "1" (uuid 756eca83-238d-4605-91e4-2db48f947981))
+    (pin "2" (uuid f2a381b6-b6c4-4ff5-9c53-4102771c13f1))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"

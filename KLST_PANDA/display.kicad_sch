@@ -1155,6 +1155,11 @@
     (effects (font (face "KiCad Font") (size 1.27 1.27)) (justify right bottom))
     (uuid 647a74a9-580c-4fe7-a760-704c72e2105c)
   )
+  (text "@TODO(packages for R18+R19 are a bit oversized … maybe switch to 0805)"
+    (at 36.83 54.61 0)
+    (effects (font (face "KiCad Font") (size 1.27 1.27)) (justify left bottom))
+    (uuid 6665d602-8005-4deb-a0f7-c1982da735fe)
+  )
   (text "ceramic, X5R/X7R\nclose to VIN" (at 113.03 50.165 0)
     (effects (font (face "KiCad Font") (size 1.27 1.27)) (justify left bottom))
     (uuid 8cb81ddf-62db-41cf-9fab-41be6909cdd7)
