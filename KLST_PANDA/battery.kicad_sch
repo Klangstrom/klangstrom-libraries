@@ -1342,6 +1342,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid ba877fa3-06cf-42fd-bb94-8da2e9f86e30)
   )
+  (text "@TODO(might want to increase R to match 3.3V powered LEDs)"
+    (at 89.535 33.02 0)
+    (effects (font (size 0.9906 0.9906)) (justify left bottom))
+    (uuid e719ded9-95e2-48d4-8c4c-101174c0717c)
+  )
 
   (label "BAT" (at 194.31 41.275 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right bottom))

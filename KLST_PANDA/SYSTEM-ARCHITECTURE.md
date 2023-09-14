@@ -10,16 +10,15 @@ the core is a `‌STM32H723ZGT` by ST, a 32-bit Arm® Cortex®-M7 CPU ( or MCU )
 
 ## External Memory
 
-external memory is provided by `S70KL1282` by Infineon ( or more specifically `S70KL1282GABHV020` ), a 16MB ( or more specifically 128Mb ) DRAM with HYPERBUS™ interface 
+external memory is provided by `S70KL1282` by Infineon ( or more specifically `S70KL1282GABHV020` ), a 16MB ( or 128Mb ) DRAM with HYPERBUS™ interface 
 
-- [S70KL1282, S70KS1282: 128 Mb HYPERRAMTM self-refresh DRAM (PSRAM)](https://www.infineon.com/dgdl/Infineon-S70KL1282_S70KS1282_3.0_V_1.8_V_128_Mb_(16_MB)_HYPERBUS_INTERFACE_HYPERRAM_(SELF-REFRESH_DRAM)-DataSheet-v02_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ee9315b7210) ( datasheet )
-- [Migrating from S70KL1281/S70KS1281 to S70KL1282/S70KS1282](https://www.infineon.com/dgdl/Infineon-AN229785_-_Migrating_from_S70KL1281_S70KS1281_to_S70KL1282_S70KS1282-ApplicationNotes-v01_00-EN.pdf?fileId=8ac78c8c7e7124d1017eb8fba9bb258c)
+- [S70KL1282, S70KS1282: 128 Mb HYPERRAMTM self-refresh DRAM (PSRAM) ( datasheet )](https://www.infineon.com/dgdl/Infineon-S70KL1282_S70KS1282_3.0_V_1.8_V_128_Mb_(16_MB)_HYPERBUS_INTERFACE_HYPERRAM_(SELF-REFRESH_DRAM)-DataSheet-v02_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ee9315b7210) 
 
 ## Audio Codec
 
 the audio codec is a `‌WM8904` by Cirrus Logic. it features stereo headphone amplifiers in a QFN-32 package. it can be interface via a stereo line-in ( 3.5mm, TRS ), a stereo line-out ( 3.5mm, TRS ) or a 3-ring audio connector ( 3.5mm, TRRS with CTIA allocation ) for stereo headphones and mono microphone.
 
-- [WM8904](https://statics.cirrus.com/pubs/proDatasheet/WM8904_Rev4.1.pdf) ( datasheet )
+- [WM8904 ( datasheet )](https://statics.cirrus.com/pubs/proDatasheet/WM8904_Rev4.1.pdf)
 
 ## Display
 
@@ -33,7 +32,7 @@ the display is interfaced with the CPU via a parallel LTDC interface.
 
 ## On-Board Microphone
 
-the on-board microphones are two mono MEMS microphone fitted directly onto the board and interfaced via a second I2S interface. they can be used in parallel with an external microphone or line-in signals from the audio codec.
+the on-board microphones are two mono MEMS microphone ( `‌MP34DT05TR-A` ) fitted directly onto the board and interfaced via a PDM interface. they can be used in parallel with an external microphone or line-in signals from the audio codec.
 
 ## SD Card
 
@@ -51,8 +50,6 @@ the charging mechanism is realized via a `TP5400` an all-in-one battery charger 
 
 the board also features an on-off switch.
 
-- with PCB mounted holder e.g [MY-18650-01](https://jlcpcb.com/partdetail/Myoung-MY_1865001/C2979183)
-
 ## Rotary Encoder
 
 two rotary encoders `‌PEC11R-4015F-S0024` by Bourns feature a 6mm diameter metal shaft, a metal case, a push button and 24 pulses per 360° rotation but no detents.
@@ -63,9 +60,9 @@ buttons and pulse channels are debounced in hardware.
 
 ## GPIO
 
-a 32-pin port hosts 29 General Purpose Inputs and Outputs (GPIO) and 3 power pins. the GPIO can either be used as standard input or output pins or can have the following extra functionalities:
+a 34-pin port hosts 28 General Purpose Inputs and Outputs (GPIO) and 6 power pins. the GPIO can either be used as standard input or output pins or can have the following extra functionalities:
 
-- 21× GPIO pins including
+- 19× GPIO pins including
     - 4× programmable PWM pins
     - 2× ADC pins
     - 1× external interrupt pin
@@ -75,73 +72,51 @@ a 32-pin port hosts 29 General Purpose Inputs and Outputs (GPIO) and 3 power pin
 
 the power pins are available as follows:
 
-- GND
-- 3.3V
-- 5.0V
+- 4× GND
+- 1× 3.3V
+- 1× 5.0V
 
-==@TODO(maybe encase with fake shrouded connectors ( see IDC housing ))==
+the GPIO connector is a shrouded IDC connector.
 
 ## MIDI analog
 
-- analog MIDI: 3.5mm mono audio jack ( TS )
-- ==@TODO also or exclusively map out as MIDI IN/OUT see KLST_OCTOPUS==
-- MIDI ( analog )
-    - interfaced via 3.5mm stereo audio connector ( TRS with `Type A` allocation ) ==@TODO(decide on the Type see https://minimidi.world)==
+an analog MIDI-IN and a MIDI-OUT connector ( both via UART ) are available through two 3.5mm audio connectors ( TRS with `Type A` allocation ).
+
+- [Specification for TRS Adapters Adopted and Released](https://www.midi.org/midi-articles/trs-specification-adopted-and-released)
 
 ## DAC + ADC
 
-one Digital-Analog-Converter (DAC) and one ADC are 
-
-- with 3.5mm audio connector ( TS )
-
-==@TODO==
-
-- DAC: 3.5mm mono audio jack ( TS )
-- ADC: MIDI: 3.5mm mono audio jack ( TS )
-- range 0.0–3.3V
-- @TODO(over voltage protection e.g https://electronics.stackexchange.com/questions/487790/how-to-protect-a-microcontroller-analog-pin-from-continuous-overvoltage)
-- @TODO(reversed voltage protection)
-
-```
-    - connection to modular synth?!?
-    - 12V tolerant ( or modular connection as extension board = 0.0—3.3V > -12.0–12.0V + -1.0–1.0V>-5.0>5.0V(?) )
-```
+one Digital-Analog-Converter ( DAC ) and one Analog-Digital-Converter ( ADC ) are available via two 3.5mm audio connectors ( TS ). the DAC can generate voltages from 0.0V–3.3V, while the ADC can measure voltage from 0.0V–3.3V.
 
 ## IDC Serial
 
-==@TODO==
+two serial ports are available as 6-pin shrouded IDC connectors. ports can be connected with a crossed cable ( as also used in KLST_SHEEP ).
 
-## Programmer + Debugger
+the pins of the connectors are assigned as follows:
 
-==@TODO==
 ```
-- programmer interface
-    - STD14 ( which is an SWD programmer connector extended by a serial port for debugging )
-    - pogo pin connector ( without housing on front-side )
-    [TC2070-IDC-NL-050](https://www.tag-connect.com/product/tc2070-idc-nl-050) by Tag-Connect 
++---------------+
+|  GND 1  2 TX  |
+ | PWR 3  4 PWR |
+|  RX  5  6 GND |
++---------------+
 ```
 
-- programmer interface with UART with STD14 and pogo pin connector
+## Programmer
+
+the programmer interface features two options. on one side of the board there is a standard STD14 connector ( a SWD connector extended by a dedicated serial port for debugging ), while on the other side there is a PCB-only ( no extra hardware components required ) footprint to be used with a [TC2070-IDC-NL-050](https://www.tag-connect.com/product/tc2070-idc-nl-050) by Tag-Connect.
 
 ## Dimmable LEDs
 
-2 dimmable LEDs.
+the board features two user-programmable, dimmable ( via PWM ) white LEDs.
+
+note that the board also feature three power LEDs on the backside. two indicate the battery charging states and one the system power.
 
 ## Buttons
 
-==@TODO==
-```
-- mechanical keybord keys
-    - 2×
-    - just below encoders?
-    - with interrupts
-    - https://github.com/daprice/keyswitches.pretty
-```
+the board is equipped with a RESET button, a BOOT_MODE button and a PROGRAMMER button. if the BOOT_MODE is pressed at start-up the core (MCU) will enter DFU mode. PROGRAMMER button can trigger DFU mode at runtime. the RESET button triggers a *soft* reset.
 
-- 2× programmable buttons ( ==@TODO(mechanical keybord keys?)== )
-- reset button
-- programmer button
-- boot button
+the booard also features two user-programmable mechanical Cherry MX keys. both can be connected to a hardware interrupt.
 
 ## Form Factor
 
@@ -177,6 +152,8 @@ one Digital-Analog-Converter (DAC) and one ADC are
 | TIM24 | CH2             | BUTTON_PROGRAMMER       |
 
 ## Buses
+
+==@TODO(update)==
 
 ### U(S)ART
 
@@ -218,4 +195,4 @@ one Digital-Analog-Converter (DAC) and one ADC are
 | SAI     | DESCRIPTION        |
 |---------|--------------------|
 | SAI1    | AUDIO_CODEC        |
-| SAI4    | AUDIO_MIC          |
+| SAI4    | AUDIO_MIC ==@TODO==|
