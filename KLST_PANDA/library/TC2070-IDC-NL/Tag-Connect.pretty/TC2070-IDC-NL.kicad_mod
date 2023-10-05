@@ -15,7 +15,6 @@
   )
   (fp_rect (start -8.25 -2.05) (end 8.25 2.05)
     (stroke (width 0.025) (type default)) (fill none) (layer "F.CrtYd") (tstamp f7edb852-a1cd-4b79-a245-0c5fc6094027))
-  (pad "" np_thru_hole circle (at -5.08 0) (size 0.99 0.99) (drill 0.99) (layers "F&B.Cu" "*.Mask") (tstamp 2361f9b7-40ef-47f5-8e5a-350dd525555b))
   (pad "" np_thru_hole circle (at -5.08 0) (size 0.99 0.99) (drill 0.99) (layers "F&B.Cu" "*.Mask") (tstamp a0a15bee-8a94-465d-8947-98fd6fa1df26))
   (pad "" np_thru_hole circle (at 5.08 -1.016) (size 0.99 0.99) (drill 0.99) (layers "F&B.Cu" "*.Mask") (tstamp b79fc6e2-f87f-4aaa-984b-af8a6d5ad4e4))
   (pad "" np_thru_hole circle (at 5.08 1.016) (size 0.99 0.99) (drill 0.99) (layers "F&B.Cu" "*.Mask") (tstamp e72fd7ad-4d87-45e4-9550-7251ddf3448c))
@@ -40,10 +39,10 @@
     (fill (thermal_gap 0.5) (thermal_bridge_width 0.5))
     (polygon
       (pts
-        (xy -3.81 -0.635)
-        (xy 3.81 -0.635)
-        (xy 3.81 0.635)
-        (xy -3.81 0.635)
+        (xy -3.81 -0.235)
+        (xy 3.81 -0.235)
+        (xy 3.81 0.235)
+        (xy -3.81 0.235)
       )
     )
   )
