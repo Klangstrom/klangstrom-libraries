@@ -362,6 +362,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 3998a128-d7f0-47ed-92bb-25425b2ad100)
   )
+  (text "@TODO( maybe fit Samtec FTSH-107-01-F-DV-K for assembly )"
+    (at 15.875 78.105 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 401d1931-a943-443e-afd7-5b63a313b4b3)
+  )
   (text "ARM_JTAG_SWD(STDC14)" (at 15.24 15.24 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid dea32e6e-e27b-4ada-b0f0-b530dc91957a)
