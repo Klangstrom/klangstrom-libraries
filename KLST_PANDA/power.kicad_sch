@@ -867,7 +867,7 @@
   )
 
   (text_box "VDDA can be connected to VDD through a ferrite bead. see AN5419"
-    (at 112.395 48.26 0) (size 24.13 13.97)
+    (at 110.49 51.435 0) (size 31.75 7.62)
     (stroke (width 0) (type default))
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
@@ -878,7 +878,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 946fbd87-b0ac-4718-a17a-37bb40057b62)
   )
-  (text "@TODO(check im 200mA is OK)" (at 120.65 27.94 0)
+  (text "@NOTE(200mA rating)" (at 114.3 27.305 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid b72bd5ab-7911-49ad-be2c-f7097d05c37a)
   )
@@ -959,7 +959,7 @@
           (reference "#PWR05") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR010") (unit 1)
+          (reference "#PWR011") (unit 1)
         )
       )
     )
@@ -1063,7 +1063,7 @@
           (reference "#PWR01") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR04") (unit 1)
+          (reference "#PWR05") (unit 1)
         )
       )
     )
@@ -1232,7 +1232,7 @@
           (reference "#PWR032") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR08") (unit 1)
+          (reference "#PWR09") (unit 1)
         )
       )
     )
@@ -1297,7 +1297,7 @@
           (reference "#PWR016") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR011") (unit 1)
+          (reference "#PWR012") (unit 1)
         )
       )
     )
@@ -1362,7 +1362,7 @@
           (reference "#PWR06") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR05") (unit 1)
+          (reference "#PWR06") (unit 1)
         )
       )
     )
@@ -1393,7 +1393,7 @@
           (reference "#PWR032") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR012") (unit 1)
+          (reference "#PWR013") (unit 1)
         )
       )
     )
@@ -1424,7 +1424,7 @@
           (reference "#PWR03") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR09") (unit 1)
+          (reference "#PWR010") (unit 1)
         )
       )
     )
@@ -1455,7 +1455,7 @@
           (reference "#PWR010") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR07") (unit 1)
+          (reference "#PWR08") (unit 1)
         )
       )
     )
@@ -1598,7 +1598,7 @@
           (reference "#PWR09") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR06") (unit 1)
+          (reference "#PWR07") (unit 1)
         )
       )
     )
@@ -1610,8 +1610,8 @@
     (property "Reference" "#PWR033" (at 136.525 29.21 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+3.3VA" (at 136.525 20.32 0)
-      (effects (font (size 1.27 1.27)))
+    (property "Value" "+3.3VA" (at 138.43 24.13 0)
+      (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "" (at 136.525 25.4 0)
       (effects (font (size 1.27 1.27)) hide)
@@ -1629,7 +1629,7 @@
           (reference "#PWR018") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
-          (reference "#PWR013") (unit 1)
+          (reference "#PWR014") (unit 1)
         )
       )
     )

@@ -1642,7 +1642,7 @@
           (reference "C4") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "C77") (unit 1)
+          (reference "C47") (unit 1)
         )
       )
     )
@@ -1710,7 +1710,7 @@
           (reference "C36") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "C79") (unit 1)
+          (reference "C49") (unit 1)
         )
       )
     )
@@ -1719,7 +1719,7 @@
   (symbol (lib_id "Device:R_Small") (at 238.125 38.735 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2047335f-34bf-4ba5-afef-2427b352d4fd)
-    (property "Reference" "R45" (at 239.395 38.1 0)
+    (property "Reference" "R46" (at 239.395 38.1 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "56K" (at 239.395 40.005 0)
@@ -1742,7 +1742,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R45") (unit 1)
+          (reference "R46") (unit 1)
         )
       )
     )
@@ -1751,7 +1751,7 @@
   (symbol (lib_id "Device:R_Small") (at 67.31 71.755 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 3ad48edf-62b4-48a4-9a2b-0f99d3474f15)
-    (property "Reference" "R43" (at 68.58 71.12 0)
+    (property "Reference" "R44" (at 68.58 71.12 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5.1K" (at 68.58 73.025 0)
@@ -1774,7 +1774,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R43") (unit 1)
+          (reference "R44") (unit 1)
         )
       )
     )
@@ -1877,7 +1877,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR069") (unit 1)
+          (reference "#PWR070") (unit 1)
         )
       )
     )
@@ -1886,7 +1886,7 @@
   (symbol (lib_id "Power_Management:TPS2041B") (at 162.56 123.825 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9456de0a-8c16-4a63-82dc-0331caae2613)
-    (property "Reference" "U13" (at 162.56 112.395 0)
+    (property "Reference" "U8" (at 162.56 112.395 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TPS2041B" (at 162.56 114.935 0)
@@ -1909,7 +1909,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "U13") (unit 1)
+          (reference "U8") (unit 1)
         )
       )
     )
@@ -1918,7 +1918,7 @@
   (symbol (lib_id "Device:R_Small") (at 64.77 71.755 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9c90db7c-df6a-4a6a-9907-5d170ffb51b4)
-    (property "Reference" "R42" (at 63.5 71.12 0)
+    (property "Reference" "R43" (at 63.5 71.12 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "5.1K" (at 63.5 73.025 0)
@@ -1941,7 +1941,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R42") (unit 1)
+          (reference "R43") (unit 1)
         )
       )
     )
@@ -1974,7 +1974,7 @@
           (reference "#PWR023") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR070") (unit 1)
+          (reference "#PWR072") (unit 1)
         )
       )
     )
@@ -1983,7 +1983,7 @@
   (symbol (lib_id "Device:R_Small") (at 235.585 38.735 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid af338ca8-dabf-4f06-81b8-c50316de8c9e)
-    (property "Reference" "R44" (at 234.315 38.1 0)
+    (property "Reference" "R45" (at 234.315 38.1 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "56K" (at 234.315 40.005 0)
@@ -2006,7 +2006,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "R44") (unit 1)
+          (reference "R45") (unit 1)
         )
       )
     )
@@ -2091,7 +2091,7 @@
           (reference "C4") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "C78") (unit 1)
+          (reference "C48") (unit 1)
         )
       )
     )
@@ -2100,7 +2100,7 @@
   (symbol (lib_id "Device:C_Small") (at 57.15 52.705 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid d6170e73-5dba-473f-88f0-c8e8f91987d7)
-    (property "Reference" "C45" (at 54.61 52.0763 0)
+    (property "Reference" "C46" (at 54.61 52.0763 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "1uF" (at 54.61 54.6163 0)
@@ -2123,7 +2123,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "C45") (unit 1)
+          (reference "C46") (unit 1)
         )
       )
     )
@@ -2151,7 +2151,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR067") (unit 1)
+          (reference "#PWR068") (unit 1)
         )
       )
     )
@@ -2210,7 +2210,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR099") (unit 1)
+          (reference "#PWR071") (unit 1)
         )
       )
     )
@@ -2238,7 +2238,7 @@
           (reference "#PWR0125") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/c1368b5a-3c14-4f80-b962-228aee9202ba"
-          (reference "#PWR068") (unit 1)
+          (reference "#PWR069") (unit 1)
         )
       )
     )

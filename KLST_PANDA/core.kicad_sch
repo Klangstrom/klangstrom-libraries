@@ -3960,8 +3960,8 @@
     (property "Description" "125mW" (at 246.38 125.73 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 34d4972c-0b9f-486b-8e94-0013cbfae8c5))
-    (pin "2" (uuid 5e6318a6-ad7e-4351-9304-eeced180201e))
+    (pin "1" (uuid 536ebc79-7599-4878-b1a5-815c1c7bb29c))
+    (pin "2" (uuid 0bcaf791-959a-4a68-a24b-167532ac90e9))
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
@@ -3996,7 +3996,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR019") (unit 1)
+          (reference "#PWR020") (unit 1)
         )
       )
     )
@@ -4265,7 +4265,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR014") (unit 1)
+          (reference "#PWR015") (unit 1)
         )
       )
     )
@@ -4293,7 +4293,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR024") (unit 1)
+          (reference "#PWR025") (unit 1)
         )
       )
     )
@@ -4321,7 +4321,7 @@
           (reference "#PWR06") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR036") (unit 1)
+          (reference "#PWR037") (unit 1)
         )
       )
     )
@@ -4384,7 +4384,7 @@
           (reference "#PWR04") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR029") (unit 1)
+          (reference "#PWR030") (unit 1)
         )
       )
     )
@@ -4412,7 +4412,7 @@
           (reference "#PWR05") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR035") (unit 1)
+          (reference "#PWR036") (unit 1)
         )
       )
     )
@@ -4440,7 +4440,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR030") (unit 1)
+          (reference "#PWR031") (unit 1)
         )
       )
     )
@@ -4538,7 +4538,7 @@
           (reference "#PWR016") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR022") (unit 1)
+          (reference "#PWR023") (unit 1)
         )
       )
     )
@@ -4671,7 +4671,7 @@
           (reference "#PWR07") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR015") (unit 1)
+          (reference "#PWR016") (unit 1)
         )
       )
     )
@@ -4874,7 +4874,7 @@
           (reference "#PWR013") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR016") (unit 1)
+          (reference "#PWR017") (unit 1)
         )
       )
     )
@@ -4972,7 +4972,7 @@
           (reference "#PWR09") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR017") (unit 1)
+          (reference "#PWR018") (unit 1)
         )
       )
     )
@@ -5105,7 +5105,7 @@
           (reference "#PWR029") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR027") (unit 1)
+          (reference "#PWR028") (unit 1)
         )
       )
     )
@@ -5238,7 +5238,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR021") (unit 1)
+          (reference "#PWR022") (unit 1)
         )
       )
     )
@@ -5247,7 +5247,7 @@
   (symbol (lib_id "power:+3.3VA") (at 339.725 26.035 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a92929f3-0fef-46ab-b12b-f26a8f0a2c1a)
-    (property "Reference" "#PWR033" (at 339.725 29.845 0)
+    (property "Reference" "#PWR034" (at 339.725 29.845 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3VA" (at 339.725 20.955 0)
@@ -5263,7 +5263,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR033") (unit 1)
+          (reference "#PWR034") (unit 1)
         )
       )
     )
@@ -5291,7 +5291,7 @@
           (reference "#PWR03") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR028") (unit 1)
+          (reference "#PWR029") (unit 1)
         )
       )
     )
@@ -5354,7 +5354,7 @@
           (reference "#PWR013") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR020") (unit 1)
+          (reference "#PWR021") (unit 1)
         )
       )
     )
@@ -5414,7 +5414,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR026") (unit 1)
+          (reference "#PWR027") (unit 1)
         )
       )
     )
@@ -5563,7 +5563,7 @@
   (symbol (lib_id "power:GND") (at 339.725 33.02 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c8c0dfa7-2014-4604-b833-ea289e0269f0)
-    (property "Reference" "#PWR034" (at 339.725 39.37 0)
+    (property "Reference" "#PWR035" (at 339.725 39.37 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 339.725 36.83 0)
@@ -5579,7 +5579,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR034") (unit 1)
+          (reference "#PWR035") (unit 1)
         )
       )
     )
@@ -5677,7 +5677,7 @@
           (reference "#PWR029") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR025") (unit 1)
+          (reference "#PWR026") (unit 1)
         )
       )
     )
@@ -5686,7 +5686,7 @@
   (symbol (lib_id "power:GND") (at 330.835 33.02 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d8e21a86-96f3-4ddd-9696-3cbd91f0a0b7)
-    (property "Reference" "#PWR031" (at 330.835 39.37 0)
+    (property "Reference" "#PWR032" (at 330.835 39.37 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 330.835 36.83 0)
@@ -5702,7 +5702,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR031") (unit 1)
+          (reference "#PWR032") (unit 1)
         )
       )
     )
@@ -5730,7 +5730,7 @@
           (reference "#PWR022") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR023") (unit 1)
+          (reference "#PWR024") (unit 1)
         )
       )
     )
@@ -5830,7 +5830,7 @@
           (reference "#PWR013") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR018") (unit 1)
+          (reference "#PWR019") (unit 1)
         )
       )
     )
@@ -5890,7 +5890,7 @@
           (reference "#PWR021") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR032") (unit 1)
+          (reference "#PWR033") (unit 1)
         )
       )
     )

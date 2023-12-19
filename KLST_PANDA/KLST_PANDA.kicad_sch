@@ -492,13 +492,6 @@
     (uuid f68b83e2-2f06-4393-86a5-06dc9c5d91d4)
   )
 
-  (text_box "# TODO\n\n- resolve all @TODOs"
-    (at 15.24 300.355 0) (size 100.33 17.78)
-    (stroke (width 0) (type default))
-    (fill (type none))
-    (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid 20e99576-dcae-47d6-96e9-70fcda6ea398)
-  )
   (text_box "# NOTES\n\n- global pins prefixed with a '_' are exclusive to one function and are exclusively used internally\n- all component values are specified with units ( except for resistors with kilo or mega e.g 10K or 2M )"
     (at 15.24 263.525 0) (size 115.57 17.78)
     (stroke (width 0) (type default))
@@ -659,7 +652,7 @@
           (reference "#PWR044") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR03") (unit 1)
+          (reference "#PWR04") (unit 1)
         )
       )
     )
@@ -782,7 +775,7 @@
   (symbol (lib_id "power:GND") (at 85.725 101.6 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 31536d98-660b-45c9-8b4d-c841a52a48c1)
-    (property "Reference" "#PWR0100" (at 85.725 107.95 0)
+    (property "Reference" "#PWR02" (at 85.725 107.95 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 85.725 105.41 0)
@@ -798,7 +791,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR0100") (unit 1)
+          (reference "#PWR02") (unit 1)
         )
       )
     )
@@ -1073,7 +1066,7 @@
           (reference "#PWR044") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR02") (unit 1)
+          (reference "#PWR03") (unit 1)
         )
       )
     )

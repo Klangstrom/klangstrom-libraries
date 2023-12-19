@@ -671,7 +671,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR074") (unit 1)
+          (reference "#PWR076") (unit 1)
         )
       )
     )
@@ -702,7 +702,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR072") (unit 1)
+          (reference "#PWR074") (unit 1)
         )
       )
     )
@@ -733,7 +733,7 @@
           (reference "#PWR02") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR071") (unit 1)
+          (reference "#PWR073") (unit 1)
         )
       )
     )
@@ -742,7 +742,7 @@
   (symbol (lib_id "Device:R_Small") (at 87.63 78.105 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 26d30be3-d079-46a3-aa5f-a88d88ed0c46)
-    (property "Reference" "R47" (at 87.63 74.295 90)
+    (property "Reference" "R48" (at 87.63 74.295 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "20K" (at 87.63 76.2 90)
@@ -765,7 +765,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R47") (unit 1)
+          (reference "R48") (unit 1)
         )
       )
     )
@@ -774,7 +774,7 @@
   (symbol (lib_id "Amplifier_Operational:TLV9001IDCK") (at 98.425 80.645 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 293aadf5-9357-4eb5-8bc5-532330ce68d3)
-    (property "Reference" "U8" (at 114.3 77.2161 0)
+    (property "Reference" "U9" (at 114.3 77.2161 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "TLV9001IDCK" (at 114.3 79.7561 0)
@@ -797,7 +797,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "U8") (unit 1)
+          (reference "U9") (unit 1)
         )
       )
     )
@@ -806,7 +806,7 @@
   (symbol (lib_id "power:+3.3V") (at 98.425 66.04 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2cd54f68-8991-446a-afe0-6407ed693c92)
-    (property "Reference" "#PWR073" (at 98.425 69.85 0)
+    (property "Reference" "#PWR075" (at 98.425 69.85 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 98.425 61.595 0)
@@ -822,7 +822,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "#PWR073") (unit 1)
+          (reference "#PWR075") (unit 1)
         )
       )
     )
@@ -943,7 +943,7 @@
   (symbol (lib_id "Device:R_Small") (at 81.915 85.09 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 84bb65c1-02b6-4881-ba85-43f31711f8d4)
-    (property "Reference" "R46" (at 80.645 83.82 0)
+    (property "Reference" "R47" (at 80.645 83.82 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100K" (at 80.645 86.36 0)
@@ -966,7 +966,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R46") (unit 1)
+          (reference "R47") (unit 1)
         )
       )
     )
@@ -975,7 +975,7 @@
   (symbol (lib_id "Device:R_Small") (at 106.68 69.85 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid fc381537-1184-42e0-beef-ba80bfe1b26a)
-    (property "Reference" "R48" (at 106.68 66.04 90)
+    (property "Reference" "R49" (at 106.68 66.04 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "20K" (at 106.68 67.945 90)
@@ -998,7 +998,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
-          (reference "R48") (unit 1)
+          (reference "R49") (unit 1)
         )
       )
     )

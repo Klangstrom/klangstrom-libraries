@@ -568,7 +568,7 @@
   (symbol (lib_id "power:+3.3V") (at 49.53 25.4 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 5583e120-e39e-4eb3-af40-27499ff8dd1e)
-    (property "Reference" "#PWR078" (at 49.53 29.21 0)
+    (property "Reference" "#PWR080" (at 49.53 29.21 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 49.53 20.32 0)
@@ -584,7 +584,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR078") (unit 1)
+          (reference "#PWR080") (unit 1)
         )
       )
     )
@@ -593,7 +593,7 @@
   (symbol (lib_id "Device:C_Polarized_Small") (at 88.9 31.75 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 68a2678f-f755-4319-b99f-a245b6d4bb72)
-    (property "Reference" "C47" (at 91.44 31.115 0)
+    (property "Reference" "C51" (at 91.44 31.115 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 91.44 33.02 0)
@@ -616,7 +616,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "C47") (unit 1)
+          (reference "C51") (unit 1)
         )
       )
     )
@@ -625,7 +625,7 @@
   (symbol (lib_id "MP34DT05TR-A:MP34DT05TR-A") (at 29.21 40.64 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 92fbdbcf-e533-476c-87a0-72bd684a5bf1)
-    (property "Reference" "U9" (at 49.53 30.48 0)
+    (property "Reference" "U10" (at 49.53 30.48 0)
       (effects (font (size 1.524 1.524)))
     )
     (property "Value" "MP34DT05TR-A" (at 49.53 33.02 0)
@@ -648,7 +648,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "U9") (unit 1)
+          (reference "U10") (unit 1)
         )
       )
     )
@@ -657,7 +657,7 @@
   (symbol (lib_id "Device:C_Small") (at 76.2 31.75 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9a715a9f-d64e-4938-8d3a-e64f74f1e9ea)
-    (property "Reference" "C46" (at 78.74 31.115 0)
+    (property "Reference" "C50" (at 78.74 31.115 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100nF" (at 78.74 33.02 0)
@@ -680,7 +680,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "C46") (unit 1)
+          (reference "C50") (unit 1)
         )
       )
     )
@@ -708,7 +708,7 @@
           (reference "#PWR0129") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR079") (unit 1)
+          (reference "#PWR081") (unit 1)
         )
       )
     )
@@ -717,7 +717,7 @@
   (symbol (lib_name "MP34DT05TR-A_1") (lib_id "MP34DT05TR-A:MP34DT05TR-A") (at 29.21 65.405 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid e1451c55-596b-48af-b784-cd8ce5e1f34e)
-    (property "Reference" "U10" (at 49.53 55.245 0)
+    (property "Reference" "U11" (at 49.53 55.245 0)
       (effects (font (size 1.524 1.524)))
     )
     (property "Value" "MP34DT05TR-A" (at 49.53 57.785 0)
@@ -740,7 +740,7 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "U10") (unit 1)
+          (reference "U11") (unit 1)
         )
       )
     )

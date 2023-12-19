@@ -302,12 +302,6 @@
     (uuid f9188ac5-69df-44be-9638-16bbca8be618)
   )
 
-  (text "@TODO(do Cherry MX keys need to be debounced in hardware?)"
-    (at 149.225 88.9 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 46aa29c0-35e9-493f-be22-56bd2fa0e98b)
-  )
-
   (hierarchical_label "KEY" (shape input) (at 158.115 95.885 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 8753ebfd-d8a3-4e73-964d-6eed7608e6ca)
@@ -335,10 +329,10 @@
           (reference "#PWR077") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/042452de-70bc-4b43-b264-a9a1cbea3e51"
-          (reference "#PWR080") (unit 1)
+          (reference "#PWR082") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/84723a09-c269-4794-b0be-89f4260a1140"
-          (reference "#PWR082") (unit 1)
+          (reference "#PWR084") (unit 1)
         )
       )
     )
@@ -347,7 +341,7 @@
   (symbol (lib_id "power:GND") (at 142.875 116.84 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 73d34087-68fd-44e0-8cab-db30d7498353)
-    (property "Reference" "#PWR081" (at 142.875 123.19 0)
+    (property "Reference" "#PWR083" (at 142.875 123.19 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 142.875 121.92 0)
@@ -363,10 +357,10 @@
     (instances
       (project "KLST_PANDA"
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/042452de-70bc-4b43-b264-a9a1cbea3e51"
-          (reference "#PWR081") (unit 1)
+          (reference "#PWR083") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/84723a09-c269-4794-b0be-89f4260a1140"
-          (reference "#PWR083") (unit 1)
+          (reference "#PWR085") (unit 1)
         )
       )
     )
@@ -452,10 +446,10 @@
           (reference "C?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/042452de-70bc-4b43-b264-a9a1cbea3e51"
-          (reference "C48") (unit 1)
+          (reference "C52") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/84723a09-c269-4794-b0be-89f4260a1140"
-          (reference "C49") (unit 1)
+          (reference "C53") (unit 1)
         )
       )
     )
@@ -498,10 +492,10 @@
           (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/042452de-70bc-4b43-b264-a9a1cbea3e51"
-          (reference "R49") (unit 1)
+          (reference "R50") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/84723a09-c269-4794-b0be-89f4260a1140"
-          (reference "R51") (unit 1)
+          (reference "R52") (unit 1)
         )
       )
     )
@@ -541,10 +535,10 @@
           (reference "R?") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/042452de-70bc-4b43-b264-a9a1cbea3e51"
-          (reference "R50") (unit 1)
+          (reference "R51") (unit 1)
         )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/84723a09-c269-4794-b0be-89f4260a1140"
-          (reference "R52") (unit 1)
+          (reference "R53") (unit 1)
         )
       )
     )
