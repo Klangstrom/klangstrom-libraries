@@ -1401,7 +1401,7 @@
     (property "Datasheet" "~" (at 125.73 33.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "JLCPCB" "C328396" (at 125.73 33.02 0)
+    (property "JLCPCB" "C17710" (at 125.73 33.02 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Description" "125mW" (at 125.73 33.02 0)
