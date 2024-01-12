@@ -6,6 +6,9 @@
 
 this repository hosts the hardware designs of *Klangstrom* boards. currently the following boards have been produced:
 
+![KLST_PANDA](./assets/KLST_PANDA.jpg)    
+KLST_PANDA (v1.0a) :: handheld-style development board with audio in-+output, MIDI in-+output, 2 on-board microphones, 4.3" TFT display, SD card reader, 16 MB external memory, 2 encoders, 2 mechanical keys, rechargeable battery ( based on STM32H723ZGT )
+
 ![KLST_SHEEP](./assets/KLST_SHEEP.jpg)    
 KLST_SHEEP (v0.1) :: handheld-style development board with 16 LEDs, 2 encoders, display ( based on STM32H743VI )
 
