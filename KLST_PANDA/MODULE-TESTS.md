@@ -44,6 +44,8 @@
 - [ ] LTDC: Validate basic color patterns and graphics on the TFT display.
 - [ ] Touch Screen: Test the responsiveness and calibration of the touch interface.
 - [ ] Backlight Control: Verify PWM control for dimming the backlight.
+	- [x] works with GPIO
+	- [ ] works with PWM
 
 - Objective: Validate the functionality of the TFT display using the LTDC.
 - Steps:
