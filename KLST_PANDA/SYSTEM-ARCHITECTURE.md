@@ -160,7 +160,7 @@ the booard also features two user-programmable mechanical Cherry MX keys. both c
 | U(S)ART | DESCRIPTION        |
 |---------|--------------------|
 | USART2  | SERIAL_USR         |
-| USART3  | SERIAL_DEBUG_TX    |
+| USART3  | SERIAL_DEBUG       |
 | UART4   | MIDI_ANALOG_IN+OUT |
 | UART9   | IDC_SERIAL_00      |
 | UART8   | IDC_SERIAL_01      |

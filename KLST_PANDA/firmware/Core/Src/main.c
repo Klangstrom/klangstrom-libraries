@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,7 +87,6 @@ UART_HandleTypeDef huart3;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
-static void MPU_Initialize(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_MDMA_Init(void);
@@ -125,7 +124,49 @@ void MX_USB_HOST_Process(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int _write(int file, char *data, int len) {
+   HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*)data, len, 0xFFFF);
+   return (status == HAL_OK ? len : 0);
+}
 
+/**
+ * control LEDs + backlight without PWM
+ */
+static void USR_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+//  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+//  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, _LED_00_Pin|_LED_01_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
+  GPIO_InitStruct.Pin = _LED_00_Pin|_LED_01_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : _DISPLAY_BACKLIGHT_PWM_Pin */
+  GPIO_InitStruct.Pin = _DISPLAY_BACKLIGHT_PWM_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, &GPIO_InitStruct);
+
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
+}
 /* USER CODE END 0 */
 
 /**
@@ -138,13 +179,13 @@ int main(void)
 
   /* USER CODE END 1 */
 
+  /* MPU Configuration--------------------------------------------------------*/
+  MPU_Config();
+
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* MPU Configuration--------------------------------------------------------*/
-  MPU_Config();
 
   /* USER CODE BEGIN Init */
 
@@ -153,11 +194,16 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-/* Configure the peripherals common clocks */
+  /* Configure the peripherals common clocks */
   PeriphCommonClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  MX_GPIO_Init();
+  MX_USART3_UART_Init();
+  USR_GPIO_Init();
+  printf("KLST_PANDA-STM32H723ZGT-BSP (%s)\r\n", __TIME__);
+//#define CALL_MX
+#if defined(CALL_MX)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -192,17 +238,27 @@ int main(void)
   MX_TIM15_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-
+#endif
+  HAL_GPIO_WritePin(_LED_00_GPIO_Port, _LED_00_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+#if defined(CALL_MX)
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
+#endif
+    HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
+    HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+	HAL_GPIO_TogglePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin);
+	printf("*\r\n");
+	HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
@@ -234,7 +290,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 275;
   RCC_OscInitStruct.PLL.PLLP = 1;
   RCC_OscInitStruct.PLL.PLLQ = 2;
@@ -279,7 +335,7 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_SAI4A
                               |RCC_PERIPHCLK_SDMMC|RCC_PERIPHCLK_SAI1
                               |RCC_PERIPHCLK_SPI2|RCC_PERIPHCLK_LTDC;
-  PeriphClkInitStruct.PLL2.PLL2M = 1;
+  PeriphClkInitStruct.PLL2.PLL2M = 2;
   PeriphClkInitStruct.PLL2.PLL2N = 24;
   PeriphClkInitStruct.PLL2.PLL2P = 4;
   PeriphClkInitStruct.PLL2.PLL2Q = 2;
@@ -287,7 +343,7 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
   PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
   PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
-  PeriphClkInitStruct.PLL3.PLL3M = 1;
+  PeriphClkInitStruct.PLL3.PLL3M = 2;
   PeriphClkInitStruct.PLL3.PLL3N = 24;
   PeriphClkInitStruct.PLL3.PLL3P = 2;
   PeriphClkInitStruct.PLL3.PLL3Q = 2;
