@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "module-tests.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -139,9 +140,7 @@ static void USR_GPIO_Init(void) {
 	/* USER CODE END MX_GPIO_Init_1 */
 
 	/* GPIO Ports Clock Enable */
-//  __HAL_RCC_GPIOH_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
-//  __HAL_RCC_GPIOD_CLK_ENABLE();
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 
 	/*Configure GPIO pin Output Level */
@@ -149,7 +148,7 @@ static void USR_GPIO_Init(void) {
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-			_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
+	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
 	GPIO_InitStruct.Pin = _LED_00_Pin | _LED_01_Pin;
@@ -198,12 +197,18 @@ int main(void) {
 	PeriphCommonClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-	MX_GPIO_Init();
 	MX_USART3_UART_Init();
+	printf("\r\n---------------------------------------------------------\r\n");
+	printf("\r\nKLST_PANDA-STM32H723ZGT-BSP (%s)\r\n\r\n", __TIME__);
+	print_debug("initialize GPIO");
+	MX_GPIO_Init();
+	print_debug("initialize GPIO(USR)");
 	USR_GPIO_Init();
-	printf("KLST_PANDA-STM32H723ZGT-BSP (%s)\r\n", __TIME__);
-//#define CALL_MX
-#if defined(CALL_MX)
+	print_debug("test RAM");
+	test_all_ram();
+//#define MX_INIT
+//#define MX_LOOP
+#if defined(MX_INIT)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -233,24 +238,24 @@ int main(void) {
   MX_UART9_Init();
   MX_FATFS_Init();
   MX_SDMMC2_SD_Init();
-  MX_USB_HOST_Init();
   MX_TIM3_Init();
   MX_TIM15_Init();
   MX_UART4_Init();
+  MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 #endif
 	HAL_GPIO_WritePin(_LED_00_GPIO_Port, _LED_00_Pin, GPIO_PIN_RESET); // GPIO_PIN_RESET == OFF
 	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-			_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
+	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin,
-			GPIO_PIN_SET);
+			GPIO_PIN_RESET);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-#if defined(CALL_MX)
+#if defined(MX_LOOP)
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
@@ -259,9 +264,9 @@ int main(void) {
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
 		HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
 		HAL_GPIO_TogglePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-				_DISPLAY_BACKLIGHT_PWM_Pin);
+		_DISPLAY_BACKLIGHT_PWM_Pin);
 		HAL_GPIO_TogglePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin);
-		printf("*\r\n");
+		print_debug("EOF");
 		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
@@ -830,7 +835,7 @@ static void MX_OCTOSPI1_Init(void) {
 	sOspiManagerCfg.IOLowPort = HAL_OSPIM_IOPORT_1_LOW;
 	sOspiManagerCfg.IOHighPort = HAL_OSPIM_IOPORT_1_HIGH;
 	if (HAL_OSPIM_Config(&hospi1, &sOspiManagerCfg,
-			HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
 	sHyperBusCfg.RWRecoveryTime = 0;
@@ -838,7 +843,7 @@ static void MX_OCTOSPI1_Init(void) {
 	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_NO_LATENCY_ON_WRITE;
 	sHyperBusCfg.LatencyMode = HAL_OSPI_VARIABLE_LATENCY;
 	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg,
-			HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN OCTOSPI1_Init 2 */
@@ -1030,9 +1035,9 @@ static void MX_SPI2_Init(void) {
 	hspi2.Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
 	hspi2.Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
 	hspi2.Init.TxCRCInitializationPattern =
-			SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
+	SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
 	hspi2.Init.RxCRCInitializationPattern =
-			SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
+	SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
 	hspi2.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
 	hspi2.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
 	hspi2.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
@@ -1732,7 +1737,7 @@ static void MX_GPIO_Init(void) {
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOC,
-			GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin | _DISPLAY_ON_OFF_Pin,
+	GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin | _DISPLAY_ON_OFF_Pin,
 			GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
@@ -1743,8 +1748,7 @@ static void MX_GPIO_Init(void) {
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOG,
-			GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin,
-			GPIO_PIN_RESET);
+	GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pins : GPIO_11_Pin GPIO_17_Pin */
 	GPIO_InitStruct.Pin = GPIO_11_Pin | GPIO_17_Pin;

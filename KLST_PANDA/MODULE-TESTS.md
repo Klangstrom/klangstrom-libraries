@@ -8,14 +8,15 @@
 - [x] Clock Configuration: Verify the system clock settings.
 	- [x] SYSCLK
 	- [ ] @later(test peripheral clocks) @TODO
-- [ ] Flash Memory: Test reading/writing to the internal flash.
-- [ ] RAM Test: Check the integrity of the internal RAM.
+- [x] RAM Test: Check the integrity of the internal RAM.
 
 ## 2. Communication Interfaces Test
 
-- [ ] USB Device: Validate USB enumeration and data transfer.
-- [ ] USB Host: Test connection with external devices (keyboard, mouse).
-- [ ] USART: Verify serial communication through USART2 and USART3.
+- [x] USB Device: Validate USB enumeration and data transfer.
+- [x] USB Host: Test connection with external devices (keyboard, mouse).
+- [ ] USART: Verify serial communication through 
+	- [ ] USART2 and 
+	- [x] USART3.
 - [ ] SPI: Test SPI communication with a loopback or external device.
 - [ ] I2C: Validate I2C communication with internal/external peripherals.
 
@@ -23,7 +24,7 @@
 - Steps for USB Device:
 	- Configure the USB peripheral in device mode.
 	- Connect the board to a PC and verify enumeration and communication.
-	- Steps for USB Host:
+- Steps for USB Host:
 	- Configure the USB peripheral in host mode.
 	- Connect a USB device (e.g., keyboard, mouse) and verify detection and basic functionality.
 
@@ -129,3 +130,10 @@
 
 - [ ] Firmware Functionality: Test all firmware features for correct operation.
 - [ ] Error Handling: Verify system behavior under error conditions.
+
+---
+
+# RESUME
+
+- switching on LCD backlight in full brightness (@TEST) crashes the system when on battery power @date(2024-01-31)
+- USB host is sometimes reacting ( printing debug messages ) but not working @TEST @date(2024-01-31)
