@@ -595,7 +595,7 @@
   (symbol (lib_id "Device:R_Small") (at 186.69 88.265 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0393ec0a-6400-46b4-be91-56dfb3c63865)
-    (property "Reference" "R17" (at 187.96 87.63 0)
+    (property "Reference" "R6" (at 187.96 87.63 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "2.2K" (at 187.96 89.535 0)
@@ -617,9 +617,6 @@
     (pin "2" (uuid 4179b02c-d643-40e4-9fba-07132593b589))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R17") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "R6") (unit 1)
         )
@@ -630,7 +627,7 @@
   (symbol (lib_id "power:+3.3V") (at 185.42 80.645 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0a56ad10-61bc-49be-b9cf-351c101c064f)
-    (property "Reference" "#PWR077" (at 185.42 84.455 0)
+    (property "Reference" "#PWR04" (at 185.42 84.455 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 185.42 75.565 0)
@@ -645,12 +642,6 @@
     (pin "1" (uuid 534fa673-3b4b-4837-b864-b2f0b7f20ace))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR044") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "#PWR04") (unit 1)
         )
@@ -800,7 +791,7 @@
   (symbol (lib_id "Device:R_Small") (at 123.19 88.265 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 56567835-ddaf-4eb1-a0ce-bd80ac566e23)
-    (property "Reference" "R16" (at 121.92 87.63 0)
+    (property "Reference" "R3" (at 121.92 87.63 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2.2K" (at 121.92 89.535 0)
@@ -822,9 +813,6 @@
     (pin "2" (uuid f3203975-bfca-43c0-9e67-e7fedbc079c4))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R16") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "R3") (unit 1)
         )
@@ -924,7 +912,7 @@
   (symbol (lib_id "Device:R_Small") (at 125.73 88.265 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 7f8e3b97-14a0-44cb-a79b-d11b4267e8e2)
-    (property "Reference" "R17" (at 127 87.63 0)
+    (property "Reference" "R4" (at 127 87.63 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "2.2K" (at 127 89.535 0)
@@ -946,9 +934,6 @@
     (pin "2" (uuid b779cd90-c1ae-473e-9c3b-37821eecbaae))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R17") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "R4") (unit 1)
         )
@@ -959,7 +944,7 @@
   (symbol (lib_id "Device:R_Small") (at 184.15 88.265 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid af2c632d-2d71-45e2-b46e-910d018c0ede)
-    (property "Reference" "R16" (at 182.88 87.63 0)
+    (property "Reference" "R5" (at 182.88 87.63 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2.2K" (at 182.88 89.535 0)
@@ -981,9 +966,6 @@
     (pin "2" (uuid 995b3a92-f8c2-4065-ab1b-7a582344194c))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "R16") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "R5") (unit 1)
         )
@@ -1044,7 +1026,7 @@
   (symbol (lib_id "power:+3.3V") (at 124.46 80.645 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid dc2defa4-c3e1-4189-9adc-75d0be1724dc)
-    (property "Reference" "#PWR077" (at 124.46 84.455 0)
+    (property "Reference" "#PWR03" (at 124.46 84.455 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 124.46 75.565 0)
@@ -1059,12 +1041,6 @@
     (pin "1" (uuid 41c815e6-b19d-43b1-8435-7901a2b05d2a))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
-          (reference "#PWR044") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
           (reference "#PWR03") (unit 1)
         )

@@ -649,7 +649,7 @@
   (symbol (lib_id "power:GND") (at 98.425 93.345 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 035bf140-8b5d-4290-8198-9eb82eb5c4ce)
-    (property "Reference" "#PWR03" (at 98.425 99.695 0)
+    (property "Reference" "#PWR076" (at 98.425 99.695 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 98.425 97.155 0)
@@ -664,12 +664,6 @@
     (pin "1" (uuid 8128dc62-01af-4b72-bf38-ceeba79b0e81))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR03") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd"
-          (reference "#PWR02") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "#PWR076") (unit 1)
         )
@@ -680,7 +674,7 @@
   (symbol (lib_id "power:GND") (at 36.83 90.17 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 15f9d943-cac6-49e7-babe-5c6c3bb9d735)
-    (property "Reference" "#PWR03" (at 36.83 96.52 0)
+    (property "Reference" "#PWR074" (at 36.83 96.52 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 36.83 93.98 0)
@@ -695,12 +689,6 @@
     (pin "1" (uuid 9a224b93-1ce7-4e71-829a-68b497191e0d))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR03") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd"
-          (reference "#PWR02") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "#PWR074") (unit 1)
         )
@@ -711,7 +699,7 @@
   (symbol (lib_id "power:GND") (at 36.83 45.72 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 198a7cb2-dc2b-458b-b8e9-1fc55b309354)
-    (property "Reference" "#PWR03" (at 36.83 52.07 0)
+    (property "Reference" "#PWR073" (at 36.83 52.07 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 36.83 49.53 0)
@@ -726,12 +714,6 @@
     (pin "1" (uuid 42ece1d4-ec79-4aaf-913e-ec0c35049e3d))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR03") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd"
-          (reference "#PWR02") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "#PWR073") (unit 1)
         )
@@ -855,12 +837,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "D8") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "D9") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "D14") (unit 1)
         )
@@ -871,7 +847,7 @@
   (symbol (lib_id "Connector_Audio:AudioJack4_SwitchTR1") (at 29.845 83.185 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 777a4804-2cf3-4861-a594-2c8503499ca9)
-    (property "Reference" "J3" (at 20.955 80.645 0)
+    (property "Reference" "J12" (at 20.955 80.645 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "ADC" (at 20.955 83.185 0)
@@ -894,9 +870,6 @@
     (pin "TN" (uuid bcf3f7c1-ceb4-4e2e-a18b-3e4ded24f73a))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "J3") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "J12") (unit 1)
         )
@@ -907,7 +880,7 @@
   (symbol (lib_id "Connector_Audio:AudioJack4_SwitchTR1") (at 29.845 38.735 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 84225708-5670-46c2-919b-72fdbd0f52af)
-    (property "Reference" "J3" (at 20.955 36.195 0)
+    (property "Reference" "J11" (at 20.955 36.195 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "DAC" (at 20.955 38.735 0)
@@ -930,9 +903,6 @@
     (pin "TN" (uuid 45b84e20-9bd2-4d2a-8339-79587ed03c64))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "J3") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/98dcce4c-cc8c-420d-bfb6-73762da3b881"
           (reference "J11") (unit 1)
         )

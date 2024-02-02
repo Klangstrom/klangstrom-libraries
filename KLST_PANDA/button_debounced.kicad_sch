@@ -344,7 +344,7 @@
   (symbol (lib_id "power:+3.3V") (at 138.43 86.995 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 700f9307-4acd-4353-9cff-c515144d6383)
-    (property "Reference" "#PWR077" (at 138.43 90.805 0)
+    (property "Reference" "#PWR059" (at 138.43 90.805 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 138.43 81.915 0)
@@ -359,9 +359,6 @@
     (pin "1" (uuid 25b8d711-51ce-4e1b-9b8c-46a445bd7635))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
           (reference "#PWR059") (unit 1)
         )

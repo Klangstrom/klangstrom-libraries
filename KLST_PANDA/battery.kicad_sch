@@ -1311,6 +1311,13 @@
     (effects (font (size 1.27 1.27)) (justify right top))
     (uuid 448e73b4-5027-4538-aa61-7b8b4c636889)
   )
+  (text_box "SS14 diode is a problem and prevents charging"
+    (at 171.45 47.625 0) (size 34.925 9.525)
+    (stroke (width 0) (type default))
+    (fill (type color) (color 255 0 0 1))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid ae0484a4-b954-4dc7-b92c-6b69826d2675)
+  )
 
   (text "@TODO is this the ideal position for on/off-switch?"
     (at 22.86 113.03 0)
@@ -1430,12 +1437,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/8f837d10-8dfd-4ab5-9b60-26a38e53480d"
-          (reference "D8") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0/91fd47dd-a581-4f6b-aa29-abb0b8099e11"
-          (reference "D9") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
           (reference "D8") (unit 1)
         )
@@ -1476,7 +1477,7 @@
   (symbol (lib_id "Device:R_Small") (at 74.93 31.115 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0adb4d9f-63dd-4d2b-84fb-507574c8fcb8)
-    (property "Reference" "R2" (at 76.4286 29.9466 0)
+    (property "Reference" "R20" (at 76.4286 29.9466 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2K" (at 76.4286 32.258 0)
@@ -1498,9 +1499,6 @@
     (pin "2" (uuid f2ae9d41-87b5-46f7-b2e5-d6b44fad4ce7))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "R2") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
           (reference "R20") (unit 1)
         )
@@ -2151,7 +2149,7 @@
   (symbol (lib_id "Device:R_Small") (at 92.71 31.115 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid bae620fa-4529-49f9-9fef-60c2bacad31b)
-    (property "Reference" "R2" (at 94.2086 29.9466 0)
+    (property "Reference" "R21" (at 94.2086 29.9466 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "2K" (at 94.2086 32.258 0)
@@ -2173,9 +2171,6 @@
     (pin "2" (uuid ff813feb-234e-4009-aafd-7c9c9f968c41))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "R2") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
           (reference "R21") (unit 1)
         )
@@ -2290,7 +2285,7 @@
   (symbol (lib_id "Transistor_FET:AO3401A") (at 228.6 32.385 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid df6f2d3f-42eb-48ec-886b-44dc411a0555)
-    (property "Reference" "Q1" (at 228.6 23.6982 90)
+    (property "Reference" "Q3" (at 228.6 23.6982 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "AO3401A" (at 228.6 26.0096 90)
@@ -2310,9 +2305,6 @@
     (pin "3" (uuid 421051a0-c24f-4379-8001-6735aebfba06))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "Q1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
           (reference "Q3") (unit 1)
         )

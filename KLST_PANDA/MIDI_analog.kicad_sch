@@ -994,7 +994,7 @@
   (symbol (lib_id "Connector_Audio:AudioJack4_SwitchTR1") (at 35.56 93.98 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0ce5629f-5145-46fa-a368-936635ada015)
-    (property "Reference" "J3" (at 26.67 91.44 0)
+    (property "Reference" "J8" (at 26.67 91.44 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "MIDI_OUT" (at 26.67 93.98 0)
@@ -1017,9 +1017,6 @@
     (pin "TN" (uuid 0059ee6e-6ce5-4092-b013-fc263d648f40))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "J3") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
           (reference "J8") (unit 1)
         )
@@ -1030,7 +1027,7 @@
   (symbol (lib_id "power:+3.3V") (at 115.57 26.67 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 28772c58-6c2c-4299-bda0-68b74025aa7a)
-    (property "Reference" "#PWR021" (at 115.57 30.48 0)
+    (property "Reference" "#PWR063" (at 115.57 30.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 115.57 21.59 0)
@@ -1045,9 +1042,6 @@
     (pin "1" (uuid 96562ca3-33a2-46ad-b5de-60ddc907d38b))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
           (reference "#PWR063") (unit 1)
         )
@@ -1207,7 +1201,7 @@
   (symbol (lib_id "Connector_Audio:AudioJack4_SwitchTR1") (at 35.56 43.18 0) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 78d947ee-3bcd-44e9-8d74-0bcdbac42cd2)
-    (property "Reference" "J3" (at 26.67 40.64 0)
+    (property "Reference" "J7" (at 26.67 40.64 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "MIDI_IN" (at 26.67 43.18 0)
@@ -1230,9 +1224,6 @@
     (pin "TN" (uuid 8018c765-a3b8-4aad-ae7a-74c37cc70fcf))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "J3") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
           (reference "J7") (unit 1)
         )
@@ -1303,7 +1294,7 @@
   (symbol (lib_id "power:+3.3V") (at 88.9 80.01 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid b01b2e74-3c3d-4426-a2d2-26efd7780caa)
-    (property "Reference" "#PWR021" (at 88.9 83.82 0)
+    (property "Reference" "#PWR061" (at 88.9 83.82 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 88.9 74.93 0)
@@ -1318,9 +1309,6 @@
     (pin "1" (uuid 145cd0c1-6a52-4607-969f-c61e0eb63331))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
           (reference "#PWR061") (unit 1)
         )
@@ -1331,7 +1319,7 @@
   (symbol (lib_id "power:+3.3V") (at 124.46 80.01 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ba9baed0-9225-46bc-a0f8-23a727bbfbec)
-    (property "Reference" "#PWR021" (at 124.46 83.82 0)
+    (property "Reference" "#PWR066" (at 124.46 83.82 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 124.46 74.93 0)
@@ -1346,9 +1334,6 @@
     (pin "1" (uuid e80bd49c-d5a0-4f11-8a15-cd31a7343517))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
           (reference "#PWR066") (unit 1)
         )

@@ -613,9 +613,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "#PWR?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "#PWR051") (unit 1)
         )
@@ -659,9 +656,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R27") (unit 1)
         )
@@ -705,9 +699,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R30") (unit 1)
         )
@@ -751,9 +742,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R29") (unit 1)
         )
@@ -767,7 +755,7 @@
   (symbol (lib_id "power:+3.3V") (at 149.86 71.12 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 4e3362e8-1646-47f7-a49d-027f2448e68e)
-    (property "Reference" "#PWR077" (at 149.86 74.93 0)
+    (property "Reference" "#PWR052" (at 149.86 74.93 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 149.86 66.04 0)
@@ -782,9 +770,6 @@
     (pin "1" (uuid 862ca93a-c69f-43f5-bcf2-155bb61b95c4))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "#PWR052") (unit 1)
         )
@@ -828,9 +813,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R25") (unit 1)
         )
@@ -874,9 +856,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C39") (unit 1)
         )
@@ -920,9 +899,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R26") (unit 1)
         )
@@ -966,9 +942,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C40") (unit 1)
         )
@@ -1009,9 +982,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "R?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "R28") (unit 1)
         )
@@ -1093,9 +1063,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc"
-          (reference "C?") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/b123f5e9-cc72-42aa-83b5-20f52795babc/87cd59e0-a7cb-4402-bde3-1e8396956bda"
           (reference "C38") (unit 1)
         )

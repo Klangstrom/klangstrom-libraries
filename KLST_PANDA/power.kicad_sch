@@ -903,7 +903,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 34.925 79.375 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 00722153-8265-4817-8eba-d65f250ccb86)
-    (property "Reference" "#FLG05" (at 34.925 81.28 0)
+    (property "Reference" "#FLG02" (at 34.925 81.28 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 34.925 83.82 0)
@@ -918,12 +918,6 @@
     (pin "1" (uuid 39748de0-7a8d-4a89-aa68-39bc9d24261e))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#FLG05") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#FLG03") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#FLG02") (unit 1)
         )
@@ -934,7 +928,7 @@
   (symbol (lib_id "power:+3.3V") (at 88.9 26.67 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 00d07a8c-72ec-4b9a-9e35-1cec45b328f2)
-    (property "Reference" "#PWR021" (at 88.9 30.48 0)
+    (property "Reference" "#PWR011" (at 88.9 30.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 88.9 21.59 0)
@@ -949,15 +943,6 @@
     (pin "1" (uuid bf7d6cec-9e3e-44d0-9abb-2746ae0d1fa5))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR030") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR05") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR011") (unit 1)
         )
@@ -968,7 +953,7 @@
   (symbol (lib_id "Device:C_Small") (at 88.9 46.355 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 049122d6-69ac-4b0d-9cc3-f6d298836fe8)
-    (property "Reference" "C3" (at 91.2368 45.1866 0)
+    (property "Reference" "C2" (at 91.2368 45.1866 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10uF" (at 91.2368 47.498 0)
@@ -990,12 +975,6 @@
     (pin "2" (uuid 62f33033-b37d-4439-9d98-42d464932b8f))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "C3") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "C25") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "C2") (unit 1)
         )
@@ -1025,12 +1004,6 @@
     (pin "2" (uuid 02f64778-450f-4cf8-a8f7-1bdf3548ab78))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "FB1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "FB1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "FB1") (unit 1)
         )
@@ -1041,7 +1014,7 @@
   (symbol (lib_name "+5V_1") (lib_id "power:+5V") (at 20.32 26.67 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1fb0c01d-0c89-4035-baed-b1a18eb7858f)
-    (property "Reference" "#PWR020" (at 20.32 30.48 0)
+    (property "Reference" "#PWR05" (at 20.32 30.48 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 20.32 21.59 0)
@@ -1056,12 +1029,6 @@
     (pin "1" (uuid 57b2f85b-3e37-4cf5-b10d-172850535a76))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR020") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR01") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR05") (unit 1)
         )
@@ -1072,7 +1039,7 @@
   (symbol (lib_id "Device:C_Small") (at 136.525 35.56 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 21ac00f1-8b88-461f-9e69-6348f8c7fd38)
-    (property "Reference" "C5" (at 138.8618 34.3916 0)
+    (property "Reference" "C4" (at 138.8618 34.3916 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10nF" (at 138.8618 36.703 0)
@@ -1094,12 +1061,6 @@
     (pin "2" (uuid 2f1051c9-e27f-49e8-9086-bcdc52d9cf5e))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "C5") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "C27") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "C4") (unit 1)
         )
@@ -1110,7 +1071,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 56.515 79.375 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2a2771e4-0c58-4a98-964b-c91bd592a881)
-    (property "Reference" "#FLG07" (at 56.515 77.47 0)
+    (property "Reference" "#FLG04" (at 56.515 77.47 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 56.515 74.295 0)
@@ -1125,12 +1086,6 @@
     (pin "1" (uuid b5d811b1-76e7-4931-86ac-5e0c90a110f5))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#FLG07") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#FLG06") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#FLG04") (unit 1)
         )
@@ -1141,7 +1096,7 @@
   (symbol (lib_id "Device:C_Small") (at 126.365 35.56 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2ab989c9-8ece-415f-a84d-5a6b502cc6d7)
-    (property "Reference" "C4" (at 128.7018 34.3916 0)
+    (property "Reference" "C3" (at 128.7018 34.3916 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1uF" (at 128.7018 36.703 0)
@@ -1163,12 +1118,6 @@
     (pin "2" (uuid e893f342-e346-4635-9d72-81f2f38bba19))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "C4") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "C26") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "C3") (unit 1)
         )
@@ -1179,7 +1128,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 24.765 79.375 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2be5a69b-5e08-4f5e-a7df-0ed5bf4382fa)
-    (property "Reference" "#FLG05" (at 24.765 81.28 0)
+    (property "Reference" "#FLG01" (at 24.765 81.28 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 24.765 83.82 0)
@@ -1194,12 +1143,6 @@
     (pin "1" (uuid 0674e994-363c-445a-9f9b-54edcfea726b))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#FLG05") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#FLG02") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#FLG01") (unit 1)
         )
@@ -1210,7 +1153,7 @@
   (symbol (lib_id "power:GND") (at 56.515 79.375 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2d5728d7-6dc1-4d18-814e-1817014cb3c6)
-    (property "Reference" "#PWR014" (at 56.515 85.725 0)
+    (property "Reference" "#PWR09" (at 56.515 85.725 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 56.515 83.185 0)
@@ -1225,12 +1168,6 @@
     (pin "1" (uuid 2abb35ad-6518-468a-92f7-0c36ac07f95e))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR014") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR032") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR09") (unit 1)
         )
@@ -1241,7 +1178,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 45.085 79.375 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2ec88b3c-cdc9-472f-abff-f535497fe660)
-    (property "Reference" "#FLG06" (at 45.085 81.28 0)
+    (property "Reference" "#FLG03" (at 45.085 81.28 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 45.085 83.82 0)
@@ -1256,12 +1193,6 @@
     (pin "1" (uuid f5e968be-68e0-4da6-8a3f-332b4398342a))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#FLG06") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#FLG04") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#FLG03") (unit 1)
         )
@@ -1272,7 +1203,7 @@
   (symbol (lib_id "power:+3.3V") (at 112.395 25.4 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 393ea65f-d814-4cec-b903-b49ef0d55f4f)
-    (property "Reference" "#PWR021" (at 112.395 29.21 0)
+    (property "Reference" "#PWR012" (at 112.395 29.21 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 112.395 20.32 0)
@@ -1287,15 +1218,6 @@
     (pin "1" (uuid c542cd31-668c-4b45-bf07-09045361b2fa))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR031") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR016") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR012") (unit 1)
         )
@@ -1306,7 +1228,7 @@
   (symbol (lib_id "power:PWR_FLAG") (at 62.865 33.655 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 4536c344-caa3-4df4-b844-e43193fac653)
-    (property "Reference" "#FLG06" (at 62.865 31.75 0)
+    (property "Reference" "#FLG05" (at 62.865 31.75 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "PWR_FLAG" (at 62.865 29.21 0)
@@ -1321,12 +1243,6 @@
     (pin "1" (uuid 25329ab1-dbed-4c6e-894c-b31698978758))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#FLG06") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#FLG01") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#FLG05") (unit 1)
         )
@@ -1337,7 +1253,7 @@
   (symbol (lib_id "power:+3.3V") (at 24.765 79.375 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 487b539a-4033-4526-ac56-cddffa203197)
-    (property "Reference" "#PWR021" (at 24.765 83.185 0)
+    (property "Reference" "#PWR06" (at 24.765 83.185 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 24.765 74.295 0)
@@ -1352,15 +1268,6 @@
     (pin "1" (uuid f2750476-6c6b-47bf-97ed-1463f75d150c))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR030") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR06") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR06") (unit 1)
         )
@@ -1371,7 +1278,7 @@
   (symbol (lib_id "power:GND") (at 126.365 40.64 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 556d1e91-b11e-47e8-988c-73ed8e52bacc)
-    (property "Reference" "#PWR017" (at 126.365 46.99 0)
+    (property "Reference" "#PWR013" (at 126.365 46.99 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 126.365 44.45 0)
@@ -1386,12 +1293,6 @@
     (pin "1" (uuid 94c7343f-66d3-46fd-95e1-8c29aec515d4))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR017") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR032") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR013") (unit 1)
         )
@@ -1402,7 +1303,7 @@
   (symbol (lib_id "power:GND") (at 62.865 58.42 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 6ed770cc-19fd-4c2b-92a2-c047ee0c0458)
-    (property "Reference" "#PWR025" (at 62.865 64.77 0)
+    (property "Reference" "#PWR010" (at 62.865 64.77 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 62.865 63.5 0)
@@ -1417,12 +1318,6 @@
     (pin "1" (uuid c3741a59-2334-4867-8941-63176d52b63b))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR025") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR03") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR010") (unit 1)
         )
@@ -1433,7 +1328,7 @@
   (symbol (lib_id "power:+3.3VA") (at 45.085 79.375 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 708fa2aa-9a28-4445-ae2a-543ef7657397)
-    (property "Reference" "#PWR035" (at 45.085 83.185 0)
+    (property "Reference" "#PWR08" (at 45.085 83.185 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3VA" (at 45.085 74.295 0)
@@ -1448,12 +1343,6 @@
     (pin "1" (uuid 0956a589-3462-4f07-be38-f6991db70ed0))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR035") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR010") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR08") (unit 1)
         )
@@ -1486,12 +1375,6 @@
     (pin "2" (uuid 451d27f7-59de-4688-af08-4e5052a4a74c))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "L1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "L1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "L1") (unit 1)
         )
@@ -1524,12 +1407,6 @@
     (pin "2" (uuid 1c212d7d-103a-4402-987e-f6f4d4c4dbae))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "C1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "C24") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "C1") (unit 1)
         )
@@ -1560,12 +1437,6 @@
     (pin "3" (uuid d37f840c-dd13-41e7-9999-184531707614))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "Q1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "Q1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "Q1") (unit 1)
         )
@@ -1576,7 +1447,7 @@
   (symbol (lib_name "+5V_1") (lib_id "power:+5V") (at 34.925 79.375 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 9e53f329-17dd-4fdd-ad07-09b1f8c4d6ce)
-    (property "Reference" "#PWR034" (at 34.925 83.185 0)
+    (property "Reference" "#PWR07" (at 34.925 83.185 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (at 34.925 74.295 0)
@@ -1591,12 +1462,6 @@
     (pin "1" (uuid 8e9a8288-7c4e-43ec-b9de-d3106b362906))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR034") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR09") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR07") (unit 1)
         )
@@ -1607,7 +1472,7 @@
   (symbol (lib_name "+3.3VA_3") (lib_id "power:+3.3VA") (at 136.525 25.4 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid aaea4bca-0662-47e1-9204-0f61cdb345d6)
-    (property "Reference" "#PWR033" (at 136.525 29.21 0)
+    (property "Reference" "#PWR014" (at 136.525 29.21 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3VA" (at 138.43 24.13 0)
@@ -1622,12 +1487,6 @@
     (pin "1" (uuid e98ac419-cbb7-4a88-a348-8bc1c4709909))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "#PWR033") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR018") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "#PWR014") (unit 1)
         )
@@ -1658,12 +1517,6 @@
     (pin "3" (uuid c7d956e6-6bb6-4f45-8d5e-8f1a89057de7))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "U1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "U2") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "U1") (unit 1)
         )
@@ -1693,12 +1546,6 @@
     (pin "2" (uuid 43e92fce-82f9-4178-83b2-dcb16953c4be))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "NT1") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "NT1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
           (reference "NT1") (unit 1)
         )

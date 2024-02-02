@@ -1807,7 +1807,7 @@
   (symbol (lib_id "power:GND") (at 229.87 133.35 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4f52f316-ee56-4261-bcf3-653b21f685b7)
-    (property "Reference" "#PWR04" (at 229.87 139.7 0)
+    (property "Reference" "#PWR045" (at 229.87 139.7 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 229.87 137.16 0)
@@ -1822,12 +1822,6 @@
     (pin "1" (uuid 04a70311-9dfa-46d9-93c4-3947bda0d557))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR04") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd"
-          (reference "#PWR04") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
           (reference "#PWR045") (unit 1)
         )
@@ -1999,7 +1993,7 @@
   (symbol (lib_id "power:+3.3V") (at 227.33 24.13 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d516e932-27fe-4904-987b-45cc8d5b7dd0)
-    (property "Reference" "#PWR077" (at 227.33 27.94 0)
+    (property "Reference" "#PWR044" (at 227.33 27.94 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 227.33 19.05 0)
@@ -2014,9 +2008,6 @@
     (pin "1" (uuid 99e2ee5e-4da6-4aad-9e17-64718ae990c9))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
           (reference "#PWR044") (unit 1)
         )
@@ -2091,7 +2082,7 @@
   (symbol (lib_id "power:GND") (at 88.9 55.88 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid e757701e-8284-4554-afdd-00ef9665fa1f)
-    (property "Reference" "#PWR04" (at 88.9 62.23 0)
+    (property "Reference" "#PWR042" (at 88.9 62.23 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 88.9 59.69 0)
@@ -2106,12 +2097,6 @@
     (pin "1" (uuid 08907369-9b37-40aa-b1f4-a59188d524e3))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR04") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f33ecd0b-aa1f-4f6b-afec-a5b478ff75fd"
-          (reference "#PWR04") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/e5470bb0-cacd-4f1d-9ba6-63c7432dbe78"
           (reference "#PWR042") (unit 1)
         )

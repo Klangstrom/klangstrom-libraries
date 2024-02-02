@@ -711,7 +711,7 @@
   (symbol (lib_id "power:+3.3V") (at 125.095 23.495 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 45c283e1-a9d1-4bfd-9e00-11142dc36d66)
-    (property "Reference" "#PWR021" (at 125.095 27.305 0)
+    (property "Reference" "#PWR040" (at 125.095 27.305 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 125.095 18.415 0)
@@ -726,9 +726,6 @@
     (pin "1" (uuid 181417ab-8c00-4c73-8428-91c698761ba6))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "#PWR040") (unit 1)
         )
@@ -759,9 +756,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "#PWR039") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "#PWR039") (unit 1)
         )
@@ -772,7 +766,7 @@
   (symbol (lib_id "power:+3.3V") (at 24.765 23.495 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 610bb11b-919e-4e48-9d9b-f1507207178a)
-    (property "Reference" "#PWR021" (at 24.765 27.305 0)
+    (property "Reference" "#PWR038" (at 24.765 27.305 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 24.765 18.415 0)
@@ -787,9 +781,6 @@
     (pin "1" (uuid 067fd318-6230-4fea-9741-445bc0beffba))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/88042be3-8ae4-47d6-9c31-0a9af833bdb2"
-          (reference "#PWR021") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "#PWR038") (unit 1)
         )
@@ -800,7 +791,7 @@
   (symbol (lib_id "power:GND") (at 161.29 92.71 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 61be1139-f802-4557-a8bf-f9249340342f)
-    (property "Reference" "#PWR07" (at 161.29 99.06 0)
+    (property "Reference" "#PWR041" (at 161.29 99.06 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 161.29 96.52 0)
@@ -815,9 +806,6 @@
     (pin "1" (uuid 6fb9a416-7797-4da6-9e50-05c194efcada))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR07") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "#PWR041") (unit 1)
         )
@@ -962,7 +950,7 @@
   (symbol (lib_id "Device:C_Small") (at 127 75.565 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c79d1da7-c97e-4e11-98c2-b85f601f0ec1)
-    (property "Reference" "C3" (at 129.3368 74.3966 0)
+    (property "Reference" "C30" (at 129.3368 74.3966 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100nF" (at 129.3368 76.708 0)
@@ -984,12 +972,6 @@
     (pin "2" (uuid 41f87b0a-42d7-4bd9-aeda-11b7fe750555))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "C3") (unit 1)
-        )
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/d68846c2-d235-4363-b980-eab3c53b4a55"
-          (reference "C6") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "C30") (unit 1)
         )
@@ -1123,9 +1105,6 @@
         )
       )
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee/7936a5e0-5a04-43e4-aa84-42432289d154"
-          (reference "R62") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/52cda7d1-da0e-43fc-963f-d09ac6e0ff74"
           (reference "R12") (unit 1)
         )

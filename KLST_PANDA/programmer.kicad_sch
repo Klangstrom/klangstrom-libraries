@@ -527,7 +527,7 @@
   (symbol (lib_id "power:GND") (at 99.695 67.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2beb9231-91f3-432a-bca2-be93f3a2e3b9)
-    (property "Reference" "#PWR025" (at 99.695 73.66 0)
+    (property "Reference" "#PWR088" (at 99.695 73.66 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 99.695 71.12 0)
@@ -542,9 +542,6 @@
     (pin "1" (uuid 46a63e12-b719-468d-8abc-80f16175960c))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR025") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "#PWR088") (unit 1)
         )
@@ -587,7 +584,7 @@
   (symbol (lib_id "Connector:Conn_ST_STDC14") (at 31.75 46.99 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 43282ee1-55fb-4fac-8ac9-f43f883b40fd)
-    (property "Reference" "J1" (at 41.91 29.845 0)
+    (property "Reference" "J14" (at 41.91 29.845 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "ARM_JTAG_SWD(STDC14)" (at 42.545 27.305 0)
@@ -618,9 +615,6 @@
     (pin "9" (uuid c846a45a-6016-4d5f-a249-3f4ea4ab0bc0))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "J1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "J14") (unit 1)
         )
@@ -631,7 +625,7 @@
   (symbol (lib_id "power:+3.3V") (at 100.965 27.305 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 459503bb-dfcf-49de-83fe-ef94ee7a0ff1)
-    (property "Reference" "#PWR077" (at 100.965 31.115 0)
+    (property "Reference" "#PWR089" (at 100.965 31.115 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 100.965 22.225 0)
@@ -646,9 +640,6 @@
     (pin "1" (uuid 0a5fe321-d481-4b69-bc22-9a3611c6dc76))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "#PWR089") (unit 1)
         )
@@ -723,7 +714,7 @@
   (symbol (lib_id "power:+3.3V") (at 31.75 27.305 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 57f30a3c-ca7c-4da7-99f4-18480f621e9c)
-    (property "Reference" "#PWR077" (at 31.75 31.115 0)
+    (property "Reference" "#PWR087" (at 31.75 31.115 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (at 31.75 22.225 0)
@@ -738,9 +729,6 @@
     (pin "1" (uuid a63486ac-6c1e-4e59-918e-e78be3092f1e))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/47e8e77e-c64e-4c44-bfd8-2073580a3d85"
-          (reference "#PWR077") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "#PWR087") (unit 1)
         )
@@ -783,7 +771,7 @@
   (symbol (lib_id "Connector:Conn_ST_STDC14") (at 100.965 46.99 0) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 9b401a96-e386-4e89-8b4b-eb5f585b8b6c)
-    (property "Reference" "J1" (at 110.49 29.845 0)
+    (property "Reference" "J15" (at 110.49 29.845 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "TC2070-IDC-NL" (at 111.125 27.305 0)
@@ -814,9 +802,6 @@
     (pin "9" (uuid de5affb0-d502-41d5-b029-dce818e6118f))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "J1") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "J15") (unit 1)
         )
@@ -859,7 +844,7 @@
   (symbol (lib_id "power:GND") (at 30.48 67.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid ff264a3b-6666-44b3-a376-7befd1e42d79)
-    (property "Reference" "#PWR025" (at 30.48 73.66 0)
+    (property "Reference" "#PWR086" (at 30.48 73.66 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 30.48 71.12 0)
@@ -874,9 +859,6 @@
     (pin "1" (uuid 2b84b19b-df5d-4fc7-a930-2d4db31c9070))
     (instances
       (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
-          (reference "#PWR025") (unit 1)
-        )
         (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/2ad43130-8b99-4527-817e-e6414020b242"
           (reference "#PWR086") (unit 1)
         )
