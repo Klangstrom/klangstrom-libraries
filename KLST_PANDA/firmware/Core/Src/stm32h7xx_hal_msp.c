@@ -344,21 +344,11 @@ void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef* hdma2d)
 void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hi2c->Instance==I2C1)
   {
   /* USER CODE BEGIN I2C1_MspInit 0 */
 
   /* USER CODE END I2C1_MspInit 0 */
-
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
-    PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C1235CLKSOURCE_D2PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**I2C1 GPIO Configuration
@@ -383,15 +373,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
   /* USER CODE BEGIN I2C4_MspInit 0 */
 
   /* USER CODE END I2C4_MspInit 0 */
-
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2C4;
-    PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_D3PCLK1;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
 
     __HAL_RCC_GPIOF_CLK_ENABLE();
     /**I2C4 GPIO Configuration
@@ -667,22 +648,11 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* hltdc)
 void HAL_OSPI_MspInit(OSPI_HandleTypeDef* hospi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hospi->Instance==OCTOSPI1)
   {
   /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
 
   /* USER CODE END OCTOSPI1_MspInit 0 */
-
-  /** Initializes the peripherals clock
-  */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI;
-    PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_D1HCLK;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
     /* Peripheral clock enable */
     __HAL_RCC_OCTOSPIM_CLK_ENABLE();
     __HAL_RCC_OSPI1_CLK_ENABLE();

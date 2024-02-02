@@ -180,6 +180,13 @@ int main(void) {
 
 	/* MPU Configuration--------------------------------------------------------*/
 	MPU_Config();
+	/* Enable the CPU Cache */
+
+	/* Enable I-Cache---------------------------------------------------------*/
+	SCB_EnableICache();
+
+	/* Enable D-Cache---------------------------------------------------------*/
+	SCB_EnableDCache();
 
 	/* MCU Configuration--------------------------------------------------------*/
 
@@ -204,6 +211,11 @@ int main(void) {
 	MX_GPIO_Init();
 	print_debug("initialize GPIO(USR)");
 	USR_GPIO_Init();
+
+	print_debug("initialize external RAM");
+	MX_MDMA_Init();
+	MX_OCTOSPI1_Init();
+
 	print_debug("test RAM");
 	test_all_ram();
 //#define MX_INIT
@@ -250,6 +262,7 @@ int main(void) {
 	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin,
 			GPIO_PIN_RESET);
+	external_memory_test_setup();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -262,11 +275,10 @@ int main(void) {
     /* USER CODE BEGIN 3 */
 #endif
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
-		HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
 		HAL_GPIO_TogglePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
 		_DISPLAY_BACKLIGHT_PWM_Pin);
-		HAL_GPIO_TogglePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin);
 		print_debug("EOF");
+		external_memory_test_loop();
 		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
@@ -339,14 +351,15 @@ void PeriphCommonClock_Config(void) {
 
 	/** Initializes the peripherals clock
 	 */
-	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC
-			| RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_SAI1
+	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI
+			| RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SAI4A
+			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_SAI1
 			| RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_LTDC;
 	PeriphClkInitStruct.PLL2.PLL2M = 2;
-	PeriphClkInitStruct.PLL2.PLL2N = 24;
+	PeriphClkInitStruct.PLL2.PLL2N = 25;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
-	PeriphClkInitStruct.PLL2.PLL2R = 2;
+	PeriphClkInitStruct.PLL2.PLL2R = 1;
 	PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
 	PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
 	PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
@@ -358,9 +371,12 @@ void PeriphCommonClock_Config(void) {
 	PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
 	PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
+	PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
 	PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL2;
 	PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
 	PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
+	PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C1235CLKSOURCE_PLL3;
+	PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_PLL3;
 	PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL2;
 	PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
 	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
@@ -639,7 +655,7 @@ static void MX_I2C1_Init(void) {
 
 	/* USER CODE END I2C1_Init 1 */
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.Timing = 0x60404E72;
+	hi2c1.Init.Timing = 0x10707DBC;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -684,7 +700,7 @@ static void MX_I2C4_Init(void) {
 
 	/* USER CODE END I2C4_Init 1 */
 	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x60404E72;
+	hi2c4.Init.Timing = 0x10707DBC;
 	hi2c4.Init.OwnAddress1 = 0;
 	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -811,21 +827,21 @@ static void MX_OCTOSPI1_Init(void) {
 	/* USER CODE END OCTOSPI1_Init 1 */
 	/* OCTOSPI1 parameter configuration*/
 	hospi1.Instance = OCTOSPI1;
-	hospi1.Init.FifoThreshold = 1;
+	hospi1.Init.FifoThreshold = 4;
 	hospi1.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
 	hospi1.Init.MemoryType = HAL_OSPI_MEMTYPE_HYPERBUS;
-	hospi1.Init.DeviceSize = 32;
+	hospi1.Init.DeviceSize = 24;
 	hospi1.Init.ChipSelectHighTime = 1;
 	hospi1.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
 	hospi1.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
 	hospi1.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
 	hospi1.Init.ClockPrescaler = 1;
 	hospi1.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_NONE;
-	hospi1.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_DISABLE;
+	hospi1.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_ENABLE;
 	hospi1.Init.ChipSelectBoundary = 0;
-	hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_BYPASSED;
-	hospi1.Init.MaxTran = 0;
-	hospi1.Init.Refresh = 0;
+	hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_USED;
+	hospi1.Init.MaxTran = 23;
+	hospi1.Init.Refresh = 799;
 	if (HAL_OSPI_Init(&hospi1) != HAL_OK) {
 		Error_Handler();
 	}
@@ -838,16 +854,19 @@ static void MX_OCTOSPI1_Init(void) {
 	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
-	sHyperBusCfg.RWRecoveryTime = 0;
-	sHyperBusCfg.AccessTime = 0;
-	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_NO_LATENCY_ON_WRITE;
-	sHyperBusCfg.LatencyMode = HAL_OSPI_VARIABLE_LATENCY;
+	sHyperBusCfg.RWRecoveryTime = 7;
+	sHyperBusCfg.AccessTime = 7;
+	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_LATENCY_ON_WRITE;
+	sHyperBusCfg.LatencyMode = HAL_OSPI_FIXED_LATENCY;
 	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg,
 	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN OCTOSPI1_Init 2 */
-
+	// datasheet ( at 200MHz -> 1tick = 5ns ):
+	// - RWRecoveryTime        : ( 35ns (p48) -> ) 7
+	// - Access Tim            : ( 35ns (p48) -> ) 7
+	// - Chip Select High Time : (  4ns (p48) -> ) 7
 	/* USER CODE END OCTOSPI1_Init 2 */
 
 }
@@ -1818,9 +1837,9 @@ void MPU_Config(void) {
 	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
 	MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
 	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
 	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
 
 	HAL_MPU_ConfigRegion(&MPU_InitStruct);
 	/* Enables the MPU */

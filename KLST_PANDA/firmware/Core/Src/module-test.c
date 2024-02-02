@@ -9,7 +9,7 @@
 #include <string.h>
 #include <inttypes.h>
 
-#include "stm32h7xx_hal.h"
+#include "main.h"
 #include "module-tests.h"
 
 void print_debug(char *text) {
@@ -92,3 +92,54 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 	return errorFlag; // Return 0 if the RAM is okay, 1 if there is an error
 }
 
+/* S70KL1281 memory */
+/* Size of the HyperRAM */
+#define OSPI_HYPERRAM_SIZE          24
+#define OSPI_HYPERRAM_INCR_SIZE     256
+
+/* End address of the OSPI memory */
+#define OSPI_HYPERRAM_END_ADDR      (1 << OSPI_HYPERRAM_SIZE)
+
+/* Buffer used for transmission */
+uint8_t aTxBuffer[] =
+		" ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****  ****Memory-mapped OSPI communication**** ";
+
+uint32_t address = 0;
+__IO uint32_t *mem_addr;
+
+/* Size of buffers */
+#define BUFFERSIZE                  (COUNTOF(aTxBuffer) - 1)
+/* Exported macro ------------------------------------------------------------*/
+#define COUNTOF(__BUFFER__)         (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
+
+uint8_t CmdCplt, TxCplt, StatusMatch, RxCplt;
+
+void external_memory_test_setup() {
+	address = 0;
+}
+
+void external_memory_test_loop() {
+	/* Intensive Access ----------------------------------------------- */
+	mem_addr = (__IO uint32_t*) (LCD_FRAME_BUFFER + address);
+
+	for (uint16_t index = 0; index < BUFFERSIZE; (index += 4)) {
+		/* Writing Sequence --------------------------------------------------- */
+		*mem_addr = *(uint32_t*) &aTxBuffer[index];
+
+		/* Reading Sequence --------------------------------------------------- */
+		if (*mem_addr != *(uint32_t*) &aTxBuffer[index]) {
+			HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+		}
+
+		mem_addr++;
+	}
+
+	HAL_GPIO_TogglePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin);
+	HAL_Delay(100);
+
+	address += OSPI_HYPERRAM_INCR_SIZE;
+	if (address >= OSPI_HYPERRAM_END_ADDR) {
+		address = 0;
+	}
+
+}
