@@ -28,6 +28,10 @@ static void run_test(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 	} else {
 		println("        OK");
 	}
+	/*
+	 [0000000018] test external RAM
+	 OK
+	 */
 	//	uint32_t a = 0;
 	//	void *b = (void*) &a;
 	//	printf("%p\r\n", b);
@@ -93,6 +97,31 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 }
 
 /* S70KL1281 memory */
+
+#define MEMORY_START_ADDR 0x90000000
+#define TEST_SIZE         (0x1000000 / 4) // 16MB = 0x1000000 à 32BIT
+
+bool external_memory_test_integrity_test(void) {
+	uint32_t *write_ptr = (uint32_t*) MEMORY_START_ADDR;
+	uint32_t *read_ptr = (uint32_t*) MEMORY_START_ADDR;
+	bool is_valid = true;
+
+	// Write a pattern to the external memory
+	for (uint32_t i = 0; i < TEST_SIZE; i++) {
+		write_ptr[i] = i;
+	}
+
+	// Read back the pattern and verify
+	for (uint32_t i = 0; i < TEST_SIZE; i++) {
+		if (read_ptr[i] != i) {
+			is_valid = false;
+			break;
+		}
+	}
+
+	return is_valid;
+}
+
 /* Size of the HyperRAM */
 #define OSPI_HYPERRAM_SIZE          24
 #define OSPI_HYPERRAM_INCR_SIZE     256
@@ -102,7 +131,7 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 
 /* Buffer used for transmission */
 uint8_t aTxBuffer[] =
-		" ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****   ****Memory-mapped OSPI communication****  ****Memory-mapped OSPI communication**** ";
+		"1234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678";
 
 uint32_t address = 0;
 __IO uint32_t *mem_addr;
@@ -128,7 +157,10 @@ void external_memory_test_loop() {
 
 		/* Reading Sequence --------------------------------------------------- */
 		if (*mem_addr != *(uint32_t*) &aTxBuffer[index]) {
-			HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+//			HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+			printf("> %p\n\r", mem_addr);
+			printf("  %c == %c\n\r", (char) aTxBuffer[index],
+					(char) (*mem_addr));
 		}
 
 		mem_addr++;

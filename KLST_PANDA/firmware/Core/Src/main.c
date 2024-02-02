@@ -216,7 +216,14 @@ int main(void) {
 	MX_MDMA_Init();
 	MX_OCTOSPI1_Init();
 
-	print_debug("test RAM");
+	print_debug("test external RAM");
+	if (external_memory_test_integrity_test()) {
+		println("             FAILED");
+	} else {
+		println("             OK");
+	}
+
+	print_debug("test internal RAM");
 	test_all_ram();
 //#define MX_INIT
 //#define MX_LOOP
@@ -863,10 +870,31 @@ static void MX_OCTOSPI1_Init(void) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN OCTOSPI1_Init 2 */
+
 	// datasheet ( at 200MHz -> 1tick = 5ns ):
 	// - RWRecoveryTime        : ( 35ns (p48) -> ) 7
 	// - Access Tim            : ( 35ns (p48) -> ) 7
 	// - Chip Select High Time : (  4ns (p48) -> ) 7
+	OSPI_HyperbusCmdTypeDef sCommand;
+	OSPI_MemoryMappedTypeDef sMemMappedCfg;
+
+	/* Memory-mapped mode configuration --------------------------------------- */
+	sCommand.AddressSpace = HAL_OSPI_MEMORY_ADDRESS_SPACE;
+	sCommand.AddressSize = HAL_OSPI_ADDRESS_32_BITS;
+	sCommand.DQSMode = HAL_OSPI_DQS_ENABLE;
+	sCommand.Address = 0;
+	sCommand.NbData = 1;
+
+	if (HAL_OSPI_HyperbusCmd(&hospi1, &sCommand,
+	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+		Error_Handler();
+	}
+
+	sMemMappedCfg.TimeOutActivation = HAL_OSPI_TIMEOUT_COUNTER_DISABLE;
+
+	if (HAL_OSPI_MemoryMapped(&hospi1, &sMemMappedCfg) != HAL_OK) {
+		Error_Handler();
+	}
 	/* USER CODE END OCTOSPI1_Init 2 */
 
 }
