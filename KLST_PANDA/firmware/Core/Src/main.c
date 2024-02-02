@@ -167,6 +167,11 @@ static void USR_GPIO_Init(void) {
 	/* USER CODE BEGIN MX_GPIO_Init_2 */
 	/* USER CODE END MX_GPIO_Init_2 */
 }
+
+#define EXT_MEM __attribute__((section(".external_memory")))
+#define NUM_SAMPLES (48000 * 20)
+EXT_MEM float m_array[NUM_SAMPLES];
+
 /* USER CODE END 0 */
 
 /**
@@ -274,6 +279,14 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
+	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
+		m_array[i] = (float) i / (float) NUM_SAMPLES;
+	}
+	for (uint32_t i = 0; i < NUM_SAMPLES; i+=1024) {
+		float r = (float) i / (float) NUM_SAMPLES;
+		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
+	}
+	println(" ... NOT COOL");
 	while (1) {
 #if defined(MX_LOOP)
     /* USER CODE END WHILE */
