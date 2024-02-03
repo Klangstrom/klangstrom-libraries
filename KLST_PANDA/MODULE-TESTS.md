@@ -130,10 +130,3 @@
 
 - [ ] Firmware Functionality: Test all firmware features for correct operation.
 - [ ] Error Handling: Verify system behavior under error conditions.
-
----
-
-# RESUME
-
-- switching on LCD backlight in full brightness (@TEST) crashes the system when on battery power @date(2024-01-31)
-- USB host is sometimes reacting ( printing debug messages ) but not working @TEST @date(2024-01-31)
