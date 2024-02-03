@@ -98,80 +98,48 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 
 /* S70KL1281 memory */
 
-#define MEMORY_START_ADDR 0x90000000
-#define TEST_SIZE         (0x1000000 / 4) // 16MB = 0x1000000 à 32BIT
+#define SDRAM_ADDRESS_START 0x90000000
+#define SDRAM_SIZE           0x1000000
 
-bool external_memory_test_integrity_test(void) {
-	uint32_t *write_ptr = (uint32_t*) MEMORY_START_ADDR;
-	uint32_t *read_ptr = (uint32_t*) MEMORY_START_ADDR;
-	bool is_valid = true;
+void external_memory_test() {
+	uint32_t counter;
+	uint32_t start_time;
+	uint32_t stop_time;
 
-	// Write a pattern to the external memory
-	for (uint32_t i = 0; i < TEST_SIZE; i++) {
-		write_ptr[i] = i;
+	start_time = HAL_GetTick();
+	for (counter = 0x00; counter < SDRAM_SIZE; counter++) {
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) 0x0;
 	}
+	stop_time = HAL_GetTick() - start_time;
+	printf("             writing 0s   : %li\r\n", stop_time);
 
-	// Read back the pattern and verify
-	for (uint32_t i = 0; i < TEST_SIZE; i++) {
-		if (read_ptr[i] != i) {
-			is_valid = false;
-			break;
+	HAL_Delay(50);
+
+	uint8_t testByte = 0x00;
+	start_time = HAL_GetTick();
+	for (counter = 0x00; counter < SDRAM_SIZE; counter++) {
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) (testByte
+				+ counter);
+	}
+	stop_time = HAL_GetTick() - start_time;
+	printf("             writing byte : %li\r\n", stop_time);
+
+	HAL_Delay(50);
+
+	uint32_t error_counter = 0;
+	start_time = HAL_GetTick();
+	for (counter = 0x00; counter < SDRAM_SIZE; counter++) {
+		uint8_t testValue = counter;
+		uint8_t readValue = *(__IO uint8_t*) (SDRAM_ADDRESS_START + counter);
+
+		if (testValue != readValue) {
+			error_counter++;
 		}
 	}
+	stop_time = HAL_GetTick() - start_time;
+	printf("             reading byte : %li\r\n", stop_time);
+	printf("                   errors : %li\r\n", error_counter);
 
-	return is_valid;
+	HAL_Delay(50);
 }
 
-/* Size of the HyperRAM */
-#define OSPI_HYPERRAM_SIZE          24
-#define OSPI_HYPERRAM_INCR_SIZE     256
-
-/* End address of the OSPI memory */
-#define OSPI_HYPERRAM_END_ADDR      (1 << OSPI_HYPERRAM_SIZE)
-
-/* Buffer used for transmission */
-uint8_t aTxBuffer[] =
-		"1234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678";
-
-uint32_t address = 0;
-__IO uint32_t *mem_addr;
-
-/* Size of buffers */
-#define BUFFERSIZE                  (COUNTOF(aTxBuffer) - 1)
-/* Exported macro ------------------------------------------------------------*/
-#define COUNTOF(__BUFFER__)         (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
-
-uint8_t CmdCplt, TxCplt, StatusMatch, RxCplt;
-
-void external_memory_test_setup() {
-	address = 0;
-}
-
-void external_memory_test_loop() {
-	/* Intensive Access ----------------------------------------------- */
-	mem_addr = (__IO uint32_t*) (LCD_FRAME_BUFFER + address);
-
-	for (uint16_t index = 0; index < BUFFERSIZE; (index += 4)) {
-		/* Writing Sequence --------------------------------------------------- */
-		*mem_addr = *(uint32_t*) &aTxBuffer[index];
-
-		/* Reading Sequence --------------------------------------------------- */
-		if (*mem_addr != *(uint32_t*) &aTxBuffer[index]) {
-//			HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-			printf("> %p\n\r", mem_addr);
-			printf("  %c == %c\n\r", (char) aTxBuffer[index],
-					(char) (*mem_addr));
-		}
-
-		mem_addr++;
-	}
-
-	HAL_GPIO_TogglePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin);
-	HAL_Delay(100);
-
-	address += OSPI_HYPERRAM_INCR_SIZE;
-	if (address >= OSPI_HYPERRAM_END_ADDR) {
-		address = 0;
-	}
-
-}

@@ -222,11 +222,7 @@ int main(void) {
 	MX_OCTOSPI1_Init();
 
 	print_debug("test external RAM");
-	if (external_memory_test_integrity_test()) {
-		println("             FAILED");
-	} else {
-		println("             OK");
-	}
+	external_memory_test();
 
 	print_debug("test internal RAM");
 	test_all_ram();
@@ -274,7 +270,6 @@ int main(void) {
 	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin,
 			GPIO_PIN_RESET);
-	external_memory_test_setup();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -282,11 +277,11 @@ int main(void) {
 	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
 		m_array[i] = (float) i / (float) NUM_SAMPLES;
 	}
-	for (uint32_t i = 0; i < NUM_SAMPLES; i += 1024) {
-		float r = (float) i / (float) NUM_SAMPLES;
-		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
-	}
-	println(" ... NOT COOL");
+//	for (uint32_t i = 0; i < NUM_SAMPLES; i += 1024) {
+//		float r = (float) i / (float) NUM_SAMPLES;
+//		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
+//	}
+//	println(" ... NOT COOL");
 	while (1) {
 #if defined(MX_LOOP)
     /* USER CODE END WHILE */
@@ -298,7 +293,6 @@ int main(void) {
 		HAL_GPIO_TogglePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
 		_DISPLAY_BACKLIGHT_PWM_Pin);
 		print_debug("EOF");
-		external_memory_test_loop();
 		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
@@ -376,7 +370,7 @@ void PeriphCommonClock_Config(void) {
 			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
 			| RCC_PERIPHCLK_LTDC;
 	PeriphClkInitStruct.PLL2.PLL2M = 2;
-	PeriphClkInitStruct.PLL2.PLL2N = 41;
+	PeriphClkInitStruct.PLL2.PLL2N = 25;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
 	PeriphClkInitStruct.PLL2.PLL2R = 1;
@@ -850,17 +844,17 @@ static void MX_OCTOSPI1_Init(void) {
 	hospi1.Init.DualQuad = HAL_OSPI_DUALQUAD_DISABLE;
 	hospi1.Init.MemoryType = HAL_OSPI_MEMTYPE_HYPERBUS;
 	hospi1.Init.DeviceSize = 24;
-	hospi1.Init.ChipSelectHighTime = 1;
+	hospi1.Init.ChipSelectHighTime = 2;
 	hospi1.Init.FreeRunningClock = HAL_OSPI_FREERUNCLK_DISABLE;
 	hospi1.Init.ClockMode = HAL_OSPI_CLOCK_MODE_0;
 	hospi1.Init.WrapSize = HAL_OSPI_WRAP_NOT_SUPPORTED;
-	hospi1.Init.ClockPrescaler = 1;
+	hospi1.Init.ClockPrescaler = 2;
 	hospi1.Init.SampleShifting = HAL_OSPI_SAMPLE_SHIFTING_NONE;
 	hospi1.Init.DelayHoldQuarterCycle = HAL_OSPI_DHQC_ENABLE;
 	hospi1.Init.ChipSelectBoundary = 0;
 	hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_USED;
 	hospi1.Init.MaxTran = 23;
-	hospi1.Init.Refresh = 6;
+	hospi1.Init.Refresh = 799;
 	if (HAL_OSPI_Init(&hospi1) != HAL_OK) {
 		Error_Handler();
 	}
@@ -873,8 +867,8 @@ static void MX_OCTOSPI1_Init(void) {
 	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
-	sHyperBusCfg.RWRecoveryTime = 6;
-	sHyperBusCfg.AccessTime = 6;
+	sHyperBusCfg.RWRecoveryTime = 4;
+	sHyperBusCfg.AccessTime = 7;
 	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_LATENCY_ON_WRITE;
 	sHyperBusCfg.LatencyMode = HAL_OSPI_FIXED_LATENCY;
 	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg,
