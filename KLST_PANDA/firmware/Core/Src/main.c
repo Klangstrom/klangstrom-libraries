@@ -282,7 +282,7 @@ int main(void) {
 	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
 		m_array[i] = (float) i / (float) NUM_SAMPLES;
 	}
-	for (uint32_t i = 0; i < NUM_SAMPLES; i+=1024) {
+	for (uint32_t i = 0; i < NUM_SAMPLES; i += 1024) {
 		float r = (float) i / (float) NUM_SAMPLES;
 		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
 	}
@@ -335,7 +335,7 @@ void SystemClock_Config(void) {
 	RCC_OscInitStruct.PLL.PLLM = 8;
 	RCC_OscInitStruct.PLL.PLLN = 275;
 	RCC_OscInitStruct.PLL.PLLP = 1;
-	RCC_OscInitStruct.PLL.PLLQ = 2;
+	RCC_OscInitStruct.PLL.PLLQ = 5;
 	RCC_OscInitStruct.PLL.PLLR = 2;
 	RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_1;
 	RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -373,10 +373,10 @@ void PeriphCommonClock_Config(void) {
 	 */
 	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI
 			| RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SAI4A
-			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_SAI1
-			| RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_LTDC;
+			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
+			| RCC_PERIPHCLK_LTDC;
 	PeriphClkInitStruct.PLL2.PLL2M = 2;
-	PeriphClkInitStruct.PLL2.PLL2N = 25;
+	PeriphClkInitStruct.PLL2.PLL2N = 41;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
 	PeriphClkInitStruct.PLL2.PLL2R = 1;
@@ -392,7 +392,6 @@ void PeriphCommonClock_Config(void) {
 	PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
 	PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
-	PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL2;
 	PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
 	PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
 	PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C1235CLKSOURCE_PLL3;
@@ -861,7 +860,7 @@ static void MX_OCTOSPI1_Init(void) {
 	hospi1.Init.ChipSelectBoundary = 0;
 	hospi1.Init.DelayBlockBypass = HAL_OSPI_DELAY_BLOCK_USED;
 	hospi1.Init.MaxTran = 23;
-	hospi1.Init.Refresh = 799;
+	hospi1.Init.Refresh = 6;
 	if (HAL_OSPI_Init(&hospi1) != HAL_OK) {
 		Error_Handler();
 	}
@@ -874,8 +873,8 @@ static void MX_OCTOSPI1_Init(void) {
 	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
-	sHyperBusCfg.RWRecoveryTime = 7;
-	sHyperBusCfg.AccessTime = 7;
+	sHyperBusCfg.RWRecoveryTime = 6;
+	sHyperBusCfg.AccessTime = 6;
 	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_LATENCY_ON_WRITE;
 	sHyperBusCfg.LatencyMode = HAL_OSPI_FIXED_LATENCY;
 	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg,

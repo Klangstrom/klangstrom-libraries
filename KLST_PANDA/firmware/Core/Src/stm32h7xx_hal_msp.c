@@ -761,6 +761,9 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* hospi)
 
     __HAL_LINKDMA(hospi,hmdma,hmdma_octospi1_fifo_th);
 
+    /* OCTOSPI1 interrupt Init */
+    HAL_NVIC_SetPriority(OCTOSPI1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(OCTOSPI1_IRQn);
   /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
   /* USER CODE END OCTOSPI1_MspInit 1 */
@@ -812,6 +815,9 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* hospi)
 
     /* OCTOSPI1 MDMA DeInit */
     HAL_MDMA_DeInit(hospi->hmdma);
+
+    /* OCTOSPI1 interrupt DeInit */
+    HAL_NVIC_DisableIRQ(OCTOSPI1_IRQn);
   /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
 
   /* USER CODE END OCTOSPI1_MspDeInit 1 */
@@ -828,11 +834,22 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* hospi)
 void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hsd->Instance==SDMMC2)
   {
   /* USER CODE BEGIN SDMMC2_MspInit 0 */
 
   /* USER CODE END SDMMC2_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SDMMC;
+    PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* Peripheral clock enable */
     __HAL_RCC_SDMMC2_CLK_ENABLE();
 
