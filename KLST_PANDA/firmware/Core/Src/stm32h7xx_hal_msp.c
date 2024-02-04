@@ -513,7 +513,14 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R1_Pin|_DISPLAY_LTDC_R4_Pin|_DISPLAY_LTDC_G2_Pin|_DISPLAY_LTDC_VSYNC_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R1_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
+    HAL_GPIO_Init(_DISPLAY_LTDC_R1_GPIO_Port, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R4_Pin|_DISPLAY_LTDC_G2_Pin|_DISPLAY_LTDC_VSYNC_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -573,6 +580,8 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     /* LTDC interrupt Init */
     HAL_NVIC_SetPriority(LTDC_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LTDC_IRQn);
+    HAL_NVIC_SetPriority(LTDC_ER_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(LTDC_ER_IRQn);
   /* USER CODE BEGIN LTDC_MspInit 1 */
 
   /* USER CODE END LTDC_MspInit 1 */
@@ -643,6 +652,7 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* hltdc)
 
     /* LTDC interrupt DeInit */
     HAL_NVIC_DisableIRQ(LTDC_IRQn);
+    HAL_NVIC_DisableIRQ(LTDC_ER_IRQn);
   /* USER CODE BEGIN LTDC_MspDeInit 1 */
 
   /* USER CODE END LTDC_MspDeInit 1 */

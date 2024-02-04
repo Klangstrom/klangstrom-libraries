@@ -59,7 +59,9 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LCD_FRAME_BUFFER 0x90000000
+#define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
+#define KLST_DISPLAY_WIDTH 480
+#define KLST_DISPLAY_HEIGHT 272
 #define _AUDIO_MIC_CLK_Pin GPIO_PIN_2
 #define _AUDIO_MIC_CLK_GPIO_Port GPIOE
 #define _AUDIO_CODEC_SAI_SD_OUT_Pin GPIO_PIN_3

@@ -126,8 +126,7 @@ void MX_USB_HOST_Process(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int _write(int file, char *data, int len) {
-	HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len,
-			0xFFFF);
+	HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 0xFFFF);
 	return (status == HAL_OK ? len : 0);
 }
 
@@ -168,9 +167,26 @@ static void USR_GPIO_Init(void) {
 	/* USER CODE END MX_GPIO_Init_2 */
 }
 
-#define EXT_MEM __attribute__((section(".external_memory")))
-#define NUM_SAMPLES (48000 * 20)
-EXT_MEM float m_array[NUM_SAMPLES];
+//#define EXT_MEM __attribute__((section(".external_memory")))
+//#define NUM_SAMPLES (48000 * 20)
+//EXT_MEM float m_array[NUM_SAMPLES];
+
+void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc) {
+	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+}
+
+void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+	hdma2d.Instance = DMA2D;
+	hdma2d.Init.Mode = DMA2D_M2M;
+	hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
+	hdma2d.Init.OutputOffset = KLST_DISPLAY_WIDTH - width;
+
+	HAL_DMA2D_Init(&hdma2d);
+	HAL_DMA2D_ConfigLayer(&hdma2d, 0);
+	HAL_DMA2D_ConfigLayer(&hdma2d, 1);
+	HAL_DMA2D_Start(&hdma2d, color, KLST_DISPLAY_FRAMEBUFFER_ADDRESS + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
+	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
+}
 
 /* USER CODE END 0 */
 
@@ -230,7 +246,18 @@ int main(void) {
 	print_debug("initialize LCD (LTDC+DMA2D)");
 	MX_LTDC_Init();
 //	MX_DMA2D_Init();
+//	HAL_DMA2D_Start(&hdma2d,
+//	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
+//	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
+//	KLST_DISPLAY_WIDTH,
+//	KLST_DISPLAY_HEIGHT);
+//	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
 
+	DMA2D_FillRect(0xffffc000,
+	KLST_DISPLAY_WIDTH / 4,
+	KLST_DISPLAY_HEIGHT / 4,
+	KLST_DISPLAY_WIDTH / 2,
+	KLST_DISPLAY_HEIGHT / 2);
 //#define MX_INIT
 //#define MX_LOOP
 #if defined(MX_INIT)
@@ -270,18 +297,17 @@ int main(void) {
   /* USER CODE BEGIN 2 */
 #endif
 	HAL_GPIO_WritePin(_LED_00_GPIO_Port, _LED_00_Pin, GPIO_PIN_RESET); // GPIO_PIN_RESET == OFF
-	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
+	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
-	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin,
-			GPIO_PIN_RESET);
+	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
+	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
-		m_array[i] = (float) i / (float) NUM_SAMPLES;
-	}
+//	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
+//		m_array[i] = (float) i / (float) NUM_SAMPLES;
+//	}
 //	for (uint32_t i = 0; i < NUM_SAMPLES; i += 1024) {
 //		float r = (float) i / (float) NUM_SAMPLES;
 //		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
@@ -295,8 +321,17 @@ int main(void) {
     /* USER CODE BEGIN 3 */
 #endif
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
-		HAL_GPIO_TogglePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-		_DISPLAY_BACKLIGHT_PWM_Pin);
+
+#define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 3)
+		uint8_t testByte = (uint8_t) (HAL_GetTick());
+		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 3) {
+			const uint8_t rgb = (uint8_t) (testByte + counter);
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb;
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb;
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb;
+		}
+
 		print_debug("EOF");
 		HAL_Delay(500);
 	}
@@ -325,8 +360,7 @@ void SystemClock_Config(void) {
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48
-			| RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -345,9 +379,8 @@ void SystemClock_Config(void) {
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_D3PCLK1
-			| RCC_CLOCKTYPE_D1PCLK1;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2
+			| RCC_CLOCKTYPE_D3PCLK1 | RCC_CLOCKTYPE_D1PCLK1;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
@@ -370,10 +403,8 @@ void PeriphCommonClock_Config(void) {
 
 	/** Initializes the peripherals clock
 	 */
-	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI
-			| RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SAI4A
-			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
-			| RCC_PERIPHCLK_LTDC;
+	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC
+			| RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_LTDC;
 	PeriphClkInitStruct.PLL2.PLL2M = 1;
 	PeriphClkInitStruct.PLL2.PLL2N = 25;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
@@ -383,10 +414,10 @@ void PeriphCommonClock_Config(void) {
 	PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
 	PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
 	PeriphClkInitStruct.PLL3.PLL3M = 2;
-	PeriphClkInitStruct.PLL3.PLL3N = 24;
+	PeriphClkInitStruct.PLL3.PLL3N = 25;
 	PeriphClkInitStruct.PLL3.PLL3P = 2;
 	PeriphClkInitStruct.PLL3.PLL3Q = 2;
-	PeriphClkInitStruct.PLL3.PLL3R = 10;
+	PeriphClkInitStruct.PLL3.PLL3R = 21;
 	PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
 	PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
@@ -673,7 +704,7 @@ static void MX_I2C1_Init(void) {
 
 	/* USER CODE END I2C1_Init 1 */
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.Timing = 0x0040496F;
+	hi2c1.Init.Timing = 0x00202538;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -687,8 +718,7 @@ static void MX_I2C1_Init(void) {
 
 	/** Configure Analogue filter
 	 */
-	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE)
-			!= HAL_OK) {
+	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK) {
 		Error_Handler();
 	}
 
@@ -718,7 +748,7 @@ static void MX_I2C4_Init(void) {
 
 	/* USER CODE END I2C4_Init 1 */
 	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x0040496F;
+	hi2c4.Init.Timing = 0x00202538;
 	hi2c4.Init.OwnAddress1 = 0;
 	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -732,8 +762,7 @@ static void MX_I2C4_Init(void) {
 
 	/** Configure Analogue filter
 	 */
-	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE)
-			!= HAL_OK) {
+	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK) {
 		Error_Handler();
 	}
 
@@ -756,7 +785,24 @@ static void MX_I2C4_Init(void) {
 static void MX_LTDC_Init(void) {
 
 	/* USER CODE BEGIN LTDC_Init 0 */
-
+	// LTDC Clock Rate = ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.5 MHz at ( 565 * 279 * 60Hz )
+//#define  KLST_PANDA_DISPLAY_HSYNC            ((uint16_t)41)     /* Horizontal synchronization */
+//#define  KLST_PANDA_DISPLAY_HBP              ((uint16_t)13)     /* Horizontal back porch      */
+//#define  KLST_PANDA_DISPLAY_HFP              ((uint16_t)32)     /* Horizontal front porch     */
+//#define  KLST_PANDA_DISPLAY_VSYNC            ((uint16_t)10)     /* Vertical synchronization   */
+//#define  KLST_PANDA_DISPLAY_VBP              ((uint16_t)2)      /* Vertical back porch        */
+//#define  KLST_PANDA_DISPLAY_VFP              ((uint16_t)2)      /* Vertical front porch       */
+//#define  KLST_PANDA_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 3) // 24-bit
+//	hltdc.Init.HorizontalSync = (KLST_PANDA_DISPLAY_HSYNC - 1);
+//	hltdc.Init.VerticalSync = (KLST_PANDA_DISPLAY_VSYNC - 1);
+//	hltdc.Init.AccumulatedHBP = (KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP - 1);
+//	hltdc.Init.AccumulatedVBP = (KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP - 1);
+//	hltdc.Init.AccumulatedActiveW = (KLST_DISPLAY_WIDTH + KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP - 1);
+//	hltdc.Init.AccumulatedActiveH = (KLST_DISPLAY_HEIGHT + KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP - 1);
+//	hltdc.Init.TotalWidth = (KLST_DISPLAY_WIDTH + KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP
+//			+ KLST_PANDA_DISPLAY_HFP - 1);
+//	hltdc.Init.TotalHeigh = (KLST_DISPLAY_HEIGHT + KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP
+//			+ KLST_PANDA_DISPLAY_VFP - 1);
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
@@ -769,14 +815,14 @@ static void MX_LTDC_Init(void) {
 	hltdc.Init.VSPolarity = LTDC_VSPOLARITY_AL;
 	hltdc.Init.DEPolarity = LTDC_DEPOLARITY_AL;
 	hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-	hltdc.Init.HorizontalSync = 7;
+	hltdc.Init.HorizontalSync = 40;
 	hltdc.Init.VerticalSync = 3;
-	hltdc.Init.AccumulatedHBP = 14;
+	hltdc.Init.AccumulatedHBP = 53;
 	hltdc.Init.AccumulatedVBP = 5;
-	hltdc.Init.AccumulatedActiveW = 654;
-	hltdc.Init.AccumulatedActiveH = 485;
-	hltdc.Init.TotalWidth = 660;
-	hltdc.Init.TotalHeigh = 487;
+	hltdc.Init.AccumulatedActiveW = 533;
+	hltdc.Init.AccumulatedActiveH = 277;
+	hltdc.Init.TotalWidth = 565;
+	hltdc.Init.TotalHeigh = 279;
 	hltdc.Init.Backcolor.Blue = 0;
 	hltdc.Init.Backcolor.Green = 0;
 	hltdc.Init.Backcolor.Red = 255;
@@ -784,17 +830,17 @@ static void MX_LTDC_Init(void) {
 		Error_Handler();
 	}
 	pLayerCfg.WindowX0 = 0;
-	pLayerCfg.WindowX1 = 640;
+	pLayerCfg.WindowX1 = KLST_DISPLAY_WIDTH;
 	pLayerCfg.WindowY0 = 0;
-	pLayerCfg.WindowY1 = 480;
+	pLayerCfg.WindowY1 = KLST_DISPLAY_HEIGHT;
 	pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
 	pLayerCfg.Alpha = 0;
 	pLayerCfg.Alpha0 = 0;
 	pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
 	pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-	pLayerCfg.FBStartAdress = LCD_FRAME_BUFFER;
-	pLayerCfg.ImageWidth = 640;
-	pLayerCfg.ImageHeight = 480;
+	pLayerCfg.FBStartAdress = KLST_DISPLAY_FRAMEBUFFER_ADDRESS;
+	pLayerCfg.ImageWidth = KLST_DISPLAY_WIDTH;
+	pLayerCfg.ImageHeight = KLST_DISPLAY_HEIGHT;
 	pLayerCfg.Backcolor.Blue = 255;
 	pLayerCfg.Backcolor.Green = 0;
 	pLayerCfg.Backcolor.Red = 0;
@@ -849,16 +895,14 @@ static void MX_OCTOSPI1_Init(void) {
 	sOspiManagerCfg.NCSPort = 1;
 	sOspiManagerCfg.IOLowPort = HAL_OSPIM_IOPORT_1_LOW;
 	sOspiManagerCfg.IOHighPort = HAL_OSPIM_IOPORT_1_HIGH;
-	if (HAL_OSPIM_Config(&hospi1, &sOspiManagerCfg,
-	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+	if (HAL_OSPIM_Config(&hospi1, &sOspiManagerCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
 	sHyperBusCfg.RWRecoveryTime = 4;
 	sHyperBusCfg.AccessTime = 7;
 	sHyperBusCfg.WriteZeroLatency = HAL_OSPI_LATENCY_ON_WRITE;
 	sHyperBusCfg.LatencyMode = HAL_OSPI_FIXED_LATENCY;
-	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg,
-	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
+	if (HAL_OSPI_HyperbusCfg(&hospi1, &sHyperBusCfg, HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN OCTOSPI1_Init 2 */
@@ -1073,10 +1117,8 @@ static void MX_SPI2_Init(void) {
 	hspi2.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
 	hspi2.Init.NSSPolarity = SPI_NSS_POLARITY_LOW;
 	hspi2.Init.FifoThreshold = SPI_FIFO_THRESHOLD_01DATA;
-	hspi2.Init.TxCRCInitializationPattern =
-	SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-	hspi2.Init.RxCRCInitializationPattern =
-	SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
+	hspi2.Init.TxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
+	hspi2.Init.RxCRCInitializationPattern = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
 	hspi2.Init.MasterSSIdleness = SPI_MASTER_SS_IDLENESS_00CYCLE;
 	hspi2.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
 	hspi2.Init.MasterReceiverAutoSusp = SPI_MASTER_RX_AUTOSUSP_DISABLE;
@@ -1134,8 +1176,7 @@ static void MX_TIM1_Init(void) {
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
@@ -1192,8 +1233,7 @@ static void MX_TIM2_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
@@ -1237,16 +1277,14 @@ static void MX_TIM3_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
 	sConfigOC.Pulse = 0;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-	if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN TIM3_Init 2 */
@@ -1284,8 +1322,7 @@ static void MX_TIM4_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
@@ -1335,20 +1372,17 @@ static void MX_TIM12_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim12, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim12, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
 	sConfigOC.Pulse = 0;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-	if (HAL_TIM_PWM_ConfigChannel(&htim12, &sConfigOC, TIM_CHANNEL_1)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim12, &sConfigOC, TIM_CHANNEL_1) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_TIM_PWM_ConfigChannel(&htim12, &sConfigOC, TIM_CHANNEL_2)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim12, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN TIM12_Init 2 */
@@ -1387,16 +1421,14 @@ static void MX_TIM15_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
 	sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
 	sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
 	sConfigIC.ICFilter = 0;
-	if (HAL_TIM_IC_ConfigChannel(&htim15, &sConfigIC, TIM_CHANNEL_1)
-			!= HAL_OK) {
+	if (HAL_TIM_IC_ConfigChannel(&htim15, &sConfigIC, TIM_CHANNEL_1) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN TIM15_Init 2 */
@@ -1433,28 +1465,23 @@ static void MX_TIM23_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim23, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim23, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
 	sConfigOC.Pulse = 0;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_1)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_1) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_2)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_3)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_4)
-			!= HAL_OK) {
+	if (HAL_TIM_PWM_ConfigChannel(&htim23, &sConfigOC, TIM_CHANNEL_4) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN TIM23_Init 2 */
@@ -1492,16 +1519,14 @@ static void MX_TIM24_Init(void) {
 	}
 	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
 	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-	if (HAL_TIMEx_MasterConfigSynchronization(&htim24, &sMasterConfig)
-			!= HAL_OK) {
+	if (HAL_TIMEx_MasterConfigSynchronization(&htim24, &sMasterConfig) != HAL_OK) {
 		Error_Handler();
 	}
 	sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
 	sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
 	sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
 	sConfigIC.ICFilter = 0;
-	if (HAL_TIM_IC_ConfigChannel(&htim24, &sConfigIC, TIM_CHANNEL_2)
-			!= HAL_OK) {
+	if (HAL_TIM_IC_ConfigChannel(&htim24, &sConfigIC, TIM_CHANNEL_2) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN TIM24_Init 2 */
@@ -1538,12 +1563,10 @@ static void MX_UART4_Init(void) {
 	if (HAL_UART_Init(&huart4) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetTxFifoThreshold(&huart4, UART_TXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetTxFifoThreshold(&huart4, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetRxFifoThreshold(&huart4, UART_RXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetRxFifoThreshold(&huart4, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_UARTEx_DisableFifoMode(&huart4) != HAL_OK) {
@@ -1583,12 +1606,10 @@ static void MX_UART8_Init(void) {
 	if (HAL_UART_Init(&huart8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetTxFifoThreshold(&huart8, UART_TXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetTxFifoThreshold(&huart8, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetRxFifoThreshold(&huart8, UART_RXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetRxFifoThreshold(&huart8, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_UARTEx_DisableFifoMode(&huart8) != HAL_OK) {
@@ -1628,12 +1649,10 @@ static void MX_UART9_Init(void) {
 	if (HAL_UART_Init(&huart9) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetTxFifoThreshold(&huart9, UART_TXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetTxFifoThreshold(&huart9, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetRxFifoThreshold(&huart9, UART_RXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetRxFifoThreshold(&huart9, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_UARTEx_DisableFifoMode(&huart9) != HAL_OK) {
@@ -1673,12 +1692,10 @@ static void MX_USART2_UART_Init(void) {
 	if (HAL_UART_Init(&huart2) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetTxFifoThreshold(&huart2, UART_TXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetTxFifoThreshold(&huart2, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetRxFifoThreshold(&huart2, UART_RXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetRxFifoThreshold(&huart2, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_UARTEx_DisableFifoMode(&huart2) != HAL_OK) {
@@ -1718,12 +1735,10 @@ static void MX_USART3_UART_Init(void) {
 	if (HAL_UART_Init(&huart3) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
-	if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8)
-			!= HAL_OK) {
+	if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
 		Error_Handler();
 	}
 	if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK) {
@@ -1775,9 +1790,7 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_WritePin(GPIOE, GPIO_11_Pin | GPIO_17_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOC,
-	GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin | _DISPLAY_ON_OFF_Pin,
-			GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin | _DISPLAY_ON_OFF_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIO_07_GPIO_Port, GPIO_07_Pin, GPIO_PIN_RESET);
@@ -1786,8 +1799,7 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_WritePin(GPIOD, GPIO_06_Pin | GPIO_12_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOG,
-	GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOG, GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pins : GPIO_11_Pin GPIO_17_Pin */
 	GPIO_InitStruct.Pin = GPIO_11_Pin | GPIO_17_Pin;
@@ -1797,8 +1809,7 @@ static void MX_GPIO_Init(void) {
 	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
 	/*Configure GPIO pins : GPIO_10_Pin GPIO_09_Pin GPIO_08_Pin _DISPLAY_ON_OFF_Pin */
-	GPIO_InitStruct.Pin = GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin
-			| _DISPLAY_ON_OFF_Pin;
+	GPIO_InitStruct.Pin = GPIO_10_Pin | GPIO_09_Pin | GPIO_08_Pin | _DISPLAY_ON_OFF_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1851,7 +1862,7 @@ void MPU_Config(void) {
 	 */
 	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
 	MPU_InitStruct.Number = MPU_REGION_NUMBER0;
-	MPU_InitStruct.BaseAddress = LCD_FRAME_BUFFER;
+	MPU_InitStruct.BaseAddress = KLST_DISPLAY_FRAMEBUFFER_ADDRESS;
 	MPU_InitStruct.Size = MPU_REGION_SIZE_16MB;
 	MPU_InitStruct.SubRegionDisable = 0x0;
 	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
