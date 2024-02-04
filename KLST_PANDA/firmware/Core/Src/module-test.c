@@ -21,8 +21,7 @@ void println(char *text) {
 }
 
 static void run_test(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
-	printf("REGION: 0x%08" PRIX32 " - 0x%08" PRIX32 "\r\n", RAM_START_ADDR,
-			RAM_END_ADDR);
+	printf("REGION: 0x%08" PRIX32 " - 0x%08" PRIX32 "\r\n", RAM_START_ADDR, RAM_END_ADDR);
 	if (TestRAM(RAM_START_ADDR, RAM_END_ADDR) != 0) {
 		println("        FAILED");
 	} else {
@@ -66,8 +65,7 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 
 	// Write phase: fill RAM with a test pattern
 	printf("WRITE : ");
-	for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR;
-			pMem++) {
+	for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR; pMem++) {
 		*pMem = (uint32_t) pMem;  // Example pattern: address of the cell itself
 		i = *pMem;
 		if ((i % 1024) == 0) {
@@ -78,8 +76,7 @@ int TestRAM(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
 
 	// Verification phase: check the test pattern
 	printf("READ  : ");
-	for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR;
-			pMem++) {
+	for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR; pMem++) {
 		testVal = *pMem;
 		if (testVal != (uint32_t) pMem) {
 			errorFlag = 1;  // Memory error detected
@@ -118,8 +115,7 @@ void external_memory_test() {
 	uint8_t testByte = 0x00;
 	start_time = HAL_GetTick();
 	for (counter = 0x00; counter < SDRAM_SIZE; counter++) {
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) (testByte
-				+ counter);
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) (testByte + counter);
 	}
 	stop_time = HAL_GetTick() - start_time;
 	printf("             writing byte : %li\r\n", stop_time);
@@ -141,5 +137,18 @@ void external_memory_test() {
 	printf("                   errors : %li\r\n", error_counter);
 
 	HAL_Delay(50);
+
+	// fill with visual pattern
+	const uint32_t M_FRAMEBUFFER_SIZE = 480 * 272 * 4;
+	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter++) {
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + (counter + 0)) = 0;
+	}
+	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter += 4) {
+		const uint8_t rgb = (uint8_t) (counter / (480 * 4));
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 0)) = 255;
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 1)) = rgb;
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 2)) = rgb;
+		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 3)) = 255;
+	}
 }
 

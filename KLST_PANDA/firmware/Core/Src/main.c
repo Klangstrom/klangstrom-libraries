@@ -177,7 +177,7 @@ void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc) {
 
 void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
 	hdma2d.Instance = DMA2D;
-	hdma2d.Init.Mode = DMA2D_M2M;
+	hdma2d.Init.Mode = DMA2D_R2M;
 	hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
 	hdma2d.Init.OutputOffset = KLST_DISPLAY_WIDTH - width;
 
@@ -188,6 +188,7 @@ void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint
 	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
 }
 
+uint8_t frame_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -245,7 +246,7 @@ int main(void) {
 
 	print_debug("initialize LCD (LTDC+DMA2D)");
 	MX_LTDC_Init();
-//	MX_DMA2D_Init();
+	MX_DMA2D_Init();
 //	HAL_DMA2D_Start(&hdma2d,
 //	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
 //	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
@@ -253,11 +254,6 @@ int main(void) {
 //	KLST_DISPLAY_HEIGHT);
 //	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
 
-	DMA2D_FillRect(0xffffc000,
-	KLST_DISPLAY_WIDTH / 4,
-	KLST_DISPLAY_HEIGHT / 4,
-	KLST_DISPLAY_WIDTH / 2,
-	KLST_DISPLAY_HEIGHT / 2);
 //#define MX_INIT
 //#define MX_LOOP
 #if defined(MX_INIT)
@@ -320,17 +316,28 @@ int main(void) {
 
     /* USER CODE BEGIN 3 */
 #endif
+		frame_counter++;
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
 
 #define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 3)
-		uint8_t testByte = (uint8_t) (HAL_GetTick());
-		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 3) {
-			const uint8_t rgb = (uint8_t) (testByte + counter);
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb;
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
+		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE * 2; counter += 4) {
+			uint8_t rgb = (uint8_t)(rand());
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = 255;
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb;
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb;
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = rgb;
 		}
+
+//		DMA2D_FillRect(0xFF000000, 0, 0,
+//		KLST_DISPLAY_WIDTH,
+//		KLST_DISPLAY_HEIGHT);
+//
+//		DMA2D_FillRect(0xFFFFFFFF,
+//		KLST_DISPLAY_WIDTH / 4 + (frame_counter % 16),
+//		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
+//		KLST_DISPLAY_WIDTH / 2,
+//		KLST_DISPLAY_HEIGHT / 2);
 
 		print_debug("EOF");
 		HAL_Delay(500);
@@ -673,7 +680,7 @@ static void MX_DMA2D_Init(void) {
 	hdma2d.LayerCfg[1].InputOffset = 0;
 	hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
 	hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
-	hdma2d.LayerCfg[1].InputAlpha = 0;
+	hdma2d.LayerCfg[1].InputAlpha = 127;
 	hdma2d.LayerCfg[1].AlphaInverted = DMA2D_REGULAR_ALPHA;
 	hdma2d.LayerCfg[1].RedBlueSwap = DMA2D_RB_REGULAR;
 	hdma2d.LayerCfg[1].ChromaSubSampling = DMA2D_NO_CSS;
@@ -704,7 +711,7 @@ static void MX_I2C1_Init(void) {
 
 	/* USER CODE END I2C1_Init 1 */
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.Timing = 0x00202538;
+	hi2c1.Init.Timing = 0x00202335;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -748,7 +755,7 @@ static void MX_I2C4_Init(void) {
 
 	/* USER CODE END I2C4_Init 1 */
 	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x00202538;
+	hi2c4.Init.Timing = 0x00202335;
 	hi2c4.Init.OwnAddress1 = 0;
 	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -806,6 +813,7 @@ static void MX_LTDC_Init(void) {
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
+	LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
 
 	/* USER CODE BEGIN LTDC_Init 1 */
 
@@ -834,7 +842,7 @@ static void MX_LTDC_Init(void) {
 	pLayerCfg.WindowY0 = 0;
 	pLayerCfg.WindowY1 = KLST_DISPLAY_HEIGHT;
 	pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-	pLayerCfg.Alpha = 0;
+	pLayerCfg.Alpha = 127;
 	pLayerCfg.Alpha0 = 0;
 	pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
 	pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
@@ -845,6 +853,24 @@ static void MX_LTDC_Init(void) {
 	pLayerCfg.Backcolor.Green = 0;
 	pLayerCfg.Backcolor.Red = 0;
 	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK) {
+		Error_Handler();
+	}
+	pLayerCfg1.WindowX0 = 0;
+	pLayerCfg1.WindowX1 = KLST_DISPLAY_WIDTH;
+	pLayerCfg1.WindowY0 = 0;
+	pLayerCfg1.WindowY1 = KLST_DISPLAY_HEIGHT;
+	pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+	pLayerCfg1.Alpha = 127;
+	pLayerCfg1.Alpha0 = 0;
+	pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
+	pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+	pLayerCfg1.FBStartAdress = ( KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4);
+	pLayerCfg1.ImageWidth = KLST_DISPLAY_WIDTH;
+	pLayerCfg1.ImageHeight = KLST_DISPLAY_HEIGHT;
+	pLayerCfg1.Backcolor.Blue = 0;
+	pLayerCfg1.Backcolor.Green = 255;
+	pLayerCfg1.Backcolor.Red = 0;
+	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN LTDC_Init 2 */
@@ -1867,10 +1893,10 @@ void MPU_Config(void) {
 	MPU_InitStruct.SubRegionDisable = 0x0;
 	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
 	MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
-	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-	MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+	MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+	MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
 	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
+	MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
 
 	HAL_MPU_ConfigRegion(&MPU_InitStruct);
 	/* Enables the MPU */
