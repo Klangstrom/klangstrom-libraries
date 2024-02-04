@@ -146,9 +146,8 @@ static void USR_GPIO_Init(void) {
 	HAL_GPIO_WritePin(GPIOB, _LED_00_Pin | _LED_01_Pin, GPIO_PIN_RESET);
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
-
+//	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
+//	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
 	/*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
 	GPIO_InitStruct.Pin = _LED_00_Pin | _LED_01_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -157,12 +156,11 @@ static void USR_GPIO_Init(void) {
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 	/*Configure GPIO pin : _DISPLAY_BACKLIGHT_PWM_Pin */
-	GPIO_InitStruct.Pin = _DISPLAY_BACKLIGHT_PWM_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, &GPIO_InitStruct);
-
+//	GPIO_InitStruct.Pin = _DISPLAY_BACKLIGHT_PWM_Pin;
+//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//	HAL_GPIO_Init(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, &GPIO_InitStruct);
 	/* USER CODE BEGIN MX_GPIO_Init_2 */
 	/* USER CODE END MX_GPIO_Init_2 */
 }
@@ -247,12 +245,10 @@ int main(void) {
 	print_debug("initialize LCD (LTDC+DMA2D)");
 	MX_LTDC_Init();
 	MX_DMA2D_Init();
-//	HAL_DMA2D_Start(&hdma2d,
-//	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
-//	KLST_DISPLAY_FRAMEBUFFER_ADDRESS,
-//	KLST_DISPLAY_WIDTH,
-//	KLST_DISPLAY_HEIGHT);
-//	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
+
+	print_debug("initialize LCD backlight PWM");
+	MX_TIM3_Init();
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 
 //#define MX_INIT
 //#define MX_LOOP
@@ -294,8 +290,7 @@ int main(void) {
 #endif
 	HAL_GPIO_WritePin(_LED_00_GPIO_Port, _LED_00_Pin, GPIO_PIN_RESET); // GPIO_PIN_RESET == OFF
 	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
-	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
+//	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);
 	/* USER CODE END 2 */
 
@@ -322,7 +317,7 @@ int main(void) {
 #define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
 #define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
 		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE * 2; counter += 4) {
-			uint8_t rgb = (uint8_t)(rand());
+			uint8_t rgb = (uint8_t) (rand());
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = 255;
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb;
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb;
@@ -338,6 +333,10 @@ int main(void) {
 //		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
 //		KLST_DISPLAY_WIDTH / 2,
 //		KLST_DISPLAY_HEIGHT / 2);
+
+		const uint8_t mPhaseDivider = ((1 << (frame_counter % 5 + 2)));
+		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 65535 / mPhaseDivider);
+		printf("             LCD backlight divider: %i\r\n", mPhaseDivider);
 
 		print_debug("EOF");
 		HAL_Delay(500);
@@ -1295,7 +1294,7 @@ static void MX_TIM3_Init(void) {
 	htim3.Instance = TIM3;
 	htim3.Init.Prescaler = 0;
 	htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim3.Init.Period = 65535;
+	htim3.Init.Period = 65535 / 2;
 	htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 	if (HAL_TIM_PWM_Init(&htim3) != HAL_OK) {
@@ -1307,7 +1306,7 @@ static void MX_TIM3_Init(void) {
 		Error_Handler();
 	}
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 0;
+	sConfigOC.Pulse = 65535 / 32;
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 	if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK) {
