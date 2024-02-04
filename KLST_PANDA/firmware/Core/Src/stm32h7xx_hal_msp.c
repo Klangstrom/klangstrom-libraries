@@ -306,6 +306,9 @@ void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef* hdma2d)
   /* USER CODE END DMA2D_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DMA2D_CLK_ENABLE();
+    /* DMA2D interrupt Init */
+    HAL_NVIC_SetPriority(DMA2D_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(DMA2D_IRQn);
   /* USER CODE BEGIN DMA2D_MspInit 1 */
 
   /* USER CODE END DMA2D_MspInit 1 */
@@ -328,6 +331,9 @@ void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef* hdma2d)
   /* USER CODE END DMA2D_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DMA2D_CLK_DISABLE();
+
+    /* DMA2D interrupt DeInit */
+    HAL_NVIC_DisableIRQ(DMA2D_IRQn);
   /* USER CODE BEGIN DMA2D_MspDeInit 1 */
 
   /* USER CODE END DMA2D_MspDeInit 1 */
@@ -564,6 +570,9 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* hltdc)
     GPIO_InitStruct.Alternate = GPIO_AF3_LTDC;
     HAL_GPIO_Init(_DISPLAY_LTDC_B5_GPIO_Port, &GPIO_InitStruct);
 
+    /* LTDC interrupt Init */
+    HAL_NVIC_SetPriority(LTDC_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(LTDC_IRQn);
   /* USER CODE BEGIN LTDC_MspInit 1 */
 
   /* USER CODE END LTDC_MspInit 1 */
@@ -632,6 +641,8 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* hltdc)
 
     HAL_GPIO_DeInit(GPIOG, _DISPLAY_LTDC_CLK_Pin|_DISPLAY_LTDC_G7_Pin|_DISPLAY_LTDC_R0_Pin|_DISPLAY_LTDC_B0_Pin);
 
+    /* LTDC interrupt DeInit */
+    HAL_NVIC_DisableIRQ(LTDC_IRQn);
   /* USER CODE BEGIN LTDC_MspDeInit 1 */
 
   /* USER CODE END LTDC_MspDeInit 1 */

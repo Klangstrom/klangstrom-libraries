@@ -226,6 +226,11 @@ int main(void) {
 
 	print_debug("test internal RAM");
 	test_all_ram();
+
+	print_debug("initialize LCD (LTDC+DMA2D)");
+	MX_LTDC_Init();
+//	MX_DMA2D_Init();
+
 //#define MX_INIT
 //#define MX_LOOP
 #if defined(MX_INIT)
@@ -369,11 +374,11 @@ void PeriphCommonClock_Config(void) {
 			| RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_SAI4A
 			| RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
 			| RCC_PERIPHCLK_LTDC;
-	PeriphClkInitStruct.PLL2.PLL2M = 2;
+	PeriphClkInitStruct.PLL2.PLL2M = 1;
 	PeriphClkInitStruct.PLL2.PLL2N = 25;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
-	PeriphClkInitStruct.PLL2.PLL2R = 1;
+	PeriphClkInitStruct.PLL2.PLL2R = 2;
 	PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
 	PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
 	PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
@@ -381,7 +386,7 @@ void PeriphCommonClock_Config(void) {
 	PeriphClkInitStruct.PLL3.PLL3N = 24;
 	PeriphClkInitStruct.PLL3.PLL3P = 2;
 	PeriphClkInitStruct.PLL3.PLL3Q = 2;
-	PeriphClkInitStruct.PLL3.PLL3R = 3;
+	PeriphClkInitStruct.PLL3.PLL3R = 10;
 	PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
 	PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
@@ -668,7 +673,7 @@ static void MX_I2C1_Init(void) {
 
 	/* USER CODE END I2C1_Init 1 */
 	hi2c1.Instance = I2C1;
-	hi2c1.Init.Timing = 0x10707DBC;
+	hi2c1.Init.Timing = 0x0040496F;
 	hi2c1.Init.OwnAddress1 = 0;
 	hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -713,7 +718,7 @@ static void MX_I2C4_Init(void) {
 
 	/* USER CODE END I2C4_Init 1 */
 	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x10707DBC;
+	hi2c4.Init.Timing = 0x0040496F;
 	hi2c4.Init.OwnAddress1 = 0;
 	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -755,7 +760,6 @@ static void MX_LTDC_Init(void) {
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
-	LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
 
 	/* USER CODE BEGIN LTDC_Init 1 */
 
@@ -775,44 +779,26 @@ static void MX_LTDC_Init(void) {
 	hltdc.Init.TotalHeigh = 487;
 	hltdc.Init.Backcolor.Blue = 0;
 	hltdc.Init.Backcolor.Green = 0;
-	hltdc.Init.Backcolor.Red = 0;
+	hltdc.Init.Backcolor.Red = 255;
 	if (HAL_LTDC_Init(&hltdc) != HAL_OK) {
 		Error_Handler();
 	}
 	pLayerCfg.WindowX0 = 0;
-	pLayerCfg.WindowX1 = 0;
+	pLayerCfg.WindowX1 = 640;
 	pLayerCfg.WindowY0 = 0;
-	pLayerCfg.WindowY1 = 0;
+	pLayerCfg.WindowY1 = 480;
 	pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
 	pLayerCfg.Alpha = 0;
 	pLayerCfg.Alpha0 = 0;
 	pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
 	pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-	pLayerCfg.FBStartAdress = 0;
-	pLayerCfg.ImageWidth = 0;
-	pLayerCfg.ImageHeight = 0;
-	pLayerCfg.Backcolor.Blue = 0;
+	pLayerCfg.FBStartAdress = LCD_FRAME_BUFFER;
+	pLayerCfg.ImageWidth = 640;
+	pLayerCfg.ImageHeight = 480;
+	pLayerCfg.Backcolor.Blue = 255;
 	pLayerCfg.Backcolor.Green = 0;
 	pLayerCfg.Backcolor.Red = 0;
 	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK) {
-		Error_Handler();
-	}
-	pLayerCfg1.WindowX0 = 0;
-	pLayerCfg1.WindowX1 = 0;
-	pLayerCfg1.WindowY0 = 0;
-	pLayerCfg1.WindowY1 = 0;
-	pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-	pLayerCfg1.Alpha = 0;
-	pLayerCfg1.Alpha0 = 0;
-	pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-	pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-	pLayerCfg1.FBStartAdress = 0;
-	pLayerCfg1.ImageWidth = 0;
-	pLayerCfg1.ImageHeight = 0;
-	pLayerCfg1.Backcolor.Blue = 0;
-	pLayerCfg1.Backcolor.Green = 0;
-	pLayerCfg1.Backcolor.Red = 0;
-	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN LTDC_Init 2 */
