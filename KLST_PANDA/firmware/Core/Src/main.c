@@ -168,10 +168,15 @@ static void USR_GPIO_Init(void) {
 //EXT_MEM float m_array[NUM_SAMPLES];
 
 bool fRenderNewFrame = true;
+uint32_t fVSYNCDuration = 0;
+uint32_t fVSYNCStart = 0;
+
 void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc_handle) {
+	fVSYNCDuration = HAL_GetTick() - fVSYNCStart;
 	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
 	HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
 	fRenderNewFrame = true;
+	fVSYNCStart = HAL_GetTick();
 }
 
 void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
@@ -335,21 +340,22 @@ int main(void) {
 		const uint32_t mStartFillBuffer = HAL_GetTick();
 #define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
 #define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
-		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE * 2; counter += 4) {
+		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 4) {
 			uint8_t rgb = (uint8_t) (rand());
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = 255;
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb;
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb;
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = rgb;
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb; // B
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb; // G
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb; // R
+			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
 		}
 		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
-		printf("             frame fill duration: %li\r\n", mFillBufferDuration);
+		printf("             frame fill duration    : %li\r\n", mFillBufferDuration);
+		printf("             VSYNC duration duration: %li\r\n", fVSYNCDuration);
 
 //		DMA2D_FillRect(0xFF000000, 0, 0,
 //		KLST_DISPLAY_WIDTH,
 //		KLST_DISPLAY_HEIGHT);
 //
-		DMA2D_FillRect(0xFFFFFFFF,
+		DMA2D_FillRect(0xFFFFFF00, // ARGB
 		KLST_DISPLAY_WIDTH / 4 + (frame_counter % 16),
 		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
 		KLST_DISPLAY_WIDTH / 2,
@@ -360,7 +366,7 @@ int main(void) {
 		printf("             LCD backlight divider: %i\r\n", mPhaseDivider);
 
 		print_debug("EOF");
-		HAL_Delay(500);
+		HAL_Delay(250);
 	}
 	/* USER CODE END 3 */
 }
@@ -836,7 +842,6 @@ static void MX_LTDC_Init(void) {
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
-	LTDC_LayerCfgTypeDef pLayerCfg1 = { 0 };
 
 	/* USER CODE BEGIN LTDC_Init 1 */
 
@@ -856,7 +861,7 @@ static void MX_LTDC_Init(void) {
 	hltdc.Init.TotalHeigh = 279;
 	hltdc.Init.Backcolor.Blue = 0;
 	hltdc.Init.Backcolor.Green = 0;
-	hltdc.Init.Backcolor.Red = 255;
+	hltdc.Init.Backcolor.Red = 0;
 	if (HAL_LTDC_Init(&hltdc) != HAL_OK) {
 		Error_Handler();
 	}
@@ -865,35 +870,17 @@ static void MX_LTDC_Init(void) {
 	pLayerCfg.WindowY0 = 0;
 	pLayerCfg.WindowY1 = KLST_DISPLAY_HEIGHT;
 	pLayerCfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-	pLayerCfg.Alpha = 127;
+	pLayerCfg.Alpha = 255;
 	pLayerCfg.Alpha0 = 0;
 	pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
 	pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
 	pLayerCfg.FBStartAdress = KLST_DISPLAY_FRAMEBUFFER_ADDRESS;
 	pLayerCfg.ImageWidth = KLST_DISPLAY_WIDTH;
 	pLayerCfg.ImageHeight = KLST_DISPLAY_HEIGHT;
-	pLayerCfg.Backcolor.Blue = 255;
+	pLayerCfg.Backcolor.Blue = 0;
 	pLayerCfg.Backcolor.Green = 0;
 	pLayerCfg.Backcolor.Red = 0;
 	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg, 0) != HAL_OK) {
-		Error_Handler();
-	}
-	pLayerCfg1.WindowX0 = 0;
-	pLayerCfg1.WindowX1 = KLST_DISPLAY_WIDTH;
-	pLayerCfg1.WindowY0 = 0;
-	pLayerCfg1.WindowY1 = KLST_DISPLAY_HEIGHT;
-	pLayerCfg1.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
-	pLayerCfg1.Alpha = 127;
-	pLayerCfg1.Alpha0 = 0;
-	pLayerCfg1.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-	pLayerCfg1.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
-	pLayerCfg1.FBStartAdress = ( KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4);
-	pLayerCfg1.ImageWidth = KLST_DISPLAY_WIDTH;
-	pLayerCfg1.ImageHeight = KLST_DISPLAY_HEIGHT;
-	pLayerCfg1.Backcolor.Blue = 0;
-	pLayerCfg1.Backcolor.Green = 255;
-	pLayerCfg1.Backcolor.Red = 0;
-	if (HAL_LTDC_ConfigLayer(&hltdc, &pLayerCfg1, 1) != HAL_OK) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN LTDC_Init 2 */
