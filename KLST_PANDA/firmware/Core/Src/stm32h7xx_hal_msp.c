@@ -90,11 +90,22 @@ static uint32_t HAL_RCC_ADC12_CLK_ENABLED=0;
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hadc->Instance==ADC1)
   {
   /* USER CODE BEGIN ADC1_MspInit 0 */
 
   /* USER CODE END ADC1_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+    PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_CLKP;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* Peripheral clock enable */
     HAL_RCC_ADC12_CLK_ENABLED++;
     if(HAL_RCC_ADC12_CLK_ENABLED==1){
@@ -119,6 +130,16 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE BEGIN ADC2_MspInit 0 */
 
   /* USER CODE END ADC2_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+    PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_CLKP;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* Peripheral clock enable */
     HAL_RCC_ADC12_CLK_ENABLED++;
     if(HAL_RCC_ADC12_CLK_ENABLED==1){
@@ -143,6 +164,16 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE BEGIN ADC3_MspInit 0 */
 
   /* USER CODE END ADC3_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+    PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_CLKP;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* Peripheral clock enable */
     __HAL_RCC_ADC3_CLK_ENABLE();
 
@@ -350,11 +381,21 @@ void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef* hdma2d)
 void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hi2c->Instance==I2C1)
   {
   /* USER CODE BEGIN I2C1_MspInit 0 */
 
   /* USER CODE END I2C1_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
+    PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C1235CLKSOURCE_HSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
     __HAL_RCC_GPIOB_CLK_ENABLE();
     /**I2C1 GPIO Configuration
@@ -379,6 +420,15 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
   /* USER CODE BEGIN I2C4_MspInit 0 */
 
   /* USER CODE END I2C4_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2C4;
+    PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_HSI;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
     __HAL_RCC_GPIOF_CLK_ENABLE();
     /**I2C4 GPIO Configuration

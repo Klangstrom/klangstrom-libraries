@@ -366,8 +366,10 @@ void SystemClock_Config(void) {
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	RCC_OscInitStruct.HSIState = RCC_HSI_DIV1;
+	RCC_OscInitStruct.HSICalibrationValue = 64;
 	RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -409,10 +411,10 @@ void PeriphCommonClock_Config(void) {
 
 	/** Initializes the peripherals clock
 	 */
-	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_ADC
-			| RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_LTDC;
-	PeriphClkInitStruct.PLL2.PLL2M = 1;
-	PeriphClkInitStruct.PLL2.PLL2N = 25;
+	PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SAI1
+			| RCC_PERIPHCLK_SPI2 | RCC_PERIPHCLK_CKPER | RCC_PERIPHCLK_LTDC;
+	PeriphClkInitStruct.PLL2.PLL2M = 2;
+	PeriphClkInitStruct.PLL2.PLL2N = 75;
 	PeriphClkInitStruct.PLL2.PLL2P = 4;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
 	PeriphClkInitStruct.PLL2.PLL2R = 2;
@@ -428,11 +430,9 @@ void PeriphCommonClock_Config(void) {
 	PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
 	PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
+	PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
 	PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
 	PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
-	PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C1235CLKSOURCE_PLL3;
-	PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_PLL3;
-	PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL2;
 	PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
 	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
 		Error_Handler();
@@ -679,7 +679,7 @@ static void MX_DMA2D_Init(void) {
 	hdma2d.LayerCfg[1].InputOffset = 0;
 	hdma2d.LayerCfg[1].InputColorMode = DMA2D_INPUT_ARGB8888;
 	hdma2d.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
-	hdma2d.LayerCfg[1].InputAlpha = 127;
+	hdma2d.LayerCfg[1].InputAlpha = 0;
 	hdma2d.LayerCfg[1].AlphaInverted = DMA2D_REGULAR_ALPHA;
 	hdma2d.LayerCfg[1].RedBlueSwap = DMA2D_RB_REGULAR;
 	hdma2d.LayerCfg[1].ChromaSubSampling = DMA2D_NO_CSS;
