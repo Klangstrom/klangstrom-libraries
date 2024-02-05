@@ -56,7 +56,6 @@ I2C_HandleTypeDef hi2c4;
 LTDC_HandleTypeDef hltdc;
 
 OSPI_HandleTypeDef hospi1;
-MDMA_HandleTypeDef hmdma_octospi1_fifo_th;
 
 SAI_HandleTypeDef hsai_BlockA1;
 SAI_HandleTypeDef hsai_BlockB1;
@@ -90,8 +89,6 @@ void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_MDMA_Init(void);
-static void MX_OCTOSPI1_Init(void);
 static void MX_SAI1_Init(void);
 static void MX_DAC1_Init(void);
 static void MX_I2C1_Init(void);
@@ -117,6 +114,7 @@ static void MX_SDMMC2_SD_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_UART4_Init(void);
+static void MX_OCTOSPI1_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
@@ -169,8 +167,11 @@ static void USR_GPIO_Init(void) {
 //#define NUM_SAMPLES (48000 * 20)
 //EXT_MEM float m_array[NUM_SAMPLES];
 
-void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc) {
+bool fRenderNewFrame = true;
+void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc_handle) {
 	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+	HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
+	fRenderNewFrame = true;
 }
 
 void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
@@ -178,12 +179,27 @@ void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint
 	hdma2d.Init.Mode = DMA2D_R2M;
 	hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
 	hdma2d.Init.OutputOffset = KLST_DISPLAY_WIDTH - width;
-
 	HAL_DMA2D_Init(&hdma2d);
 	HAL_DMA2D_ConfigLayer(&hdma2d, 0);
 	HAL_DMA2D_ConfigLayer(&hdma2d, 1);
 	HAL_DMA2D_Start(&hdma2d, color, KLST_DISPLAY_FRAMEBUFFER_ADDRESS + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
 	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
+}
+
+void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *handle) {
+	/* USER CODE BEGIN DMA2D_XferCpltCallback */
+	// If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
+	// to flush the Dcache prior to letting DMA2D accessing it. That's done
+	// using SCB_CleanInvalidateDCache().
+//	SCB_CleanInvalidateDCache();
+	/* USER CODE END DMA2D_XferCpltCallback */
+	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+	print_debug("DMA2D_XferCpltCallback");
+}
+
+void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef *handle) {
+	print_debug("DMA2D_XferErrorCallback");
+	assert(0);
 }
 
 uint8_t frame_counter = 0;
@@ -232,8 +248,9 @@ int main(void) {
 	print_debug("initialize GPIO(USR)");
 	USR_GPIO_Init();
 
+	print_debug("initialize DMAs");
+
 	print_debug("initialize external RAM");
-	MX_MDMA_Init();
 	MX_OCTOSPI1_Init();
 
 	print_debug("test external RAM");
@@ -257,8 +274,6 @@ int main(void) {
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_MDMA_Init();
-  MX_OCTOSPI1_Init();
   MX_SAI1_Init();
   MX_DAC1_Init();
   MX_I2C1_Init();
@@ -285,6 +300,7 @@ int main(void) {
   MX_TIM3_Init();
   MX_TIM15_Init();
   MX_UART4_Init();
+  MX_OCTOSPI1_Init();
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 #endif
@@ -292,6 +308,8 @@ int main(void) {
 	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 //	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);
+	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -314,6 +332,7 @@ int main(void) {
 		frame_counter++;
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
 
+		const uint32_t mStartFillBuffer = HAL_GetTick();
 #define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
 #define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
 		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE * 2; counter += 4) {
@@ -323,16 +342,18 @@ int main(void) {
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb;
 			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = rgb;
 		}
+		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
+		printf("             frame fill duration: %li\r\n", mFillBufferDuration);
 
 //		DMA2D_FillRect(0xFF000000, 0, 0,
 //		KLST_DISPLAY_WIDTH,
 //		KLST_DISPLAY_HEIGHT);
 //
-//		DMA2D_FillRect(0xFFFFFFFF,
-//		KLST_DISPLAY_WIDTH / 4 + (frame_counter % 16),
-//		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
-//		KLST_DISPLAY_WIDTH / 2,
-//		KLST_DISPLAY_HEIGHT / 2);
+		DMA2D_FillRect(0xFFFFFFFF,
+		KLST_DISPLAY_WIDTH / 4 + (frame_counter % 16),
+		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
+		KLST_DISPLAY_WIDTH / 2,
+		KLST_DISPLAY_HEIGHT / 2);
 
 		const uint8_t mPhaseDivider = ((1 << (frame_counter % 5 + 2)));
 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 65535 / mPhaseDivider);
@@ -690,7 +711,10 @@ static void MX_DMA2D_Init(void) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN DMA2D_Init 2 */
-
+	hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
+	hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
+//	HAL_DMA2D_RegisterCallback(&hdma2d, HAL_DMA2D_TRANSFERCOMPLETE_CB_ID, DMA2D_XferCpltCallback);
+	NVIC_EnableIRQ(DMA2D_IRQn);
 	/* USER CODE END DMA2D_Init 2 */
 
 }
@@ -791,7 +815,7 @@ static void MX_I2C4_Init(void) {
 static void MX_LTDC_Init(void) {
 
 	/* USER CODE BEGIN LTDC_Init 0 */
-	// LTDC Clock Rate = ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.5 MHz at ( 565 * 279 * 60Hz )
+// LTDC Clock Rate = ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.5 MHz at ( 565 * 279 * 60Hz )
 //#define  KLST_PANDA_DISPLAY_HSYNC            ((uint16_t)41)     /* Horizontal synchronization */
 //#define  KLST_PANDA_DISPLAY_HBP              ((uint16_t)13)     /* Horizontal back porch      */
 //#define  KLST_PANDA_DISPLAY_HFP              ((uint16_t)32)     /* Horizontal front porch     */
@@ -1767,22 +1791,6 @@ static void MX_USART3_UART_Init(void) {
 	/* USER CODE BEGIN USART3_Init 2 */
 
 	/* USER CODE END USART3_Init 2 */
-
-}
-
-/**
- * Enable MDMA controller clock
- */
-static void MX_MDMA_Init(void) {
-
-	/* MDMA controller clock enable */
-	__HAL_RCC_MDMA_CLK_ENABLE();
-	/* Local variables */
-
-	/* MDMA interrupt initialization */
-	/* MDMA_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(MDMA_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(MDMA_IRQn);
 
 }
 
