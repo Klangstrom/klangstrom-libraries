@@ -34,6 +34,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
+#define FRAMEBUFFER1_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)
+#define FRAMEBUFFER2_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE)
+enum framebuffer {
+	FRAMEBUFFER1 = 0, FRAMEBUFFER2 = 1
+};
+static enum framebuffer active = FRAMEBUFFER1;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -167,16 +174,39 @@ static void USR_GPIO_Init(void) {
 //#define NUM_SAMPLES (48000 * 20)
 //EXT_MEM float m_array[NUM_SAMPLES];
 
-bool fRenderNewFrame = true;
 uint32_t fVSYNCDuration = 0;
 uint32_t fVSYNCStart = 0;
 
 void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc_handle) {
 	fVSYNCDuration = HAL_GetTick() - fVSYNCStart;
 	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
+	// switch and redraw framebuffer
 	HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
-	fRenderNewFrame = true;
 	fVSYNCStart = HAL_GetTick();
+}
+
+__IO uint32_t LTDC_get_backbuffer_address(void) {
+	if (active == FRAMEBUFFER1)
+		return (__IO uint32_t) FRAMEBUFFER2_ADDR;
+	else
+		return (__IO uint32_t) FRAMEBUFFER1_ADDR;
+}
+
+void LTDC_switch_framebuffer(void) {
+//	LTDC->SRCR = LTDC_SRCR_VBR;
+	if (active == FRAMEBUFFER1) {
+		LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
+//		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER2, 1);
+		active = FRAMEBUFFER2;
+	} else {
+		LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
+//		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
+		active = FRAMEBUFFER1;
+	}
+//	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+	LTDC->SRCR = LTDC_SRCR_VBR; // not sure if it is better to first switch buffer and the reload or viceversa
+//	while ((LTDC->CDSR & LTDC_CDSR_VSYNCS) == 0)
+//		;
 }
 
 void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
@@ -187,7 +217,7 @@ void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint
 	HAL_DMA2D_Init(&hdma2d);
 	HAL_DMA2D_ConfigLayer(&hdma2d, 0);
 	HAL_DMA2D_ConfigLayer(&hdma2d, 1);
-	HAL_DMA2D_Start(&hdma2d, color, KLST_DISPLAY_FRAMEBUFFER_ADDRESS + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
+	HAL_DMA2D_Start(&hdma2d, color, LTDC_get_backbuffer_address() + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
 	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
 }
 
@@ -207,7 +237,8 @@ void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef *handle) {
 	assert(0);
 }
 
-uint8_t frame_counter = 0;
+uint32_t frame_counter = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -313,8 +344,14 @@ int main(void) {
 	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
 //	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
 	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);
-	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
 
+	/* fill framebuffers with black */
+	for (int i = 0; i < KLST_DISPLAY_FRAMEBUFFER_SIZE; i++) {
+		((volatile uint8_t*) FRAMEBUFFER1_ADDR)[i] = 0x88;
+		((volatile uint8_t*) FRAMEBUFFER2_ADDR)[i] = 0x88;
+	}
+
+//	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING); // start reload look at 60Hz
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -337,36 +374,43 @@ int main(void) {
 		frame_counter++;
 		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
 
-		const uint32_t mStartFillBuffer = HAL_GetTick();
-#define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
-		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 4) {
-			uint8_t rgb = (uint8_t) (rand());
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb; // B
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb; // G
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb; // R
-			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
-		}
-		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
-		printf("             frame fill duration    : %li\r\n", mFillBufferDuration);
-		printf("             VSYNC duration duration: %li\r\n", fVSYNCDuration);
-
-//		DMA2D_FillRect(0xFF000000, 0, 0,
-//		KLST_DISPLAY_WIDTH,
-//		KLST_DISPLAY_HEIGHT);
-//
+		/* LTDC --> */
+//		const uint32_t mStartFillBuffer = HAL_GetTick();
+//		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 4) {
+//			uint8_t rgb = (uint8_t) (rand());
+//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb; // B
+//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb; // G
+//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb; // R
+//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
+//		}
+//		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
+//		printf("             frame fill duration    : %li\r\n", mFillBufferDuration);
+		DMA2D_FillRect(0xFF000000, // ARGB
+				0, 0,
+				KLST_DISPLAY_WIDTH,
+				KLST_DISPLAY_HEIGHT);
+		const uint32_t x = (frame_counter * 10) % KLST_DISPLAY_WIDTH;
+		const uint32_t y = ((frame_counter * 10) / KLST_DISPLAY_WIDTH * 20) % KLST_DISPLAY_HEIGHT;
 		DMA2D_FillRect(0xFFFFFF00, // ARGB
-		KLST_DISPLAY_WIDTH / 4 + (frame_counter % 16),
-		KLST_DISPLAY_HEIGHT / 4 + (frame_counter % 64),
-		KLST_DISPLAY_WIDTH / 2,
-		KLST_DISPLAY_HEIGHT / 2);
+				x, y,
+				KLST_DISPLAY_WIDTH / 2,
+				KLST_DISPLAY_HEIGHT / 2);
 
+		/* schedule redraw */
+		LTDC_switch_framebuffer(); // manually trigger frame redraw
+
+		printf("                      VSYNC duration: %li\r\n", fVSYNCDuration);
+		/* --> LTDC */
+
+#define TEST_BACKLIGHT_BRIGHTNESS
+#ifdef TEST_BACKLIGHT_BRIGHTNESS
 		const uint8_t mPhaseDivider = ((1 << (frame_counter % 5 + 2)));
 		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 65535 / mPhaseDivider);
 		printf("             LCD backlight divider: %i\r\n", mPhaseDivider);
+#endif
 
 		print_debug("EOF");
-		HAL_Delay(250);
+		HAL_Delay(100);
 	}
 	/* USER CODE END 3 */
 }

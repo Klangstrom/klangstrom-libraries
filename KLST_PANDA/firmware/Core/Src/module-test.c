@@ -138,17 +138,17 @@ void external_memory_test() {
 
 	HAL_Delay(50);
 
-	// fill with visual pattern
-	const uint32_t M_FRAMEBUFFER_SIZE = 480 * 272 * 4;
-	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter++) {
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + (counter + 0)) = 0;
-	}
-	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter += 4) {
-		const uint8_t rgb = (uint8_t) (counter / (480 * 4));
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 0)) = 255;
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 1)) = rgb;
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 2)) = rgb;
-		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 3)) = 255;
-	}
+//	// fill with visual pattern
+//	const uint32_t M_FRAMEBUFFER_SIZE = 480 * 272 * 4;
+//	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter++) {
+//		*(__IO uint8_t*) (SDRAM_ADDRESS_START + (counter + 0)) = 0;
+//	}
+//	for (counter = 0x00; counter < M_FRAMEBUFFER_SIZE; counter += 4) {
+//		const uint8_t rgb = (uint8_t) (counter / (480 * 4));
+//		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 0)) = 255;
+//		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 1)) = rgb;
+//		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 2)) = rgb;
+//		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 3)) = 255;
+//	}
 }
 
