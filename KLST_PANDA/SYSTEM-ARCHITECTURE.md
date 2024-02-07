@@ -26,9 +26,9 @@ the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272p
 
 the display is interfaced with the CPU via a parallel LTDC interface.
 
-- [ER-TFT043A2-3 4.3 inch TFT LCD 480x270 Pixels Display Datasheet](https://www.buydisplay.com/download/manual/ER-TFT043A2-3_Datasheet.pdf)
+- [ER-TFT043A2-3 4.3 inch TFT LCD 480x272 Pixels Display Datasheet](https://www.buydisplay.com/download/manual/ER-TFT043A2-3_Datasheet.pdf)
 - [FT5206](https://www.buydisplay.com/download/ic/FT5206.pdf)
-- [CAT4139TD-GT3](https://www.onsemi.com/products/power-management/led-drivers/dc-dc-led-drivers/cat4139)
+- [CAT4139TD-GT3](https://www.onsemi.com/download/data-sheet/pdf/cat4139-d.pdf)
 
 ## On-Board Microphone
 

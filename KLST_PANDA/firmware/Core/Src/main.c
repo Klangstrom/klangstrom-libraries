@@ -34,13 +34,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (480 * 272 * 4)
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4)
 #define FRAMEBUFFER1_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)
 #define FRAMEBUFFER2_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE)
-enum framebuffer {
-	FRAMEBUFFER1 = 0, FRAMEBUFFER2 = 1
-};
-static enum framebuffer active = FRAMEBUFFER1;
+#define FRAMEBUFFER1                     0
+#define FRAMEBUFFER2                     1
+static uint8_t active_framebuffer = FRAMEBUFFER1;
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -140,8 +140,6 @@ int _write(int file, char *data, int len) {
  */
 static void USR_GPIO_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
-	/* USER CODE BEGIN MX_GPIO_Init_1 */
-	/* USER CODE END MX_GPIO_Init_1 */
 
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOB_CLK_ENABLE();
@@ -150,30 +148,18 @@ static void USR_GPIO_Init(void) {
 	/*Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOB, _LED_00_Pin | _LED_01_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pin Output Level */
-//	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port,
-//	_DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
 	/*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
 	GPIO_InitStruct.Pin = _LED_00_Pin | _LED_01_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-	/*Configure GPIO pin : _DISPLAY_BACKLIGHT_PWM_Pin */
-//	GPIO_InitStruct.Pin = _DISPLAY_BACKLIGHT_PWM_Pin;
-//	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//	GPIO_InitStruct.Pull = GPIO_NOPULL;
-//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//	HAL_GPIO_Init(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, &GPIO_InitStruct);
-	/* USER CODE BEGIN MX_GPIO_Init_2 */
-	/* USER CODE END MX_GPIO_Init_2 */
 }
 
+/* allocate external memory */
 //#define EXT_MEM __attribute__((section(".external_memory")))
 //#define NUM_SAMPLES (48000 * 20)
 //EXT_MEM float m_array[NUM_SAMPLES];
-
 uint32_t fVSYNCDuration = 0;
 uint32_t fVSYNCStart = 0;
 
@@ -186,7 +172,7 @@ void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc_handle) {
 }
 
 __IO uint32_t LTDC_get_backbuffer_address(void) {
-	if (active == FRAMEBUFFER1)
+	if (active_framebuffer == FRAMEBUFFER1)
 		return (__IO uint32_t) FRAMEBUFFER2_ADDR;
 	else
 		return (__IO uint32_t) FRAMEBUFFER1_ADDR;
@@ -194,14 +180,14 @@ __IO uint32_t LTDC_get_backbuffer_address(void) {
 
 void LTDC_switch_framebuffer(void) {
 //	LTDC->SRCR = LTDC_SRCR_VBR;
-	if (active == FRAMEBUFFER1) {
+	if (active_framebuffer == FRAMEBUFFER1) {
 		LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
 //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER2, 1);
-		active = FRAMEBUFFER2;
+		active_framebuffer = FRAMEBUFFER2;
 	} else {
 		LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
 //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
-		active = FRAMEBUFFER1;
+		active_framebuffer = FRAMEBUFFER1;
 	}
 //	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
 	LTDC->SRCR = LTDC_SRCR_VBR; // not sure if it is better to first switch buffer and the reload or viceversa
@@ -226,7 +212,7 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *handle) {
 	// If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
 	// to flush the Dcache prior to letting DMA2D accessing it. That's done
 	// using SCB_CleanInvalidateDCache().
-//	SCB_CleanInvalidateDCache();
+//	SCB_CleanInvalidateDCache(); // todo is this necessary
 	/* USER CODE END DMA2D_XferCpltCallback */
 	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
 	print_debug("DMA2D_XferCpltCallback");
@@ -283,8 +269,6 @@ int main(void) {
 	MX_GPIO_Init();
 	print_debug("initialize GPIO(USR)");
 	USR_GPIO_Init();
-
-	print_debug("initialize DMAs");
 
 	print_debug("initialize external RAM");
 	MX_OCTOSPI1_Init();
@@ -356,14 +340,6 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-//	for (uint32_t i = 0; i < NUM_SAMPLES; ++i) {
-//		m_array[i] = (float) i / (float) NUM_SAMPLES;
-//	}
-//	for (uint32_t i = 0; i < NUM_SAMPLES; i += 1024) {
-//		float r = (float) i / (float) NUM_SAMPLES;
-//		printf("(%f)>%i,", m_array[i], (m_array[i] == r));
-//	}
-//	println(" ... NOT COOL");
 	while (1) {
 #if defined(MX_LOOP)
     /* USER CODE END WHILE */
@@ -763,8 +739,6 @@ static void MX_DMA2D_Init(void) {
 	/* USER CODE BEGIN DMA2D_Init 2 */
 	hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
 	hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
-//	HAL_DMA2D_RegisterCallback(&hdma2d, HAL_DMA2D_TRANSFERCOMPLETE_CB_ID, DMA2D_XferCpltCallback);
-	NVIC_EnableIRQ(DMA2D_IRQn);
 	/* USER CODE END DMA2D_Init 2 */
 
 }
@@ -865,24 +839,24 @@ static void MX_I2C4_Init(void) {
 static void MX_LTDC_Init(void) {
 
 	/* USER CODE BEGIN LTDC_Init 0 */
-// LTDC Clock Rate = ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.5 MHz at ( 565 * 279 * 60Hz )
-//#define  KLST_PANDA_DISPLAY_HSYNC            ((uint16_t)41)     /* Horizontal synchronization */
-//#define  KLST_PANDA_DISPLAY_HBP              ((uint16_t)13)     /* Horizontal back porch      */
-//#define  KLST_PANDA_DISPLAY_HFP              ((uint16_t)32)     /* Horizontal front porch     */
-//#define  KLST_PANDA_DISPLAY_VSYNC            ((uint16_t)10)     /* Vertical synchronization   */
-//#define  KLST_PANDA_DISPLAY_VBP              ((uint16_t)2)      /* Vertical back porch        */
-//#define  KLST_PANDA_DISPLAY_VFP              ((uint16_t)2)      /* Vertical front porch       */
-//#define  KLST_PANDA_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 3) // 24-bit
-//	hltdc.Init.HorizontalSync = (KLST_PANDA_DISPLAY_HSYNC - 1);
-//	hltdc.Init.VerticalSync = (KLST_PANDA_DISPLAY_VSYNC - 1);
-//	hltdc.Init.AccumulatedHBP = (KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP - 1);
-//	hltdc.Init.AccumulatedVBP = (KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP - 1);
-//	hltdc.Init.AccumulatedActiveW = (KLST_DISPLAY_WIDTH + KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP - 1);
-//	hltdc.Init.AccumulatedActiveH = (KLST_DISPLAY_HEIGHT + KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP - 1);
-//	hltdc.Init.TotalWidth = (KLST_DISPLAY_WIDTH + KLST_PANDA_DISPLAY_HSYNC + KLST_PANDA_DISPLAY_HBP
-//			+ KLST_PANDA_DISPLAY_HFP - 1);
-//	hltdc.Init.TotalHeigh = (KLST_DISPLAY_HEIGHT + KLST_PANDA_DISPLAY_VSYNC + KLST_PANDA_DISPLAY_VBP
-//			+ KLST_PANDA_DISPLAY_VFP - 1);
+//	LTDC_CLOCK_RATE          9.5   // ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.45 MHz at ( 534 * 295 * 60Hz )
+//	DISPLAY_HSYNC            3     /* Horizontal synchronization */
+//	DISPLAY_HBP              43    /* Horizontal back porch      */
+//	DISPLAY_HFP              8     /* Horizontal front porch     */
+//	DISPLAY_VSYNC            3     /* Vertical synchronization   */
+//	DISPLAY_VBP              12    /* Vertical back porch        */
+//	DISPLAY_VFP              8     /* Vertical front porch       */
+//	DISPLAY_WIDTH            480
+//	DISPLAY_HEIGHT           272
+//	DISPLAY_FRAMEBUFFER_SIZE (DISPLAY_WIDTH * DISPLAY_HEIGHT * 4) // 32bit TODO(check if this 32bit or 24bit)
+//	HorizontalSync     = (DISPLAY_HSYNC - 1);
+//	VerticalSync       = (DISPLAY_VSYNC - 1);
+//	AccumulatedHBP     = (DISPLAY_HSYNC + DISPLAY_HBP - 1);
+//	AccumulatedVBP     = (DISPLAY_VSYNC + DISPLAY_VBP - 1);
+//	AccumulatedActiveW = (DISPLAY_WIDTH + DISPLAY_HSYNC + DISPLAY_HBP - 1);
+//	AccumulatedActiveH = (DISPLAY_HEIGHT + DISPLAY_VSYNC + DISPLAY_VBP - 1);
+//	TotalWidth         = (DISPLAY_WIDTH + DISPLAY_HSYNC + DISPLAY_HBP + DISPLAY_HFP - 1);
+//	TotalHeigh         = (DISPLAY_HEIGHT + DISPLAY_VSYNC + DISPLAY_VBP + DISPLAY_VFP - 1);
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
@@ -989,7 +963,7 @@ static void MX_OCTOSPI1_Init(void) {
 	OSPI_HyperbusCmdTypeDef sCommand;
 	OSPI_MemoryMappedTypeDef sMemMappedCfg;
 
-	/* Memory-mapped mode configuration --------------------------------------- */
+	/* Memory-mapped mode configuration */
 	sCommand.AddressSpace = HAL_OSPI_MEMORY_ADDRESS_SPACE;
 	sCommand.AddressSize = HAL_OSPI_ADDRESS_32_BITS;
 	sCommand.DQSMode = HAL_OSPI_DQS_ENABLE;
