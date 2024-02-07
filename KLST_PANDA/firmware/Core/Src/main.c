@@ -23,8 +23,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include "module-tests.h"
+#include "KLST_PANDA-Backlight.h"
+#include "KLST_PANDA-ExternalMemory.h"
+#include "KLST_PANDA-InternalMemory.h"
+#include "KLST_PANDA-LED.h"
+#include "KLST_PANDA-LTDC.h"
+#include "KLST_PANDA-SerialDebug.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,13 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE    (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4)
-#define FRAMEBUFFER1_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)
-#define FRAMEBUFFER2_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE)
-#define FRAMEBUFFER1                     0
-#define FRAMEBUFFER2                     1
-static uint8_t active_framebuffer = FRAMEBUFFER1;
-
+#define MX_OMIT_INIT
+#define MX_OMIT_LOOP
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -130,101 +129,7 @@ void MX_USB_HOST_Process(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int _write(int file, char *data, int len) {
-	HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 0xFFFF);
-	return (status == HAL_OK ? len : 0);
-}
-
-/**
- * control LEDs + backlight without PWM
- */
-static void USR_GPIO_Init(void) {
-	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
-
-	/* GPIO Ports Clock Enable */
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-
-	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOB, _LED_00_Pin | _LED_01_Pin, GPIO_PIN_RESET);
-
-	/*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
-	GPIO_InitStruct.Pin = _LED_00_Pin | _LED_01_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-}
-
-/* allocate external memory */
-//#define EXT_MEM __attribute__((section(".external_memory")))
-//#define NUM_SAMPLES (48000 * 20)
-//EXT_MEM float m_array[NUM_SAMPLES];
-uint32_t fVSYNCDuration = 0;
-uint32_t fVSYNCStart = 0;
-
-void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef *hltdc_handle) {
-	fVSYNCDuration = HAL_GetTick() - fVSYNCStart;
-	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-	// switch and redraw framebuffer
-	HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
-	fVSYNCStart = HAL_GetTick();
-}
-
-__IO uint32_t LTDC_get_backbuffer_address(void) {
-	if (active_framebuffer == FRAMEBUFFER1)
-		return (__IO uint32_t) FRAMEBUFFER2_ADDR;
-	else
-		return (__IO uint32_t) FRAMEBUFFER1_ADDR;
-}
-
-void LTDC_switch_framebuffer(void) {
-//	LTDC->SRCR = LTDC_SRCR_VBR;
-	if (active_framebuffer == FRAMEBUFFER1) {
-		LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
-//		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER2, 1);
-		active_framebuffer = FRAMEBUFFER2;
-	} else {
-		LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
-//		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
-		active_framebuffer = FRAMEBUFFER1;
-	}
-//	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
-	LTDC->SRCR = LTDC_SRCR_VBR; // not sure if it is better to first switch buffer and the reload or viceversa
-//	while ((LTDC->CDSR & LTDC_CDSR_VSYNCS) == 0)
-//		;
-}
-
-void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-	hdma2d.Instance = DMA2D;
-	hdma2d.Init.Mode = DMA2D_R2M;
-	hdma2d.Init.ColorMode = DMA2D_OUTPUT_ARGB8888;
-	hdma2d.Init.OutputOffset = KLST_DISPLAY_WIDTH - width;
-	HAL_DMA2D_Init(&hdma2d);
-	HAL_DMA2D_ConfigLayer(&hdma2d, 0);
-	HAL_DMA2D_ConfigLayer(&hdma2d, 1);
-	HAL_DMA2D_Start(&hdma2d, color, LTDC_get_backbuffer_address() + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
-	HAL_DMA2D_PollForTransfer(&hdma2d, 10);
-}
-
-void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *handle) {
-	/* USER CODE BEGIN DMA2D_XferCpltCallback */
-	// If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
-	// to flush the Dcache prior to letting DMA2D accessing it. That's done
-	// using SCB_CleanInvalidateDCache().
-//	SCB_CleanInvalidateDCache(); // todo is this necessary
-	/* USER CODE END DMA2D_XferCpltCallback */
-	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-	print_debug("DMA2D_XferCpltCallback");
-}
-
-void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef *handle) {
-	print_debug("DMA2D_XferErrorCallback");
-	assert(0);
-}
-
-uint32_t frame_counter = 0;
-
+static uint32_t frame_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -262,34 +167,49 @@ int main(void) {
 	PeriphCommonClock_Config();
 
 	/* USER CODE BEGIN SysInit */
+
+	/* --- serial debug */
+
 	MX_USART3_UART_Init();
-	printf("\r\n---------------------------------------------------------\r\n");
-	printf("\r\nKLST_PANDA-STM32H723ZGT-BSP (%s)\r\n\r\n", __TIME__);
+	serialdebug_setup();
+
+	/* --- GPIO+LEDs */
+
 	print_debug("initialize GPIO");
 	MX_GPIO_Init();
-	print_debug("initialize GPIO(USR)");
-	USR_GPIO_Init();
+	display_switch_off();
+
+	print_debug("initialize LEDs");
+	LED_setup();
+	LED_turn_off(LED_00);
+	LED_turn_off(LED_01);
+
+	/* --- external/internal RAM */
 
 	print_debug("initialize external RAM");
 	MX_OCTOSPI1_Init();
+	externalmemory_setup();
 
 	print_debug("test external RAM");
-	external_memory_test();
+	externalmemory_test();
 
 	print_debug("test internal RAM");
-	test_all_ram();
+	internalmemory_test_all();
+
+	/* --- LTDC+DMA2D */
 
 	print_debug("initialize LCD (LTDC+DMA2D)");
 	MX_LTDC_Init();
 	MX_DMA2D_Init();
+	LTDC_setup();
+
+	/* --- backlight */
 
 	print_debug("initialize LCD backlight PWM");
 	MX_TIM3_Init();
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+	backlight_setup();
 
-//#define MX_INIT
-//#define MX_LOOP
-#if defined(MX_INIT)
+#ifndef MX_OMIT_INIT
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -324,69 +244,24 @@ int main(void) {
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 #endif
-	HAL_GPIO_WritePin(_LED_00_GPIO_Port, _LED_00_Pin, GPIO_PIN_RESET); // GPIO_PIN_RESET == OFF
-	HAL_GPIO_WritePin(_LED_01_GPIO_Port, _LED_01_Pin, GPIO_PIN_RESET); // GPIO_PIN_SET == ON
-//	HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_SET); // GPIO_PIN_SET == ON
-	HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);
-
-	/* fill framebuffers with black */
-	for (int i = 0; i < KLST_DISPLAY_FRAMEBUFFER_SIZE; i++) {
-		((volatile uint8_t*) FRAMEBUFFER1_ADDR)[i] = 0x88;
-		((volatile uint8_t*) FRAMEBUFFER2_ADDR)[i] = 0x88;
-	}
-
-//	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING); // start reload look at 60Hz
+	display_switch_on();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-#if defined(MX_LOOP)
+#ifndef MX_OMIT_LOOP
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
 #endif
 		frame_counter++;
-		HAL_GPIO_TogglePin(_LED_00_GPIO_Port, _LED_00_Pin);
-
-		/* LTDC --> */
-//		const uint32_t mStartFillBuffer = HAL_GetTick();
-//		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 4) {
-//			uint8_t rgb = (uint8_t) (rand());
-//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb; // B
-//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb; // G
-//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb; // R
-//			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
-//		}
-//		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
-//		printf("             frame fill duration    : %li\r\n", mFillBufferDuration);
-		DMA2D_FillRect(0xFF000000, // ARGB
-				0, 0,
-				KLST_DISPLAY_WIDTH,
-				KLST_DISPLAY_HEIGHT);
-		const uint32_t x = (frame_counter * 10) % KLST_DISPLAY_WIDTH;
-		const uint32_t y = ((frame_counter * 10) / KLST_DISPLAY_WIDTH * 20) % KLST_DISPLAY_HEIGHT;
-		DMA2D_FillRect(0xFFFFFF00, // ARGB
-				x, y,
-				KLST_DISPLAY_WIDTH / 2,
-				KLST_DISPLAY_HEIGHT / 2);
-
-		/* schedule redraw */
-		LTDC_switch_framebuffer(); // manually trigger frame redraw
-
-		printf("                      VSYNC duration: %li\r\n", fVSYNCDuration);
-		/* --> LTDC */
-
-#define TEST_BACKLIGHT_BRIGHTNESS
-#ifdef TEST_BACKLIGHT_BRIGHTNESS
-		const uint8_t mPhaseDivider = ((1 << (frame_counter % 5 + 2)));
-		__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 65535 / mPhaseDivider);
-		printf("             LCD backlight divider: %i\r\n", mPhaseDivider);
-#endif
-
+		LED_toggle(LED_00);
+		LTDC_loop();
+//		backlight_set_brightness((float) (frame_counter % 100) / 100.0);
 		print_debug("EOF");
-		HAL_Delay(100);
+		HAL_Delay(250);
 	}
 	/* USER CODE END 3 */
 }
@@ -839,24 +714,7 @@ static void MX_I2C4_Init(void) {
 static void MX_LTDC_Init(void) {
 
 	/* USER CODE BEGIN LTDC_Init 0 */
-//	LTDC_CLOCK_RATE          9.5   // ( TotalWidth * TotalHeigh * RefreshRate ) / 1000000 = 9.45 MHz at ( 534 * 295 * 60Hz )
-//	DISPLAY_HSYNC            3     /* Horizontal synchronization */
-//	DISPLAY_HBP              43    /* Horizontal back porch      */
-//	DISPLAY_HFP              8     /* Horizontal front porch     */
-//	DISPLAY_VSYNC            3     /* Vertical synchronization   */
-//	DISPLAY_VBP              12    /* Vertical back porch        */
-//	DISPLAY_VFP              8     /* Vertical front porch       */
-//	DISPLAY_WIDTH            480
-//	DISPLAY_HEIGHT           272
-//	DISPLAY_FRAMEBUFFER_SIZE (DISPLAY_WIDTH * DISPLAY_HEIGHT * 4) // 32bit TODO(check if this 32bit or 24bit)
-//	HorizontalSync     = (DISPLAY_HSYNC - 1);
-//	VerticalSync       = (DISPLAY_VSYNC - 1);
-//	AccumulatedHBP     = (DISPLAY_HSYNC + DISPLAY_HBP - 1);
-//	AccumulatedVBP     = (DISPLAY_VSYNC + DISPLAY_VBP - 1);
-//	AccumulatedActiveW = (DISPLAY_WIDTH + DISPLAY_HSYNC + DISPLAY_HBP - 1);
-//	AccumulatedActiveH = (DISPLAY_HEIGHT + DISPLAY_VSYNC + DISPLAY_VBP - 1);
-//	TotalWidth         = (DISPLAY_WIDTH + DISPLAY_HSYNC + DISPLAY_HBP + DISPLAY_HFP - 1);
-//	TotalHeigh         = (DISPLAY_HEIGHT + DISPLAY_VSYNC + DISPLAY_VBP + DISPLAY_VFP - 1);
+
 	/* USER CODE END LTDC_Init 0 */
 
 	LTDC_LayerCfgTypeDef pLayerCfg = { 0 };
@@ -960,26 +818,7 @@ static void MX_OCTOSPI1_Init(void) {
 		Error_Handler();
 	}
 	/* USER CODE BEGIN OCTOSPI1_Init 2 */
-	OSPI_HyperbusCmdTypeDef sCommand;
-	OSPI_MemoryMappedTypeDef sMemMappedCfg;
 
-	/* Memory-mapped mode configuration */
-	sCommand.AddressSpace = HAL_OSPI_MEMORY_ADDRESS_SPACE;
-	sCommand.AddressSize = HAL_OSPI_ADDRESS_32_BITS;
-	sCommand.DQSMode = HAL_OSPI_DQS_ENABLE;
-	sCommand.Address = 0;
-	sCommand.NbData = 1;
-
-	if (HAL_OSPI_HyperbusCmd(&hospi1, &sCommand,
-	HAL_OSPI_TIMEOUT_DEFAULT_VALUE) != HAL_OK) {
-		Error_Handler();
-	}
-
-	sMemMappedCfg.TimeOutActivation = HAL_OSPI_TIMEOUT_COUNTER_DISABLE;
-
-	if (HAL_OSPI_MemoryMapped(&hospi1, &sMemMappedCfg) != HAL_OK) {
-		Error_Handler();
-	}
 	/* USER CODE END OCTOSPI1_Init 2 */
 
 }
