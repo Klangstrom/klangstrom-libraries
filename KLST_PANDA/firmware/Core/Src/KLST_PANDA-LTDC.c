@@ -70,12 +70,12 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *handle) {
 //	SCB_CleanInvalidateDCache(); // todo is this necessary
 	/* USER CODE END DMA2D_XferCpltCallback */
 	HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-	print_debug("DMA2D_XferCpltCallback");
+	println("DMA2D_XferCpltCallback");
 }
 
 void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef *handle) {
-	print_debug("DMA2D_XferErrorCallback");
-	assert(0);
+	println("DMA2D_XferErrorCallback");
+	println(0);
 }
 
 void LTDC_setup() {
@@ -115,5 +115,5 @@ void LTDC_loop() {
 	/* schedule redraw */
 	LTDC_switch_framebuffer(); // manually trigger frame redraw
 
-	printf("%sVSYNC duration: %li\r\n", DEBUG_PREFIX_SPACE, fVSYNCDuration);
+	println("VSYNC duration: %li\r\n", fVSYNCDuration);
 }

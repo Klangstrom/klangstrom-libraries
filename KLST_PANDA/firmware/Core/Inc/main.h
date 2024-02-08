@@ -292,7 +292,6 @@ void Error_Handler(void);
 #define _IDC_SERIAL_00_TX_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
-#define DEBUG_PREFIX_SPACE "             "
 #define LED_00             0
 #define LED_01             1
 /* USER CODE END Private defines */

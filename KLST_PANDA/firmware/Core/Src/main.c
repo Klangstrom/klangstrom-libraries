@@ -29,6 +29,7 @@
 #include "KLST_PANDA-LED.h"
 #include "KLST_PANDA-LTDC.h"
 #include "KLST_PANDA-SerialDebug.h"
+#include "KLST_PANDA-Touch.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -175,39 +176,50 @@ int main(void) {
 
 	/* --- GPIO+LEDs */
 
-	print_debug("initialize GPIO");
+	println("initialize GPIO");
 	MX_GPIO_Init();
 	display_switch_off();
 
-	print_debug("initialize LEDs");
+	println("initialize LEDs");
 	LED_setup();
 	LED_turn_off(LED_00);
 	LED_turn_off(LED_01);
 
 	/* --- external/internal RAM */
 
-	print_debug("initialize external RAM");
+	println("initialize I2C");
+	MX_I2C4_Init();
+//	MX_I2C1_Init();
+
+	/* --- external/internal RAM */
+
+	println("initialize external RAM");
 	MX_OCTOSPI1_Init();
 	externalmemory_setup();
 
-	print_debug("test external RAM");
+	println("test external RAM");
 	externalmemory_test();
 
-	print_debug("test internal RAM");
+	println("test internal RAM");
 	internalmemory_test_all();
 
 	/* --- LTDC+DMA2D */
 
-	print_debug("initialize LCD (LTDC+DMA2D)");
+	println("initialize LCD (LTDC+DMA2D)");
 	MX_LTDC_Init();
 	MX_DMA2D_Init();
 	LTDC_setup();
 
 	/* --- backlight */
 
-	print_debug("initialize LCD backlight PWM");
+	println("initialize LCD backlight PWM");
 	MX_TIM3_Init();
 	backlight_setup();
+
+	/* --- touch ( requires I2C4 ) */
+
+	display_switch_on();
+	touch_setup();
 
 #ifndef MX_OMIT_INIT
   /* USER CODE END SysInit */
@@ -258,10 +270,12 @@ int main(void) {
 #endif
 		frame_counter++;
 		LED_toggle(LED_00);
-		LTDC_loop();
+//		LTDC_loop();
+		touch_read();
+		// _DISPLAY_TOUCH_INTERRUPT
 //		backlight_set_brightness((float) (frame_counter % 100) / 100.0);
-		print_debug("EOF");
-		HAL_Delay(250);
+//		println("EOF");
+		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */
 }
@@ -677,7 +691,7 @@ static void MX_I2C4_Init(void) {
 
 	/* USER CODE END I2C4_Init 1 */
 	hi2c4.Instance = I2C4;
-	hi2c4.Init.Timing = 0x10707DBC;
+	hi2c4.Init.Timing = 0x00D056FC;
 	hi2c4.Init.OwnAddress1 = 0;
 	hi2c4.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hi2c4.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
@@ -691,7 +705,7 @@ static void MX_I2C4_Init(void) {
 
 	/** Configure Analogue filter
 	 */
-	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_ENABLE) != HAL_OK) {
+	if (HAL_I2CEx_ConfigAnalogFilter(&hi2c4, I2C_ANALOGFILTER_DISABLE) != HAL_OK) {
 		Error_Handler();
 	}
 

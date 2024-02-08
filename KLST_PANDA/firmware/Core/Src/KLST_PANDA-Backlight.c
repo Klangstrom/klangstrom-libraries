@@ -23,6 +23,6 @@ void backlight_loop() {
 void backlight_set_brightness(float brightness) {
 	uint32_t mPhase = (uint32_t) (fPeriod * brightness);
 	mPhase = MAX(1, MIN(fPeriod, mPhase));
-	printf("%sbacklight brightness: %f %li/%li\r\n", DEBUG_PREFIX_SPACE, brightness, mPhase, fPeriod);
+	println("backlight brightness: %f %li/%li\r\n", brightness, mPhase, fPeriod);
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
 }
