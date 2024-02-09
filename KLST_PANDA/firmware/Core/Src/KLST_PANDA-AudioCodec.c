@@ -1,0 +1,79 @@
+#include "KLST_PANDA-AudioCodec.h"
+#include "KLST_PANDA-SerialDebug.h"
+#include "WM8904.h"
+
+extern I2C_HandleTypeDef hi2c4;
+
+static void delay_ms(uint32_t duration) {
+    HAL_Delay(duration);
+}
+
+static void configure_codec(void) {
+//	uint16_t data = 0;
+//	/* check that WM8904 is present */
+//	WM8904_write_register(WM8904_SW_RESET_AND_ID, 0xFFFF);
+//	data = WM8904_read_register(WM8904_SW_RESET_AND_ID);
+//	if (data != 0x8904) {
+//		printf("WM8904 not found!\n\r");
+//		while (1)
+//			;
+//	}
+
+    WM8904_write_register(WM8904_BIAS_CONTROL_0, WM8904_ISEL_HP_BIAS);
+    WM8904_write_register(WM8904_VMID_CONTROL_0, WM8904_VMID_BUF_ENA | WM8904_VMID_RES_FAST | WM8904_VMID_ENA);
+    delay_ms(5);
+    WM8904_write_register(WM8904_VMID_CONTROL_0,
+    WM8904_VMID_BUF_ENA | WM8904_VMID_RES_NORMAL | WM8904_VMID_ENA);
+    WM8904_write_register(WM8904_BIAS_CONTROL_0, WM8904_ISEL_HP_BIAS | WM8904_BIAS_ENA);
+    WM8904_write_register(WM8904_POWER_MANAGEMENT_0, WM8904_INL_ENA | WM8904_INR_ENA);
+    WM8904_write_register(WM8904_POWER_MANAGEMENT_2, WM8904_HPL_PGA_ENA | WM8904_HPR_PGA_ENA);
+    WM8904_write_register(WM8904_DAC_DIGITAL_1, WM8904_DEEMPH(0));
+    WM8904_write_register(WM8904_ANALOGUE_OUT12_ZC, 0x0000);
+    WM8904_write_register(WM8904_CHARGE_PUMP_0, WM8904_CP_ENA);
+    WM8904_write_register(WM8904_CLASS_W_0, WM8904_CP_DYN_PWR);
+    WM8904_write_register(WM8904_FLL_CONTROL_1, 0x0000);
+    WM8904_write_register(WM8904_FLL_CONTROL_2, WM8904_FLL_OUTDIV(7) | WM8904_FLL_FRATIO(4));
+    WM8904_write_register(WM8904_FLL_CONTROL_3, WM8904_FLL_K(0x8000));
+    WM8904_write_register(WM8904_FLL_CONTROL_4, WM8904_FLL_N(0xBB));
+    WM8904_write_register(WM8904_FLL_CONTROL_1, WM8904_FLL_FRACN_ENA | WM8904_FLL_ENA);
+    delay_ms(5);
+    WM8904_write_register(WM8904_CLOCK_RATES_1, WM8904_CLK_SYS_RATE(3) | WM8904_SAMPLE_RATE(5));
+    WM8904_write_register(WM8904_CLOCK_RATES_0, 0x0000);
+//    WM8904_write_register(WM8904_CLOCK_RATES_2, WM8904_SYSCLK_SRC | WM8904_CLK_SYS_ENA | WM8904_CLK_DSP_ENA);
+    WM8904_write_register(WM8904_CLOCK_RATES_2, 0x0000);
+    WM8904_write_register(WM8904_AUDIO_INTERFACE_1, WM8904_BCLK_DIR | WM8904_AIF_FMT_I2S);
+    WM8904_write_register(WM8904_AUDIO_INTERFACE_2, WM8904_BCLK_DIV(8));
+    WM8904_write_register(WM8904_AUDIO_INTERFACE_3, WM8904_LRCLK_DIR | WM8904_LRCLK_RATE(0x20));
+    WM8904_write_register(WM8904_POWER_MANAGEMENT_6,
+    WM8904_DACL_ENA | WM8904_DACR_ENA | WM8904_ADCL_ENA | WM8904_ADCR_ENA);
+    delay_ms(5);
+    WM8904_write_register(WM8904_ANALOGUE_LEFT_INPUT_0, WM8904_LIN_VOL(0x10));
+    WM8904_write_register(WM8904_ANALOGUE_RIGHT_INPUT_0, WM8904_RIN_VOL(0x10));
+    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA | WM8904_HPR_ENA);
+    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA_DLY | WM8904_HPL_ENA |
+    WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
+    WM8904_write_register(WM8904_DC_SERVO_0, WM8904_DCS_ENA_CHAN_3 | WM8904_DCS_ENA_CHAN_2 |
+    WM8904_DCS_ENA_CHAN_1 | WM8904_DCS_ENA_CHAN_0);
+    WM8904_write_register(WM8904_DC_SERVO_1, WM8904_DCS_TRIG_STARTUP_3 | WM8904_DCS_TRIG_STARTUP_2 |
+    WM8904_DCS_TRIG_STARTUP_1 | WM8904_DCS_TRIG_STARTUP_0);
+    delay_ms(100);
+    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA_OUTP | WM8904_HPL_ENA_DLY | WM8904_HPL_ENA |
+    WM8904_HPR_ENA_OUTP | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
+    WM8904_write_register(WM8904_ANALOGUE_HP_0,
+    WM8904_HPL_RMV_SHORT | WM8904_HPL_ENA_OUTP | WM8904_HPL_ENA_DLY | WM8904_HPL_ENA |
+    WM8904_HPR_RMV_SHORT | WM8904_HPR_ENA_OUTP | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
+    WM8904_write_register(WM8904_ANALOGUE_OUT1_LEFT, WM8904_HPOUT_VU | WM8904_HPOUTL_VOL(0x39));
+    WM8904_write_register(WM8904_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(0x39));
+    delay_ms(100);
+}
+
+uint8_t audiocodec_setup() {
+    if (WM8904_init(&hi2c4) != HAL_OK) {
+        println("could not initialize audiocodec");
+        return HAL_ERROR;
+    } else {
+        println("configuring audiocodec");
+        configure_codec();
+    }
+    return HAL_OK;
+}

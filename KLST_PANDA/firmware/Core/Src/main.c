@@ -30,6 +30,7 @@
 #include "KLST_PANDA-LTDC.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-Touch.h"
+#include "KLST_PANDA-AudioCodec.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -200,8 +201,8 @@ int main(void) {
 	println("test external RAM");
 	externalmemory_test();
 
-	println("test internal RAM");
-	internalmemory_test_all();
+//	println("test internal RAM");
+//	internalmemory_test_all();
 
 	/* --- LTDC+DMA2D */
 
@@ -216,10 +217,22 @@ int main(void) {
 	MX_TIM3_Init();
 	backlight_setup();
 
-	/* --- touch ( requires I2C4 ) */
+	/* --- touch panel ( requires I2C4 ) */
 
+	println("initialize touch panel (FT5206)");
 	display_switch_on();
-	touch_setup();
+//	touch_setup();
+
+	/* --- audiocodec ( requires I2C4 + SAI1 ) */
+
+	println("initialize audiocodec (WM8904)");
+
+	MX_SAI1_Init();
+	// DMA?
+	audiocodec_setup();
+
+	/* --- MEMS microphones */
+//	MX_SAI4_Init();
 
 #ifndef MX_OMIT_INIT
   /* USER CODE END SysInit */
@@ -271,10 +284,10 @@ int main(void) {
 		frame_counter++;
 		LED_toggle(LED_00);
 //		LTDC_loop();
-		touch_read();
+//		touch_read();
 		// _DISPLAY_TOUCH_INTERRUPT
 //		backlight_set_brightness((float) (frame_counter % 100) / 100.0);
-//		println("EOF");
+		println("EOF");
 		HAL_Delay(500);
 	}
 	/* USER CODE END 3 */

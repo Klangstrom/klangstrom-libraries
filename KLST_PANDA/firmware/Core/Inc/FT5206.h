@@ -1,7 +1,9 @@
 #ifndef INC_FT5206_H_
 #define INC_FT5206_H_
 
-#define FT5206_I2C_ADDRESS                0x70 // or 0x71?
+#include "main.h"
+
+#define FT5206_I2C_ADDRESS                0x70 // or 0x71? used to be 0x38, why?
 #define FT5206_NUMBER_OF_REGISTERS        31 // there are more registers, but this is enough to get all 5 touch coordinates.
 #define FT5206_NUMBER_OF_TOTAL_REGISTERS  0xFE
 #define FT5206_DEVICE_MODE                0x00
@@ -36,5 +38,7 @@
 void FT5206_init(I2C_HandleTypeDef *hi2c_handle);
 void FT5206_read();
 void FT5206_print_info();
+
+// TODO(add calibration and touch threshold configuration)
 
 #endif /* INC_FT5206_H_ */

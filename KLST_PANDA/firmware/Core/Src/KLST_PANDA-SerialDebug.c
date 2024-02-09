@@ -13,8 +13,9 @@ int _write(int file, char *data, int len) {
 }
 
 void serialdebug_setup() {
-	printf("\r\n---------------------------------------------------------\r\n");
-	printf("\r\nKLST_PANDA-STM32H723ZGT-BSP (%s)\r\n\r\n", __TIME__);
+	printf("\r\n---------------------------------------------------------\r\n\r\n");
+	printf("KLST_PANDA-STM32H723ZGT-BSP @ %liMHz (%s)\r\n", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
+	printf("\r\n---------------------------------------------------------\r\n\r\n");
 }
 
 void print(const char *format, ...) {

@@ -1,9 +1,12 @@
-#include "main.h"
 #include "FT5206.h"
 #include "KLST_PANDA-SerialDebug.h"
 
 static HAL_StatusTypeDef ret;
 static I2C_HandleTypeDef *hi2c = 0;
+
+#define FT5206_TIMEOUT      1000
+//                          in ms?
+//                          (default)HAL_MAX_DELAY
 
 static uint16_t word(uint8_t highByte, uint8_t lowByte) {
 	return (uint16_t) (highByte << 8) | lowByte;
@@ -18,23 +21,18 @@ void FT5206_init(I2C_HandleTypeDef *hi2c_handle) {
 	print_I2C_show_devices(hi2c);
 
 	/*
-	 DEVICE READY: 0x34
-	 DEVICE READY: 0x35
-	 DEVICE READY: 0x70
+	 DEVICE READY: 0x70 // FT5206
 	 DEVICE READY: 0x71
 	 */
 
 	uint8_t buf[2];
 	buf[0] = FT5206_DEVICE_MODE;
 	buf[1] = 0x00;
-	ret = HAL_I2C_Master_Transmit(hi2c, FT5206_I2C_ADDRESS, buf, 2, HAL_MAX_DELAY);
+	ret = HAL_I2C_Master_Transmit(hi2c, FT5206_I2C_ADDRESS, buf, 2, FT5206_TIMEOUT);
 
 	if (ret != HAL_OK) {
-		println("transmit I2C: ERROR");
-//	} else {
-//		print_debug("transmit I2C4: OK");
+		println("FT5206: transmit I2C ERROR");
 	}
-
 }
 
 void FT5206_read() {
@@ -42,9 +40,9 @@ void FT5206_read() {
 		return;
 	}
 	uint8_t buf[FT5206_NUMBER_OF_REGISTERS];
-	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, HAL_MAX_DELAY);
+	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
 	if (ret != HAL_OK) {
-		println("receive I2C : ERROR");
+		println("FT5206: receive I2C ERROR");
 		return;
 	}
 
@@ -65,9 +63,9 @@ void FT5206_print_info() {
 		return;
 	}
 	uint8_t buf[FT5206_NUMBER_OF_TOTAL_REGISTERS];
-	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, HAL_MAX_DELAY);
+	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, FT5206_TIMEOUT);
 	if (ret != HAL_OK) {
-		println("receive I2C4 : ERROR");
+		println("FT5206: receive I2C ERROR");
 		return;
 	}
 
