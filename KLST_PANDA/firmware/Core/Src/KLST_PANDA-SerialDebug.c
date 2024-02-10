@@ -38,7 +38,14 @@ void print_I2C_show_devices(I2C_HandleTypeDef *hi2c) {
 	}
 }
 
-void print_binary(uint16_t value) {
+void print_binary8ui(uint8_t value) {
+    for (int i = 7; i >= 0; i--) {
+        printf("%d", (value >> i) & 1);
+    }
+    printf("\r\n");
+}
+
+void print_binary16ui(uint16_t value) {
     for (int i = 15; i >= 0; i--) {
         printf("%d", (value >> i) & 1);
     }

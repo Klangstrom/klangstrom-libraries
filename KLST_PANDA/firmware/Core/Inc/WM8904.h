@@ -8,11 +8,13 @@ extern "C" {
 #include "main.h"
 #include "stdint.h"
 
-#define WM8904_ON       1
-#define WM8904_OFF      0
+#define WM8904_I2C_ADDRESS       0x34 // (p120)
 
-#define WM8904_CLK_MCLK 1
-#define WM8904_CLK_FLL  2
+#define WM8904_ON                1
+#define WM8904_OFF               0
+
+#define WM8904_CLK_MCLK          1
+#define WM8904_CLK_FLL           2
 
 #define WM8904_FLL_MCLK          1
 #define WM8904_FLL_BCLK          2
@@ -142,6 +144,7 @@ extern "C" {
 /*
  * R4 (0x04) - Bias Control 0
  */
+#define WM8905_R4_BIAS_CONTROL_0                WM8904_BIAS_CONTROL_0
 #define WM8904_ISEL_Pos                         2  /* ISEL - [3:2] */
 #define WM8904_ISEL_Msk                         0x000C
 #define WM8904_ISEL(Value)                      (WM8904_ISEL_Msk & ((Value) << WM8904_ISEL_Pos))
@@ -153,6 +156,7 @@ extern "C" {
 /*
  * R5 (0x05) - VMID Control 0
  */
+#define WM8904_R5_VMID_CONTROL_0                WM8904_VMID_CONTROL_0
 #define WM8904_VMID_BUF_ENA_Pos                 6  /* VMID_BUF_ENA */
 #define WM8904_VMID_BUF_ENA                     0x0040
 #define WM8904_VMID_RES_Pos                     1  /* VMID_RES - [2:1] */
@@ -168,6 +172,7 @@ extern "C" {
 /*
  * R6 (0x06) - Mic Bias Control 0
  */
+#define WM8904_R6_MIC_BIAS_CONTROL_0            WM8904_MIC_BIAS_CONTROL_0
 #define WM8904_MICDET_THR_Pos                   4  /* MICDET_THR - [6:4] */
 #define WM8904_MICDET_THR_Msk                   0x0070
 #define WM8904_MICDET_THR(Value)                (WM8904_MICDET_THR_Msk & ((Value) << WM8904_MICDET_THR_Pos))
@@ -189,6 +194,7 @@ extern "C" {
 /*
  * R10 (0x0A) - Analogue ADC 0
  */
+#define WM8904_R10_ANALOGUE_ADC_0               WM8904_ANALOGUE_ADC_0
 #define WM8904_ADC_OSR128_Pos                   0  /* ADC_OSR128 */
 #define WM8904_ADC_OSR128                       0x0001
 
@@ -235,6 +241,7 @@ extern "C" {
 /*
  * R20 (0x14) - Clock Rates 0
  */
+#define WM8904_R20_CLOCK_RATES_0                WM8904_CLOCK_RATES_0
 #define WM8904_TOCLK_RATE_DIV16_Pos             14  /* TOCLK_RATE_DIV16 */
 #define WM8904_TOCLK_RATE_DIV16                 0x4000
 #define WM8904_TOCLK_RATE_X4_Pos                13  /* TOCLK_RATE_X4 */
@@ -245,6 +252,7 @@ extern "C" {
 /*
  * R21 (0x15) - Clock Rates 1
  */
+#define WM8904_R21_CLOCK_RATES_1                WM8904_CLOCK_RATES_1
 #define WM8904_CLK_SYS_RATE_Pos                 10  /* CLK_SYS_RATE - [13:10] */
 #define WM8904_CLK_SYS_RATE_Msk                 0x3C00
 #define WM8904_CLK_SYS_RATE(Value)              (WM8904_CLK_SYS_RATE_Msk & ((Value) << WM8904_CLK_SYS_RATE_Pos))
@@ -303,6 +311,7 @@ extern "C" {
 /*
  * R25 (0x19) - Audio Interface 1
  */
+#define WM8904_R25_AUDIO_INTERFACE_1            WM8904_AUDIO_INTERFACE_1
 #define WM8904_AIFDAC_TDM_Pos                   13  /* AIFDAC_TDM */
 #define WM8904_AIFDAC_TDM                       0x2000
 #define WM8904_AIFDAC_TDM_CHAN_Pos              12  /* AIFDAC_TDM_CHAN */
@@ -337,6 +346,7 @@ extern "C" {
 /*
  * R26 (0x1A) - Audio Interface 2
  */
+#define WM8904_R26_AUDIO_INTERFACE_2            WM8904_AUDIO_INTERFACE_2
 #define WM8904_OPCLK_DIV_Pos                    8  /* OPCLK_DIV - [11:8] */
 #define WM8904_OPCLK_DIV_Msk                    0x0F00
 #define WM8904_OPCLK_DIV(Value)                 (WM8904_OPCLK_DIV_Msk & ((Value) << WM8904_OPCLK_DIV_Pos))
@@ -347,6 +357,7 @@ extern "C" {
 /*
  * R27 (0x1B) - Audio Interface 3
  */
+#define WM8904_R27_AUDIO_INTERFACE_3            WM8904_AUDIO_INTERFACE_3
 #define WM8904_LRCLK_DIR_Pos                    11  /* LRCLK_DIR */
 #define WM8904_LRCLK_DIR                        0x0800
 #define WM8904_LRCLK_RATE_Pos                   0  /* LRCLK_RATE - [10:0] */
@@ -872,6 +883,7 @@ extern "C" {
 /*
  * R116 (0x74) - FLL Control 1
  */
+#define WM8904_R116_FLL_CONTROL_1               WM8904_FLL_CONTROL_1
 #define WM8904_FLL_FRACN_ENA_Pos                2  /* FLL_FRACN_ENA */
 #define WM8904_FLL_FRACN_ENA                    0x0004
 #define WM8904_FLL_OSC_ENA_Pos                  1  /* FLL_OSC_ENA */
@@ -882,6 +894,7 @@ extern "C" {
 /*
  * R117 (0x75) - FLL Control 2
  */
+#define WM8904_R117_FLL_CONTROL_2               WM8904_FLL_CONTROL_2
 #define WM8904_FLL_OUTDIV_Pos                   8  /* FLL_OUTDIV - [13:8] */
 #define WM8904_FLL_OUTDIV_Msk                   0x3F00
 #define WM8904_FLL_OUTDIV(Value)                (WM8904_FLL_OUTDIV_Msk & ((Value) << WM8904_FLL_OUTDIV_Pos))
@@ -895,6 +908,7 @@ extern "C" {
 /*
  * R118 (0x76) - FLL Control 3
  */
+#define WM8904_R118_FLL_CONTROL_3               WM8904_FLL_CONTROL_3
 #define WM8904_FLL_K_Pos                        0  /* FLL_K - [15:0] */
 #define WM8904_FLL_K_Msk                        0xFFFF
 #define WM8904_FLL_K(Value)                     (WM8904_FLL_K_Msk & ((Value) << WM8904_FLL_K_Pos))
@@ -902,6 +916,7 @@ extern "C" {
 /*
  * R119 (0x77) - FLL Control 4
  */
+#define WM8904_R119_FLL_CONTROL_4               WM8904_FLL_CONTROL_4
 #define WM8904_FLL_N_Pos                        5  /* FLL_N - [14:5] */
 #define WM8904_FLL_N_Msk                        0x7FE0
 #define WM8904_FLL_N(Value)                     (WM8904_FLL_N_Msk & ((Value) << WM8904_FLL_N_Pos))
@@ -912,6 +927,7 @@ extern "C" {
 /*
  * R120 (0x78) - FLL Control 5
  */
+#define WM8904_R120_FLL_CONTROL_5               WM8904_FLL_CONTROL_5
 #define WM8904_FLL_CLK_REF_DIV_Pos              3  /* FLL_CLK_REF_DIV - [4:3] */
 #define WM8904_FLL_CLK_REF_DIV_Msk              0x0018
 #define WM8904_FLL_CLK_REF_DIV(Value)           (WM8904_FLL_CLK_REF_DIV_Msk & ((Value) << WM8904_FLL_CLK_REF_DIV_Pos))

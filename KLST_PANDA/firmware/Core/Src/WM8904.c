@@ -5,20 +5,21 @@ extern "C" {
 #include "WM8904.h"
 #include "KLST_PANDA-SerialDebug.h"
 
-#define WM8904_I2C_ADDRESS 0x34
-#define WM8904_TIMEOUT     1000
-//                         (default)HAL_MAX_DELAY
+#define WM8904_TIMEOUT     HAL_MAX_DELAY
 
 static HAL_StatusTypeDef ret;
 static I2C_HandleTypeDef *hi2c = 0;
 
-uint8_t WM8904_write_register(uint8_t uc_register_address, uint16_t us_data) {
-    static const uint8_t mLength = 2;
-    uint8_t buf[3];
-    buf[0] = uc_register_address;
-    buf[1] = (us_data & 0xff00) >> 8;
-    buf[2] = us_data & 0xff;
-    ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, buf, mLength, WM8904_TIMEOUT);
+uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
+    if (!hi2c) {
+        println("WM8904 not initialized!");
+        return HAL_ERROR;
+    }
+    uint8_t transmit_buffer[3];
+    transmit_buffer[0] = register_address;
+    transmit_buffer[1] = (data & 0xff00) >> 8;
+    transmit_buffer[2] = data & 0xff;
+    ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 3, WM8904_TIMEOUT);
     if (ret != HAL_OK) {
         println("WM8904: transmit I2C ERROR");
         return HAL_ERROR;
@@ -26,23 +27,34 @@ uint8_t WM8904_write_register(uint8_t uc_register_address, uint16_t us_data) {
     return HAL_OK;
 }
 
-uint16_t WM8904_read_register(uint8_t uc_register_address) {
-    static const uint8_t mLength = 2;
-    uint8_t buf[2];
-    ret = HAL_I2C_Master_Receive(hi2c, WM8904_I2C_ADDRESS, buf, mLength, WM8904_TIMEOUT);
+uint16_t WM8904_read_register(uint8_t register_address) {
+    if (!hi2c) {
+        println("WM8904 not initialized!");
+        return HAL_ERROR;
+    }
+    uint8_t transmit_buffer[1];
+    transmit_buffer[0] = register_address;
+    ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 1, WM8904_TIMEOUT);
+    if (ret != HAL_OK) {
+        println("WM8904: transmit I2C ERROR");
+        return HAL_ERROR;
+    }
 
+    uint8_t receive_buffer[2];
+    ret = HAL_I2C_Master_Receive(hi2c, WM8904_I2C_ADDRESS, receive_buffer, 2, WM8904_TIMEOUT);
     if (ret != HAL_OK) {
         println("WM8904: receive I2C ERROR");
         return HAL_ERROR;
     }
-    return (((uint16_t) buf[0] << 8) & 0xff00) | buf[1];
+    return (((uint16_t) receive_buffer[0] << 8) & 0xff00) | receive_buffer[1];
 }
 
 uint32_t WM8904_init(I2C_HandleTypeDef *hi2c_handle) {
     hi2c = hi2c_handle;
 
     if (!hi2c) {
-        return 1;
+        println("WM8904 not initialized!");
+        return HAL_ERROR;
     }
 
     WM8904_write_register(WM8904_SW_RESET_AND_ID, 0xFFFF);
@@ -70,17 +82,20 @@ uint8_t WM8904_set_flag(uint8_t register_address, uint16_t flag_bit, uint8_t fla
     } else {
         register_value &= ~(1 << flag_bit); // set to 0
     }
-    // test
-    WM8904_write_register(register_address, register_value);
+//#define WM8904_SET_FLAG_TEST
+#ifdef WM8904_SET_FLAG_TEST
+    ret = WM8904_write_register(register_address, register_value);
     println("TOOD check if register was written: ");
     print("previous : ");
-    print_binary(previous_register_value);
+    print_binary16ui(previous_register_value);
     print("written  : ");
-    print_binary(register_address);
+    print_binary16ui(register_value);
     print("read back: ");
-    print_binary(WM8904_read_register(register_address));
-    //
+    print_binary16ui(WM8904_read_register(register_address));
+    return ret;
+#else
     return WM8904_write_register(register_address, register_value);
+#endif
 }
 
 #ifdef __cplusplus

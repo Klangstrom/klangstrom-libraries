@@ -375,7 +375,7 @@ void PeriphCommonClock_Config(void)
             | RCC_PERIPHCLK_LTDC;
     PeriphClkInitStruct.PLL3.PLL3M = 2;
     PeriphClkInitStruct.PLL3.PLL3N = 25;
-    PeriphClkInitStruct.PLL3.PLL3P = 17;
+    PeriphClkInitStruct.PLL3.PLL3P = 16;
     PeriphClkInitStruct.PLL3.PLL3Q = 2;
     PeriphClkInitStruct.PLL3.PLL3R = 21;
     PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
