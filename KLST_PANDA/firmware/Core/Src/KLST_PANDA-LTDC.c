@@ -115,5 +115,5 @@ void LTDC_loop() {
 	/* schedule redraw */
 	LTDC_switch_framebuffer(); // manually trigger frame redraw
 
-	println("VSYNC duration: %li\r\n", fVSYNCDuration);
+//	println("VSYNC duration: %li\r\n", fVSYNCDuration);
 }

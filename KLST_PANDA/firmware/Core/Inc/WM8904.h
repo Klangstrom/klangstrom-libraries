@@ -8,6 +8,9 @@ extern "C" {
 #include "main.h"
 #include "stdint.h"
 
+#define WM8904_ON       1
+#define WM8904_OFF      0
+
 #define WM8904_CLK_MCLK 1
 #define WM8904_CLK_FLL  2
 
@@ -192,6 +195,7 @@ extern "C" {
 /*
  * R12 (0x0C) - Power Management 0
  */
+#define WM8904_R12_WM8904_POWER_MANAGEMENT_0    WM8904_POWER_MANAGEMENT_0
 #define WM8904_INL_ENA_Pos                      1  /* INL_ENA */
 #define WM8904_INL_ENA                          0x0002
 #define WM8904_INR_ENA_Pos                      0  /* INR_ENA */
@@ -200,6 +204,7 @@ extern "C" {
 /*
  * R14 (0x0E) - Power Management 2
  */
+#define WM8904_R14_WM8904_POWER_MANAGEMENT_2    WM8904_POWER_MANAGEMENT_2
 #define WM8904_HPL_PGA_ENA_Pos                  1  /* HPL_PGA_ENA */
 #define WM8904_HPL_PGA_ENA                      0x0002
 #define WM8904_HPR_PGA_ENA_Pos                  0  /* HPR_PGA_ENA */
@@ -208,6 +213,7 @@ extern "C" {
 /*
  * R15 (0x0F) - Power Management 3
  */
+#define WM8904_R15_WM8904_POWER_MANAGEMENT_3    WM8904_POWER_MANAGEMENT_3
 #define WM8904_LINEOUTL_PGA_ENA_Pos             1  /* LINEOUTL_PGA_ENA */
 #define WM8904_LINEOUTL_PGA_ENA                 0x0002
 #define WM8904_LINEOUTR_PGA_ENA_Pos             0  /* LINEOUTR_PGA_ENA */
@@ -216,6 +222,7 @@ extern "C" {
 /*
  * R18 (0x12) - Power Management 6
  */
+#define WM8904_R18_WM8904_POWER_MANAGEMENT_6    WM8904_POWER_MANAGEMENT_6
 #define WM8904_DACL_ENA_Pos                     3  /* DACL_ENA */
 #define WM8904_DACL_ENA                         0x0008
 #define WM8904_DACR_ENA_Pos                     2  /* DACR_ENA */
@@ -248,6 +255,7 @@ extern "C" {
 /*
  * R22 (0x16) - Clock Rates 2
  */
+#define WM8904_R22_CLOCK_RATES_2                WM8904_CLOCK_RATES_2
 #define WM8904_MCLK_INV_Pos                     15  /* MCLK_INV */
 #define WM8904_MCLK_INV                         0x8000
 #define WM8904_SYSCLK_SRC_Pos                   14  /* SYSCLK_SRC */
@@ -366,6 +374,7 @@ extern "C" {
 /*
  * R32 (0x20) - DAC Digital 0
  */
+#define WM8904_R32_DAC_DIGITAL_0                WM8904_DAC_DIGITAL_0
 #define WM8904_ADCL_DAC_SVOL_Pos                8  /* ADCL_DAC_SVOL - [11:8] */
 #define WM8904_ADCL_DAC_SVOL_Msk                0x0F00
 #define WM8904_ADCL_DAC_SVOL(Value)             (WM8904_ADCL_DAC_SVOL_Msk & ((Value) << WM8904_ADCL_DAC_SVOL_Pos))
@@ -382,6 +391,7 @@ extern "C" {
 /*
  * R33 (0x21) - DAC Digital 1
  */
+#define WM8904_R33_DAC_DIGITAL_1                WM8904_DAC_DIGITAL_1
 #define WM8904_DAC_MONO_Pos                     12  /* DAC_MONO */
 #define WM8904_DAC_MONO                         0x1000
 #define WM8904_DAC_SB_FILT_Pos                  11  /* DAC_SB_FILT */
@@ -749,6 +759,7 @@ extern "C" {
 /*
  * R90 (0x5A) - Analogue HP 0
  */
+#define WM8904_R90_WM8904_ANALOGUE_HP_0         WM8904_ANALOGUE_HP_0
 #define WM8904_HPL_RMV_SHORT_Pos                7  /* HPL_RMV_SHORT */
 #define WM8904_HPL_RMV_SHORT                    0x0080
 #define WM8904_HPL_ENA_OUTP_Pos                 6  /* HPL_ENA_OUTP */
@@ -769,6 +780,7 @@ extern "C" {
 /*
  * R94 (0x5E) - Analogue Lineout 0
  */
+#define WM8904_R94_WM8904_ANALOGUE_LINEOUT_0    WM8904_ANALOGUE_LINEOUT_0
 #define WM8904_LINEOUTL_RMV_SHORT_Pos           7  /* LINEOUTL_RMV_SHORT */
 #define WM8904_LINEOUTL_RMV_SHORT               0x0080
 #define WM8904_LINEOUTL_ENA_OUTP_Pos            6  /* LINEOUTL_ENA_OUTP */
@@ -801,6 +813,7 @@ extern "C" {
 /*
  * R108 (0x6C) - Write Sequencer 0
  */
+#define WM8904_R108_WM8904_WRITE_SEQUENCER_0    WM8904_WRITE_SEQUENCER_0
 #define WM8904_WSEQ_ENA_Pos                     8  /* WSEQ_ENA */
 #define WM8904_WSEQ_ENA                         0x0100
 #define WM8904_WSEQ_WRITE_INDEX_Pos             0  /* WSEQ_WRITE_INDEX - [4:0] */
@@ -810,6 +823,7 @@ extern "C" {
 /*
  * R109 (0x6D) - Write Sequencer 1
  */
+#define WM8904_R109_WM8904_WRITE_SEQUENCER_1    WM8904_WRITE_SEQUENCER_1
 #define WM8904_WSEQ_DATA_WIDTH_Pos              12  /* WSEQ_DATA_WIDTH - [14:12] */
 #define WM8904_WSEQ_DATA_WIDTH_Msk              0x7000
 #define WM8904_WSEQ_DATA_WIDTH(Value)           (WM8904_WSEQ_DATA_WIDTH_Msk & ((Value) << WM8904_WSEQ_DATA_WIDTH_Pos))
@@ -823,6 +837,7 @@ extern "C" {
 /*
  * R110 (0x6E) - Write Sequencer 2
  */
+#define WM8904_R110_WM8904_WRITE_SEQUENCER_2    WM8904_WRITE_SEQUENCER_2
 #define WM8904_WSEQ_EOS_Pos                     14  /* WSEQ_EOS */
 #define WM8904_WSEQ_EOS                         0x4000
 #define WM8904_WSEQ_DELAY_Pos                   8  /* WSEQ_DELAY - [11:8] */
@@ -835,6 +850,7 @@ extern "C" {
 /*
  * R111 (0x6F) - Write Sequencer 3
  */
+#define WM8904_R111_WM8904_WRITE_SEQUENCER_3    WM8904_WRITE_SEQUENCER_3
 #define WM8904_WSEQ_ABORT_Pos                   9  /* WSEQ_ABORT */
 #define WM8904_WSEQ_ABORT                       0x0200
 #define WM8904_WSEQ_START_Pos                   8  /* WSEQ_START */
@@ -846,6 +862,7 @@ extern "C" {
 /*
  * R112 (0x70) - Write Sequencer 4
  */
+#define WM8904_R112_WM8904_WRITE_SEQUENCER_4    WM8904_WRITE_SEQUENCER_4
 #define WM8904_WSEQ_CURRENT_INDEX_Pos           4  /* WSEQ_CURRENT_INDEX - [9:4] */
 #define WM8904_WSEQ_CURRENT_INDEX_Msk           0x03F0
 #define WM8904_WSEQ_CURRENT_INDEX(Value)        (WM8904_WSEQ_CURRENT_INDEX_Msk & ((Value) << WM8904_WSEQ_CURRENT_INDEX_Pos))
@@ -1257,6 +1274,8 @@ extern "C" {
 uint8_t WM8904_write_register(uint8_t uc_register_address, uint16_t us_data);
 uint16_t WM8904_read_register(uint8_t uc_register_address);
 uint32_t WM8904_init(I2C_HandleTypeDef *hi2c_handle);
+uint8_t WM8904_toggle_flag(uint8_t register_address, uint16_t flag_bit);
+uint8_t WM8904_set_flag(uint8_t register_address, uint16_t flag_bit, uint8_t flag_state);
 
 #ifdef __cplusplus
 }

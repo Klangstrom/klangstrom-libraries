@@ -181,28 +181,28 @@ int main(void)
 
     /* --- GPIO+LEDs */
 
-    println("initialize GPIO");
+    println("initializing GPIO");
     MX_GPIO_Init();
     display_switch_off();
 
-    println("initialize LEDs");
+    println("initializing LEDs");
     LED_setup();
     LED_turn_off(LED_00);
     LED_turn_off(LED_01);
 
     /* --- external/internal RAM */
 
-    println("initialize I2C");
+    println("initializing I2C");
     MX_I2C4_Init();
 //	MX_I2C1_Init();
 
     /* --- external/internal RAM */
 
-    println("initialize external RAM");
+    println("initializing external RAM");
     MX_OCTOSPI1_Init();
     externalmemory_setup();
 
-    println("test external RAM");
+    println("testing external RAM");
     externalmemory_test();
 
 //	println("test internal RAM");
@@ -210,29 +210,28 @@ int main(void)
 
     /* --- LTDC+DMA2D */
 
-    println("initialize LCD (LTDC+DMA2D)");
+    println("initializing LCD (LTDC+DMA2D)");
     MX_LTDC_Init();
     MX_DMA2D_Init();
     LTDC_setup();
 
     /* --- backlight */
 
-    println("initialize LCD backlight PWM");
+    println("initializing LCD backlight PWM");
     MX_TIM3_Init();
     backlight_setup();
 
     /* --- touch panel ( requires I2C4 ) */
 
-    println("initialize touch panel (FT5206)");
+    println("initializing touch panel (FT5206)");
     display_switch_on();
 //	touch_setup();
 
     /* --- audiocodec ( requires I2C4 + SAI1 ) */
 
-    println("initialize audiocodec (WM8904)");
+    println("initializing audiocodec (WM8904)");
     MX_DMA_Init();
     MX_SAI1_Init();
-    // DMA?
     audiocodec_setup();
 
     /* --- MEMS microphones */
@@ -273,6 +272,7 @@ int main(void)
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 #endif
+    println("begin loop");
     display_switch_on();
     /* USER CODE END 2 */
 
@@ -287,7 +287,7 @@ int main(void)
 #endif
         frame_counter++;
         LED_toggle(LED_00);
-//		LTDC_loop();
+        LTDC_loop();
 //		touch_read();
         // _DISPLAY_TOUCH_INTERRUPT
 //		backlight_set_brightness((float) (frame_counter % 100) / 100.0);

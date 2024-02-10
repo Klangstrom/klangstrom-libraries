@@ -41,7 +41,10 @@ static void configure_codec(void) {
     WM8904_write_register(WM8904_DAC_DIGITAL_1, WM8904_DEEMPH(0));
     WM8904_write_register(WM8904_ANALOGUE_OUT12_ZC, 0x0000);
     WM8904_write_register(WM8904_CHARGE_PUMP_0, WM8904_CP_ENA);
-    WM8904_write_register(WM8904_CLASS_W_0, WM8904_CP_DYN_PWR);
+//    WM8904_write_register(WM8904_CLASS_W_0, WM8904_CP_DYN_PWR);
+
+//    WM8904_write_register(WM8904_DIGITAL_PULLS, WM8904_MCLK_PU | WM8904_DACDAT_PU | WM8904_LRCLK_PU | WM8904_BCLK_PU);
+//    WM8904_write_register(WM8904_DIGITAL_PULLS, WM8904_MCLK_PD | WM8904_DACDAT_PD | WM8904_LRCLK_PD | WM8904_BCLK_PD);
 
 //    WM8904_write_register(WM8904_FLL_CONTROL_1, 0x0000);
 //    WM8904_write_register(WM8904_FLL_CONTROL_2, WM8904_FLL_OUTDIV(7) | WM8904_FLL_FRATIO(4));
@@ -60,7 +63,6 @@ static void configure_codec(void) {
 //    WM8904_write_register(WM8904_CLOCK_RATES_0, 0x0000);
 //    WM8904_write_register(WM8904_CLOCK_RATES_2, WM8904_SYSCLK_SRC | WM8904_CLK_SYS_ENA | WM8904_CLK_DSP_ENA);
 //    delay_ms(5);
-    WM8904_write_register(WM8904_CLOCK_RATES_2, 0);
     WM8904_write_register(WM8904_CLOCK_RATES_0, 0);
     WM8904_write_register(WM8904_CLOCK_RATES_1, WM8904_CLK_SYS_RATE(3) | WM8904_SAMPLE_RATE(5)); // 12.5MHz / 48KHz = 260 (256 > 3 > 0b0011)
     WM8904_write_register(WM8904_CLOCK_RATES_2, WM8904_CLK_SYS_ENA);
@@ -71,6 +73,7 @@ static void configure_codec(void) {
 //    WM8904_write_register(WM8904_POWER_MANAGEMENT_6,
 //            WM8904_DACL_ENA | WM8904_DACR_ENA | WM8904_ADCL_ENA | WM8904_ADCR_ENA);
 //    delay_ms(5);
+//    WM8904_write_register(WM8904_AUDIO_INTERFACE_0, WM8904_LOOPBACK);
     WM8904_write_register(WM8904_AUDIO_INTERFACE_1, WM8904_AIF_FMT_I2S | WM8904_AIF_WL_16BIT);
     WM8904_write_register(WM8904_AUDIO_INTERFACE_2, WM8904_BCLK_DIV(8)); // 12.5MHz / ( 16bit * 2ch * 48KHz ) = 8 (0b01000)
     WM8904_write_register(WM8904_AUDIO_INTERFACE_3, WM8904_LRCLK_RATE(0x20));
@@ -90,17 +93,64 @@ static void configure_codec(void) {
     WM8904_write_register(WM8904_DC_SERVO_1, WM8904_DCS_TRIG_STARTUP_3 | WM8904_DCS_TRIG_STARTUP_2 |
     WM8904_DCS_TRIG_STARTUP_1 | WM8904_DCS_TRIG_STARTUP_0);
     delay_ms(100);
-    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA_OUTP | WM8904_HPL_ENA_DLY | WM8904_HPL_ENA |
-    WM8904_HPR_ENA_OUTP | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
-    WM8904_write_register(WM8904_ANALOGUE_HP_0,
-    WM8904_HPL_RMV_SHORT | WM8904_HPL_ENA_OUTP | WM8904_HPL_ENA_DLY | WM8904_HPL_ENA |
-    WM8904_HPR_RMV_SHORT | WM8904_HPR_ENA_OUTP | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
-    WM8904_write_register(WM8904_ANALOGUE_OUT1_LEFT, WM8904_HPOUT_VU | WM8904_HPOUTL_VOL(0x39));
-    WM8904_write_register(WM8904_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(0x39));
+    WM8904_write_register(
+    WM8904_ANALOGUE_HP_0,
+    WM8904_HPL_RMV_SHORT |
+    WM8904_HPL_ENA_OUTP |
+    WM8904_HPL_ENA_DLY |
+    WM8904_HPL_ENA |
+    WM8904_HPR_RMV_SHORT |
+    WM8904_HPR_ENA_OUTP |
+    WM8904_HPR_ENA_DLY |
+    WM8904_HPR_ENA);
+
+    WM8904_write_register(
+    WM8904_ANALOGUE_OUT1_LEFT,
+    WM8904_HPOUT_VU |
+            WM8904_HPOUTL_VOL(0x39));
+    WM8904_write_register(
+    WM8904_ANALOGUE_OUT1_RIGHT,
+    WM8904_HPOUT_VU |
+            WM8904_HPOUTR_VOL(0x39));
+
+    WM8904_write_register(
+    WM8904_DAC_DIGITAL_VOLUME_LEFT,
+    WM8904_DACL_VOL(0xFF) |
+    WM8904_DAC_VU);
+    WM8904_write_register(
+    WM8904_DAC_DIGITAL_VOLUME_RIGHT,
+    WM8904_DACR_VOL(0xFF) |
+    WM8904_DAC_VU);
+
+    WM8904_write_register(
+    WM8904_DAC_DIGITAL_1,
+    WM8904_DAC_MUTE);
+
+    WM8904_write_register(
+    WM8904_ANALOGUE_LINEOUT_0,
+    WM8904_LINEOUTL_ENA |
+    WM8904_LINEOUTR_ENA |
+    WM8904_LINEOUTL_ENA_OUTP |
+    WM8904_LINEOUTR_ENA_OUTP);
+    delay_ms(20);
+
+    WM8904_write_register(
+    WM8904_ANALOGUE_LINEOUT_0,
+    WM8904_LINEOUTL_ENA_DLY |
+    WM8904_LINEOUTR_ENA_DLY);
+
     delay_ms(100);
 }
 
 static void setup_SAI();
+
+static void test_register(uint8_t register_addr, uint8_t iterations) {
+    println("test_register: %i", register_addr);
+    for (uint8_t i = 0; i < iterations; ++i) {
+        print_binary(WM8904_read_register(register_addr));
+        delay_ms(100);
+    }
+}
 
 uint8_t audiocodec_setup() {
     if (WM8904_init(&hi2c4) != HAL_OK) {
@@ -109,12 +159,79 @@ uint8_t audiocodec_setup() {
     } else {
         println("configuring audiocodec");
 
+        for (uint8_t i = 0; i < 5; ++i) {
+            WM8904_write_register(WM8904_SW_RESET_AND_ID, 0xFFFF); // reset
+            println("WM8904_SW_RESET_AND_ID: %02X", WM8904_read_register(WM8904_SW_RESET_AND_ID));
+            delay_ms(100);
+        }
+
+        println("WM8904_CLK_SYS_ENA");
+        WM8904_write_register(WM8904_R22_CLOCK_RATES_2, WM8904_CLK_SYS_ENA);
+        delay_ms(100);
+        test_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6, 5);
+        test_register(WM8904_R33_DAC_DIGITAL_1, 5);
+        test_register(WM8904_CLOCK_RATES_0, 5);
+        test_register(WM8904_CLOCK_RATES_1, 5);
+        test_register(WM8904_CLOCK_RATES_2, 5);
+
+        println("WM8904_CLK_SYS_ENA + WM8904_SYSCLK_SRC");
+        WM8904_write_register(WM8904_R22_CLOCK_RATES_2, WM8904_CLK_SYS_ENA | WM8904_SYSCLK_SRC);
+        delay_ms(100);
+        test_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6, 5);
+        test_register(WM8904_R33_DAC_DIGITAL_1, 5);
+        test_register(WM8904_CLOCK_RATES_0, 5);
+        test_register(WM8904_CLOCK_RATES_1, 5);
+        test_register(WM8904_CLOCK_RATES_2, 5);
+
+        println("!WM8904_CLK_SYS_ENA");
+        WM8904_write_register(WM8904_R22_CLOCK_RATES_2, 0);
+        delay_ms(100);
+        test_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6, 5);
+        test_register(WM8904_R33_DAC_DIGITAL_1, 5);
+        test_register(WM8904_CLOCK_RATES_0, 5);
+        test_register(WM8904_CLOCK_RATES_1, 5);
+        test_register(WM8904_CLOCK_RATES_2, 5);
+
+#define USE_STARTUP_SEQUENCE
+
+#ifndef USE_STARTUP_SEQUENCE
+        /* manual startup sequence */
+        WM8904_set_flag(WM8904_R18_WM8904_POWER_MANAGEMENT_6, WM8904_DACL_ENA_Pos, WM8904_ON); // enable DAC (p64)
+        WM8904_set_flag(WM8904_R18_WM8904_POWER_MANAGEMENT_6, WM8904_DACR_ENA_Pos, WM8904_ON);
+#else
+        /* (p70)
+         Under recommended usage conditions, all the control bits associated with enabling the Headphone
+         Outputs and the Line Outputs will be configured by scheduling the default Start-Up and Shutdown
+         sequences as described in the “Control Write Sequencer” section. In these cases, the user does not
+         need to set the register fields in R14, R15, R90 and R94 directly.
+         */
+
+        // use CONTROL WRITE SEQUENCER (p122)
+        // when done writing it asserts the WSEQ_EINT flag in Register R127
+        // R112 (70h) Write Sequencer 4, WSEQ_BUSY: 0 = Sequencer idle, 1 = Sequencer busy
+        // "The Start-up sequence is initiated by writing 0100h to Register R111 (6Fh)"
+        /* using the default startup sequence (p131) */
+        WM8904_write_register(WM8904_R108_WM8904_WRITE_SEQUENCER_0, WM8904_WSEQ_ENA); // (R108 > 0100h) - This enables the Write Sequencer
+        WM8904_write_register(WM8904_R111_WM8904_WRITE_SEQUENCER_3, WM8904_WSEQ_START); // (R111 > 0100h) - This starts the Write Sequencer at Index address 0 (00h)
+        while (WM8904_read_register(WM8904_R112_WM8904_WRITE_SEQUENCER_4) == WM8904_WSEQ_BUSY) { // (R112 = 0)
+            println("writer busy");
+            delay_ms(50);
+        }
+        WM8904_write_register(WM8904_R33_DAC_DIGITAL_1, 0x0000);              // (R33  > 0000h) - This un-mutes the DACs
+        // ^^^ should this run before or after the loop?
+        // "... this sequence takes approximately 300ms to run."
+        delay_ms(400);
+#endif
+
+        // DIGITAL AUDIO INTERFACE (p87)
+
+        /* ----------------------------------------------------------------------------------------- */
+
+        // note, at 12.5MHz clock speed duration of a cycle is: 80ns ( = 1000*1000*1000/12500000Hz )
 //        WM8904_write_register(0x6C, 0x0100);
 //        WM8904_write_register(0x6F, 0x0100);
 //        WM8904_write_register(0x21, 0x0000);
-
-        configure_codec();
-
+//        configure_codec();
 //        WM8904_write_register(WM8904_SW_RESET_AND_ID, 0xFFFF);
 //        delay_ms(100);
 //
