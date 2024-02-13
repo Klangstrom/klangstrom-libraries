@@ -167,7 +167,13 @@ SECTIONS
       _eexternal_memory = .;
       PROVIDE(__external_memory_end = _eexternal_memory);
   } >EXT_MEM
-    
+
+  .dma_buffer (NOLOAD) :
+  {
+    . = ALIGN(2);
+    KEEP(*(.dma_buffer))
+  } >RAM_D3
+  
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack :
   {

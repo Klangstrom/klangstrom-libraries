@@ -15,8 +15,9 @@ extern SAI_HandleTypeDef hsai_BlockB1;
 #define KLANG_AUDIO_RATE 48000
 #define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
 #define I2S_BUFFER_SIZE (KLANG_SAMPLES_PER_AUDIO_BLOCK * 2)
-uint32_t dma_TX_buffer[I2S_BUFFER_SIZE];
-uint32_t dma_RX_buffer[I2S_BUFFER_SIZE];
+
+uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
+uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
 
 static void delay_ms(uint32_t duration) {
