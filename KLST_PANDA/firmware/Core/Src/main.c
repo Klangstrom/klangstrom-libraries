@@ -150,11 +150,11 @@ int main(void) {
     MPU_Config();
     /* Enable the CPU Cache */
 
-    /* Enable I-Cache---------------------------------------------------------*/
-    SCB_EnableICache();
-
-    /* Enable D-Cache---------------------------------------------------------*/
-    SCB_EnableDCache();
+//    /* Enable I-Cache---------------------------------------------------------*/
+//    SCB_EnableICache();
+//
+//    /* Enable D-Cache---------------------------------------------------------*/
+//    SCB_EnableDCache();
 
     /* MCU Configuration--------------------------------------------------------*/
 
@@ -339,8 +339,8 @@ void SystemClock_Config(void) {
 
     /** Initializes the CPU, AHB and APB buses clocks
      */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2
-            | RCC_CLOCKTYPE_D3PCLK1 | RCC_CLOCKTYPE_D1PCLK1;
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_D3PCLK1
+            | RCC_CLOCKTYPE_D1PCLK1;
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
@@ -363,8 +363,16 @@ void PeriphCommonClock_Config(void) {
 
     /** Initializes the peripherals clock
      */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
             | RCC_PERIPHCLK_CKPER | RCC_PERIPHCLK_LTDC;
+    PeriphClkInitStruct.PLL2.PLL2M = 2;
+    PeriphClkInitStruct.PLL2.PLL2N = 75;
+    PeriphClkInitStruct.PLL2.PLL2P = 48;
+    PeriphClkInitStruct.PLL2.PLL2Q = 2;
+    PeriphClkInitStruct.PLL2.PLL2R = 2;
+    PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
+    PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
+    PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
     PeriphClkInitStruct.PLL3.PLL3M = 2;
     PeriphClkInitStruct.PLL3.PLL3N = 25;
     PeriphClkInitStruct.PLL3.PLL3P = 16;
@@ -373,8 +381,9 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
     PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
+    PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
     PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
-    PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL3;
+    PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
     PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL3;
     PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {

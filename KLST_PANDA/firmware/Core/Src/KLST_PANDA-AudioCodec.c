@@ -32,10 +32,9 @@ uint8_t audiocodec_setup() {
         println("could not initialize audiocodec");
         return HAL_ERROR;
     } else {
-        println("setup SAI");
         setup_SAI(); // this is required to start the master clock
         delay_ms(100);
-        println("configuring audiocodec at I2C 0x%02X", WM8904_I2C_ADDRESS);
+//        println("configuring audiocodec at I2C 0x%02X", WM8904_I2C_ADDRESS);
         setup_WM8904(true, false);
         return HAL_OK;
     }
@@ -56,6 +55,11 @@ static void setup_manually() {
     WM8904_write_register(WM8904_CLASS_W_0, WM8904_CP_DYN_PWR);
 
     /* --- AUDIO_INTERFACE ------------------------------------------------------------------------------------------ */
+
+    println("TEST register values below should not be the same");
+    print("WM8904_R25_AUDIO_INTERFACE_1: ");
+    print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+
     WM8904_write_register(WM8904_R25_AUDIO_INTERFACE_1, WM8904_AIF_WL_16BIT | WM8904_AIF_FMT_I2S);
     WM8904_write_register(WM8904_R26_AUDIO_INTERFACE_2, 0);
     WM8904_write_register(WM8904_R27_AUDIO_INTERFACE_3, 0);
@@ -78,6 +82,10 @@ static void setup_manually() {
     WM8904_write_register(WM8904_ANALOGUE_OUT1_LEFT, WM8904_HPOUT_VU | WM8904_HPOUTL_VOL(0x39));
     WM8904_write_register(WM8904_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(0x39));
     delay_ms(100);
+
+    print("WM8904_R25_AUDIO_INTERFACE_1: ");
+    print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+
 }
 
 static void setup_default_start_sequence() {
@@ -94,6 +102,7 @@ static void setup_default_start_sequence() {
     WM8904_write_register(WM8904_R108_WM8904_WRITE_SEQUENCER_0, WM8904_WSEQ_ENA);
     //                                                          (R111 > 0100h) - This starts the Write Sequencer at Index address 0 (00h)
     WM8904_write_register(WM8904_R111_WM8904_WRITE_SEQUENCER_3, WM8904_WSEQ_START);
+
     println("starting WM8904_WSEQ_START");
     println("TEST register values below should not be the same");
     print("WM8904_R5_VMID_CONTROL_0: ");
@@ -125,6 +134,7 @@ static void setup_SCLK_MCLK() {
     WM8904_write_register(WM8904_R20_CLOCK_RATES_0, 0x0000);
     //                                              DSP Clock enable
     //                                              System Clock enable
+    //                                              ( SYSCLK Source is MCLK )
     WM8904_write_register(WM8904_R22_CLOCK_RATES_2, WM8904_CLK_DSP_ENA | WM8904_CLK_SYS_ENA);
 }
 
@@ -167,16 +177,17 @@ static void setup_FLL() {
 }
 
 static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
+    println("configuring WM8904 at I2C 0x%02X", WM8904_I2C_ADDRESS);
     if (use_FLL) {
         setup_FLL();
     }
-
+    delay_ms(50);
     if (use_start_sequence) {
         setup_default_start_sequence();
     } else {
         setup_manually();
     }
-
+    delay_ms(50);
     if (use_FLL) {
         setup_SCLK_FLL();
     } else {
@@ -188,32 +199,38 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 
 #define SANITY_TEST             1
 #define SANITY_TEST_PASSTHROUGH 0
-#define SANITY_TEST_NOISE       1
+#define SANITY_TEST_NOISE       0
 
 #if SANITY_TEST
 
-float left_osc_phi = 0;
 static const float M_MAX_FREQUENCEY = 440.0;
-float left_osc_phi_inc = M_MAX_FREQUENCEY * 0.5 / (float) KLANG_AUDIO_RATE;  // generating 220Hz
+float mFreqL = M_MAX_FREQUENCEY * 0.25;
+float mFreqR = M_MAX_FREQUENCEY * 0.5;
+float left_osc_phi = 0;
 float right_osc_phi = 0;
-float right_osc_phi_inc = M_MAX_FREQUENCEY * 0.25 / (float) KLANG_AUDIO_RATE;  // generating 110Hz
+float left_osc_phi_inc = 0;
+float right_osc_phi_inc = 0;
 
 void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
-    left_osc_phi_inc += 1;
-    if (left_osc_phi_inc > M_MAX_FREQUENCEY) {
-        left_osc_phi_inc = M_MAX_FREQUENCEY * 0.25;
+    mFreqL++;
+    mFreqR++;
+    if (mFreqL > M_MAX_FREQUENCEY) {
+        mFreqL = M_MAX_FREQUENCEY * 0.25;
     }
-    right_osc_phi_inc += 1;
-    if (right_osc_phi_inc > M_MAX_FREQUENCEY) {
-        right_osc_phi_inc = M_MAX_FREQUENCEY * 0.25;
+    if (mFreqR > M_MAX_FREQUENCEY) {
+        mFreqR = M_MAX_FREQUENCEY * 0.25;
     }
+    left_osc_phi_inc = mFreqL / (float) KLANG_AUDIO_RATE;
+    right_osc_phi_inc = mFreqR / (float) KLANG_AUDIO_RATE;
 
     for (uint16_t i = 0; i < len; i++) {
 #if SANITY_TEST_PASSTHROUGH
         mTXBuffer[i] = mRXBuffer[i];
 #else
-#if SANITY_TEST_PASSTHROUGH
-        const float mAmplitude = 0.1f;
+#if SANITY_TEST_NOISE
+        mTXBuffer[i] = rand();
+#else
+        const float mAmplitude = 0.9f;
 
         float mLeftf = (float) sin(left_osc_phi * 6.2832f) * mAmplitude;
         left_osc_phi += left_osc_phi_inc;
@@ -227,15 +244,15 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
 
         // both channels
         mTXBuffer[i] = ((uint32_t) (uint16_t) mLefti) << 0 | ((uint32_t) (uint16_t) mRighti) << 16;
-#else
-        mTXBuffer[i] = rand();
-#endif
-#endif
+#endif // SANITY_TEST_NOISE
+#endif // SANITY_TEST_PASSTHROUGH
     }
 }
 #endif
 
 static void setup_SAI() {
+    println("settin up SAI");
+
     srand(time(NULL));
 
     memset(dma_TX_buffer, 0, sizeof(dma_TX_buffer));
@@ -257,7 +274,7 @@ static void setup_SAI() {
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
-//    printf("<");
+    printf("<");
 #if SANITY_TEST
     FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
