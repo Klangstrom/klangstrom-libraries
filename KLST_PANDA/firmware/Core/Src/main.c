@@ -850,7 +850,7 @@ static void MX_SAI4_Init(void) {
     hsai_BlockA4.Instance = SAI4_Block_A;
     hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
     hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-    hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
+    hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
     hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
     hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
     hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
@@ -863,7 +863,7 @@ static void MX_SAI4_Init(void) {
     hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
     hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
     hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
-    hsai_BlockA4.FrameInit.FrameLength = 8;
+    hsai_BlockA4.FrameInit.FrameLength = 16;
     hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
     hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
     hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;

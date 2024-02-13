@@ -1,4 +1,4 @@
-#include "stm32h7xx_hal.h"
+#include "main.h"
 #include "KLST_PANDA-ExternalMemory.h"
 
 extern OSPI_HandleTypeDef hospi1;

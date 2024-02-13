@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <inttypes.h>
 
+#include <stdio.h>
 #include "stm32h7xx_hal.h"
 #include "KLST_PANDA-InternalMemory.h"
 #include "KLST_PANDA-SerialDebug.h"
