@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "main.h"
+#include "stm32h7xx_hal.h"
 #include "stdint.h"
 
 #define WM8904_I2C_ADDRESS       0x34 // (p120)

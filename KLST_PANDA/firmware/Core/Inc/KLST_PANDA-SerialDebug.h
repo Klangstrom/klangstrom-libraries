@@ -1,7 +1,7 @@
 #ifndef INC_KLST_PANDA_SERIALDEBUG_H_
 #define INC_KLST_PANDA_SERIALDEBUG_H_
 
-#include "main.h"
+#include "stm32h7xx_hal.h"
 
 void serialdebug_setup();
 void serialdebug_loop();

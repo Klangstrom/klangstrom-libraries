@@ -1,7 +1,7 @@
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
-#include "main.h"
+#include "stm32h7xx_hal.h"
 #include "KLST_PANDA-backlight.h"
 
 extern TIM_HandleTypeDef htim3;

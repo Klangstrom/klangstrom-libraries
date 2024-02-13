@@ -76,26 +76,12 @@ uint8_t WM8904_toggle_flag(uint8_t register_address, uint16_t flag_bit) {
 
 uint8_t WM8904_set_flag(uint8_t register_address, uint16_t flag_bit, uint8_t flag_state) {
     uint16_t register_value = WM8904_read_register(register_address);
-    uint16_t previous_register_value = register_value;
     if (flag_state) {
         register_value |= (1 << flag_bit);  // set to 1
     } else {
         register_value &= ~(1 << flag_bit); // set to 0
     }
-//#define WM8904_SET_FLAG_TEST
-#ifdef WM8904_SET_FLAG_TEST
-    ret = WM8904_write_register(register_address, register_value);
-    println("TOOD check if register was written: ");
-    print("previous : ");
-    print_binary16ui(previous_register_value);
-    print("written  : ");
-    print_binary16ui(register_value);
-    print("read back: ");
-    print_binary16ui(WM8904_read_register(register_address));
-    return ret;
-#else
     return WM8904_write_register(register_address, register_value);
-#endif
 }
 
 #ifdef __cplusplus

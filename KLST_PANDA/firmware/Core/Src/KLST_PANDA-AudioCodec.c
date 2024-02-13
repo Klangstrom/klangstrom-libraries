@@ -1,6 +1,6 @@
+#include "stm32h7xx_hal.h"
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-SerialDebug.h"
-#include "main.h"
 #include "WM8904.h"
 #include <string.h>
 #include <stdbool.h>

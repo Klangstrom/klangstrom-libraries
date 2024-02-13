@@ -1,7 +1,7 @@
 #ifndef INC_KLST_PANDA_LTDC_H_
 #define INC_KLST_PANDA_LTDC_H_
 
-#include "main.h"
+#include "stm32h7xx_hal.h"
 
 #define KLST_DISPLAY_FRAMEBUFFER_SIZE    (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4)
 #define FRAMEBUFFER1_ADDR                (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)

@@ -23,19 +23,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "KLST_PANDA-Backlight.h"
-#include "KLST_PANDA-ExternalMemory.h"
-#include "KLST_PANDA-InternalMemory.h"
-#include "KLST_PANDA-LED.h"
-#include "KLST_PANDA-LTDC.h"
-#include "KLST_PANDA-SerialDebug.h"
-#include "KLST_PANDA-Touch.h"
-#include "KLST_PANDA-AudioCodec.h"
+#include "KLST_PANDA.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#include <sys/time.h>
+int _gettimeofday(struct timeval *tv, void *tzvp) {
+    return 0;
+}
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -134,7 +130,6 @@ void MX_USB_HOST_Process(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static uint32_t frame_counter = 0;
 /* USER CODE END 0 */
 
 /**
@@ -172,69 +167,18 @@ int main(void) {
     PeriphCommonClock_Config();
 
     /* USER CODE BEGIN SysInit */
-
-    /* --- serial debug */
-
-    MX_USART3_UART_Init();
-    serialdebug_setup();
-
-    /* --- GPIO+LEDs */
-
-    println("initializing GPIO");
     MX_GPIO_Init();
-    display_switch_off();
-
-    println("initializing LEDs");
-    LED_setup();
-    LED_turn_off(LED_00);
-    LED_turn_off(LED_01);
-
-    /* --- external/internal RAM */
-
-    println("initializing I2C");
+    MX_USART3_UART_Init();
     MX_I2C4_Init();
-//	MX_I2C1_Init();
-
-    /* --- external/internal RAM */
-
-    println("initializing external RAM");
     MX_OCTOSPI1_Init();
-    externalmemory_setup();
-
-    println("testing external RAM");
-    externalmemory_test();
-
-//	println("test internal RAM");
-//	internalmemory_test_all();
-
-    /* --- LTDC+DMA2D */
-
-    println("initializing LCD (LTDC+DMA2D)");
     MX_LTDC_Init();
     MX_DMA2D_Init();
-    LTDC_setup();
-
-    /* --- backlight */
-
-    println("initializing LCD backlight PWM");
     MX_TIM3_Init();
-    backlight_setup();
-
-    /* --- touch panel ( requires I2C4 ) */
-
-    println("initializing touch panel (FT5206)");
-    display_switch_on();
-//	touch_setup();
-
-    /* --- audiocodec ( requires I2C4 + SAI1 ) */
-
-    println("initializing audiocodec (WM8904)");
     MX_DMA_Init();
     MX_SAI1_Init();
-    audiocodec_setup();
+    MX_SAI4_Init();
+    KLST_PANDA_setup();
 
-    /* --- MEMS microphones */
-//	MX_SAI4_Init();
 #ifndef MX_OMIT_INIT
   /* USER CODE END SysInit */
 
@@ -271,8 +215,6 @@ int main(void) {
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
 #endif
-    println("begin loop");
-    display_switch_on();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -284,14 +226,7 @@ int main(void) {
 
     /* USER CODE BEGIN 3 */
 #endif
-        frame_counter++;
-        LED_toggle(LED_00);
-        LTDC_loop();
-//		touch_read();
-        // _DISPLAY_TOUCH_INTERRUPT
-//		backlight_set_brightness((float) (frame_counter % 100) / 100.0);
-        println("EOF");
-        HAL_Delay(500);
+        KLST_PANDA_loop();
     }
     /* USER CODE END 3 */
 }
@@ -385,7 +320,7 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
     PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
     PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL3;
-    PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
+    PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL2;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
         Error_Handler();
     }
@@ -642,8 +577,7 @@ static void MX_DMA2D_Init(void) {
         Error_Handler();
     }
     /* USER CODE BEGIN DMA2D_Init 2 */
-    hdma2d.XferCpltCallback = DMA2D_XferCpltCallback;
-    hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
+
     /* USER CODE END DMA2D_Init 2 */
 
 }
