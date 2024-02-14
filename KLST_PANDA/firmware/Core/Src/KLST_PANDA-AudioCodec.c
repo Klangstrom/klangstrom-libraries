@@ -11,6 +11,7 @@
 extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
+extern SAI_HandleTypeDef hsai_BlockA4;
 
 #define KLANG_AUDIO_RATE 48000
 #define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
@@ -18,6 +19,7 @@ extern SAI_HandleTypeDef hsai_BlockB1;
 
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
+uint32_t __attribute__((section(".dma_buffer"))) dma_MIC_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
 
 static void delay_ms(uint32_t duration) {
@@ -259,43 +261,58 @@ static void setup_SAI() {
     memset(dma_TX_buffer, 0, sizeof(dma_TX_buffer));
     memset(dma_RX_buffer, 0, sizeof(dma_RX_buffer));
 
-    HAL_StatusTypeDef status = HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t*) dma_TX_buffer,
-    I2S_BUFFER_SIZE << 1);
+    HAL_StatusTypeDef status;
+    status = HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t*) dma_TX_buffer, I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI TX: %i", status);
     }
 
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t*) dma_RX_buffer,
-    I2S_BUFFER_SIZE << 1);
+    status = HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t*) dma_RX_buffer, I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI RX: %i", status);
     }
 
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
+
+    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) dma_MIC_RX_buffer, I2S_BUFFER_SIZE << 1);
+    if (HAL_OK != status) {
+        println("### ERROR initializing SAI MIC RX: %i", status);
+    }
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
-    printf("<");
+    if (hsai == &hsai_BlockB1) {
+        printf("<");
 #if SANITY_TEST
-    FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
     KLST_ISH_fill_buffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
+    }
 }
 
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+    if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
-    FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
     KLST_ISH_fill_buffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
+    }
 }
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
-//    printf(">");
-    mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
+    if (hsai == &hsai_BlockA4) {
+        printf("*");
+    }
+    if (hsai == &hsai_BlockA1) {
+        printf(">");
+        mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
+    }
 }
 
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
-    mCurrentRXBuffer = &(dma_RX_buffer[0]);
+    if (hsai == &hsai_BlockA1) {
+        mCurrentRXBuffer = &(dma_RX_buffer[0]);
+    }
 }

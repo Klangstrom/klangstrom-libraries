@@ -966,11 +966,22 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* hsd)
 void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(hspi->Instance==SPI2)
   {
   /* USER CODE BEGIN SPI2_MspInit 0 */
 
   /* USER CODE END SPI2_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SPI2;
+    PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* Peripheral clock enable */
     __HAL_RCC_SPI2_CLK_ENABLE();
 
@@ -1768,6 +1779,8 @@ extern DMA_HandleTypeDef hdma_sai1_a;
 
 extern DMA_HandleTypeDef hdma_sai1_b;
 
+extern DMA_HandleTypeDef hdma_sai4_a;
+
 static uint32_t SAI1_client =0;
 static uint32_t SAI4_client =0;
 
@@ -1885,6 +1898,10 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     if (SAI4_client == 0)
     {
        __HAL_RCC_SAI4_CLK_ENABLE();
+
+    /* Peripheral interrupt init*/
+    HAL_NVIC_SetPriority(SAI4_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(SAI4_IRQn);
     }
     SAI4_client ++;
 
@@ -1905,6 +1922,28 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF9_SAI4;
     HAL_GPIO_Init(_AUDIO_MIC_DATA_GPIO_Port, &GPIO_InitStruct);
+
+      /* Peripheral DMA init*/
+
+    hdma_sai4_a.Instance = BDMA_Channel0;
+    hdma_sai4_a.Init.Request = BDMA_REQUEST_SAI4_A;
+    hdma_sai4_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_sai4_a.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_sai4_a.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_sai4_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_sai4_a.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai4_a.Init.Mode = DMA_CIRCULAR;
+    hdma_sai4_a.Init.Priority = DMA_PRIORITY_LOW;
+    if (HAL_DMA_Init(&hdma_sai4_a) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Several peripheral DMA handle pointers point to the same DMA handle.
+     Be aware that there is only one channel to perform all the requested DMAs. */
+    __HAL_LINKDMA(hsai,hdmarx,hdma_sai4_a);
+
+    __HAL_LINKDMA(hsai,hdmatx,hdma_sai4_a);
 
     }
 }
@@ -1965,6 +2004,8 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
       {
       /* Peripheral clock disable */
        __HAL_RCC_SAI4_CLK_DISABLE();
+      /* SAI4 interrupt DeInit */
+      HAL_NVIC_DisableIRQ(SAI4_IRQn);
       }
 
     /**SAI4_A_Block_A GPIO Configuration
@@ -1973,6 +2014,9 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     */
     HAL_GPIO_DeInit(GPIOE, _AUDIO_MIC_CLK_Pin|_AUDIO_MIC_DATA_Pin);
 
+    /* SAI4 DMA Deinit */
+    HAL_DMA_DeInit(hsai->hdmarx);
+    HAL_DMA_DeInit(hsai->hdmatx);
     }
 }
 

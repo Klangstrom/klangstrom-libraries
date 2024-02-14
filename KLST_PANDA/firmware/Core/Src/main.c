@@ -66,6 +66,7 @@ SAI_HandleTypeDef hsai_BlockB1;
 SAI_HandleTypeDef hsai_BlockA4;
 DMA_HandleTypeDef hdma_sai1_a;
 DMA_HandleTypeDef hdma_sai1_b;
+DMA_HandleTypeDef hdma_sai4_a;
 
 SD_HandleTypeDef hsd2;
 
@@ -96,7 +97,7 @@ void PeriphCommonClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
-static void MX_DAC1_Init(void);
+static void MX_BDMA_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_I2C4_Init(void);
 static void MX_TIM1_Init(void);
@@ -121,6 +122,7 @@ static void MX_TIM3_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_UART4_Init(void);
 static void MX_OCTOSPI1_Init(void);
+static void MX_DAC1_Init(void);
 static void MX_SAI1_Init(void);
 void MX_USB_HOST_Process(void);
 
@@ -176,6 +178,7 @@ int main(void) {
     MX_TIM3_Init();
     MX_DMA_Init();
     MX_SAI1_Init();
+    MX_BDMA_Init();
     MX_SAI4_Init();
     KLST_PANDA_setup();
 
@@ -185,7 +188,7 @@ int main(void) {
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_DAC1_Init();
+  MX_BDMA_Init();
   MX_I2C1_Init();
   MX_I2C4_Init();
   MX_TIM1_Init();
@@ -211,8 +214,9 @@ int main(void) {
   MX_TIM15_Init();
   MX_UART4_Init();
   MX_OCTOSPI1_Init();
-  MX_SAI1_Init();
+  MX_DAC1_Init();
   MX_USB_HOST_Init();
+  MX_SAI1_Init();
   /* USER CODE BEGIN 2 */
 #endif
     /* USER CODE END 2 */
@@ -298,8 +302,8 @@ void PeriphCommonClock_Config(void) {
 
     /** Initializes the peripherals clock
      */
-    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SPI2
-            | RCC_PERIPHCLK_CKPER | RCC_PERIPHCLK_LTDC;
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI | RCC_PERIPHCLK_SAI4A | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_CKPER
+            | RCC_PERIPHCLK_LTDC;
     PeriphClkInitStruct.PLL2.PLL2M = 2;
     PeriphClkInitStruct.PLL2.PLL2N = 75;
     PeriphClkInitStruct.PLL2.PLL2P = 48;
@@ -310,7 +314,7 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
     PeriphClkInitStruct.PLL3.PLL3M = 2;
     PeriphClkInitStruct.PLL3.PLL3N = 25;
-    PeriphClkInitStruct.PLL3.PLL3P = 16;
+    PeriphClkInitStruct.PLL3.PLL3P = 98;
     PeriphClkInitStruct.PLL3.PLL3Q = 2;
     PeriphClkInitStruct.PLL3.PLL3R = 21;
     PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
@@ -319,8 +323,7 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
     PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
     PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
-    PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL3;
-    PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL2;
+    PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
         Error_Handler();
     }
@@ -863,15 +866,15 @@ static void MX_SAI4_Init(void) {
     hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
     hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
     hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
-    hsai_BlockA4.FrameInit.FrameLength = 16;
+    hsai_BlockA4.FrameInit.FrameLength = 32;
     hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
     hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
     hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
     hsai_BlockA4.FrameInit.FSOffset = SAI_FS_FIRSTBIT;
     hsai_BlockA4.SlotInit.FirstBitOffset = 0;
     hsai_BlockA4.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
-    hsai_BlockA4.SlotInit.SlotNumber = 1;
-    hsai_BlockA4.SlotInit.SlotActive = 0x00000000;
+    hsai_BlockA4.SlotInit.SlotNumber = 2;
+    hsai_BlockA4.SlotInit.SlotActive = 0x0000FFFF;
     if (HAL_SAI_Init(&hsai_BlockA4) != HAL_OK) {
         Error_Handler();
     }
@@ -1567,6 +1570,21 @@ static void MX_USART3_UART_Init(void) {
     /* USER CODE BEGIN USART3_Init 2 */
 
     /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
+ * Enable DMA controller clock
+ */
+static void MX_BDMA_Init(void) {
+
+    /* DMA controller clock enable */
+    __HAL_RCC_BDMA_CLK_ENABLE();
+
+    /* DMA interrupt init */
+    /* BDMA_Channel0_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(BDMA_Channel0_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(BDMA_Channel0_IRQn);
 
 }
 
