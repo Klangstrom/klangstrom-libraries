@@ -1,4 +1,5 @@
 #include "stm32h7xx_hal.h"
+#include "pdm2pcm.h"
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "WM8904.h"
@@ -12,6 +13,7 @@ extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
 extern SAI_HandleTypeDef hsai_BlockA4;
+extern PDM_Filter_Handler_t PDM1_filter_handler;
 
 #define KLANG_AUDIO_RATE 48000
 #define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
@@ -19,8 +21,29 @@ extern SAI_HandleTypeDef hsai_BlockA4;
 
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
-uint32_t __attribute__((section(".dma_buffer"))) dma_MIC_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
+
+uint16_t txBuf[128];
+uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[128];
+uint16_t MidBuffer[16];
+uint8_t txstate = 0;
+uint8_t rxstate = 0;
+
+uint16_t fifobuf[256];
+uint8_t fifo_w_ptr = 0;
+uint8_t fifo_r_ptr = 0;
+uint8_t fifo_read_enabled = 0;
+
+static void FifoWrite(uint16_t data) {
+    fifobuf[fifo_w_ptr] = data;
+    fifo_w_ptr++;
+}
+
+static uint16_t FifoRead() {
+    uint16_t val = fifobuf[fifo_r_ptr];
+    fifo_r_ptr++;
+    return val;
+}
 
 static void delay_ms(uint32_t duration) {
     HAL_Delay(duration);
@@ -246,7 +269,9 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
         int16_t mRighti = (int16_t) (mRightf * 32767.0f);
 
         // both channels
-        mTXBuffer[i] = ((uint32_t) (uint16_t) mLefti) << 0 | ((uint32_t) (uint16_t) mRighti) << 16;
+//        mTXBuffer[i] = ((uint32_t) (uint16_t) mLefti) << 0 | ((uint32_t) (uint16_t) mRighti) << 16;
+        uint16_t out = FifoRead();
+        mTXBuffer[i] = ((uint32_t) out) << 0 | ((uint32_t) out) << 16;
 #endif // SANITY_TEST_NOISE
 #endif // SANITY_TEST_PASSTHROUGH
     }
@@ -274,7 +299,7 @@ static void setup_SAI() {
 
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
 
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) dma_MIC_RX_buffer, I2S_BUFFER_SIZE << 1);
+    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, 64);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI MIC RX: %i", status);
     }
@@ -303,7 +328,10 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA4) {
-        printf("*");
+        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
+        for (int i = 0; i < 16; i++) {
+            FifoWrite(MidBuffer[i]);
+        }
     }
     if (hsai == &hsai_BlockA1) {
         printf(">");
@@ -312,6 +340,15 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
 }
 
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+    if (hsai == &hsai_BlockA4) {
+        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
+        for (int i = 0; i < 16; i++) {
+            FifoWrite(MidBuffer[i]);
+        }
+//        printf("%i ", MidBuffer[0]);
+        printf("*", MidBuffer[0]);
+        if (fifo_w_ptr - fifo_r_ptr > 128) fifo_read_enabled = 1;
+    }
     if (hsai == &hsai_BlockA1) {
         mCurrentRXBuffer = &(dma_RX_buffer[0]);
     }
