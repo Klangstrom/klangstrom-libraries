@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fatfs.h"
+#include "pdm2pcm.h"
 #include "usb_host.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -49,6 +50,8 @@ int _gettimeofday(struct timeval *tv, void *tzvp) {
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 ADC_HandleTypeDef hadc3;
+
+CRC_HandleTypeDef hcrc;
 
 DAC_HandleTypeDef hdac1;
 
@@ -124,6 +127,7 @@ static void MX_UART4_Init(void);
 static void MX_OCTOSPI1_Init(void);
 static void MX_DAC1_Init(void);
 static void MX_SAI1_Init(void);
+static void MX_CRC_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
@@ -180,6 +184,8 @@ int main(void) {
     MX_SAI1_Init();
     MX_BDMA_Init();
     MX_SAI4_Init();
+    MX_CRC_Init();
+    MX_PDM2PCM_Init();
     KLST_PANDA_setup();
 
 #ifndef MX_OMIT_INIT
@@ -217,6 +223,8 @@ int main(void) {
   MX_DAC1_Init();
   MX_USB_HOST_Init();
   MX_SAI1_Init();
+  MX_CRC_Init();
+  MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 #endif
     /* USER CODE END 2 */
@@ -505,6 +513,36 @@ static void MX_ADC3_Init(void) {
     /* USER CODE BEGIN ADC3_Init 2 */
 
     /* USER CODE END ADC3_Init 2 */
+
+}
+
+/**
+ * @brief CRC Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_CRC_Init(void) {
+
+    /* USER CODE BEGIN CRC_Init 0 */
+
+    /* USER CODE END CRC_Init 0 */
+
+    /* USER CODE BEGIN CRC_Init 1 */
+
+    /* USER CODE END CRC_Init 1 */
+    hcrc.Instance = CRC;
+    hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
+    hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;
+    hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;
+    hcrc.Init.OutputDataInversionMode = CRC_OUTPUTDATA_INVERSION_DISABLE;
+    hcrc.InputDataFormat = CRC_INPUTDATA_FORMAT_BYTES;
+    if (HAL_CRC_Init(&hcrc) != HAL_OK) {
+        Error_Handler();
+    }
+    __HAL_CRC_DR_RESET(&hcrc);
+    /* USER CODE BEGIN CRC_Init 2 */
+
+    /* USER CODE END CRC_Init 2 */
 
 }
 
