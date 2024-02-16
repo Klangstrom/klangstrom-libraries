@@ -23,27 +23,27 @@ uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
 
-uint16_t txBuf[128];
-uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[128];
-uint16_t MidBuffer[16];
-uint8_t txstate = 0;
-uint8_t rxstate = 0;
+#define PDM_BUFFER_SIZE 128
+uint8_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
+//uint16_t MidBuffer[16];
+//uint8_t txstate = 0;
+//uint8_t rxstate = 0;
 
 uint16_t fifobuf[256];
 uint8_t fifo_w_ptr = 0;
 uint8_t fifo_r_ptr = 0;
 uint8_t fifo_read_enabled = 0;
 
-static void FifoWrite(uint16_t data) {
-    fifobuf[fifo_w_ptr] = data;
-    fifo_w_ptr++;
-}
-
-static uint16_t FifoRead() {
-    uint16_t val = fifobuf[fifo_r_ptr];
-    fifo_r_ptr++;
-    return val;
-}
+//static void FifoWrite(uint16_t data) {
+//    fifobuf[fifo_w_ptr] = data;
+//    fifo_w_ptr++;
+//}
+//
+//static uint16_t FifoRead() {
+//    uint16_t val = fifobuf[fifo_r_ptr];
+//    fifo_r_ptr++;
+//    return val;
+//}
 
 static void delay_ms(uint32_t duration) {
     HAL_Delay(duration);
@@ -111,7 +111,6 @@ static void setup_manually() {
 
     print("WM8904_R25_AUDIO_INTERFACE_1: ");
     print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
-
 }
 
 static void setup_default_start_sequence() {
@@ -226,6 +225,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 #define SANITY_TEST             1
 #define SANITY_TEST_PASSTHROUGH 0
 #define SANITY_TEST_NOISE       0
+#define SANITY_TEST_MIC         0
 
 #if SANITY_TEST
 
@@ -256,6 +256,10 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
 #if SANITY_TEST_NOISE
         mTXBuffer[i] = rand();
 #else
+#if SANITY_TEST_MIC
+        uint16_t out = FifoRead();
+        mTXBuffer[i] = ((uint32_t) out) << 0 | ((uint32_t) out) << 16;
+#else
         const float mAmplitude = 0.9f;
 
         float mLeftf = (float) sin(left_osc_phi * 6.2832f) * mAmplitude;
@@ -269,9 +273,8 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
         int16_t mRighti = (int16_t) (mRightf * 32767.0f);
 
         // both channels
-//        mTXBuffer[i] = ((uint32_t) (uint16_t) mLefti) << 0 | ((uint32_t) (uint16_t) mRighti) << 16;
-        uint16_t out = FifoRead();
-        mTXBuffer[i] = ((uint32_t) out) << 0 | ((uint32_t) out) << 16;
+        mTXBuffer[i] = ((uint32_t) (uint16_t) mLefti) << 0 | ((uint32_t) (uint16_t) mRighti) << 16;
+#endif // SANITY_TEST_MIC
 #endif // SANITY_TEST_NOISE
 #endif // SANITY_TEST_PASSTHROUGH
     }
@@ -299,7 +302,11 @@ static void setup_SAI() {
 
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
 
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, 64);
+    for (uint32_t i = 0; i < PDM_BUFFER_SIZE; i++) {
+        pdmRxBuf[0] = 0;
+    }
+
+    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI MIC RX: %i", status);
     }
@@ -307,7 +314,7 @@ static void setup_SAI() {
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
-        printf("<");
+//        printf("<");
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
@@ -326,30 +333,54 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
     }
 }
 
+//static void print_FIFO() {
+//    uint32_t mSum = 0;
+//    for (int i = 0; i < 16; i++) {
+//        mSum += FifoRead();
+//    }
+//    mSum /= 16;
+//    printf("%li\n\r", mSum);
+//}
+
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA4) {
-        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
-        for (int i = 0; i < 16; i++) {
-            FifoWrite(MidBuffer[i]);
+//        print_binary32ui(pdmRxBuf[0]);
+//        print_binary32ui(pdmRxBuf[1]);
+//        print_binary32ui(pdmRxBuf[2]);
+//        print_binary32ui(pdmRxBuf[3]);
+        for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
+            if (pdmRxBuf[i] > 0) print_binary8ui(pdmRxBuf[i]);
         }
+//        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
+//        for (int i = 0; i < 16; i++) {
+//            FifoWrite(MidBuffer[i]);
+//        }
+//        print_FIFO();
     }
     if (hsai == &hsai_BlockA1) {
-        printf(">");
+//        printf(">");
         mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
     }
 }
 
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA4) {
-        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
-        for (int i = 0; i < 16; i++) {
-            FifoWrite(MidBuffer[i]);
-        }
-//        printf("%i ", MidBuffer[0]);
-        printf("*", MidBuffer[0]);
-        if (fifo_w_ptr - fifo_r_ptr > 128) fifo_read_enabled = 1;
+//        for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
+//            print_binary32ui(pdmRxBuf[i]);
+//        }
+//        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
+//        for (int i = 0; i < 16; i++) {
+//            FifoWrite(MidBuffer[i]);
+//        }
+//        print_FIFO();
     }
     if (hsai == &hsai_BlockA1) {
         mCurrentRXBuffer = &(dma_RX_buffer[0]);
+    }
+}
+
+void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
+    if (hsai == &hsai_BlockA4) {
+    println("### ERROR error in MIC SAI4");
     }
 }

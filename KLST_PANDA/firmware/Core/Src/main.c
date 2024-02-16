@@ -183,9 +183,9 @@ int main(void) {
     MX_DMA_Init();
     MX_SAI1_Init();
     MX_BDMA_Init();
-    MX_SAI4_Init();
     MX_CRC_Init();
     MX_PDM2PCM_Init();
+    MX_SAI4_Init();
     KLST_PANDA_setup();
 
 #ifndef MX_OMIT_INIT
@@ -275,7 +275,7 @@ void SystemClock_Config(void) {
     RCC_OscInitStruct.PLL.PLLM = 8;
     RCC_OscInitStruct.PLL.PLLN = 275;
     RCC_OscInitStruct.PLL.PLLP = 1;
-    RCC_OscInitStruct.PLL.PLLQ = 5;
+    RCC_OscInitStruct.PLL.PLLQ = 57;
     RCC_OscInitStruct.PLL.PLLR = 2;
     RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_1;
     RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -320,13 +320,13 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_3;
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
     PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
-    PeriphClkInitStruct.PLL3.PLL3M = 2;
-    PeriphClkInitStruct.PLL3.PLL3N = 25;
-    PeriphClkInitStruct.PLL3.PLL3P = 66;
-    PeriphClkInitStruct.PLL3.PLL3Q = 2;
-    PeriphClkInitStruct.PLL3.PLL3R = 21;
-    PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_3;
-    PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
+    PeriphClkInitStruct.PLL3.PLL3M = 10;
+    PeriphClkInitStruct.PLL3.PLL3N = 192;
+    PeriphClkInitStruct.PLL3.PLL3P = 25;
+    PeriphClkInitStruct.PLL3.PLL3Q = 8;
+    PeriphClkInitStruct.PLL3.PLL3R = 32;
+    PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_0;
+    PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOMEDIUM;
     PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
     PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
     PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
@@ -886,12 +886,12 @@ static void MX_SAI4_Init(void) {
     /* USER CODE END SAI4_Init 0 */
 
     /* USER CODE BEGIN SAI4_Init 1 */
-
+    // see "RM0433 STM32H742 Reference Manual, Chapter 51.6 SAI registers (p2272ff)"
     /* USER CODE END SAI4_Init 1 */
     hsai_BlockA4.Instance = SAI4_Block_A;
     hsai_BlockA4.Init.Protocol = SAI_FREE_PROTOCOL;
     hsai_BlockA4.Init.AudioMode = SAI_MODEMASTER_RX;
-    hsai_BlockA4.Init.DataSize = SAI_DATASIZE_16;
+    hsai_BlockA4.Init.DataSize = SAI_DATASIZE_8;
     hsai_BlockA4.Init.FirstBit = SAI_FIRSTBIT_MSB;
     hsai_BlockA4.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
     hsai_BlockA4.Init.Synchro = SAI_ASYNCHRONOUS;
@@ -904,7 +904,7 @@ static void MX_SAI4_Init(void) {
     hsai_BlockA4.Init.PdmInit.Activation = ENABLE;
     hsai_BlockA4.Init.PdmInit.MicPairsNbr = 1;
     hsai_BlockA4.Init.PdmInit.ClockEnable = SAI_PDM_CLOCK1_ENABLE;
-    hsai_BlockA4.FrameInit.FrameLength = 32;
+    hsai_BlockA4.FrameInit.FrameLength = 16;
     hsai_BlockA4.FrameInit.ActiveFrameLength = 1;
     hsai_BlockA4.FrameInit.FSDefinition = SAI_FS_STARTFRAME;
     hsai_BlockA4.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
@@ -1771,6 +1771,7 @@ void MPU_Config(void) {
  */
 void Error_Handler(void) {
     /* USER CODE BEGIN Error_Handler_Debug */
+    printf(":(\r\n");
     /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1) {
