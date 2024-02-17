@@ -24,7 +24,7 @@ uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
 
 #define PDM_BUFFER_SIZE 128
-uint8_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
+uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
 //uint16_t MidBuffer[16];
 //uint8_t txstate = 0;
 //uint8_t rxstate = 0;
@@ -306,10 +306,12 @@ static void setup_SAI() {
         pdmRxBuf[0] = 0;
     }
 
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
-    if (HAL_OK != status) {
-        println("### ERROR initializing SAI MIC RX: %i", status);
-    }
+//    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
+//    if (HAL_OK != status) {
+//        println("### ERROR initializing SAI MIC RX: %i", status);
+//    }
+    HAL_SAI_Receive_IT(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
+
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
@@ -344,10 +346,7 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA4) {
-//        print_binary32ui(pdmRxBuf[0]);
-//        print_binary32ui(pdmRxBuf[1]);
-//        print_binary32ui(pdmRxBuf[2]);
-//        print_binary32ui(pdmRxBuf[3]);
+//        printf("*");
         for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
             if (pdmRxBuf[i] > 0) print_binary8ui(pdmRxBuf[i]);
         }
@@ -381,6 +380,6 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 
 void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA4) {
-    println("### ERROR error in MIC SAI4");
+        println("### ERROR error in MIC SAI4");
     }
 }
