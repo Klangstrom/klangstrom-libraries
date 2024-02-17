@@ -24,6 +24,7 @@ void touch_setup() {
 }
 
 void touch_read() {
+    // TODO return values
 //	if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
 //		FT5206_read();
 //	}

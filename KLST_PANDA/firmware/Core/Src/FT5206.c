@@ -36,6 +36,7 @@ void FT5206_init(I2C_HandleTypeDef *hi2c_handle) {
 }
 
 void FT5206_read() {
+    // TODO check if this IC always transmits info when events occur or if some kind of polling is required or possible
 	if (!hi2c) {
 		return;
 	}
