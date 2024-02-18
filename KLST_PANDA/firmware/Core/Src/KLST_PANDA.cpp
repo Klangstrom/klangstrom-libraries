@@ -12,8 +12,8 @@ extern "C" {
 #include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-Touch.h"
 #include "KLST_PANDA-AudioCodec.h"
-
 #include "KLST_PANDA-RotaryEncoder.h"
+#include "KLST_PANDA-SDCard.h"
 
 RotaryEncoder encoder;
 
@@ -49,9 +49,9 @@ void KLST_PANDA_setup() {
   internalmemory_test_all();
 #endif
 
-    /* --- LTDC+DMA2D */
+    /* --- display (LTDC) */
 
-    println("initializing LCD (MX:LTDC+DMA2D)");
+    println("initializing display (LTDC) (MX:LTDC+DMA2D)");
     LTDC_setup();
 
     /* --- backlight */
@@ -60,29 +60,37 @@ void KLST_PANDA_setup() {
     backlight_setup();
     backlight_set_brightness(0.5f);
 
-    /* --- touch panel ( requires I2C4 ) */
+    /* --- touch panel */
 
     println("initializing touch panel (FT5206) (MX:I2C4)");
     display_switch_on();
     touch_setup();
 //    touch_read();
 
-    /* --- audiocodec ( requires I2C4 + SAI1 ) */
+    /* --- audiocodec */
 
-    println("initializing audiocodec (WM8904) (MX:DMA+SAI1)");
+    println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
     audiocodec_setup();
 
-    /* --- MEMS microphones ( requires SAI4 ) */
+    /* --- MEMS microphones */
 
-    println("initializing MEMS microphones (MX:SAI4)");
+    println("initializing MEMS microphones (MX:BDMA+CRC+PDM2PCM+SAI4)");
     // TODO move to own context + distribute callbacks
 
-    /* --- MEMS microphones ( requires SAI4 ) */
+    /* --- rotary encoder */
 
     println("initializing rotary encoders (MX:TIM1+TIM2)");
-    encoder.setup();
+    encoder.setup(); // TODO implement
 
-    /* --- */
+    /* --- SD card (SDMMC) */
+
+    println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
+    sdcard_setup();
+    sdcard_check_status();
+    sdcard_write_test_file(false);
+
+    /* --- end setup, begin loop --- */
+
     println("begin loop");
     display_switch_on();
 }

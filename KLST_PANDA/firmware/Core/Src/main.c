@@ -174,18 +174,30 @@ int main(void) {
 
     /* USER CODE BEGIN SysInit */
     MX_GPIO_Init();
+    // serial debug
     MX_USART3_UART_Init();
-    MX_I2C4_Init();
+    // external memory
     MX_OCTOSPI1_Init();
+    // display+backlight+touch panel
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
+    MX_I2C4_Init();
+    // audiocodec
     MX_DMA_Init();
     MX_SAI1_Init();
+    // on-board microphones
     MX_BDMA_Init();
     MX_CRC_Init();
     MX_PDM2PCM_Init();
     MX_SAI4_Init();
+    // encoder
+    MX_TIM1_Init();
+    MX_TIM2_Init();
+    // SD card
+    MX_FATFS_Init();
+    MX_SDMMC2_SD_Init();
+
     KLST_PANDA_setup();
 
 #ifndef MX_OMIT_INIT
@@ -275,7 +287,7 @@ void SystemClock_Config(void) {
     RCC_OscInitStruct.PLL.PLLM = 8;
     RCC_OscInitStruct.PLL.PLLN = 275;
     RCC_OscInitStruct.PLL.PLLP = 1;
-    RCC_OscInitStruct.PLL.PLLQ = 57;
+    RCC_OscInitStruct.PLL.PLLQ = 22;
     RCC_OscInitStruct.PLL.PLLR = 2;
     RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_1;
     RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;

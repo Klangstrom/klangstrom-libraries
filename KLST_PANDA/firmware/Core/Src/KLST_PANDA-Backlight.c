@@ -19,12 +19,12 @@ void backlight_loop() {
 	frame_counter++;
 	const uint8_t mPhaseDivider = ((1 << (frame_counter % 5 + 2)));
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, fPeriod / mPhaseDivider);
-	printf("LCD backlight divider: %i\r\n", mPhaseDivider);
+	println("LCD backlight divider: %i", mPhaseDivider);
 }
 
 void backlight_set_brightness(float brightness) {
 	uint32_t mPhase = (uint32_t) (fPeriod * brightness);
 	mPhase = MAX(1, MIN(fPeriod, mPhase));
-	println("backlight brightness: %f %li/%li\r\n", brightness, mPhase, fPeriod);
+	println("backlight brightness: %f %li/%li", brightness, mPhase, fPeriod);
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
 }

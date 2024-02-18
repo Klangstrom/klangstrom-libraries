@@ -82,9 +82,11 @@ static void setup_manually() {
 
     /* --- AUDIO_INTERFACE ------------------------------------------------------------------------------------------ */
 
+#ifdef TEST_WM8904_SET
     println("TEST register values below should not be the same");
     print("WM8904_R25_AUDIO_INTERFACE_1: ");
     print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+#endif
 
     WM8904_write_register(WM8904_R25_AUDIO_INTERFACE_1, WM8904_AIF_WL_16BIT | WM8904_AIF_FMT_I2S);
     WM8904_write_register(WM8904_R26_AUDIO_INTERFACE_2, 0);
@@ -109,8 +111,10 @@ static void setup_manually() {
     WM8904_write_register(WM8904_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(0x39));
     delay_ms(100);
 
+#ifdef TEST_WM8904_SET
     print("WM8904_R25_AUDIO_INTERFACE_1: ");
     print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+#endif
 }
 
 static void setup_default_start_sequence() {
@@ -128,15 +132,19 @@ static void setup_default_start_sequence() {
     //                                                          (R111 > 0100h) - This starts the Write Sequencer at Index address 0 (00h)
     WM8904_write_register(WM8904_R111_WM8904_WRITE_SEQUENCER_3, WM8904_WSEQ_START);
 
+#ifdef TEST_WM8904_SET
     println("starting WM8904_WSEQ_START");
     println("TEST register values below should not be the same");
     print("WM8904_R5_VMID_CONTROL_0: ");
     print_binary16ui(WM8904_read_register(WM8904_R5_VMID_CONTROL_0)); // TEST
+#endif
     /* "... this sequence takes approximately 300ms to run." ( at 12.288MHz ) */
     delay_ms(333);
+#ifdef TEST_WM8904_SET
     print("WM8904_R5_VMID_CONTROL_0: ");
     print_binary16ui(WM8904_read_register(WM8904_R5_VMID_CONTROL_0)); // TEST
     println("finished WM8904_WSEQ_START");
+#endif
 }
 
 static void setup_SCLK_FLL() {
@@ -282,7 +290,7 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
 #endif
 
 static void setup_SAI() {
-    println("settin up SAI");
+    println("setting up SAI");
 
     srand(time(NULL));
 
@@ -310,8 +318,6 @@ static void setup_SAI() {
 //    if (HAL_OK != status) {
 //        println("### ERROR initializing SAI MIC RX: %i", status);
 //    }
-    HAL_SAI_Receive_IT(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
-
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {

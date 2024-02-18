@@ -65,6 +65,7 @@ extern DMA_HandleTypeDef hdma_sai4_a;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
 extern SAI_HandleTypeDef hsai_BlockA4;
+extern SD_HandleTypeDef hsd2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -318,6 +319,20 @@ void OCTOSPI1_IRQHandler(void)
   /* USER CODE BEGIN OCTOSPI1_IRQn 1 */
 
   /* USER CODE END OCTOSPI1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles SDMMC2 global interrupt.
+  */
+void SDMMC2_IRQHandler(void)
+{
+  /* USER CODE BEGIN SDMMC2_IRQn 0 */
+
+  /* USER CODE END SDMMC2_IRQn 0 */
+  HAL_SD_IRQHandler(&hsd2);
+  /* USER CODE BEGIN SDMMC2_IRQn 1 */
+
+  /* USER CODE END SDMMC2_IRQn 1 */
 }
 
 /**
