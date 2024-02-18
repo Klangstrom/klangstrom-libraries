@@ -182,6 +182,7 @@ int main(void) {
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
+    MX_TIM4_Init();
     MX_I2C4_Init();
     // audiocodec
     MX_DMA_Init();

@@ -168,6 +168,8 @@ SECTIONS
       PROVIDE(__external_memory_end = _eexternal_memory);
   } >EXT_MEM
 
+  /* can be assigned by using: */
+  /* int variable __attribute__((section(".dma_buffer"))) foo; */
   .dma_buffer (NOLOAD) :
   {
     . = ALIGN(2);

@@ -15,6 +15,8 @@ extern "C" {
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
 
+extern TIM_HandleTypeDef htim4;
+
 RotaryEncoder encoder;
 
 static uint32_t frame_counter = 0;
@@ -22,11 +24,23 @@ static uint32_t frame_counter = 0;
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
 
+void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim) {
+    println("HAL_TIM_TriggerCallback");
+    if (htim == &htim4) {
+        println("htim4");
+    }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    println("HAL_GPIO_EXTI_Callback");
+}
+
 void KLST_PANDA_setup() {
     /* --- serial debug (USART3)*/
     serialdebug_setup();
 
     /* --- GPIO+LEDs */
+    HAL_TIM_Base_Start_IT(&htim4);
 
     println("initializing GPIO");
     display_switch_off();

@@ -14,11 +14,13 @@ uint8_t rtext[_MAX_SS];/* File read buffer */
 
 void sdcard_setup() {
     hsd2.Init.ClockDiv = SDMMC_INIT_CLK_DIV;
-
     if (HAL_SD_Init(&hsd2) != HAL_OK) {
         println("SDCard: init failed");
     }
     println("SDCard: setup completed");
+    println("SDCard: NOTE that DMA is disabled.");
+    println("SDCard: if DMA is enabled DCache must handled properly");
+    println("SDCard: e.g stored in `section(\".dma_buffer\")`");
 }
 
 bool sdcard_detected() {
@@ -92,7 +94,7 @@ void sdcard_write_test_file(bool format_volume) {
         return;
     }
 
-    println("SDCard: mounting FS");
+    println("SDCard: mounting FS ...");
     if (f_mount(&SDFatFS, (TCHAR const*) SDPath, 0) != FR_OK) {
         println("SDCard: f_mount failed");
         return;
@@ -110,7 +112,7 @@ void sdcard_write_test_file(bool format_volume) {
     FILINFO fno;
     FRESULT res = f_opendir(&dir, "/");
     if (res != FR_OK) {
-        println("SDCard: f_opendir failed");
+        println("SDCard: f_opendir failed : %i", res);
         return;
     }
 
