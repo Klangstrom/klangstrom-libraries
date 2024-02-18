@@ -1203,12 +1203,6 @@ static void MX_TIM4_Init(void) {
     sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
     sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
     sConfigIC.ICFilter = 0;
-    if (HAL_TIM_IC_ConfigChannel(&htim4, &sConfigIC, TIM_CHANNEL_2) != HAL_OK) {
-        Error_Handler();
-    }
-    if (HAL_TIM_IC_ConfigChannel(&htim4, &sConfigIC, TIM_CHANNEL_3) != HAL_OK) {
-        Error_Handler();
-    }
     if (HAL_TIM_IC_ConfigChannel(&htim4, &sConfigIC, TIM_CHANNEL_4) != HAL_OK) {
         Error_Handler();
     }
@@ -1720,6 +1714,18 @@ static void MX_GPIO_Init(void) {
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+    /*Configure GPIO pin : _DISPLAY_TOUCH_INTERRUPT_Pin */
+    GPIO_InitStruct.Pin = _DISPLAY_TOUCH_INTERRUPT_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, &GPIO_InitStruct);
+
+    /*Configure GPIO pin : _MECH_BUTTON_00_Pin */
+    GPIO_InitStruct.Pin = _MECH_BUTTON_00_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(_MECH_BUTTON_00_GPIO_Port, &GPIO_InitStruct);
+
     /*Configure GPIO pins : GPIO_16_Pin GPIO_15_Pin GPIO_14_Pin GPIO_13_Pin */
     GPIO_InitStruct.Pin = GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -1732,6 +1738,10 @@ static void MX_GPIO_Init(void) {
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(_CARD_SDMMC_CHIP_DETECT_GPIO_Port, &GPIO_InitStruct);
+
+    /* EXTI interrupt init*/
+    HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
     /* USER CODE BEGIN MX_GPIO_Init_2 */
     /* USER CODE END MX_GPIO_Init_2 */

@@ -24,23 +24,32 @@ static uint32_t frame_counter = 0;
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
 
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim) {
-    println("HAL_TIM_TriggerCallback");
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim4) {
-        println("htim4");
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+            println("MECH_01");
+        }
     }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    println("HAL_GPIO_EXTI_Callback");
+    if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
+        println("MECH_00");
+    }
+    if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
+        println("TOUCH");
+    }
 }
 
 void KLST_PANDA_setup() {
     /* --- serial debug (USART3)*/
     serialdebug_setup();
 
+    /* --- TODO mechanical keys */
+
+    HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
+
     /* --- GPIO+LEDs */
-    HAL_TIM_Base_Start_IT(&htim4);
 
     println("initializing GPIO");
     display_switch_off();

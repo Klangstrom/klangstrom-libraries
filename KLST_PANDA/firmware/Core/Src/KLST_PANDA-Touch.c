@@ -9,6 +9,7 @@ void touch_setup() {
     FT5206_init(&hi2c4);
     FT5206_print_info();
 
+#ifdef TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
     /* GPIO */
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
@@ -21,6 +22,7 @@ void touch_setup() {
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, &GPIO_InitStruct);
+#endif
 }
 
 void touch_read() {

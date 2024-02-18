@@ -1191,16 +1191,14 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* htim_ic)
 
     __HAL_RCC_GPIOD_CLK_ENABLE();
     /**TIM4 GPIO Configuration
-    PD13     ------> TIM4_CH2
-    PD14     ------> TIM4_CH3
     PD15     ------> TIM4_CH4
     */
-    GPIO_InitStruct.Pin = _DISPLAY_TOUCH_INTERRUPT_Pin|_MECH_BUTTON_00_Pin|_MECH_BUTTON_01_Pin;
+    GPIO_InitStruct.Pin = _MECH_BUTTON_01_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+    HAL_GPIO_Init(_MECH_BUTTON_01_GPIO_Port, &GPIO_InitStruct);
 
     /* TIM4 interrupt Init */
     HAL_NVIC_SetPriority(TIM4_IRQn, 0, 0);
@@ -1432,11 +1430,9 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* htim_ic)
     __HAL_RCC_TIM4_CLK_DISABLE();
 
     /**TIM4 GPIO Configuration
-    PD13     ------> TIM4_CH2
-    PD14     ------> TIM4_CH3
     PD15     ------> TIM4_CH4
     */
-    HAL_GPIO_DeInit(GPIOD, _DISPLAY_TOUCH_INTERRUPT_Pin|_MECH_BUTTON_00_Pin|_MECH_BUTTON_01_Pin);
+    HAL_GPIO_DeInit(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
 
     /* TIM4 interrupt DeInit */
     HAL_NVIC_DisableIRQ(TIM4_IRQn);
