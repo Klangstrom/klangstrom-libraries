@@ -68,6 +68,8 @@ extern SAI_HandleTypeDef hsai_BlockA4;
 extern SD_HandleTypeDef hsd2;
 extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart8;
+extern UART_HandleTypeDef huart9;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -296,6 +298,20 @@ void OTG_HS_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles UART8 global interrupt.
+  */
+void UART8_IRQHandler(void)
+{
+  /* USER CODE BEGIN UART8_IRQn 0 */
+
+  /* USER CODE END UART8_IRQn 0 */
+  HAL_UART_IRQHandler(&huart8);
+  /* USER CODE BEGIN UART8_IRQn 1 */
+
+  /* USER CODE END UART8_IRQn 1 */
+}
+
+/**
   * @brief This function handles SAI1 global interrupt.
   */
 void SAI1_IRQHandler(void)
@@ -406,6 +422,20 @@ void SAI4_IRQHandler(void)
   /* USER CODE BEGIN SAI4_IRQn 1 */
 
   /* USER CODE END SAI4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles UART9 global interrupt.
+  */
+void UART9_IRQHandler(void)
+{
+  /* USER CODE BEGIN UART9_IRQn 0 */
+
+  /* USER CODE END UART9_IRQn 0 */
+  HAL_UART_IRQHandler(&huart9);
+  /* USER CODE BEGIN UART9_IRQn 1 */
+
+  /* USER CODE END UART9_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

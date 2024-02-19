@@ -61,6 +61,7 @@ void TIM4_IRQHandler(void);
 void EXTI15_10_IRQHandler(void);
 void UART4_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
+void UART8_IRQHandler(void);
 void SAI1_IRQHandler(void);
 void LTDC_IRQHandler(void);
 void LTDC_ER_IRQHandler(void);
@@ -69,6 +70,7 @@ void OCTOSPI1_IRQHandler(void);
 void SDMMC2_IRQHandler(void);
 void BDMA_Channel0_IRQHandler(void);
 void SAI4_IRQHandler(void);
+void UART9_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

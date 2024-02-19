@@ -20,13 +20,15 @@ extern "C" {
 
 extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart8;
+extern UART_HandleTypeDef huart9;
 
 RotaryEncoder encoder;
 MechanicalKey mechanicalkey;
 
 static uint32_t frame_counter = 0;
 
-uint8_t rxBuffer[16]; // TODO move this
+uint8_t rxBuffer[4]; // TODO move this
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
@@ -153,12 +155,16 @@ void KLST_PANDA_setup() {
     sdcard_write_test_file(false);
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
-    // TODO move to own file
+    // TODO MIDI ( move to own file )
     // UART4 > _MIDI_ANALOG_IN + _MIDI_ANALOG_OUT
     MX_UART4_Init();
-    uint8_t data[3] = {0xF2, 0x20, 0x00};
-    HAL_UART_Transmit(&huart4, (uint8_t*) data, 3, 0xFFFF);
-    HAL_UART_Receive_IT(&huart4, rxBuffer, sizeof(rxBuffer));
+//    HAL_UART_Receive_IT(&huart4, rxBuffer, sizeof(rxBuffer));
+
+    // TODO IDC Serial( move to own file )
+    MX_UART8_Init();
+//    HAL_UART_Receive_IT(&huart8, rxBuffer, sizeof(rxBuffer));
+    MX_UART9_Init();
+//    HAL_UART_Receive_IT(&huart9, rxBuffer, sizeof(rxBuffer));
 
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
@@ -175,19 +181,56 @@ void KLST_PANDA_loop() {
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
 #endif // KLST_PANDA_ENABLE_DISPLAY
+
+//    println("transmit uart4");
+//    uint8_t data[3] = { 0xF2, 0x20, 0x00 };
+//    HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, 3);
+//    HAL_UART_Transmit_IT(&huart8, (uint8_t*) data, 3);
+//    HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, 3);
+    HAL_UART_Receive(&huart9, rxBuffer, sizeof(rxBuffer), 100);
+    for (int i = 0; i < (uint8_t)sizeof(rxBuffer); i++) {
+        println("%i", rxBuffer[i]);
+    }
+    HAL_UART_Receive(&huart8, rxBuffer, sizeof(rxBuffer), 100);
+    for (int i = 0; i < (uint8_t)sizeof(rxBuffer); i++) {
+        println("%i", rxBuffer[i]);
+    }
+    for (int i = 0; i < (uint8_t)sizeof(rxBuffer); i++) {
+        rxBuffer[i] = 255;
+    }
     println("EOF");
     HAL_Delay(500);
 }
 
 /* --- CALLBACKS --- */
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-    if (huart->Instance == UART4) {
-        print("UART4: ");
-
-        HAL_UART_Receive_IT(huart, rxBuffer, sizeof(rxBuffer));
-    }
-}
+//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+//}
+//
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+//    println("HAL_UART_RxCpltCallback");
+//    if (huart->Instance == UART4) {
+//        println("UART4");
+//        HAL_UART_Receive_IT(&huart4, rxBuffer, sizeof(rxBuffer));
+//    }
+//    if (huart->Instance == UART8) {
+//        println("UART8");
+//        HAL_UART_Receive_IT(&huart8, rxBuffer, sizeof(rxBuffer));
+//    }
+//    if (huart->Instance == UART9) {
+//        println("UART9");
+//        HAL_UART_Receive_IT(&huart9, rxBuffer, sizeof(rxBuffer));
+//    }
+//    if (huart == &huart4) {
+//        println("huart4");
+//    }
+//    if (huart == &huart8) {
+//        println("huart8");
+//    }
+//    if (huart == &huart9) {
+//        println("huart9");
+//    }
+//}
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim4) {

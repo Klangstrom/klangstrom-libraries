@@ -106,8 +106,6 @@ static void MX_SPI2_Init(void);
 static void MX_TIM23_Init(void);
 static void MX_TIM12_Init(void);
 static void MX_TIM24_Init(void);
-static void MX_UART8_Init(void);
-static void MX_UART9_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_DAC1_Init(void);
 void MX_USB_HOST_Process(void);
@@ -171,8 +169,6 @@ int main(void)
   MX_TIM23_Init();
   MX_TIM12_Init();
   MX_TIM24_Init();
-  MX_UART8_Init();
-  MX_UART9_Init();
   MX_TIM15_Init();
   MX_DAC1_Init();
   MX_USB_HOST_Init();
@@ -1480,7 +1476,7 @@ void MX_UART4_Init(void)
   * @param None
   * @retval None
   */
-static void MX_UART8_Init(void)
+void MX_UART8_Init(void)
 {
 
   /* USER CODE BEGIN UART8_Init 0 */
@@ -1491,8 +1487,8 @@ static void MX_UART8_Init(void)
 
   /* USER CODE END UART8_Init 1 */
   huart8.Instance = UART8;
-  huart8.Init.BaudRate = 115200;
-  huart8.Init.WordLength = UART_WORDLENGTH_8B;
+  huart8.Init.BaudRate = 31250;
+  huart8.Init.WordLength = UART_WORDLENGTH_9B;
   huart8.Init.StopBits = UART_STOPBITS_1;
   huart8.Init.Parity = UART_PARITY_NONE;
   huart8.Init.Mode = UART_MODE_TX_RX;
@@ -1528,7 +1524,7 @@ static void MX_UART8_Init(void)
   * @param None
   * @retval None
   */
-static void MX_UART9_Init(void)
+void MX_UART9_Init(void)
 {
 
   /* USER CODE BEGIN UART9_Init 0 */
@@ -1539,8 +1535,8 @@ static void MX_UART9_Init(void)
 
   /* USER CODE END UART9_Init 1 */
   huart9.Instance = UART9;
-  huart9.Init.BaudRate = 115200;
-  huart9.Init.WordLength = UART_WORDLENGTH_8B;
+  huart9.Init.BaudRate = 31250;
+  huart9.Init.WordLength = UART_WORDLENGTH_9B;
   huart9.Init.StopBits = UART_STOPBITS_1;
   huart9.Init.Parity = UART_PARITY_NONE;
   huart9.Init.Mode = UART_MODE_TX_RX;
