@@ -66,6 +66,7 @@ void MX_DMA2D_Init(void);
 void MX_SAI4_Init(void);
 void MX_SDMMC2_SD_Init(void);
 void MX_TIM3_Init(void);
+void MX_UART4_Init(void);
 void MX_OCTOSPI1_Init(void);
 void MX_SAI1_Init(void);
 void MX_CRC_Init(void);

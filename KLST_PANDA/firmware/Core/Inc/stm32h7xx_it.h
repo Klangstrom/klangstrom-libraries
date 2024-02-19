@@ -59,6 +59,7 @@ void DMA1_Stream0_IRQHandler(void);
 void DMA1_Stream1_IRQHandler(void);
 void TIM4_IRQHandler(void);
 void EXTI15_10_IRQHandler(void);
+void UART4_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
 void SAI1_IRQHandler(void);
 void LTDC_IRQHandler(void);

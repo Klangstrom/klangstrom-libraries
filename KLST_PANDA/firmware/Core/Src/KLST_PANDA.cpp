@@ -19,11 +19,14 @@ extern "C" {
 #include "KLST_PANDA-MechanicalKey.h"
 
 extern TIM_HandleTypeDef htim4;
+extern UART_HandleTypeDef huart4;
 
 RotaryEncoder encoder;
 MechanicalKey mechanicalkey;
 
 static uint32_t frame_counter = 0;
+
+uint8_t rxBuffer[16]; // TODO move this
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
@@ -150,7 +153,16 @@ void KLST_PANDA_setup() {
     sdcard_write_test_file(false);
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
+    // TODO move to own file
+    // UART4 > _MIDI_ANALOG_IN + _MIDI_ANALOG_OUT
+    MX_UART4_Init();
+    uint8_t data[3] = {0xF2, 0x20, 0x00};
+    HAL_UART_Transmit(&huart4, (uint8_t*) data, 3, 0xFFFF);
+    HAL_UART_Receive_IT(&huart4, rxBuffer, sizeof(rxBuffer));
+
+    /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
+    /* --- --------------------- --- */
     println("");
     println("begin loop");
     println("");
@@ -168,6 +180,14 @@ void KLST_PANDA_loop() {
 }
 
 /* --- CALLBACKS --- */
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == UART4) {
+        print("UART4: ");
+
+        HAL_UART_Receive_IT(huart, rxBuffer, sizeof(rxBuffer));
+    }
+}
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim4) {

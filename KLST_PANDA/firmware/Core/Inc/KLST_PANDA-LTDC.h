@@ -9,6 +9,10 @@
 #define FRAMEBUFFER1                     0
 #define FRAMEBUFFER2                     1
 
+/* FB1 :: 0x90000000
+ * FB2 :: 0x9007F800
+ */
+
 void display_switch_on();
 void display_switch_off();
 
