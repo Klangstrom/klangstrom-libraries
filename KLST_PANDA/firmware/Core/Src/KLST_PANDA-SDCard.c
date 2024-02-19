@@ -100,7 +100,7 @@ void sdcard_write_test_file(bool format_volume) {
         return;
     }
     if (format_volume) {
-        println("SDCard: creating volume ( this may take a while e.g 100s fo 16GB ) ...");
+        println("SDCard: creating volume ( this may take a while approx 6sec/1GB ) ...");
         if (f_mkfs((TCHAR const*) SDPath, FM_ANY, 0, rtext, sizeof(rtext)) != FR_OK) {
             println("SDCard: f_mkfs failed");
             return;

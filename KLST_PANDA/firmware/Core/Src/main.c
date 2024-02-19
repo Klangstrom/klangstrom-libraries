@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "fatfs.h"
-#include "pdm2pcm.h"
 #include "usb_host.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -98,36 +97,20 @@ UART_HandleTypeDef huart3;
 void SystemClock_Config(void);
 void PeriphCommonClock_Config(void);
 static void MPU_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_DMA_Init(void);
-static void MX_BDMA_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_I2C4_Init(void);
-static void MX_TIM1_Init(void);
-static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_USART3_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
 static void MX_ADC3_Init(void);
 static void MX_SPI2_Init(void);
-static void MX_TIM4_Init(void);
 static void MX_TIM23_Init(void);
-static void MX_LTDC_Init(void);
-static void MX_DMA2D_Init(void);
 static void MX_TIM12_Init(void);
 static void MX_TIM24_Init(void);
 static void MX_UART8_Init(void);
-static void MX_SAI4_Init(void);
 static void MX_UART9_Init(void);
-static void MX_SDMMC2_SD_Init(void);
-static void MX_TIM3_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_UART4_Init(void);
-static void MX_OCTOSPI1_Init(void);
 static void MX_DAC1_Init(void);
-static void MX_SAI1_Init(void);
-static void MX_CRC_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
@@ -173,88 +156,27 @@ int main(void) {
     PeriphCommonClock_Config();
 
     /* USER CODE BEGIN SysInit */
-#ifdef KLST_PANDA_ENABLE_GPIO
-    MX_GPIO_Init();
-#endif // KLST_PANDA_ENABLE_GPIO
-
-#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
-    MX_USART3_UART_Init();
-#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
-
-#ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-    MX_OCTOSPI1_Init();
-#endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-
-#ifdef KLST_PANDA_ENABLE_DISPLAY
-    // display+backlight+touch panel
-    MX_LTDC_Init();
-    MX_DMA2D_Init();
-    MX_TIM3_Init();
-    MX_TIM4_Init();
-    MX_I2C4_Init();
-#endif // KLST_PANDA_ENABLE_DISPLAY
-
-#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    MX_DMA_Init();
-    MX_SAI1_Init();
-#endif // KLST_PANDA_ENABLE_AUDIOCODEC
-
-#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-    MX_BDMA_Init();
-    MX_CRC_Init();
-    MX_PDM2PCM_Init();
-    MX_SAI4_Init();
-#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
-
-#ifdef KLST_PANDA_ENABLE_ENCODER
-    MX_TIM1_Init();
-    MX_TIM2_Init();
-#endif // KLST_PANDA_ENABLE_ENCODER
-
-#ifdef KLST_PANDA_ENABLE_SD_CARD
-    MX_FATFS_Init();
-    MX_SDMMC2_SD_Init();
-#endif // KLST_PANDA_ENABLE_SD_CARD
-
     KLST_PANDA_setup();
 
 #ifndef MX_OMIT_INIT
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_BDMA_Init();
   MX_I2C1_Init();
-  MX_I2C4_Init();
-  MX_TIM1_Init();
-  MX_TIM2_Init();
   MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_ADC3_Init();
   MX_SPI2_Init();
-  MX_TIM4_Init();
   MX_TIM23_Init();
-  MX_LTDC_Init();
-  MX_DMA2D_Init();
   MX_TIM12_Init();
   MX_TIM24_Init();
   MX_UART8_Init();
-  MX_SAI4_Init();
   MX_UART9_Init();
-  MX_FATFS_Init();
-  MX_SDMMC2_SD_Init();
-  MX_TIM3_Init();
   MX_TIM15_Init();
   MX_UART4_Init();
-  MX_OCTOSPI1_Init();
   MX_DAC1_Init();
   MX_USB_HOST_Init();
-  MX_SAI1_Init();
-  MX_CRC_Init();
-  MX_PDM2PCM_Init();
   /* USER CODE BEGIN 2 */
 #endif
     /* USER CODE END 2 */
@@ -551,7 +473,7 @@ static void MX_ADC3_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_CRC_Init(void) {
+void MX_CRC_Init(void) {
 
     /* USER CODE BEGIN CRC_Init 0 */
 
@@ -621,7 +543,7 @@ static void MX_DAC1_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_DMA2D_Init(void) {
+void MX_DMA2D_Init(void) {
 
     /* USER CODE BEGIN DMA2D_Init 0 */
 
@@ -702,7 +624,7 @@ static void MX_I2C1_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_I2C4_Init(void) {
+void MX_I2C4_Init(void) {
 
     /* USER CODE BEGIN I2C4_Init 0 */
 
@@ -746,7 +668,7 @@ static void MX_I2C4_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_LTDC_Init(void) {
+void MX_LTDC_Init(void) {
 
     /* USER CODE BEGIN LTDC_Init 0 */
 
@@ -805,7 +727,7 @@ static void MX_LTDC_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_OCTOSPI1_Init(void) {
+void MX_OCTOSPI1_Init(void) {
 
     /* USER CODE BEGIN OCTOSPI1_Init 0 */
 
@@ -863,7 +785,7 @@ static void MX_OCTOSPI1_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_SAI1_Init(void) {
+void MX_SAI1_Init(void) {
 
     /* USER CODE BEGIN SAI1_Init 0 */
 
@@ -909,7 +831,7 @@ static void MX_SAI1_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_SAI4_Init(void) {
+void MX_SAI4_Init(void) {
 
     /* USER CODE BEGIN SAI4_Init 0 */
 
@@ -957,7 +879,7 @@ static void MX_SAI4_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_SDMMC2_SD_Init(void) {
+void MX_SDMMC2_SD_Init(void) {
 
     /* USER CODE BEGIN SDMMC2_Init 0 */
 
@@ -1029,7 +951,7 @@ static void MX_SPI2_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_TIM1_Init(void) {
+void MX_TIM1_Init(void) {
 
     /* USER CODE BEGIN TIM1_Init 0 */
 
@@ -1088,7 +1010,7 @@ static void MX_TIM1_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_TIM2_Init(void) {
+void MX_TIM2_Init(void) {
 
     /* USER CODE BEGIN TIM2_Init 0 */
 
@@ -1145,7 +1067,7 @@ static void MX_TIM2_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_TIM3_Init(void) {
+void MX_TIM3_Init(void) {
 
     /* USER CODE BEGIN TIM3_Init 0 */
 
@@ -1190,7 +1112,7 @@ static void MX_TIM3_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_TIM4_Init(void) {
+void MX_TIM4_Init(void) {
 
     /* USER CODE BEGIN TIM4_Init 0 */
 
@@ -1597,7 +1519,7 @@ static void MX_USART2_UART_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_USART3_UART_Init(void) {
+void MX_USART3_UART_Init(void) {
 
     /* USER CODE BEGIN USART3_Init 0 */
 
@@ -1638,7 +1560,7 @@ static void MX_USART3_UART_Init(void) {
 /**
  * Enable DMA controller clock
  */
-static void MX_BDMA_Init(void) {
+void MX_BDMA_Init(void) {
 
     /* DMA controller clock enable */
     __HAL_RCC_BDMA_CLK_ENABLE();
@@ -1653,7 +1575,7 @@ static void MX_BDMA_Init(void) {
 /**
  * Enable DMA controller clock
  */
-static void MX_DMA_Init(void) {
+void MX_DMA_Init(void) {
 
     /* DMA controller clock enable */
     __HAL_RCC_DMA1_CLK_ENABLE();
@@ -1673,7 +1595,7 @@ static void MX_DMA_Init(void) {
  * @param None
  * @retval None
  */
-static void MX_GPIO_Init(void) {
+void MX_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStruct = { 0 };
     /* USER CODE BEGIN MX_GPIO_Init_1 */
     /* USER CODE END MX_GPIO_Init_1 */

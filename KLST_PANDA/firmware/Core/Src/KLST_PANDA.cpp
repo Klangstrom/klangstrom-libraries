@@ -3,6 +3,8 @@ extern "C" {
 #endif
 
 #include "main.h"
+#include "fatfs.h"
+#include "pdm2pcm.h"
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
@@ -14,40 +16,73 @@ extern "C" {
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
+#include "KLST_PANDA-MechanicalKey.h"
 
 extern TIM_HandleTypeDef htim4;
 
 RotaryEncoder encoder;
+MechanicalKey mechanicalkey;
 
 static uint32_t frame_counter = 0;
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
 
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-    if (htim == &htim4) {
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-            println("MECH_01");
-        }
-    }
-}
+static void KLST_PANDA_MX_Init_Modules() {
+#ifdef KLST_PANDA_ENABLE_GPIO
+    MX_GPIO_Init();
+    MX_TIM4_Init(); // TODO mechanical keys
+#endif // KLST_PANDA_ENABLE_GPIO
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
-        println("MECH_00");
-    }
-    if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
-        println("TOUCH");
-    }
+#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
+    MX_USART3_UART_Init();
+#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
+
+#ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
+    MX_OCTOSPI1_Init();
+#endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
+
+#ifdef KLST_PANDA_ENABLE_DISPLAY
+    // display+backlight+touch panel
+    MX_LTDC_Init();
+    MX_DMA2D_Init();
+    MX_TIM3_Init();
+    MX_I2C4_Init();
+#endif // KLST_PANDA_ENABLE_DISPLAY
+
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    MX_DMA_Init();
+    MX_SAI1_Init();
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+    MX_BDMA_Init();
+    MX_CRC_Init();
+    MX_PDM2PCM_Init();
+    MX_SAI4_Init();
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
+
+#ifdef KLST_PANDA_ENABLE_ENCODER
+    MX_TIM1_Init();
+    MX_TIM2_Init();
+#endif // KLST_PANDA_ENABLE_ENCODER
+
+#ifdef KLST_PANDA_ENABLE_SD_CARD
+    MX_FATFS_Init();
+    MX_SDMMC2_SD_Init();
+#endif // KLST_PANDA_ENABLE_SD_CARD
 }
 
 void KLST_PANDA_setup() {
+    KLST_PANDA_MX_Init_Modules();
+
     /* --- serial debug (USART3)*/
 #ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
     serialdebug_setup();
 #endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 
     /* --- TODO move mechanical keys to file */
+    println("initializing mechanical keys (MX:TIM4)");
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 
     /* --- GPIO+LEDs */
@@ -130,6 +165,25 @@ void KLST_PANDA_loop() {
 #endif // KLST_PANDA_ENABLE_DISPLAY
     println("EOF");
     HAL_Delay(500);
+}
+
+/* --- CALLBACKS --- */
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+    if (htim == &htim4) {
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+            println("MECH_01");
+        }
+    }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
+        println("MECH_00");
+    }
+    if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
+        println("TOUCH");
+    }
 }
 
 #ifdef __cplusplus
