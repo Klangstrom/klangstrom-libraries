@@ -173,31 +173,48 @@ int main(void) {
     PeriphCommonClock_Config();
 
     /* USER CODE BEGIN SysInit */
+#ifdef KLST_PANDA_ENABLE_GPIO
     MX_GPIO_Init();
-    // serial debug
+#endif // KLST_PANDA_ENABLE_GPIO
+
+#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
     MX_USART3_UART_Init();
-    // external memory
+#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
+
+#ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     MX_OCTOSPI1_Init();
+#endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
+
+#ifdef KLST_PANDA_ENABLE_DISPLAY
     // display+backlight+touch panel
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
     MX_TIM4_Init();
     MX_I2C4_Init();
-    // audiocodec
+#endif // KLST_PANDA_ENABLE_DISPLAY
+
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     MX_DMA_Init();
     MX_SAI1_Init();
-    // on-board microphones
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     MX_BDMA_Init();
     MX_CRC_Init();
     MX_PDM2PCM_Init();
     MX_SAI4_Init();
-    // encoder
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
+
+#ifdef KLST_PANDA_ENABLE_ENCODER
     MX_TIM1_Init();
     MX_TIM2_Init();
-    // SD card
+#endif // KLST_PANDA_ENABLE_ENCODER
+
+#ifdef KLST_PANDA_ENABLE_SD_CARD
     MX_FATFS_Init();
     MX_SDMMC2_SD_Init();
+#endif // KLST_PANDA_ENABLE_SD_CARD
 
     KLST_PANDA_setup();
 

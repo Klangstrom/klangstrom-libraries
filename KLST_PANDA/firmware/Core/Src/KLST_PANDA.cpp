@@ -43,24 +43,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 void KLST_PANDA_setup() {
     /* --- serial debug (USART3)*/
+#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
     serialdebug_setup();
+#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 
-    /* --- TODO mechanical keys */
-
+    /* --- TODO move mechanical keys to file */
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 
     /* --- GPIO+LEDs */
-
+#ifdef KLST_PANDA_ENABLE_GPIO
     println("initializing GPIO");
-    display_switch_off();
 
     println("initializing LEDs");
     LED_setup();
     LED_turn_off(LED_00);
     LED_turn_off(LED_01);
+#endif // KLST_PANDA_ENABLE_GPIO
 
-    /* --- external/internal RAM */
-
+#ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     println("initializing external RAM (MX:OCTOSPI1)");
     externalmemory_setup();
 
@@ -71,10 +71,11 @@ void KLST_PANDA_setup() {
   println("test internal RAM");
   internalmemory_test_all();
 #endif
+#endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
-    /* --- display (LTDC) */
-
+#ifdef KLST_PANDA_ENABLE_DISPLAY
     println("initializing display (LTDC) (MX:LTDC+DMA2D)");
+    display_switch_off();
     LTDC_setup();
 
     /* --- backlight */
@@ -86,42 +87,47 @@ void KLST_PANDA_setup() {
     /* --- touch panel */
 
     println("initializing touch panel (FT5206) (MX:I2C4)");
-    display_switch_on();
+    display_switch_on(); // TODO maybe turn off?
     touch_setup();
 //    touch_read();
+#endif // KLST_PANDA_ENABLE_DISPLAY
 
-    /* --- audiocodec */
-
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
     audiocodec_setup();
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
-    /* --- MEMS microphones */
-
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     println("initializing MEMS microphones (MX:BDMA+CRC+PDM2PCM+SAI4)");
     // TODO move to own context + distribute callbacks
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
-    /* --- rotary encoder */
-
+#ifdef KLST_PANDA_ENABLE_ENCODER
     println("initializing rotary encoders (MX:TIM1+TIM2)");
     encoder.setup(); // TODO implement
+#endif // KLST_PANDA_ENABLE_ENCODER
 
+#ifdef KLST_PANDA_ENABLE_SD_CARD
     /* --- SD card (SDMMC) */
-
     println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
     sdcard_setup();
     sdcard_check_status();
     sdcard_write_test_file(false);
+#endif // KLST_PANDA_ENABLE_SD_CARD
 
     /* --- end setup, begin loop --- */
-
+    println("");
     println("begin loop");
+    println("");
     display_switch_on();
 }
 
 void KLST_PANDA_loop() {
     frame_counter++;
     LED_toggle(LED_00);
+#ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
+#endif // KLST_PANDA_ENABLE_DISPLAY
     println("EOF");
     HAL_Delay(500);
 }
