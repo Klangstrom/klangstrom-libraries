@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "stdbool.h"
 #include "main.h"
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-SerialDebug.h"
@@ -26,22 +27,29 @@ static void print_and_clear_buffer(const char *name, uint8_t *buffer,
         printf("0x%X, ", buffer[i]);
         buffer[i] = 0;
     }
-    printf(")\r\n");
+    printf(") ");
 }
 
 static void evaluate_receive_flags() {
-    if (RX_00_counter > 0 || RX_01_counter > 0 || RX_MIDI_counter > 0) {
-        print("data_receive : ");
+    bool mReceivedData = RX_00_counter > 0 || RX_01_counter > 0
+            || RX_MIDI_counter > 0;
+    if (mReceivedData) {
+        print("data_receive : (");
     }
     if (RX_00_counter > 0) {
         print_and_clear_buffer("UART9", RX_00_buffer, RX_00_counter);
         RX_00_counter = 0;
-    } else if (RX_01_counter > 0) {
+    }
+    if (RX_01_counter > 0) {
         print_and_clear_buffer("UART8", RX_01_buffer, RX_01_counter);
         RX_01_counter = 0;
-    } else if (RX_MIDI_counter > 0) {
+    }
+    if (RX_MIDI_counter > 0) {
         print_and_clear_buffer("UART4", RX_MIDI_buffer, RX_MIDI_counter);
         RX_MIDI_counter = 0;
+    }
+    if (mReceivedData) {
+        printf("\r\n");
     }
 }
 
@@ -61,31 +69,14 @@ void IDC_serial_setup() {
 void IDC_serial_loop() {
     evaluate_receive_flags();
 
-    //    println("transmit uart4");
 #define TX_BUFFER_SIZE 3
-    uint8_t data[TX_BUFFER_SIZE] = { 0xF2, 0x20, 0x02 };
-    //    HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, BUFFER_SIZE);
+    uint8_t data[TX_BUFFER_SIZE] = { 0xF4, 0x22, 0x8A };
     println("data_transmit: UART9 + UART8 + UART4");
     HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, TX_BUFFER_SIZE);
+    data[2] = 0x03;
     HAL_UART_Transmit_IT(&huart8, (uint8_t*) data, TX_BUFFER_SIZE);
+    data[2] = 0x04;
     HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, TX_BUFFER_SIZE);
-    //    HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, 3);
-
-    //  print("UART9: ");
-    //  HAL_UART_Receive(&huart9, rxBuffer_00, sizeof(rxBuffer_00), 1000);
-    //  for (int i = 0; i < (uint8_t) sizeof(rxBuffer_00); i++) {
-    //      printf("0x%X, ", rxBuffer_00[i]);
-    //      rxBuffer_00[i] = 0;
-    //  }
-    //  printf("\r\n");
-    //
-    //  HAL_UART_Receive(&huart4, rxBuffer_MIDI, BUFFER_SIZE, 1000);
-    //  print("UART4: ");
-    //  for (int i = 0; i < 3; i++) {
-    //      printf("0x%X, ", rxBuffer_MIDI[i]);
-    //      rxBuffer_MIDI[i] = 0;
-    //  }
-    //  printf("\r\n");
 }
 
 uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance) {

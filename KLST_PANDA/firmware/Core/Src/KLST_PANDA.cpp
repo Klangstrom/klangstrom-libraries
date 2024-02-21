@@ -193,7 +193,14 @@ void KLST_PANDA_loop() {
 
 // void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
-    println("HAL_UART_ErrorCallback");
+//#define  HAL_UART_ERROR_NONE             (0x00000000U)    /*!< No error                */
+//#define  HAL_UART_ERROR_PE               (0x00000001U)    /*!< Parity error            */
+//#define  HAL_UART_ERROR_NE               (0x00000002U)    /*!< Noise error             */
+//#define  HAL_UART_ERROR_FE               (0x00000004U)    /*!< Frame error             */
+//#define  HAL_UART_ERROR_ORE              (0x00000008U)    /*!< Overrun error           */
+//#define  HAL_UART_ERROR_DMA              (0x00000010U)    /*!< DMA transfer error      */
+//#define  HAL_UART_ERROR_RTO              (0x00000020U)    /*!< Receiver Timeout error  */
+    println("HAL_UART_ErrorCallback: %i", huart->ErrorCode);
     if (huart->Instance == UART9) {
         println("UART9");
         RX_00_counter = 0;
