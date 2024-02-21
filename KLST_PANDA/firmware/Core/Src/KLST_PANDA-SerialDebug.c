@@ -8,7 +8,7 @@
 extern UART_HandleTypeDef huart3;
 
 int _write(int file, char *data, int len) {
-    HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 0xFFFF);
+    HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 10);
     return (status == HAL_OK ? len : 0);
 }
 

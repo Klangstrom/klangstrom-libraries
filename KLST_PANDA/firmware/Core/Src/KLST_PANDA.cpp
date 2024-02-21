@@ -17,6 +17,7 @@ extern "C" {
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-MechanicalKey.h"
+#include "KLST_PANDA-IDC_Serial.h"
 
 extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart4;
@@ -27,14 +28,6 @@ RotaryEncoder encoder;
 MechanicalKey mechanicalkey;
 
 static uint32_t frame_counter = 0;
-
-uint8_t rxBuffer_00[3]; // TODO move this
-uint8_t rxBuffer_01[3]; // TODO move this
-uint8_t rxBuffer_MIDI[3]; // TODO move this
-volatile bool receive_00 = false;
-volatile bool receive_01 = false;
-volatile bool receive_MIDI = false;
-static void evaluate_receive_flags();
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
@@ -82,6 +75,12 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_FATFS_Init();
     MX_SDMMC2_SD_Init();
 #endif // KLST_PANDA_ENABLE_SD_CARD
+
+#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+    MX_UART9_Init();
+    MX_UART8_Init();
+    MX_UART4_Init();
+#endif // KLST_PANDA_ENABLE_IDC_SERIAL
 }
 
 void KLST_PANDA_setup() {
@@ -161,16 +160,10 @@ internalmemory_test_all();
     sdcard_write_test_file(false);
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
-// TODO MIDI ( move to own file )
-// UART4 > _MIDI_ANALOG_IN + _MIDI_ANALOG_OUT
-    MX_UART4_Init();
-    HAL_UART_Receive_IT(&huart4, rxBuffer_MIDI, 3);
-
-// TODO IDC Serial( move to own file )
-    MX_UART9_Init();
-    HAL_UART_Receive_IT(&huart9, rxBuffer_00, 3);
-    MX_UART8_Init();
-    HAL_UART_Receive_IT(&huart8, rxBuffer_01, 3);
+#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+    println("initializing IDC serial (MX:UART4+UART8+UART9)");
+    IDC_serial_setup();
+#endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
@@ -183,89 +176,54 @@ internalmemory_test_all();
 
 void KLST_PANDA_loop() {
     frame_counter++;
-    LED_toggle(LED_00);
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
 #endif // KLST_PANDA_ENABLE_DISPLAY
 
-//    println("transmit uart4");
-    uint8_t data[3] = { 0xF2, 0x20, 0x02 };
-//    HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, 3);
-    println("data_transmit: UART9 + UART8 + UART4");
-    HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, 3);
-    HAL_UART_Transmit_IT(&huart8, (uint8_t*) data, 3);
-    HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, 3);
-//    HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, 3);
+#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+    IDC_serial_loop();
+#endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
-//	print("UART9: ");
-//	HAL_UART_Receive(&huart9, rxBuffer_00, sizeof(rxBuffer_00), 1000);
-//	for (int i = 0; i < (uint8_t) sizeof(rxBuffer_00); i++) {
-//		printf("0x%X, ", rxBuffer_00[i]);
-//		rxBuffer_00[i] = 0;
-//	}
-//	printf("\r\n");
-//
-//	HAL_UART_Receive(&huart4, rxBuffer_MIDI, 3, 1000);
-//	print("UART4: ");
-//	for (int i = 0; i < 3; i++) {
-//		printf("0x%X, ", rxBuffer_MIDI[i]);
-//		rxBuffer_MIDI[i] = 0;
-//	}
-//	printf("\r\n");
-
-    evaluate_receive_flags();
+    LED_toggle(LED_00);
     println("EOF");
     HAL_Delay(500);
 }
 
 /* --- CALLBACKS --- */
 
-//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
-//}
-static void print_and_clear_buffer(const char *name, UART_HandleTypeDef *huart,
-        uint8_t *buffer, uint8_t buffer_size) {
-    printf("%s (", name);
-    for (int i = 0; i < buffer_size; i++) {
-        printf("0x%X, ", buffer[i]);
-        buffer[i] = 0;
+// void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    println("HAL_UART_ErrorCallback");
+    PERIPH_BASE;
+
+    if (huart->Instance == UART9) {
+        println("UART9");
+        IDC_serial_start_rx_interrupt(UART9);
+    } else if (huart->Instance == UART8) {
+        println("UART8");
+        IDC_serial_start_rx_interrupt(UART8);
+    } else if (huart->Instance == UART4) {
+        println("UART4");
+        IDC_serial_start_rx_interrupt(UART4);
+    } else {
+        println("unknown serial port");
     }
-    printf(")\r\n");
-    HAL_UART_Receive_IT(huart, buffer, buffer_size);
 }
 
-static void evaluate_receive_flags() {
-    if (receive_00 || receive_01 || receive_MIDI) {
-        print("data_receive : ");
-    }
-    if (receive_00) {
-        print_and_clear_buffer("UART9", &huart9, rxBuffer_00, 3);
-        receive_00 = false;
-    } else if (receive_01) {
-        print_and_clear_buffer("UART8", &huart8, rxBuffer_01, 3);
-        receive_01 = false;
-    } else if (receive_MIDI) {
-        print_and_clear_buffer("UART4", &huart4, rxBuffer_MIDI, 3);
-        receive_MIDI = false;
-    }
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+    LED_toggle(LED_01);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-//	print("data_receive : ");
-//	if (huart->Instance == UART9) {
-//		print_and_clear_buffer("UART9", &huart9, rxBuffer_00, 3);
-//	} else if (huart->Instance == UART8) {
-//		print_and_clear_buffer("UART8", &huart8, rxBuffer_01, 3);
-//	} else if (huart->Instance == UART4) { // (huart == &huart4)
-//		print_and_clear_buffer("UART4", &huart4, rxBuffer_MIDI, 3);
-//	} else {
-//		println("unknown serial port");
-//	}
     if (huart->Instance == UART9) {
         receive_00 = true;
+        IDC_serial_start_rx_interrupt(UART9);
     } else if (huart->Instance == UART8) {
         receive_01 = true;
+        IDC_serial_start_rx_interrupt(UART8);
     } else if (huart->Instance == UART4) { // (huart == &huart4)
         receive_MIDI = true;
+        IDC_serial_start_rx_interrupt(UART4);
     } else {
         println("unknown serial port");
     }

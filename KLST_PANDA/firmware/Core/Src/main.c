@@ -263,10 +263,8 @@ void PeriphCommonClock_Config(void)
   /** Initializes the peripherals clock
   */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI|RCC_PERIPHCLK_SAI4A
-                              |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_UART8
-                              |RCC_PERIPHCLK_UART9|RCC_PERIPHCLK_UART4
-                              |RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_CKPER
-                              |RCC_PERIPHCLK_LTDC|RCC_PERIPHCLK_USART3;
+                              |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_CKPER
+                              |RCC_PERIPHCLK_LTDC;
   PeriphClkInitStruct.PLL2.PLL2M = 2;
   PeriphClkInitStruct.PLL2.PLL2N = 75;
   PeriphClkInitStruct.PLL2.PLL2P = 48;
@@ -286,8 +284,6 @@ void PeriphCommonClock_Config(void)
   PeriphClkInitStruct.OspiClockSelection = RCC_OSPICLKSOURCE_PLL2;
   PeriphClkInitStruct.CkperClockSelection = RCC_CLKPSOURCE_HSI;
   PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
-  PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_PLL3;
-  PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16910CLKSOURCE_PLL3;
   PeriphClkInitStruct.Sai4AClockSelection = RCC_SAI4ACLKSOURCE_PLL3;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
@@ -1513,7 +1509,7 @@ void MX_UART8_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_DisableFifoMode(&huart8) != HAL_OK)
+  if (HAL_UARTEx_EnableFifoMode(&huart8) != HAL_OK)
   {
     Error_Handler();
   }
@@ -1561,7 +1557,7 @@ void MX_UART9_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_DisableFifoMode(&huart9) != HAL_OK)
+  if (HAL_UARTEx_EnableFifoMode(&huart9) != HAL_OK)
   {
     Error_Handler();
   }
