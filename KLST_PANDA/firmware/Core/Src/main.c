@@ -1509,7 +1509,7 @@ void MX_UART8_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_EnableFifoMode(&huart8) != HAL_OK)
+  if (HAL_UARTEx_DisableFifoMode(&huart8) != HAL_OK)
   {
     Error_Handler();
   }
@@ -1557,7 +1557,7 @@ void MX_UART9_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_EnableFifoMode(&huart9) != HAL_OK)
+  if (HAL_UARTEx_DisableFifoMode(&huart9) != HAL_OK)
   {
     Error_Handler();
   }

@@ -194,17 +194,18 @@ void KLST_PANDA_loop() {
 // void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
     println("HAL_UART_ErrorCallback");
-    PERIPH_BASE;
-
     if (huart->Instance == UART9) {
         println("UART9");
-        IDC_serial_start_rx_interrupt(UART9);
+        RX_00_counter = 0;
+        IDC_serial_handle_rx(UART9);
     } else if (huart->Instance == UART8) {
         println("UART8");
-        IDC_serial_start_rx_interrupt(UART8);
+        RX_01_counter = 1;
+        IDC_serial_handle_rx(UART8);
     } else if (huart->Instance == UART4) {
         println("UART4");
-        IDC_serial_start_rx_interrupt(UART4);
+        RX_MIDI_counter = 0;
+        IDC_serial_handle_rx(UART4);
     } else {
         println("unknown serial port");
     }
@@ -216,14 +217,14 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART9) {
-        receive_00 = true;
-        IDC_serial_start_rx_interrupt(UART9);
+        RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9);
+        RX_00_counter++;
     } else if (huart->Instance == UART8) {
-        receive_01 = true;
-        IDC_serial_start_rx_interrupt(UART8);
+        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8);
+        RX_01_counter++;
     } else if (huart->Instance == UART4) { // (huart == &huart4)
-        receive_MIDI = true;
-        IDC_serial_start_rx_interrupt(UART4);
+        RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4);
+        RX_MIDI_counter++;
     } else {
         println("unknown serial port");
     }
