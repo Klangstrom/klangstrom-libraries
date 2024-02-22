@@ -19,6 +19,8 @@ extern "C" {
 #include "KLST_PANDA-MechanicalKey.h"
 #include "KLST_PANDA-IDC_Serial.h"
 
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart8;
@@ -150,6 +152,12 @@ internalmemory_test_all();
 #ifdef KLST_PANDA_ENABLE_ENCODER
     println("initializing rotary encoders (MX:TIM1+TIM2)");
     encoder.setup(); // TODO implement
+    /* --- TODO move encoder to file */
+    HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+    HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
+
+    HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+    HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_4);
 #endif // KLST_PANDA_ENABLE_ENCODER
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
@@ -183,6 +191,9 @@ void KLST_PANDA_loop() {
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
     IDC_serial_loop();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
+
+    println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
+    println("ENCODER_01: %i", ((TIM2->CNT) >> 2));
 
     LED_toggle(LED_00);
     println("EOF");
@@ -237,17 +248,32 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
+static bool MECH_00_state = false;
+static bool MECH_01_state = false;
+
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim4) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-            println("MECH_01");
+            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
+            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
+        }
+    }
+    if (htim == &htim1) {
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
+            println("ENCODER_00: BUTTON");
+        }
+    }
+    if (htim == &htim2) {
+        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+            println("ENCODER_01: BUTTON");
         }
     }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
-        println("MECH_00");
+        MECH_00_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_00_GPIO_Port, _MECH_BUTTON_00_Pin);
+        println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
     }
     if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
         println("TOUCH");
