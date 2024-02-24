@@ -70,12 +70,19 @@ void IDC_serial_loop() {
     evaluate_receive_flags();
 
 #define TX_BUFFER_SIZE 3
-    uint8_t data[TX_BUFFER_SIZE] = { 0xF4, 0x22, 0x8A };
+    uint8_t data[TX_BUFFER_SIZE];
     println("data_transmit: UART9 + UART8 + UART4");
+    data[0] = 0xF2;
+    data[1] = 0x20;
+    data[2] = 0x01;
     HAL_UART_Transmit_IT(&huart9, (uint8_t*) data, TX_BUFFER_SIZE);
-    data[2] = 0x03;
+    data[0] = 0xF3;
+    data[1] = 0x21;
+    data[2] = 0x02;
     HAL_UART_Transmit_IT(&huart8, (uint8_t*) data, TX_BUFFER_SIZE);
-    data[2] = 0x04;
+    data[0] = 0xF4;
+    data[1] = 0x22;
+    data[2] = 0x03;
     HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, TX_BUFFER_SIZE);
 }
 

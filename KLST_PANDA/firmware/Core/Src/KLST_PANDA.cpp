@@ -37,8 +37,11 @@ static uint32_t frame_counter = 0;
 static void KLST_PANDA_MX_Init_Modules() {
 #ifdef KLST_PANDA_ENABLE_GPIO
     MX_GPIO_Init();
-    MX_TIM4_Init(); // TODO mechanical keys
 #endif // KLST_PANDA_ENABLE_GPIO
+
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
+    MX_TIM4_Init();
+#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
 #ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
     MX_USART3_UART_Init();
@@ -93,11 +96,12 @@ void KLST_PANDA_setup() {
     serialdebug_setup();
 #endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     /* --- TODO move mechanical keys to file */
     println("initializing mechanical keys (MX:TIM4)");
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
+#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
-    /* --- GPIO+LEDs */
 #ifdef KLST_PANDA_ENABLE_GPIO
     println("initializing GPIO");
 
@@ -192,8 +196,10 @@ void KLST_PANDA_loop() {
     IDC_serial_loop();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
+#ifdef KLST_PANDA_ENABLE_ENCODER
     println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
     println("ENCODER_01: %i", ((TIM2->CNT) >> 2));
+#endif // KLST_PANDA_ENABLE_ENCODER
 
     LED_toggle(LED_00);
     println("EOF");
@@ -248,16 +254,22 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
+// TODO move to own file
 static bool MECH_00_state = false;
 static bool MECH_01_state = false;
+#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     if (htim == &htim4) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
             MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
             println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
         }
     }
+#endif
+#ifdef KLST_PANDA_ENABLE_ENCODER
     if (htim == &htim1) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
             println("ENCODER_00: BUTTON");
@@ -268,16 +280,21 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
             println("ENCODER_01: BUTTON");
         }
     }
+#endif // KLST_PANDA_ENABLE_ENCODER
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
         MECH_00_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_00_GPIO_Port, _MECH_BUTTON_00_Pin);
         println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
     }
+#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
+#ifdef KLST_PANDA_ENABLE_DISPLAY
     if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
         println("TOUCH");
     }
+#endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
 #ifdef __cplusplus
