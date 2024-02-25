@@ -18,9 +18,9 @@ void sdcard_setup() {
         println("SDCard: init failed");
     }
     println("SDCard: setup completed");
-    println("SDCard: NOTE that DMA is disabled.");
-    println("SDCard: if DMA is enabled DCache must handled properly");
-    println("SDCard: e.g stored in `section(\".dma_buffer\")`");
+//    println("SDCard: NOTE that DMA is disabled.");
+//    println("SDCard: if DMA is enabled DCache must handled properly");
+//    println("SDCard: e.g stored in `section(\".dma_buffer\")`");
 }
 
 bool sdcard_detected() {
