@@ -919,19 +919,12 @@
     (effects (font (size 1.27 1.27)) (justify top))
     (uuid 93c67181-fd3b-440f-a697-78faff01ed18)
   )
-  (text_box "TYPE A ( DIN-5 to TRS )\n\nPIN 4 (Source)	> TRS RING\nPIN 2 (Shield)	> TRS SLEEVE\nPIN 5 (Sink)	> TRS TIP\n"
+  (text_box "TYPE A ( DIN-5 to TRS )\n\nPIN 5 (Sink)	> TRS TIP\nPIN 4 (Source)	> TRS RING\nPIN 2 (Shield)	> TRS SLEEVE\n"
     (at 15.24 116.84 0) (size 38.1 48.26)
     (stroke (width 0) (type default))
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
     (uuid a2e6489d-8fd3-4b7b-9cac-56116040484a)
-  )
-  (text_box "@NOTE(symbol is *looking* onto cable connector e.g PIN4 is on right side, looking into to socket )"
-    (at 17.145 51.435 0) (size 32.385 8.89)
-    (stroke (width 0) (type default))
-    (fill (type none))
-    (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid b60acef8-8e13-42af-975b-6c1a8a035616)
   )
 
   (text "UART_RX" (at 139.7 38.1 0)
@@ -945,6 +938,10 @@
   (text "MIDI_OUT" (at 15.24 66.04 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 8497625e-81f6-4cc8-9956-cf78c49a7ef4)
+  )
+  (text "@TODO(maybe just leave R2 unconnected)" (at 41.91 102.235 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 980c5f6a-d53f-4dcf-a850-b69f182ac5e1)
   )
   (text "TIP 5" (at 27.305 150.495 0)
     (effects (font (size 1.27 1.27)) (justify right bottom))
