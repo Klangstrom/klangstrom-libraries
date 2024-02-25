@@ -1,106 +1,241 @@
-(kicad_sch (version 20230121) (generator eeschema)
-
-  (uuid b421b872-5329-46cd-8911-b8ec4ccbe38e)
-
-  (paper "A4")
-
-  (lib_symbols
-  )
-
-
-  (rectangle (start 15.24 15.24) (end 81.915 57.785)
-    (stroke (width 0) (type default))
-    (fill (type none))
-    (uuid 32212a7e-0b26-40d1-a5c9-db8584eff408)
-  )
-
-  (text "BUTTONS + KEYS" (at 15.24 15.24 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 85727e61-d711-41cd-90ac-c07a54385679)
-  )
-
-  (global_label "_MECH_BUTTON_00" (shape input) (at 42.545 35.56 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 287e8d2a-a74f-4cb4-9219-0210cb474989)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 21.9198 35.56 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-  (global_label "_MECH_BUTTON_01" (shape input) (at 42.545 46.99 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 3ba02b96-c2fe-47ba-b51e-5ff82bff8274)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 21.9198 46.99 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-  (global_label "_BUTTON_PROGRAMMER" (shape input) (at 42.545 24.13 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid fb400197-479c-44d4-b464-a25f3edc98eb)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 17.6864 24.13 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-
-  (sheet (at 42.545 33.02) (size 34.29 5.08) (fields_autoplaced)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0000))
-    (uuid 042452de-70bc-4b43-b264-a9a1cbea3e51)
-    (property "Sheetname" "MECHANICAL_KEY_00" (at 42.545 32.3084 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "mechanical_key.kicad_sch" (at 42.545 38.6846 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (pin "KEY" input (at 42.545 35.56 180)
-      (effects (font (size 1.27 1.27)) (justify left))
-      (uuid c49d2cf3-4758-4998-b0ba-068735ce8fc8)
-    )
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee" (page "21"))
-      )
-    )
-  )
-
-  (sheet (at 42.545 21.59) (size 26.67 5.08) (fields_autoplaced)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0000))
-    (uuid 7936a5e0-5a04-43e4-aa84-42432289d154)
-    (property "Sheetname" "BUTTON_PROGRAMMER" (at 42.545 20.8784 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "button_debounced.kicad_sch" (at 42.545 27.2546 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (pin "BUTTON_PIN" input (at 42.545 24.13 180)
-      (effects (font (size 1.27 1.27)) (justify left))
-      (uuid 35b50cb0-fda5-4852-91ac-b98047a3b922)
-    )
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee" (page "14"))
-      )
-    )
-  )
-
-  (sheet (at 42.545 44.45) (size 34.29 5.08) (fields_autoplaced)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0000))
-    (uuid 84723a09-c269-4794-b0be-89f4260a1140)
-    (property "Sheetname" "MECHANICAL_KEY_01" (at 42.545 43.7384 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "mechanical_key.kicad_sch" (at 42.545 50.1146 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (pin "KEY" input (at 42.545 46.99 180)
-      (effects (font (size 1.27 1.27)) (justify left))
-      (uuid df352994-d46f-403b-a34f-f595244d2938)
-    )
-    (instances
-      (project "KLST_PANDA"
-        (path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee" (page "22"))
-      )
-    )
-  )
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "b421b872-5329-46cd-8911-b8ec4ccbe38e")
+	(paper "A4")
+	(lib_symbols)
+	(rectangle
+		(start 15.24 15.24)
+		(end 81.915 57.785)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 32212a7e-0b26-40d1-a5c9-db8584eff408)
+	)
+	(text "BUTTONS + KEYS"
+		(exclude_from_sim no)
+		(at 15.24 15.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "85727e61-d711-41cd-90ac-c07a54385679")
+	)
+	(global_label "_MECH_BUTTON_00"
+		(shape input)
+		(at 42.545 35.56 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "287e8d2a-a74f-4cb4-9219-0210cb474989")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 21.9198 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_MECH_BUTTON_01"
+		(shape input)
+		(at 42.545 46.99 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3ba02b96-c2fe-47ba-b51e-5ff82bff8274")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 21.9198 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_BUTTON_PROGRAMMER"
+		(shape input)
+		(at 42.545 24.13 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fb400197-479c-44d4-b464-a25f3edc98eb")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 17.6864 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(sheet
+		(at 42.545 33.02)
+		(size 34.29 5.08)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "042452de-70bc-4b43-b264-a9a1cbea3e51")
+		(property "Sheetname" "MECHANICAL_KEY_00"
+			(at 42.545 32.3084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mechanical_key.kicad_sch"
+			(at 42.545 38.6846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "KEY" input
+			(at 42.545 35.56 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "c49d2cf3-4758-4998-b0ba-068735ce8fc8")
+		)
+		(instances
+			(project "KLST_PANDA"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee"
+					(page "21")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 42.545 21.59)
+		(size 26.67 5.08)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7936a5e0-5a04-43e4-aa84-42432289d154")
+		(property "Sheetname" "BUTTON_PROGRAMMER"
+			(at 42.545 20.8784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "button_debounced.kicad_sch"
+			(at 42.545 27.2546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "BUTTON_PIN" input
+			(at 42.545 24.13 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "35b50cb0-fda5-4852-91ac-b98047a3b922")
+		)
+		(instances
+			(project "KLST_PANDA"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee"
+					(page "14")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 42.545 44.45)
+		(size 34.29 5.08)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "84723a09-c269-4794-b0be-89f4260a1140")
+		(property "Sheetname" "MECHANICAL_KEY_01"
+			(at 42.545 43.7384 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mechanical_key.kicad_sch"
+			(at 42.545 50.1146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "KEY" input
+			(at 42.545 46.99 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "df352994-d46f-403b-a34f-f595244d2938")
+		)
+		(instances
+			(project "KLST_PANDA"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/f08ee185-46fd-4c64-8c0d-73017bc497ee"
+					(page "22")
+				)
+			)
+		)
+	)
 )
