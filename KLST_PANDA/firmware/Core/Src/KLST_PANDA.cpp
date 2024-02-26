@@ -25,6 +25,7 @@ extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
+extern DMA_HandleTypeDef hdma_uart8_rx;
 
 RotaryEncoder encoder;
 MechanicalKey mechanicalkey;
@@ -35,6 +36,7 @@ static uint32_t frame_counter = 0;
 // TODO distribute callbacks
 
 static void KLST_PANDA_MX_Init_Modules() {
+    bool mEnabledDMA = false;
 #ifdef KLST_PANDA_ENABLE_GPIO
     MX_GPIO_Init();
 #endif // KLST_PANDA_ENABLE_GPIO
@@ -60,7 +62,10 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_DISPLAY
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    MX_DMA_Init();
+    if (!mEnabledDMA) {
+        MX_DMA_Init();
+        mEnabledDMA = true;
+    }
     MX_SAI1_Init();
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
@@ -82,6 +87,10 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+    if (!mEnabledDMA) {
+        MX_DMA_Init();
+        mEnabledDMA = true;
+    }
     MX_UART9_Init();
     MX_UART8_Init();
     MX_UART4_Init();
@@ -174,6 +183,7 @@ internalmemory_test_all();
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
     println("initializing IDC serial (MX:UART4+UART8+UART9)");
+    println("UART: note UART8 is configured for DMA");
     IDC_serial_setup();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
@@ -223,9 +233,11 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
         RX_00_counter = 0;
         IDC_serial_handle_rx(UART9);
     } else if (huart->Instance == UART8) {
-        println("UART8");
-        RX_01_counter = 1;
-        IDC_serial_handle_rx(UART8);
+//        println("UART8");
+//        RX_01_counter = 0;
+//        IDC_serial_handle_rx(UART8);
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);
+        __HAL_DMA_DISABLE_IT(&hdma_uart8_rx, DMA_IT_HT);
     } else if (huart->Instance == UART4) {
         println("UART4");
         RX_MIDI_counter = 0;
@@ -243,9 +255,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART9) {
         RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9);
         RX_00_counter++;
-    } else if (huart->Instance == UART8) {
-        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8);
-        RX_01_counter++;
+//    } else if (huart->Instance == UART8) {
+//        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8);
+//        RX_01_counter++;
     } else if (huart->Instance == UART4) { // (huart == &huart4)
         RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4);
         RX_MIDI_counter++;
