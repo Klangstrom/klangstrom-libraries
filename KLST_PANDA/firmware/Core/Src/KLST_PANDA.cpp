@@ -26,6 +26,9 @@ extern "C" {
 #ifdef KLST_PANDA_ENABLE_USB_HOST
 #include "usb_host.h"
 #endif // KLST_PANDA_ENABLE_USB_HOST
+#ifdef KLST_PANDA_ENABLE_USB_DEVICE
+#include "usb_device.h"
+#endif // KLST_PANDA_ENABLE_USB_DEVICE
 
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
@@ -107,6 +110,10 @@ static void KLST_PANDA_MX_Init_Modules() {
 #ifdef KLST_PANDA_ENABLE_USB_HOST
     MX_USB_HOST_Init();
 #endif // KLST_PANDA_ENABLE_USB_HOST
+
+#ifdef KLST_PANDA_ENABLE_USB_DEVICE
+    MX_USB_DEVICE_Init();
+#endif // KLST_PANDA_ENABLE_USB_DEVICE
 }
 
 void KLST_PANDA_setup() {
