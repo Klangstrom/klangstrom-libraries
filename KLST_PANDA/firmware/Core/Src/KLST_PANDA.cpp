@@ -3,8 +3,6 @@ extern "C" {
 #endif
 
 #include "main.h"
-#include "fatfs.h"
-#include "pdm2pcm.h"
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
@@ -18,6 +16,16 @@ extern "C" {
 #include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-MechanicalKey.h"
 #include "KLST_PANDA-IDC_Serial.h"
+
+#ifdef KLST_PANDA_ENABLE_SD_CARD
+#include "fatfs.h"
+#endif // KLST_PANDA_ENABLE_SD_CARD
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+#include "pdm2pcm.h"
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
+#ifdef KLST_PANDA_ENABLE_USB_HOST
+#include "usb_host.h"
+#endif // KLST_PANDA_ENABLE_USB_HOST
 
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
@@ -95,6 +103,10 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_UART8_Init();
     MX_UART4_Init();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
+
+#ifdef KLST_PANDA_ENABLE_USB_HOST
+    MX_USB_HOST_Init();
+#endif // KLST_PANDA_ENABLE_USB_HOST
 }
 
 void KLST_PANDA_setup() {
@@ -113,7 +125,6 @@ void KLST_PANDA_setup() {
 
 #ifdef KLST_PANDA_ENABLE_GPIO
     println("initializing GPIO");
-
     println("initializing LEDs");
     LED_setup();
     LED_turn_off(LED_00);
@@ -212,8 +223,15 @@ void KLST_PANDA_loop() {
 #endif // KLST_PANDA_ENABLE_ENCODER
 
     LED_toggle(LED_00);
+
+    // TODO make LED task
+#ifdef KLST_PANDA_ENABLE_USB_HOST
+    MX_USB_HOST_Process();
+    HAL_Delay(10);
+#else
     println("EOF");
     HAL_Delay(500);
+#endif // KLST_PANDA_ENABLE_USB_HOST
 }
 
 /* --- CALLBACKS --- */
