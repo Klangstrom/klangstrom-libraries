@@ -4,25 +4,23 @@
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-SerialDebug.h"
 
-extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
-
 extern DMA_HandleTypeDef hdma_uart8_rx;
+extern DMA_HandleTypeDef hdma_uart8_tx;
+extern DMA_HandleTypeDef hdma_uart9_rx;
+extern DMA_HandleTypeDef hdma_uart9_tx;
 
 uint8_t RX_00_buffer[BUFFER_SIZE];
 //uint8_t RX_01_buffer[BUFFER_SIZE];
-uint8_t RX_MIDI_buffer[BUFFER_SIZE];
 uint8_t __attribute__((section(".dma_buffer"))) RX_01_DMA_buffer[DMA_BUFFER_SIZE];
 uint8_t __attribute__((section(".dma_buffer"))) TX_01_DMA_buffer[DMA_BUFFER_SIZE];
 
 volatile uint8_t RX_00_counter;
 //volatile uint8_t RX_01_counter;
-volatile uint8_t RX_MIDI_counter;
 
 uint8_t UART9_00_buffer[1];
 //uint8_t UART8_01_buffer[1];
-uint8_t UART4_MIDI_buffer[1];
 
 static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t buffer_size) {
     printf("%s (", name);
@@ -36,7 +34,7 @@ static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t bu
 static void evaluate_receive_flags() {
     bool mReceivedData = RX_00_counter > 0
 //            || RX_01_counter > 0
-            || RX_MIDI_counter > 0;
+            ;
     if (mReceivedData) {
         print("data_receive : (");
     }
@@ -44,14 +42,11 @@ static void evaluate_receive_flags() {
         print_and_clear_buffer("UART9", RX_00_buffer, RX_00_counter);
         RX_00_counter = 0;
     }
+    // TODO implement this properly
 //    if (RX_01_counter > 0) {
 //        print_and_clear_buffer("UART8", RX_01_buffer, RX_01_counter);
 //        RX_01_counter = 0;
 //    }
-    if (RX_MIDI_counter > 0) {
-        print_and_clear_buffer("UART4", RX_MIDI_buffer, RX_MIDI_counter);
-        RX_MIDI_counter = 0;
-    }
     if (mReceivedData) {
         printf("\r\n");
     }
@@ -60,19 +55,12 @@ static void evaluate_receive_flags() {
 void IDC_serial_setup() {
     RX_00_counter = 0;
 //    RX_01_counter = 0;
-    RX_MIDI_counter = 0;
     // 64000000Hz/(31250Baud*16) = 128
 
-    // TODO MIDI ( move to own file )
-    // UART4 > _MIDI_ANALOG_IN + _MIDI_ANALOG_OUT
-    IDC_serial_handle_rx(UART4);
-//    IDC_serial_handle_rx(UART8);
-    IDC_serial_handle_rx(UART9);
+    IDC_serial_handle_rx(UART8, 0);
+    IDC_serial_handle_rx(UART9, 0);
 
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);
-    __HAL_DMA_DISABLE_IT(&hdma_uart8_rx, DMA_IT_HT);
-
-    println("UART: note UART8 is configured for DMA … but not handled TODO");
+    println("UART: note, UART8 is configured for DMA + UART9 is configured for interrupt");
 }
 
 void IDC_serial_loop() {
@@ -80,8 +68,7 @@ void IDC_serial_loop() {
 
 #define TX_BUFFER_SIZE 3
     uint8_t data[TX_BUFFER_SIZE];
-//    println("data_transmit: UART9 + UART8 + UART4");
-    println("data_transmit: UART9 + UART4");
+    println("data_transmit: UART9 + UART8");
     data[0] = 0xF2;
     data[1] = 0x20;
     data[2] = 0x01;
@@ -90,10 +77,6 @@ void IDC_serial_loop() {
 //    data[1] = 0x21;
 //    data[2] = 0x02;
 //    HAL_UART_Transmit_IT(&huart8, (uint8_t*) data, TX_BUFFER_SIZE);
-    data[0] = 0xF4;
-    data[1] = 0x22;
-    data[2] = 0x03;
-    HAL_UART_Transmit_IT(&huart4, (uint8_t*) data, TX_BUFFER_SIZE);
 
     data[0] = 0xF3;
     data[1] = 0x21;
@@ -104,31 +87,23 @@ void IDC_serial_loop() {
     HAL_UART_Transmit_DMA(&huart8, TX_01_DMA_buffer, TX_BUFFER_SIZE);
 }
 
-uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance) {
+uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length) {
     uint8_t mValue = 0;
     if (uart_instance == UART9) {
         mValue = UART9_00_buffer[0];
         HAL_UART_Receive_IT(&huart9, UART9_00_buffer, 1);
-//    } else if (uart_instance == UART8) {
-//        mValue = UART8_01_buffer[0];
-//        HAL_UART_Receive_IT(&huart8, UART8_01_buffer, 1);
-    } else if (uart_instance == UART4) {
-        mValue = UART4_MIDI_buffer[0];
-        HAL_UART_Receive_IT(&huart4, UART4_MIDI_buffer, 1);
     }
-    return mValue;
-}
 
-// TODO move to KLST_PANDA.c
-
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
-    // check if the callback is called by UART8 peripheral
-    if (huart->Instance == UART8) {
-        print("data_receive : (");
-        print_and_clear_buffer("UART8[DMA]", RX_01_DMA_buffer, Size);
-        printf("\r\n");
+    if (uart_instance == UART8) {
+        if (length > 0) {
+            // TODO write to persistent buffer
+            print("data_receive : (");
+            print_and_clear_buffer("UART8[DMA]", RX_01_DMA_buffer, length);
+            printf("\r\n");
+        }
 
         HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);
         __HAL_DMA_DISABLE_IT(&hdma_uart8_rx, DMA_IT_HT);
     }
+    return mValue;
 }

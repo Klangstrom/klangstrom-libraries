@@ -9,17 +9,15 @@
 
 extern uint8_t RX_00_buffer[BUFFER_SIZE];
 //extern  uint8_t RX_01_buffer[BUFFER_SIZE];
-extern uint8_t RX_MIDI_buffer[BUFFER_SIZE];
 extern uint8_t __attribute__((section(".dma_buffer"))) RX_01_DMA_buffer[DMA_BUFFER_SIZE];
 extern uint8_t __attribute__((section(".dma_buffer"))) TX_01_DMA_buffer[DMA_BUFFER_SIZE];
 
 extern volatile uint8_t RX_00_counter;
 //extern volatile uint8_t RX_01_counter;
-extern volatile uint8_t RX_MIDI_counter;
 
-// maybe make C++
+// TODO make C++
 void IDC_serial_setup();
 void IDC_serial_loop();
-uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance);
+uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length);
 
 #endif /* INC_KLST_PANDA_IDC_SERIAL_H_ */

@@ -16,6 +16,7 @@ extern "C" {
 #include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-MechanicalKey.h"
 #include "KLST_PANDA-IDC_Serial.h"
+#include "KLST_PANDA-MIDI_analog.h"
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
 #include "fatfs.h"
@@ -104,8 +105,15 @@ static void KLST_PANDA_MX_Init_Modules() {
     }
     MX_UART9_Init();
     MX_UART8_Init();
-    MX_UART4_Init();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
+
+#ifdef KLST_PANDA_ENABLE_MIDI
+    if (!mEnabledDMA) {
+        MX_DMA_Init();
+        mEnabledDMA = true;
+    }
+    MX_UART4_Init();
+#endif // KLST_PANDA_ENABLE_MIDI
 
 #ifdef KLST_PANDA_ENABLE_USB_HOST
     MX_USB_HOST_Init();
@@ -200,18 +208,21 @@ internalmemory_test_all();
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
-    println("initializing IDC serial (MX:UART4+UART8+UART9)");
+    println("initializing IDC serial (MX:UART8+UART9)");
     println("UART: note UART8 is configured for DMA");
     IDC_serial_setup();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
+#ifdef KLST_PANDA_ENABLE_MIDI
+    println("initializing MIDI analog (MX:UART4)");
+    MIDI_analog_setup();
+#endif // KLST_PANDA_ENABLE_MIDI
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
     /* --- --------------------- --- */
     println("");
     println("begin loop");
     println("");
-    display_switch_on();
 }
 
 void KLST_PANDA_loop() {
@@ -223,6 +234,10 @@ void KLST_PANDA_loop() {
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
     IDC_serial_loop();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
+
+#ifdef KLST_PANDA_ENABLE_MIDI
+    MIDI_analog_loop();
+#endif // KLST_PANDA_ENABLE_MIDI
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
     println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
@@ -256,20 +271,20 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART9) {
         println("UART9");
         RX_00_counter = 0;
-        IDC_serial_handle_rx(UART9);
-    } else if (huart->Instance == UART8) {
-//        println("UART8");
-//        RX_01_counter = 0;
-//        IDC_serial_handle_rx(UART8);
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);
-        __HAL_DMA_DISABLE_IT(&hdma_uart8_rx, DMA_IT_HT);
-    } else if (huart->Instance == UART4) {
-        println("UART4");
-        RX_MIDI_counter = 0;
-        IDC_serial_handle_rx(UART4);
-    } else {
-        println("unknown serial port");
+        IDC_serial_handle_rx(UART9, 0);
+        return;
     }
+    if (huart->Instance == UART8) {
+        IDC_serial_handle_rx(UART8, 0);
+        return;
+    }
+    if (huart->Instance == UART4) {
+        println("UART4");
+        MIDI_analog_handle_start_receive();
+        return;
+    }
+
+    println("unknown serial port");
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
@@ -278,17 +293,39 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART9) {
-        RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9);
+        RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9, 0);
         RX_00_counter++;
-//    } else if (huart->Instance == UART8) {
-//        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8);
-//        RX_01_counter++;
-    } else if (huart->Instance == UART4) { // (huart == &huart4)
-        RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4);
-        RX_MIDI_counter++;
-    } else {
-        println("unknown serial port");
+        return;
     }
+//    if (huart->Instance == UART8) {
+//        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8, 0);
+//        RX_01_counter++;
+//        return;
+//    }
+
+//    if (huart->Instance == UART4) { // (huart == &huart4)
+//        RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4, 0);
+//        RX_MIDI_counter++;
+//        return;
+//    }
+
+    println("unknown serial port");
+}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
+    if (huart->Instance == UART8) {
+        IDC_serial_handle_rx(UART8, Size);
+        return;
+    }
+    if (huart->Instance == UART9) {
+        // TODO implement UART9 as DMA
+        return;
+    }
+    if (huart->Instance == UART4) {
+        MIDI_analog_handle_rx(Size);
+        return;
+    }
+    println("unknown serial port");
 }
 
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
