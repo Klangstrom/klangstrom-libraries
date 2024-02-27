@@ -19,7 +19,7 @@ void DAC_setup() {
     if (status) {
         println("DAC: error at start time: %i", status);
     }
-    HAL_DAC_Stop(&hdac1, DAC1_CHANNEL_1);
+//    HAL_DAC_Stop(&hdac1, DAC1_CHANNEL_1);
 }
 
 void DAC_write(float value) {
