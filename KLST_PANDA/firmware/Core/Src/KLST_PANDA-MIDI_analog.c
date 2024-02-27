@@ -49,6 +49,14 @@ void MIDI_analog_handle_rx(uint16_t length) {
 }
 
 void MIDI_analog_handle_start_receive() {
-    HAL_UARTEx_ReceiveToIdle_DMA(&huart4, RX_MIDI_DMA_buffer, MIDI_ANALOG_DMA_BUFFER_SIZE);
+    HAL_StatusTypeDef status = HAL_UARTEx_ReceiveToIdle_DMA(&huart4, RX_MIDI_DMA_buffer, MIDI_ANALOG_DMA_BUFFER_SIZE);
     __HAL_DMA_DISABLE_IT(&hdma_uart4_rx, DMA_IT_HT);
+    /*
+     HAL_OK       = 0x00,
+     HAL_ERROR    = 0x01,
+     HAL_BUSY     = 0x02,
+     HAL_TIMEOUT  = 0x03*/
+    if (status) {
+        println("MIDI: Error %i", status);
+    }
 }

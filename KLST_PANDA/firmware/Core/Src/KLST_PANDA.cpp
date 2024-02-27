@@ -229,6 +229,20 @@ internalmemory_test_all();
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
+//    printf("***** WARNING REMOVE THE LINES BELOW *****");
+//    printf("***** TESTING MIDI ANALOG UART *****");
+//    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+//    /*Configure GPIO pin : _MIDI_ANALOG_OUT_Pin */
+//    GPIO_InitStruct.Pin = _MIDI_ANALOG_OUT_Pin;
+//    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    HAL_GPIO_Init(_MIDI_ANALOG_OUT_GPIO_Port, &GPIO_InitStruct);
+//    /*Configure GPIO pin : _MIDI_ANALOG_IN_Pin */
+//    GPIO_InitStruct.Pin = _MIDI_ANALOG_IN_Pin;
+//    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    HAL_GPIO_Init(_MIDI_ANALOG_IN_GPIO_Port, &GPIO_InitStruct);
+
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
     /* --- --------------------- --- */
@@ -265,6 +279,10 @@ void KLST_PANDA_loop() {
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
     LED_toggle(LED_00);
+
+//    println("MIDI TEST");
+//    HAL_GPIO_TogglePin(_MIDI_ANALOG_OUT_GPIO_Port, _MIDI_ANALOG_OUT_Pin);
+//    println("MIDI: %i", HAL_GPIO_ReadPin(_MIDI_ANALOG_IN_GPIO_Port, _MIDI_ANALOG_IN_Pin));
 
     // TODO make LED task
 #ifdef KLST_PANDA_ENABLE_USB_HOST
