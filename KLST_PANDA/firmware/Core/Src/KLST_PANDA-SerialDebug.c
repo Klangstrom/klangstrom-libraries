@@ -33,8 +33,12 @@ void println(const char *format, ...) {
 
 void print_I2C_show_devices(I2C_HandleTypeDef *hi2c) {
     for (uint8_t i = 0; i < 255; i++) {
-        if (!HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000)) {
-            println("- I2C DEVICE READY: 0x%X", i);
+        HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000);
+//        if (hi2c->ErrorCode & HAL_I2C_ERROR_TIMEOUT) {
+//            println("- I2C DEVICE TIMED OUT: 0x%02X", i);
+//        }
+        if (!status) {
+            println("- I2C DEVICE READY: 0x%02X", i);
         }
     }
 }

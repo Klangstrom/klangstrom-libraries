@@ -25,7 +25,7 @@ uint8_t UART9_00_buffer[1];
 static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t buffer_size) {
     printf("%s (", name);
     for (int i = 0; i < buffer_size; i++) {
-        printf("0x%X, ", buffer[i]);
+        printf("0x%02X, ", buffer[i]);
         buffer[i] = 0;
     }
     printf(") ");

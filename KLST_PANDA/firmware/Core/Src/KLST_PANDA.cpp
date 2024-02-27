@@ -17,6 +17,7 @@ extern "C" {
 #include "KLST_PANDA-MechanicalKey.h"
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-MIDI_analog.h"
+#include "KLST_PANDA-ADCDAC.h"
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
 #include "fatfs.h"
@@ -122,6 +123,11 @@ static void KLST_PANDA_MX_Init_Modules() {
 #ifdef KLST_PANDA_ENABLE_USB_DEVICE
     MX_USB_DEVICE_Init();
 #endif // KLST_PANDA_ENABLE_USB_DEVICE
+
+#ifdef KLST_PANDA_ENABLE_ADC_DAC
+    MX_ADC3_Init();
+    MX_DAC1_Init();
+#endif // KLST_PANDA_ENABLE_ADC_DAC
 }
 
 void KLST_PANDA_setup() {
@@ -208,15 +214,21 @@ internalmemory_test_all();
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
-    println("initializing IDC serial (MX:UART8+UART9)");
-    println("UART: note UART8 is configured for DMA");
+    println("initializing IDC serial (MX:DMA+UART8+UART9)");
     IDC_serial_setup();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
 #ifdef KLST_PANDA_ENABLE_MIDI
-    println("initializing MIDI analog (MX:UART4)");
+    println("initializing MIDI analog (MX:DMA+UART4)");
     MIDI_analog_setup();
 #endif // KLST_PANDA_ENABLE_MIDI
+
+#ifdef KLST_PANDA_ENABLE_ADC_DAC
+    println("initializing ADC + DAC (MX:ADC3+DAC1)");
+    ADC_setup();
+    DAC_setup();
+#endif // KLST_PANDA_ENABLE_ADC_DAC
+
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
     /* --- --------------------- --- */
@@ -243,6 +255,14 @@ void KLST_PANDA_loop() {
     println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
     println("ENCODER_01: %i", ((TIM2->CNT) >> 2));
 #endif // KLST_PANDA_ENABLE_ENCODER
+
+#ifdef KLST_PANDA_ENABLE_ADC_DAC
+    static const uint8_t mDACPeriod = 25;
+    const float mDACvalue = (float) (frame_counter % mDACPeriod) / (float) mDACPeriod;
+    DAC_write(mDACvalue);
+    float mADCValue = ADC_read();
+    println("ADC: %f", mADCValue);
+#endif // KLST_PANDA_ENABLE_ADC_DAC
 
     LED_toggle(LED_00);
 

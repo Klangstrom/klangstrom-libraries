@@ -106,13 +106,11 @@ static void MX_I2C1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_ADC2_Init(void);
-static void MX_ADC3_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_TIM23_Init(void);
 static void MX_TIM12_Init(void);
 static void MX_TIM24_Init(void);
 static void MX_TIM15_Init(void);
-static void MX_DAC1_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
@@ -169,13 +167,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
-  MX_ADC3_Init();
   MX_SPI2_Init();
   MX_TIM23_Init();
   MX_TIM12_Init();
   MX_TIM24_Init();
   MX_TIM15_Init();
-  MX_DAC1_Init();
   /* USER CODE BEGIN 2 */
 #endif
   /* USER CODE END 2 */
@@ -427,7 +423,7 @@ static void MX_ADC2_Init(void)
   * @param None
   * @retval None
   */
-static void MX_ADC3_Init(void)
+void MX_ADC3_Init(void)
 {
 
   /* USER CODE BEGIN ADC3_Init 0 */
@@ -521,7 +517,7 @@ void MX_CRC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_DAC1_Init(void)
+void MX_DAC1_Init(void)
 {
 
   /* USER CODE BEGIN DAC1_Init 0 */
