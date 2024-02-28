@@ -1158,7 +1158,9 @@ void MX_TIM3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
-
+  // TODO a bit of a hack to turn off the display backlight right away at startup
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
   /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
 

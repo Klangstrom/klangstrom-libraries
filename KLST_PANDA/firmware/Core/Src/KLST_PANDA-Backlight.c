@@ -9,7 +9,7 @@
 extern TIM_HandleTypeDef htim3;
 
 static uint32_t frame_counter = 0;
-static const uint32_t fPeriod = 32768;
+static const uint32_t fPeriod = 32768; // TODO is there a better way to do this?
 
 void backlight_setup() {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);

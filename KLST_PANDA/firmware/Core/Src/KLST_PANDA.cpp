@@ -66,14 +66,6 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_OCTOSPI1_Init();
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
-#ifdef KLST_PANDA_ENABLE_DISPLAY
-// display+backlight+touch panel
-    MX_LTDC_Init();
-    MX_DMA2D_Init();
-    MX_TIM3_Init();
-    MX_I2C4_Init();
-#endif // KLST_PANDA_ENABLE_DISPLAY
-
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     if (!mEnabledDMA) {
         MX_DMA_Init();
@@ -128,6 +120,14 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_ADC3_Init();
     MX_DAC1_Init();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
+
+#ifdef KLST_PANDA_ENABLE_DISPLAY
+    /* display+backlight+touch panel */
+    MX_LTDC_Init();
+    MX_DMA2D_Init();
+    MX_TIM3_Init();
+    MX_I2C4_Init();
+#endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
 void KLST_PANDA_setup() {
@@ -164,25 +164,6 @@ println("test internal RAM");
 internalmemory_test_all();
 #endif
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-
-#ifdef KLST_PANDA_ENABLE_DISPLAY
-    println("initializing display (LTDC) (MX:LTDC+DMA2D)");
-    display_switch_off();
-    LTDC_setup();
-
-    /* --- backlight */
-
-    println("initializing LCD backlight PWM (MX:TIM3)");
-    backlight_setup();
-    backlight_set_brightness(0.5f);
-
-    /* --- touch panel */
-
-    println("initializing touch panel (FT5206) (MX:I2C4)");
-    display_switch_on(); // TODO maybe turn off?
-    touch_setup();
-//    touch_read();
-#endif // KLST_PANDA_ENABLE_DISPLAY
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
@@ -228,6 +209,25 @@ internalmemory_test_all();
     ADC_setup();
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
+
+#ifdef KLST_PANDA_ENABLE_DISPLAY
+    println("initializing display (LTDC) (MX:LTDC+DMA2D)");
+    display_switch_off();
+    LTDC_setup();
+
+    /* --- touch panel */
+
+    println("initializing touch panel (FT5206) (MX:I2C4)");
+    display_switch_on(); // TODO maybe turn off?
+    touch_setup();
+//    touch_read();
+
+    /* --- backlight */
+
+    println("initializing LCD backlight PWM (MX:TIM3)");
+    backlight_setup();
+    backlight_set_brightness(0.5f);
+#endif // KLST_PANDA_ENABLE_DISPLAY
 
 //    printf("***** WARNING REMOVE THE LINES BELOW *****");
 //    printf("***** TESTING MIDI ANALOG UART *****");
@@ -278,7 +278,10 @@ void KLST_PANDA_loop() {
     println("ADC: %f", mADCValue);
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
+#ifdef KLST_PANDA_ENABLE_GPIO
     LED_toggle(LED_00);
+    LED_toggle(LED_01);
+#endif // KLST_PANDA_ENABLE_GPIO
 
 //    println("MIDI TEST");
 //    HAL_GPIO_TogglePin(_MIDI_ANALOG_OUT_GPIO_Port, _MIDI_ANALOG_OUT_Pin);
