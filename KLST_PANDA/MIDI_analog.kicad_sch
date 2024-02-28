@@ -2146,6 +2146,26 @@
 		)
 		(uuid c78cbb35-ff6d-460f-9bff-786beb5604ca)
 	)
+	(text_box "@INVESTIGATE(MAYBE SOURCE+SINK ARE REVERSED … MAYBE WORKS AS TYPE B WITH SOFTWARE LEVEL INVERSION)"
+		(exclude_from_sim no)
+		(at 65.405 41.91 0)
+		(size 38.735 18.415)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "0c57f38c-df54-4306-9946-e45873a96ded")
+	)
 	(text_box "TYPE B has SOURCE & SINK flipped"
 		(exclude_from_sim no)
 		(at 15.24 161.925 0)
@@ -2223,6 +2243,46 @@
 		)
 		(uuid "a2e6489d-8fd3-4b7b-9cac-56116040484a")
 	)
+	(text_box "@TODO(maybe just leave R2 unconnected as it could cause problems with TS connectors)"
+		(exclude_from_sim no)
+		(at 24.13 100.965 0)
+		(size 38.735 7.62)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "e7ca8db0-6ec3-436b-8910-f508f272ef5a")
+	)
+	(text_box "@TODO(maybe just leave R2 unconnected as it could cause problems with TS connectors)"
+		(exclude_from_sim no)
+		(at 24.13 50.165 0)
+		(size 38.735 7.62)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "edb20e89-f221-4002-953e-c079c3253d18")
+	)
 	(text "UART_RX"
 		(exclude_from_sim no)
 		(at 139.7 38.1 0)
@@ -2255,17 +2315,6 @@
 			(justify left bottom)
 		)
 		(uuid "8497625e-81f6-4cc8-9956-cf78c49a7ef4")
-	)
-	(text "@TODO(maybe just leave R2 unconnected)"
-		(exclude_from_sim no)
-		(at 41.91 102.235 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "980c5f6a-d53f-4dcf-a850-b69f182ac5e1")
 	)
 	(text "TIP 5"
 		(exclude_from_sim no)
