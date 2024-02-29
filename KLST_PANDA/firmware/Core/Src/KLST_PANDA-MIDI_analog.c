@@ -11,6 +11,8 @@ extern DMA_HandleTypeDef hdma_uart4_tx;
 uint8_t __attribute__((section(".dma_buffer"))) RX_MIDI_DMA_buffer[MIDI_ANALOG_DMA_BUFFER_SIZE];
 uint8_t __attribute__((section(".dma_buffer"))) TX_MIDI_DMA_buffer[MIDI_ANALOG_DMA_BUFFER_SIZE];
 
+static bool toogle_note = false;
+
 void MIDI_analog_setup() {
     MIDI_analog_handle_start_receive();
 }
@@ -19,9 +21,10 @@ void MIDI_analog_loop() {
     println("MIDI: UART4");
 #define MIDI_TX_BUFFER_SIZE 3
     uint8_t data[MIDI_TX_BUFFER_SIZE];
-    data[0] = 0xF3;
-    data[1] = 0x21;
-    data[2] = 0x02;
+    toogle_note = !toogle_note;
+    data[0] = toogle_note ? 0x90 : 0x80; // note on : off
+    data[1] = 0x3C; // middle C, chanel 1
+    data[2] = 0x50; // velocity: 80
     for (uint8_t i = 0; i < MIDI_TX_BUFFER_SIZE; i++) {
         TX_MIDI_DMA_buffer[i] = data[i];
     }
