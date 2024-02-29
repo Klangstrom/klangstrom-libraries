@@ -2146,26 +2146,6 @@
 		)
 		(uuid c78cbb35-ff6d-460f-9bff-786beb5604ca)
 	)
-	(text_box "@INVESTIGATE(MAYBE SOURCE+SINK ARE REVERSED … MAYBE WORKS AS TYPE B WITH SOFTWARE LEVEL INVERSION)"
-		(exclude_from_sim no)
-		(at 65.405 41.91 0)
-		(size 38.735 18.415)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type color)
-			(color 255 0 0 1)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "0c57f38c-df54-4306-9946-e45873a96ded")
-	)
 	(text_box "TYPE B has SOURCE & SINK flipped"
 		(exclude_from_sim no)
 		(at 15.24 161.925 0)

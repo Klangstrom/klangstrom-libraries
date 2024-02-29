@@ -127,6 +127,24 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_DMA2D_Init();
     MX_TIM3_Init();
     MX_I2C4_Init();
+#else
+    /* turn display and backlight off when display is not used */
+    static const uint8_t _DISPLAY_ON_OFF_Pin_ID        = 4; // PC4
+    GPIOC->MODER  &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID*2));
+    GPIOC->MODER  |=  ((1 & 0x3) << (_DISPLAY_ON_OFF_Pin_ID*2));
+    GPIOC->OTYPER &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID);
+  //  GPIOC->ODR    |=  (  1 << _DISPLAY_ON_OFF_Pin_ID); // HIGH
+  //  GPIOC->ODR    &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID); // LOW
+    HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_RESET);
+
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    static const uint8_t _DISPLAY_BACKLIGHT_PWM_Pin_ID = 8; // PC8
+    GPIOC->MODER  &= ~(0x3 << (_DISPLAY_BACKLIGHT_PWM_Pin_ID*2));
+    GPIOC->MODER  |=  ((1 & 0x3) << (_DISPLAY_BACKLIGHT_PWM_Pin_ID*2));
+    GPIOC->OTYPER &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID);
+  //  GPIOC->ODR    |=  (  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // HIGH
+  //  GPIOC->ODR    &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // LOW
+    HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
