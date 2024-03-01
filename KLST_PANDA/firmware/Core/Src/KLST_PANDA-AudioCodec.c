@@ -1,5 +1,4 @@
 #include "stm32h7xx_hal.h"
-#include "pdm2pcm.h"
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "WM8904.h"
@@ -12,8 +11,6 @@
 extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
-extern SAI_HandleTypeDef hsai_BlockA4;
-extern PDM_Filter_Handler_t PDM1_filter_handler;
 
 #define KLANG_AUDIO_RATE 48000
 #define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
@@ -22,28 +19,6 @@ extern PDM_Filter_Handler_t PDM1_filter_handler;
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
 uint32_t *mCurrentRXBuffer;
-
-#define PDM_BUFFER_SIZE 128
-uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
-//uint16_t MidBuffer[16];
-//uint8_t txstate = 0;
-//uint8_t rxstate = 0;
-
-uint16_t fifobuf[256];
-uint8_t fifo_w_ptr = 0;
-uint8_t fifo_r_ptr = 0;
-uint8_t fifo_read_enabled = 0;
-
-//static void FifoWrite(uint16_t data) {
-//    fifobuf[fifo_w_ptr] = data;
-//    fifo_w_ptr++;
-//}
-//
-//static uint16_t FifoRead() {
-//    uint16_t val = fifobuf[fifo_r_ptr];
-//    fifo_r_ptr++;
-//    return val;
-//}
 
 static void delay_ms(uint32_t duration) {
     HAL_Delay(duration);
@@ -309,20 +284,10 @@ static void setup_SAI() {
     }
 
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
-
-    for (uint32_t i = 0; i < PDM_BUFFER_SIZE; i++) {
-        pdmRxBuf[0] = 0;
-    }
-
-//    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
-//    if (HAL_OK != status) {
-//        println("### ERROR initializing SAI MIC RX: %i", status);
-//    }
 }
 
-void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
+void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
-//        printf("<");
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
@@ -331,7 +296,7 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
     }
 }
 
-void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
@@ -341,51 +306,23 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
     }
 }
 
-//static void print_FIFO() {
-//    uint32_t mSum = 0;
-//    for (int i = 0; i < 16; i++) {
-//        mSum += FifoRead();
-//    }
-//    mSum /= 16;
-//    printf("%li\n\r", mSum);
-//}
-
-void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-//        printf("*");
-        for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
-            if (pdmRxBuf[i] > 0) print_binary8ui(pdmRxBuf[i]);
-        }
-//        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
-//        for (int i = 0; i < 16; i++) {
-//            FifoWrite(MidBuffer[i]);
-//        }
-//        print_FIFO();
-    }
+void audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA1) {
-//        printf(">");
         mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
     }
 }
 
-void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-//        for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
-//            print_binary32ui(pdmRxBuf[i]);
-//        }
-//        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
-//        for (int i = 0; i < 16; i++) {
-//            FifoWrite(MidBuffer[i]);
-//        }
-//        print_FIFO();
-    }
+void audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA1) {
         mCurrentRXBuffer = &(dma_RX_buffer[0]);
     }
 }
 
-void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-        println("### ERROR error in MIC SAI4");
+void audiocodec_error_callback(SAI_HandleTypeDef *hsai) {
+    if (hsai == &hsai_BlockA1) {
+        println("### ERROR error in RX SAI:BlockA1");
+    }
+    if (hsai == &hsai_BlockB1) {
+        println("### ERROR error in TX SAI:BlockB1");
     }
 }

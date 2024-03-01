@@ -18,6 +18,7 @@ extern "C" {
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-MIDI_analog.h"
 #include "KLST_PANDA-ADCDAC.h"
+#include "KLST_PANDA-OnBoardMic.h"
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
 #include "fatfs.h"
@@ -50,6 +51,7 @@ static uint32_t frame_counter = 0;
 
 static void KLST_PANDA_MX_Init_Modules() {
     bool mEnabledDMA = false;
+    bool mEnabledI2C4 = false;
 #ifdef KLST_PANDA_ENABLE_GPIO
     MX_GPIO_Init();
 #endif // KLST_PANDA_ENABLE_GPIO
@@ -70,6 +72,10 @@ static void KLST_PANDA_MX_Init_Modules() {
     if (!mEnabledDMA) {
         MX_DMA_Init();
         mEnabledDMA = true;
+    }
+    if (!mEnabledI2C4) {
+        MX_I2C4_Init();
+        mEnabledI2C4 = true;
     }
     MX_SAI1_Init();
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
@@ -126,24 +132,27 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
-    MX_I2C4_Init();
+    if (!mEnabledI2C4) {
+        MX_I2C4_Init();
+        mEnabledI2C4 = true;
+    }
 #else
     /* turn display and backlight off when display is not used */
-    static const uint8_t _DISPLAY_ON_OFF_Pin_ID        = 4; // PC4
-    GPIOC->MODER  &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID*2));
-    GPIOC->MODER  |=  ((1 & 0x3) << (_DISPLAY_ON_OFF_Pin_ID*2));
-    GPIOC->OTYPER &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID);
-  //  GPIOC->ODR    |=  (  1 << _DISPLAY_ON_OFF_Pin_ID); // HIGH
-  //  GPIOC->ODR    &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID); // LOW
+    static const uint8_t _DISPLAY_ON_OFF_Pin_ID = 4; // PC4
+    GPIOC->MODER &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID * 2));
+    GPIOC->MODER |= ((1 & 0x3) << (_DISPLAY_ON_OFF_Pin_ID * 2));
+    GPIOC->OTYPER &= ~(1 << _DISPLAY_ON_OFF_Pin_ID);
+    //  GPIOC->ODR    |=  (  1 << _DISPLAY_ON_OFF_Pin_ID); // HIGH
+    //  GPIOC->ODR    &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID); // LOW
     HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_RESET);
 
     __HAL_RCC_GPIOC_CLK_ENABLE();
     static const uint8_t _DISPLAY_BACKLIGHT_PWM_Pin_ID = 8; // PC8
-    GPIOC->MODER  &= ~(0x3 << (_DISPLAY_BACKLIGHT_PWM_Pin_ID*2));
-    GPIOC->MODER  |=  ((1 & 0x3) << (_DISPLAY_BACKLIGHT_PWM_Pin_ID*2));
-    GPIOC->OTYPER &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID);
-  //  GPIOC->ODR    |=  (  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // HIGH
-  //  GPIOC->ODR    &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // LOW
+    GPIOC->MODER &= ~(0x3 << (_DISPLAY_BACKLIGHT_PWM_Pin_ID * 2));
+    GPIOC->MODER |= ((1 & 0x3) << (_DISPLAY_BACKLIGHT_PWM_Pin_ID * 2));
+    GPIOC->OTYPER &= ~(1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID);
+    //  GPIOC->ODR    |=  (  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // HIGH
+    //  GPIOC->ODR    &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // LOW
     HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }
@@ -190,7 +199,7 @@ internalmemory_test_all();
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     println("initializing MEMS microphones (MX:BDMA+CRC+PDM2PCM+SAI4)");
-// TODO move to own context + distribute callbacks
+    onboardmic_setup();
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
@@ -301,9 +310,9 @@ void KLST_PANDA_loop() {
     LED_toggle(LED_01);
 #endif // KLST_PANDA_ENABLE_GPIO
 
-//    println("MIDI TEST");
-//    HAL_GPIO_TogglePin(_MIDI_ANALOG_OUT_GPIO_Port, _MIDI_ANALOG_OUT_Pin);
-//    println("MIDI: %i", HAL_GPIO_ReadPin(_MIDI_ANALOG_IN_GPIO_Port, _MIDI_ANALOG_IN_Pin));
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+    onboardmic_loop();
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
     // TODO make LED task
 #ifdef KLST_PANDA_ENABLE_USB_HOST
@@ -428,6 +437,45 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         println("TOUCH");
     }
 #endif // KLST_PANDA_ENABLE_DISPLAY
+}
+
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    audiocodec_TX_full_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+}
+
+void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    audiocodec_TX_half_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+}
+
+void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    audiocodec_RX_full_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+    onboardmic_RX_full_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
+}
+
+void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    audiocodec_RX_half_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+    onboardmic_RX_half_complete_callback(hsai);
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
+}
+
+void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    audiocodec_error_callback(hsai);
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+    onboardmic_error_callback(hsai);
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 }
 
 #ifdef __cplusplus
