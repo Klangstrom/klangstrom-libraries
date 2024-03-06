@@ -3,6 +3,23 @@ extern "C" {
 #endif
 
 #include "main.h"
+// TODO add enable defines >>>
+#include "adc.h"
+#include "bdma.h"
+#include "crc.h"
+#include "dac.h"
+#include "dma.h"
+#include "dma2D.h"
+#include "gpio.h"
+#include "i2c.h"
+#include "ltdc.h"
+#include "octospi.h"
+#include "sai.h"
+#include "sdmmc.h"
+#include "spi.h"
+#include "tim.h"
+#include "usart.h"
+// <<< TODO add enable defines
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"

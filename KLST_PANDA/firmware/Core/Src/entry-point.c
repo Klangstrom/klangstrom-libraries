@@ -2,6 +2,7 @@
 #define MX_OMIT_LOOP
 
 #include "main.h"
+#include "KLST_PANDA-Config.h"
 #include "KLST_PANDA.h"
 
 //#include <sys/time.h>
@@ -82,7 +83,7 @@ int main(void) {
  *
  * in `KLST_PANDA/firmware/Core/Src/main.c`
  *
- * - LINE 103: remove `static` from `void MPU_Config(void);`
+ * - LINE 60: remove `static` from `void MPU_Config(void);`
  *
  * in `KLST_PANDA/firmware/USB_HOST/Target/usbh_conf.h`
  *
