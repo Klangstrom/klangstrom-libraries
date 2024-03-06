@@ -76,7 +76,9 @@ void MX_SAI1_Init(void);
 void MX_CRC_Init(void);
 
 /* USER CODE BEGIN EFP */
-
+void SystemClock_Config(void);
+void PeriphCommonClock_Config(void);
+void MPU_Config(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
