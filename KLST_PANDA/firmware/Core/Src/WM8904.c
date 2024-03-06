@@ -5,7 +5,8 @@ extern "C" {
 #include "WM8904.h"
 #include "KLST_PANDA-SerialDebug.h"
 
-#define WM8904_TIMEOUT     HAL_MAX_DELAY
+//#define WM8904_TIMEOUT     HAL_MAX_DELAY
+#define WM8904_TIMEOUT     1000
 
 static HAL_StatusTypeDef ret;
 static I2C_HandleTypeDef *hi2c = 0;
@@ -19,9 +20,18 @@ uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
     transmit_buffer[0] = register_address;
     transmit_buffer[1] = (data & 0xff00) >> 8;
     transmit_buffer[2] = data & 0xff;
-    ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 3, WM8904_TIMEOUT);
-    if (ret != HAL_OK) {
-        println("WM8904: transmit I2C ERROR");
+
+    HAL_StatusTypeDef status = HAL_ERROR;
+    uint8_t mAttempts = 8;
+    while(status == HAL_ERROR && mAttempts > 0) {
+        mAttempts--;
+        status = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 3, WM8904_TIMEOUT);
+        if (ret != HAL_OK) {
+            println("WM8904: attempt: %i", mAttempts);
+        }
+    }
+    if (status != HAL_OK) {
+        println("WM8904: transmit I2C ERROR(W)");
         return HAL_ERROR;
     }
     return HAL_OK;
@@ -36,14 +46,14 @@ uint16_t WM8904_read_register(uint8_t register_address) {
     transmit_buffer[0] = register_address;
     ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 1, WM8904_TIMEOUT);
     if (ret != HAL_OK) {
-        println("WM8904: transmit I2C ERROR");
+        println("WM8904: transmit I2C ERROR(R0)");
         return HAL_ERROR;
     }
 
     uint8_t receive_buffer[2];
     ret = HAL_I2C_Master_Receive(hi2c, WM8904_I2C_ADDRESS, receive_buffer, 2, WM8904_TIMEOUT);
     if (ret != HAL_OK) {
-        println("WM8904: receive I2C ERROR");
+        println("WM8904: receive I2C ERROR(R1)");
         return HAL_ERROR;
     }
     return (((uint16_t) receive_buffer[0] << 8) & 0xff00) | receive_buffer[1];

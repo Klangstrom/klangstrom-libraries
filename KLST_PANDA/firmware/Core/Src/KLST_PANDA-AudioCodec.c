@@ -201,6 +201,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
     } else {
         setup_SCLK_MCLK();
     }
+    println("OK.");
 }
 
 /* ------------------------------------------------------------------------------------------------------------------ */

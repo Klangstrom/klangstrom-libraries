@@ -3,23 +3,7 @@ extern "C" {
 #endif
 
 #include "main.h"
-// TODO add enable defines >>>
-#include "adc.h"
-#include "bdma.h"
-#include "crc.h"
-#include "dac.h"
-#include "dma.h"
-#include "dma2D.h"
-#include "gpio.h"
-#include "i2c.h"
-#include "ltdc.h"
-#include "octospi.h"
-#include "sai.h"
-#include "sdmmc.h"
-#include "spi.h"
-#include "tim.h"
-#include "usart.h"
-// <<< TODO add enable defines
+#include "KLST_PANDA-Includes.h"
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
@@ -37,18 +21,10 @@ extern "C" {
 #include "KLST_PANDA-ADCDAC.h"
 #include "KLST_PANDA-OnBoardMic.h"
 
-#ifdef KLST_PANDA_ENABLE_SD_CARD
-#include "fatfs.h"
-#endif // KLST_PANDA_ENABLE_SD_CARD
-#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-#include "pdm2pcm.h"
-#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
-#ifdef KLST_PANDA_ENABLE_USB_HOST
-#include "usb_host.h"
-#endif // KLST_PANDA_ENABLE_USB_HOST
-#ifdef KLST_PANDA_ENABLE_USB_DEVICE
-#include "usb_device.h"
-#endif // KLST_PANDA_ENABLE_USB_DEVICE
+#include <sys/time.h>
+int _gettimeofday(struct timeval *tv, void *tzvp) {
+    return 0;
+}
 
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
@@ -58,6 +34,13 @@ extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
 extern DMA_HandleTypeDef hdma_uart8_rx;
 
+static void KLST_PANDA_init_system();
+static void KLST_PANDA_MX_Init_Modules();
+static void KLST_setup();
+static void KLST_loop();
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
 RotaryEncoder encoder;
 MechanicalKey mechanicalkey;
 
@@ -65,6 +48,33 @@ static uint32_t frame_counter = 0;
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
+
+static void KLST_PANDA_init_system() {
+    /* MPU Configuration--------------------------------------------------------*/
+    MPU_Config();
+    /* Enable the CPU Cache */
+
+    /* Enable I-Cache---------------------------------------------------------*/
+    SCB_EnableICache();
+
+    /* Enable D-Cache---------------------------------------------------------*/
+    SCB_EnableDCache();
+
+    /* MCU Configuration--------------------------------------------------------*/
+
+    /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+    HAL_Init();
+
+    /* USER CODE BEGIN Init */
+
+    /* USER CODE END Init */
+
+    /* Configure the system clock */
+    SystemClock_Config();
+
+    /* Configure the peripherals common clocks */
+    PeriphCommonClock_Config();
+}
 
 static void KLST_PANDA_MX_Init_Modules() {
     bool mEnabledDMA = false;
@@ -83,6 +93,7 @@ static void KLST_PANDA_MX_Init_Modules() {
 
 #ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     MX_OCTOSPI1_Init();
+    HAL_Delay(100);
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
@@ -171,10 +182,16 @@ static void KLST_PANDA_MX_Init_Modules() {
     //  GPIOC->ODR    |=  (  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // HIGH
     //  GPIOC->ODR    &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // LOW
     HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
+
+    //    // TODO a bit of a hack to turn off the display backlight right away at startup
+    //    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+    //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
-void KLST_PANDA_setup() {
+void KLST_setup() {
+    KLST_PANDA_init_system();
+    HAL_Delay(50);
     KLST_PANDA_MX_Init_Modules();
 
     /* --- serial debug (USART3)*/
@@ -208,11 +225,6 @@ println("test internal RAM");
 internalmemory_test_all();
 #endif
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-
-#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
-    audiocodec_setup();
-#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     println("initializing MEMS microphones (MX:BDMA+CRC+PDM2PCM+SAI4)");
@@ -273,6 +285,11 @@ internalmemory_test_all();
     backlight_set_brightness(0.5f);
 #endif // KLST_PANDA_ENABLE_DISPLAY
 
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
+    audiocodec_setup();
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+
 //    printf("***** WARNING REMOVE THE LINES BELOW *****");
 //    printf("***** TESTING MIDI ANALOG UART *****");
 //    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
@@ -295,7 +312,7 @@ internalmemory_test_all();
     println("");
 }
 
-void KLST_PANDA_loop() {
+void KLST_loop() {
     frame_counter++;
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
@@ -341,7 +358,9 @@ void KLST_PANDA_loop() {
 #endif // KLST_PANDA_ENABLE_USB_HOST
 }
 
-/* --- CALLBACKS --- */
+/* ----------------------------------------------------------------------------------------------------------------- */
+/* --- CALLBACKS --------------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 // void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
@@ -499,3 +518,17 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 }
 #endif
 
+void Klangstrom::setup() {
+    if (!is_initialized) {
+        KLST_setup();
+        is_initialized = true;
+    } else {
+        println("already initialized");
+    }
+}
+
+void Klangstrom::loop() {
+    if (is_initialized) {
+        KLST_loop();
+    }
+}

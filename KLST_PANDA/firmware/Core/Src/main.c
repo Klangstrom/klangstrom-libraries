@@ -32,10 +32,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#include <sys/time.h>
-int _gettimeofday(struct timeval *tv, void *tzvp) {
-    return 0;
-}
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
