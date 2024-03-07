@@ -8,7 +8,6 @@ extern "C" {
 //#define WM8904_TIMEOUT     HAL_MAX_DELAY
 #define WM8904_TIMEOUT     1000
 
-static HAL_StatusTypeDef ret;
 static I2C_HandleTypeDef *hi2c = 0;
 
 uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
@@ -23,10 +22,10 @@ uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
 
     HAL_StatusTypeDef status = HAL_ERROR;
     uint8_t mAttempts = 8;
-    while(status == HAL_ERROR && mAttempts > 0) {
+    while (status == HAL_ERROR && mAttempts > 0) {
         mAttempts--;
         status = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 3, WM8904_TIMEOUT);
-        if (ret != HAL_OK) {
+        if (status != HAL_OK) {
             println("WM8904: attempt: %i", mAttempts);
         }
     }
@@ -44,7 +43,7 @@ uint16_t WM8904_read_register(uint8_t register_address) {
     }
     uint8_t transmit_buffer[1];
     transmit_buffer[0] = register_address;
-    ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 1, WM8904_TIMEOUT);
+    HAL_StatusTypeDef ret = HAL_I2C_Master_Transmit(hi2c, WM8904_I2C_ADDRESS, transmit_buffer, 1, WM8904_TIMEOUT);
     if (ret != HAL_OK) {
         println("WM8904: transmit I2C ERROR(R0)");
         return HAL_ERROR;

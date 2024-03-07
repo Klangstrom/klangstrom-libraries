@@ -35,6 +35,7 @@ MechanicalKey* Klangstrom::create_mechancial_key(int mechanical_key_id) {
             delete peripherals.mechanicalkeys[mechanical_key_id];
         }
         peripherals.mechanicalkeys[mechanical_key_id] = new MechanicalKey(mechanical_key_id);
+        return peripherals.mechanicalkeys[mechanical_key_id];
     }
     return nullptr;
 }

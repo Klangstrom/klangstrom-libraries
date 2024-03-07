@@ -1,22 +1,6 @@
 #define MX_OMIT_INIT
 #define MX_OMIT_LOOP
 
-/*
- * TODO after code generation:
- *
- * in `KLST_PANDA/firmware/Core/Src/main.c`
- *
- * - LINE 60: remove `static` from `void MPU_Config(void);`
- *
- * in `KLST_PANDA/firmware/USB_HOST/Target/usbh_conf.h`
- *
- * - LINE 130: add `\r` to `printf("\n\r");`
- * - LINE 141: add `\r` to `printf("\n\r");`
- * - LINE 151: add `\r` to `printf("\n\r");`
- *
- * ( line numbers may vary )
- */
-
 #ifdef PLATFORM_FIRMWARE
 
 //#include "main.h"
