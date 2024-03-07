@@ -18,7 +18,6 @@ void FT5206_init(I2C_HandleTypeDef *hi2c_handle) {
 	if (!hi2c) {
 		return;
 	}
-	print_I2C_show_devices(hi2c);
 
 	/*
 	 DEVICE READY: 0x70 // FT5206

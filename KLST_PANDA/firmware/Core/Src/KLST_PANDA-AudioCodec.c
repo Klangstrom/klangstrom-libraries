@@ -27,18 +27,31 @@ static void delay_ms(uint32_t duration) {
 static void setup_SAI();
 static void setup_FLL();
 static void setup_WM8904(bool use_FLL, bool use_start_sequence);
+static void setup_default_start_sequence();
+static void setup_manually();
 
 uint8_t audiocodec_setup() {
     if (WM8904_init(&hi2c4) != HAL_OK) {
         println("could not initialize audiocodec");
         return HAL_ERROR;
     } else {
-        setup_SAI(); // this is required to start the master clock
+        setup_SAI(); /* NOTE this is required to start the master clock */
         delay_ms(100);
-//        println("configuring audiocodec at I2C 0x%02X", WM8904_I2C_ADDRESS);
         setup_WM8904(true, false);
+        //           FLL   START_SEQUENCE
+        setup_default_start_sequence(); // TODO investigate why this is necessary to generate decent volume ( albeit DC offset?!? )
         return HAL_OK;
     }
+}
+
+static void set_lineout_volume(uint8_t volume_left, uint8_t volume_right) {
+    WM8904_write_register(WM8904_R59_ANALOGUE_OUT2_LEFT, WM8904_LINEOUT_VU | WM8904_LINEOUTL_VOL(volume_left));
+    WM8904_write_register(WM8904_R60_ANALOGUE_OUT2_RIGHT, WM8904_LINEOUT_VU | WM8904_LINEOUTR_VOL(volume_right));
+}
+
+static void set_headphone_volume(uint8_t volume_left, uint8_t volume_right) {
+    WM8904_write_register(WM8904_R57_ANALOGUE_OUT1_LEFT, WM8904_HPOUT_VU | WM8904_HPOUTL_VOL(volume_left));
+    WM8904_write_register(WM8904_R58_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(volume_right));
 }
 
 static void setup_manually() {
@@ -66,24 +79,51 @@ static void setup_manually() {
     WM8904_write_register(WM8904_R25_AUDIO_INTERFACE_1, WM8904_AIF_WL_16BIT | WM8904_AIF_FMT_I2S);
     WM8904_write_register(WM8904_R26_AUDIO_INTERFACE_2, 0);
     WM8904_write_register(WM8904_R27_AUDIO_INTERFACE_3, 0);
-    WM8904_write_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6, WM8904_DACL_ENA | WM8904_DACR_ENA | WM8904_ADCL_ENA | WM8904_ADCR_ENA);
+    WM8904_write_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6,
+    WM8904_DACL_ENA |
+    WM8904_DACR_ENA |
+    WM8904_ADCL_ENA |
+    WM8904_ADCR_ENA);
     delay_ms(5);
 
     /* --- INPUT_OUTPUT --------------------------------------------------------------------------------------------- */
+
     WM8904_write_register(WM8904_ANALOGUE_LEFT_INPUT_0, WM8904_LIN_VOL(0x10));
     WM8904_write_register(WM8904_ANALOGUE_RIGHT_INPUT_0, WM8904_RIN_VOL(0x10));
-    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA | WM8904_HPR_ENA);
-    WM8904_write_register(WM8904_ANALOGUE_HP_0, WM8904_HPL_ENA_DLY | WM8904_HPL_ENA | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
-    WM8904_write_register(WM8904_DC_SERVO_0, WM8904_DCS_ENA_CHAN_3 | WM8904_DCS_ENA_CHAN_2 | WM8904_DCS_ENA_CHAN_1 | WM8904_DCS_ENA_CHAN_0);
-    WM8904_write_register(WM8904_DC_SERVO_1,
-    WM8904_DCS_TRIG_STARTUP_3 | WM8904_DCS_TRIG_STARTUP_2 | WM8904_DCS_TRIG_STARTUP_1 | WM8904_DCS_TRIG_STARTUP_0);
+    WM8904_write_register(WM8904_R67_DC_SERVO_0,
+    WM8904_DCS_ENA_CHAN_3 |
+    WM8904_DCS_ENA_CHAN_2 |
+    WM8904_DCS_ENA_CHAN_1 |
+    WM8904_DCS_ENA_CHAN_0);
+    WM8904_write_register(WM8904_R68_DC_SERVO_1,
+    WM8904_DCS_TRIG_STARTUP_3 |
+    WM8904_DCS_TRIG_STARTUP_2 |
+    WM8904_DCS_TRIG_STARTUP_1 |
+    WM8904_DCS_TRIG_STARTUP_0);
+    delay_ms(100);
+
+    /* --- LINE_OUT ------------------------------------------------------------------------------------------------- */
+
+    WM8904_write_register(WM8904_R94_WM8904_ANALOGUE_LINEOUT_0,
+    WM8904_LINEOUTL_ENA_OUTP |
+    WM8904_LINEOUTL_ENA_DLY |
+    WM8904_LINEOUTL_ENA |
+    WM8904_LINEOUTR_ENA_OUTP |
+    WM8904_LINEOUTR_ENA_DLY |
+    WM8904_LINEOUTR_ENA);
+    set_lineout_volume(0x32, 0x32); // TODO check if this is 80% ( with max 0x40 )
     delay_ms(100);
 
     /* --- HEADPHONES ----------------------------------------------------------------------------------------------- */
+
     WM8904_write_register(WM8904_R90_WM8904_ANALOGUE_HP_0,
-    WM8904_HPL_ENA_OUTP | WM8904_HPL_ENA_DLY | WM8904_HPL_ENA | WM8904_HPR_ENA_OUTP | WM8904_HPR_ENA_DLY | WM8904_HPR_ENA);
-    WM8904_write_register(WM8904_ANALOGUE_OUT1_LEFT, WM8904_HPOUT_VU | WM8904_HPOUTL_VOL(0x39));
-    WM8904_write_register(WM8904_ANALOGUE_OUT1_RIGHT, WM8904_HPOUT_VU | WM8904_HPOUTR_VOL(0x39));
+    WM8904_HPL_ENA_OUTP |
+    WM8904_HPL_ENA_DLY |
+    WM8904_HPL_ENA |
+    WM8904_HPR_ENA_OUTP |
+    WM8904_HPR_ENA_DLY |
+    WM8904_HPR_ENA);
+    set_headphone_volume(0xFF, 0xFF);
     delay_ms(100);
 
 #ifdef TEST_WM8904_SET

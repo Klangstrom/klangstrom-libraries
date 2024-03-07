@@ -38,7 +38,6 @@ static void KLST_PANDA_MX_Init_Modules();
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-
 /* ----------------------------------------------------------------------------------------------------------------- */
 
 static uint32_t frame_counter = 0;
@@ -92,18 +91,6 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_OCTOSPI1_Init();
     HAL_Delay(100);
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-
-#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    if (!mEnabledDMA) {
-        MX_DMA_Init();
-        mEnabledDMA = true;
-    }
-    if (!mEnabledI2C4) {
-        MX_I2C4_Init();
-        mEnabledI2C4 = true;
-    }
-    MX_SAI1_Init();
-#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     MX_BDMA_Init();
@@ -184,6 +171,18 @@ static void KLST_PANDA_MX_Init_Modules() {
     //    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
 #endif // KLST_PANDA_ENABLE_DISPLAY
+
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+    if (!mEnabledDMA) {
+        MX_DMA_Init();
+        mEnabledDMA = true;
+    }
+    if (!mEnabledI2C4) {
+        MX_I2C4_Init();
+        mEnabledI2C4 = true;
+    }
+    MX_SAI1_Init();
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 }
 
 void KLST_BSP_setup() {
@@ -262,6 +261,12 @@ internalmemory_test_all();
     ADC_setup();
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
+
+//#if defined(KLST_PANDA_ENABLE_DISPLAY) || defined(KLST_PANDA_ENABLE_AUDIOCODEC)
+//    TODO somehow this causes issues
+//    println("looking for I2C devices on I2C4");
+//    print_I2C_show_devices(&hi2c4);
+//#endif
 
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     println("initializing display (LTDC) (MX:LTDC+DMA2D)");

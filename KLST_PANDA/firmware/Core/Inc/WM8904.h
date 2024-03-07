@@ -593,6 +593,7 @@ extern "C" {
 /*
  * R57 (0x39) - Analogue OUT1 Left
  */
+#define WM8904_R57_ANALOGUE_OUT1_LEFT           WM8904_ANALOGUE_OUT1_LEFT
 #define WM8904_HPOUTL_MUTE_Pos                  8  /* HPOUTL_MUTE */
 #define WM8904_HPOUTL_MUTE                      0x0100
 #define WM8904_HPOUT_VU_Pos                     7  /* HPOUT_VU */
@@ -606,6 +607,7 @@ extern "C" {
 /*
  * R58 (0x3A) - Analogue OUT1 Right
  */
+#define WM8904_R58_ANALOGUE_OUT1_RIGHT          WM8904_ANALOGUE_OUT1_RIGHT
 #define WM8904_HPOUTR_MUTE_Pos                  8  /* HPOUTR_MUTE */
 #define WM8904_HPOUTR_MUTE                      0x0100
 #define WM8904_HPOUT_VU_Pos                     7  /* HPOUT_VU */
@@ -619,6 +621,7 @@ extern "C" {
 /*
  * R59 (0x3B) - Analogue OUT2 Left
  */
+#define WM8904_R59_ANALOGUE_OUT2_LEFT           WM8904_ANALOGUE_OUT2_LEFT
 #define WM8904_LINEOUTL_MUTE_Pos                8  /* LINEOUTL_MUTE */
 #define WM8904_LINEOUTL_MUTE                    0x0100
 #define WM8904_LINEOUT_VU_Pos                   7  /* LINEOUT_VU */
@@ -632,6 +635,7 @@ extern "C" {
 /*
  * R60 (0x3C) - Analogue OUT2 Right
  */
+#define WM8904_R60_ANALOGUE_OUT2_RIGHT          WM8904_ANALOGUE_OUT2_RIGHT
 #define WM8904_LINEOUTR_MUTE_Pos                8  /* LINEOUTR_MUTE */
 #define WM8904_LINEOUTR_MUTE                    0x0100
 #define WM8904_LINEOUT_VU_Pos                   7  /* LINEOUT_VU */
@@ -657,6 +661,7 @@ extern "C" {
 /*
  * R67 (0x43) - DC Servo 0
  */
+#define WM8904_R67_DC_SERVO_0                   WM8904_DC_SERVO_0
 #define WM8904_DCS_ENA_CHAN_3_Pos               3  /* DCS_ENA_CHAN_3 */
 #define WM8904_DCS_ENA_CHAN_3                   0x0008
 #define WM8904_DCS_ENA_CHAN_2_Pos               2  /* DCS_ENA_CHAN_2 */
@@ -669,6 +674,7 @@ extern "C" {
 /*
  * R68 (0x44) - DC Servo 1
  */
+#define WM8904_R68_DC_SERVO_1                   WM8904_DC_SERVO_1
 #define WM8904_DCS_TRIG_SINGLE_3_Pos            15  /* DCS_TRIG_SINGLE_3 */
 #define WM8904_DCS_TRIG_SINGLE_3                0x8000
 #define WM8904_DCS_TRIG_SINGLE_2_Pos            14  /* DCS_TRIG_SINGLE_2 */
@@ -705,6 +711,7 @@ extern "C" {
 /*
  * R69 (0x45) - DC Servo 2
  */
+#define WM8904_R69_DC_SERVO_2                   WM8904_DC_SERVO_2
 #define WM8904_DCS_TIMER_PERIOD_23_Pos          8  /* DCS_TIMER_PERIOD_23 - [11:8] */
 #define WM8904_DCS_TIMER_PERIOD_23_Msk          0x0F00
 #define WM8904_DCS_TIMER_PERIOD_23(Value)       (WM8904_DCS_TIMER_PERIOD_23_Msk & ((Value) << WM8904_DCS_TIMER_PERIOD_23_Pos))
@@ -715,6 +722,7 @@ extern "C" {
 /*
  * R71 (0x47) - DC Servo 4
  */
+#define WM8904_R71_DC_SERVO_4                   WM8904_DC_SERVO_4
 #define WM8904_DCS_SERIES_NO_23_Pos             0  /* DCS_SERIES_NO_23 - [6:0] */
 #define WM8904_DCS_SERIES_NO_23_Msk             0x007F
 #define WM8904_DCS_SERIES_NO_23(Value)          (WM8904_DCS_SERIES_NO_23_Msk & ((Value) << WM8904_DCS_SERIES_NO_23_Pos))
@@ -722,6 +730,7 @@ extern "C" {
 /*
  * R72 (0x48) - DC Servo 5
  */
+#define WM8904_R72_DC_SERVO_5                   WM8904_DC_SERVO_5
 #define WM8904_DCS_SERIES_NO_01_Pos             0  /* DCS_SERIES_NO_01 - [6:0] */
 #define WM8904_DCS_SERIES_NO_01_Msk             0x007F
 #define WM8904_DCS_SERIES_NO_01(Value)          (WM8904_DCS_SERIES_NO_01_Msk & ((Value) << WM8904_DCS_SERIES_NO_01_Pos))
@@ -729,6 +738,7 @@ extern "C" {
 /*
  * R73 (0x49) - DC Servo 6
  */
+#define WM8904_R73_DC_SERVO_6                   WM8904_DC_SERVO_6
 #define WM8904_DCS_DAC_WR_VAL_3_Pos             0  /* DCS_DAC_WR_VAL_3 - [7:0] */
 #define WM8904_DCS_DAC_WR_VAL_3_Msk             0x00FF
 #define WM8904_DCS_DAC_WR_VAL_3(Value)          (WM8904_DCS_DAC_WR_VAL_3_Msk & ((Value) << WM8904_DCS_DAC_WR_VAL_3_Pos))
@@ -736,6 +746,7 @@ extern "C" {
 /*
  * R74 (0x4A) - DC Servo 7
  */
+#define WM8904_R74_DC_SERVO_7                   WM8904_DC_SERVO_7
 #define WM8904_DCS_DAC_WR_VAL_2_Pos             0  /* DCS_DAC_WR_VAL_2 - [7:0] */
 #define WM8904_DCS_DAC_WR_VAL_2_Msk             0x00FF
 #define WM8904_DCS_DAC_WR_VAL_2(Value)          (WM8904_DCS_DAC_WR_VAL_2_Msk & ((Value) << WM8904_DCS_DAC_WR_VAL_2_Pos))
@@ -743,6 +754,7 @@ extern "C" {
 /*
  * R75 (0x4B) - DC Servo 8
  */
+#define WM8904_R75_DC_SERVO_8                   WM8904_DC_SERVO_8
 #define WM8904_DCS_DAC_WR_VAL_1_Pos             0  /* DCS_DAC_WR_VAL_1 - [7:0] */
 #define WM8904_DCS_DAC_WR_VAL_1_Msk             0x00FF
 #define WM8904_DCS_DAC_WR_VAL_1(Value)          (WM8904_DCS_DAC_WR_VAL_1_Msk & ((Value) << WM8904_DCS_DAC_WR_VAL_1_Pos))
@@ -750,6 +762,7 @@ extern "C" {
 /*
  * R76 (0x4C) - DC Servo 9
  */
+#define WM8904_R76_DC_SERVO_9                   WM8904_DC_SERVO_9
 #define WM8904_DCS_DAC_WR_VAL_0_Pos             0  /* DCS_DAC_WR_VAL_0 - [7:0] */
 #define WM8904_DCS_DAC_WR_VAL_0_Msk             0x00FF
 #define WM8904_DCS_DAC_WR_VAL_0(Value)          (WM8904_DCS_DAC_WR_VAL_0_Msk & ((Value) << WM8904_DCS_DAC_WR_VAL_0_Pos))
