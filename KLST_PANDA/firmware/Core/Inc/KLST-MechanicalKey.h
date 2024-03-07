@@ -3,6 +3,7 @@
 
 class MechanicalKey {
 public:
+    MechanicalKey(int mechanical_key_id);
     void setup();
 };
 

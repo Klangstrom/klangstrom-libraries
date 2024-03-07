@@ -15,7 +15,7 @@ extern "C" {
 #error "KLST_PANDA: external memory must be enabled when display is enabled"
 #endif
 
-#include "Klangstrom.h"
+#include "KLST.h"
 
 #ifdef __cplusplus
 }

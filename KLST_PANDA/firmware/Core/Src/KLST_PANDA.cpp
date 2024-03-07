@@ -3,6 +3,7 @@ extern "C" {
 #endif
 
 #include "main.h"
+#include "KLST.h"
 #include "KLST_PANDA-Includes.h"
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"
@@ -15,7 +16,6 @@ extern "C" {
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
-#include "KLST_PANDA-MechanicalKey.h"
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-MIDI_analog.h"
 #include "KLST_PANDA-ADCDAC.h"
@@ -34,22 +34,19 @@ extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
 extern DMA_HandleTypeDef hdma_uart8_rx;
 
-static void KLST_PANDA_init_system();
 static void KLST_PANDA_MX_Init_Modules();
-static void KLST_setup();
-static void KLST_loop();
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-RotaryEncoder encoder;
-MechanicalKey mechanicalkey;
+
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 static uint32_t frame_counter = 0;
 
 // TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
 // TODO distribute callbacks
 
-static void KLST_PANDA_init_system() {
+void KLST_BSP_init() {
     /* MPU Configuration--------------------------------------------------------*/
     MPU_Config();
     /* Enable the CPU Cache */
@@ -189,9 +186,7 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
-void KLST_setup() {
-    KLST_PANDA_init_system();
-    HAL_Delay(50);
+void KLST_BSP_setup() {
     KLST_PANDA_MX_Init_Modules();
 
     /* --- serial debug (USART3)*/
@@ -233,7 +228,9 @@ internalmemory_test_all();
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
     println("initializing rotary encoders (MX:TIM1+TIM2)");
-    encoder.setup(); // TODO implement
+    if (peripherals.encoders[0] != nullptr) {
+        peripherals.encoders[0]->setup(); // TODO implement
+    }
     /* --- TODO move encoder to file */
     HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
     HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_3);
@@ -312,7 +309,7 @@ internalmemory_test_all();
     println("");
 }
 
-void KLST_loop() {
+void KLST_BSP_loop() {
     frame_counter++;
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
@@ -518,17 +515,5 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 }
 #endif
 
-void Klangstrom::setup() {
-    if (!is_initialized) {
-        KLST_setup();
-        is_initialized = true;
-    } else {
-        println("already initialized");
-    }
-}
+/* ----------------------------------------------------------------------------------------------------------------- */
 
-void Klangstrom::loop() {
-    if (is_initialized) {
-        KLST_loop();
-    }
-}
