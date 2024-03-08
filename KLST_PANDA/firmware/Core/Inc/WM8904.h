@@ -138,13 +138,14 @@ extern "C" {
 /*
  * R0 (0x00) - SW Reset and ID
  */
+#define WM8904_R0_SW_RESET_AND_ID               WM8904_SW_RESET_AND_ID
 #define WM8904_SW_RST_DEV_ID1_Pos               0  /* SW_RST_DEV_ID1 - [15:0] */
 #define WM8904_SW_RST_DEV_ID1                   0x8904
 
 /*
  * R4 (0x04) - Bias Control 0
  */
-#define WM8905_R4_BIAS_CONTROL_0                WM8904_BIAS_CONTROL_0
+#define WM8904_R4_BIAS_CONTROL_0                WM8904_BIAS_CONTROL_0
 #define WM8904_ISEL_Pos                         2  /* ISEL - [3:2] */
 #define WM8904_ISEL_Msk                         0x000C
 #define WM8904_ISEL(Value)                      (WM8904_ISEL_Msk & ((Value) << WM8904_ISEL_Pos))
@@ -187,6 +188,7 @@ extern "C" {
 /*
  * R9 (0x07) - Mic Bias Control 1
  */
+#define WM8904_R9_MIC_FILTER_CONTROL            WM8904_MIC_FILTER_CONTROL
 #define WM8904_MICBIAS_SEL_Pos                  0  /* MICBIAS_SEL - [2:0] */
 #define WM8904_MICBIAS_SEL_Msk                  0x0007
 #define WM8904_MICBIAS_SEL(Value)               (WM8904_MICBIAS_SEL_Msk & ((Value) << WM8904_MICBIAS_SEL_Pos))
@@ -282,6 +284,7 @@ extern "C" {
 /*
  * R24 (0x18) - Audio Interface 0
  */
+#define WM8904_R24_AUDIO_INTERFACE_0            WM8904_AUDIO_INTERFACE_0
 #define WM8904_DACL_DATINV_Pos                  12  /* DACL_DATINV */
 #define WM8904_DACL_DATINV                      0x1000
 #define WM8904_DACR_DATINV_Pos                  11  /* DACR_DATINV */
@@ -367,6 +370,7 @@ extern "C" {
 /*
  * R30 (0x1E) - DAC Digital Volume Left
  */
+#define WM8904_R30_DAC_DIGITAL_VOLUME_LEFT      WM8904_DAC_DIGITAL_VOLUME_LEFT
 #define WM8904_DAC_VU_Pos                       8  /* DAC_VU */
 #define WM8904_DAC_VU                           0x0100
 #define WM8904_DACL_VOL_Pos                     0  /* DACL_VOL - [7:0] */
@@ -376,6 +380,7 @@ extern "C" {
 /*
  * R31 (0x1F) - DAC Digital Volume Right
  */
+#define WM8904_R31_DAC_DIGITAL_VOLUME_RIGHT     WM8904_DAC_DIGITAL_VOLUME_RIGHT
 #define WM8904_DAC_VU_Pos                       8  /* DAC_VU */
 #define WM8904_DAC_VU                           0x0100
 #define WM8904_DACR_VOL_Pos                     0  /* DACR_VOL - [7:0] */

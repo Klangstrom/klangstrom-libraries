@@ -5,14 +5,14 @@ extern "C" {
 #include "WM8904.h"
 #include "KLST_PANDA-SerialDebug.h"
 
-//#define WM8904_TIMEOUT     HAL_MAX_DELAY
-#define WM8904_TIMEOUT     1000
+#define WM8904_TIMEOUT     HAL_MAX_DELAY
+//#define WM8904_TIMEOUT     1000
 
 static I2C_HandleTypeDef *hi2c = 0;
 
 uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
     if (!hi2c) {
-        println("WM8904 not initialized!");
+        println("WM8904 not initialized! (I2C not setup)");
         return HAL_ERROR;
     }
     uint8_t transmit_buffer[3];
@@ -68,11 +68,12 @@ uint32_t WM8904_init(I2C_HandleTypeDef *hi2c_handle) {
 
     WM8904_write_register(WM8904_SW_RESET_AND_ID, 0xFFFF);
     uint16_t data = WM8904_read_register(WM8904_SW_RESET_AND_ID);
+    HAL_Delay(10);
     if (data != 0x8904) {
-        println("WM8904 not found!");
+        println("WM8904 not found! (ID respone to OK)");
         return 1;
     } else {
-        println("found WM8904");
+        println("audiocodec: found WM8904");
     }
     return HAL_OK;
 }
