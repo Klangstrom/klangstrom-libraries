@@ -2,6 +2,24 @@
 
 ![SYSTEM-ARCHITECTURE](SYSTEM-ARCHITECTURE.png)
 
+- core ( MCU )
+- external memory
+- audio codec
+- display
+- on-board microphone
+- SD Card
+- USB device + host
+- battery ( + charging )
+- rotary encoder
+- GPIO ( port )
+- MIDI ( analog )
+- DAC + ADC
+- IDC serial
+- programmer interface
+- Dimmable LEDs
+- Buttons
+- Mechanical Keys
+
 ## Core
 
 the core is a `‌STM32H723ZGT` by ST, a 32-bit Arm® Cortex®-M7 CPU ( or MCU ) with 550MHz, 564KB RAM, 1024KB Flash, and FPU that comes in a LQFP-144 ( 20x20x1.4mm ) package.
@@ -116,7 +134,9 @@ note that the board also feature three power LEDs on the backside. two indicate 
 
 the board is equipped with a RESET button, a BOOT_MODE button and a PROGRAMMER button. if the BOOT_MODE is pressed at start-up the core (MCU) will enter DFU mode. PROGRAMMER button can trigger DFU mode at runtime. the RESET button triggers a *soft* reset.
 
-the booard also features two user-programmable mechanical Cherry MX keys. both can be connected to a hardware interrupt.
+## Mechanical Keys
+
+the board features two user-programmable mechanical Cherry MX keys. both can be connected to a hardware interrupt.
 
 ## Form Factor
 

@@ -23,7 +23,7 @@
 #include "dma.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC)
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "i2c.h"
 #endif
 
