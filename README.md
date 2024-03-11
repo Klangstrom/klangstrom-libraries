@@ -1,16 +1,18 @@
-## klangstrom-libraries
+# klangstrom-libraries
 
 all libraries are maintained in one repository called `klangstrom-libraries` that can be cloned as a submodule into architectures:
 
+```
 .
 ├── Klangstrom
 ├── KlangWellen
 ├── ...
 └── USBHost
+```
 
-### Klangstrom
+## Klangstrom
 
-there are common files ( e.g `Klangstrom.cpp` ) and board-specific (BSP) file ( `Klangstrom-BSP-KLST_PANDA.cpp` ). the common files are used by all boards and architectures.
+there are common files ( e.g `Klangstrom.cpp` ) and board-specific (BSP) files ( `Klangstrom-BSP-KLST_PANDA.cpp` ). the common files are used by all boards and architectures.
 
 - `Klangstrom.h`
 - `Klangstrom.cpp`
@@ -22,7 +24,7 @@ there are common files ( e.g `Klangstrom.cpp` ) and board-specific (BSP) file ( 
 - `Klangstrom-KLST_PANDA-Display.cpp`
 - ...
 
-#### architectures
+### architectures
 
 available architectures are:
 
@@ -36,7 +38,7 @@ programatically identifiable e.g
 #endif // KLST_ARCHITECTURE_METAL
 ```
 
-#### boards
+### boards
 
 available boards are for `METAL`:
 
