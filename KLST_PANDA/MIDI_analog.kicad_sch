@@ -1469,12 +1469,6 @@
 		(uuid "122d5b25-e626-4cd8-8cb6-0d5adf686896")
 	)
 	(junction
-		(at 41.91 96.52)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "37ec79ef-ca99-43a2-86a8-82bc14fcf18c")
-	)
-	(junction
 		(at 115.57 27.94)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1493,12 +1487,6 @@
 		(uuid "b7a0e9d3-24cb-4a44-80eb-324a4a57e119")
 	)
 	(junction
-		(at 41.91 45.72)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "be8f05d5-f6e9-4a48-962b-127ecfc39e87")
-	)
-	(junction
 		(at 100.33 40.64)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1515,6 +1503,10 @@
 		(uuid "25e117fa-4f17-4532-b3df-c27ecc541b89")
 	)
 	(no_connect
+		(at 40.64 96.52)
+		(uuid "3217c7e3-2a02-4bf2-9de1-16ed6272b5e9")
+	)
+	(no_connect
 		(at 40.64 35.56)
 		(uuid "9cde3cce-542f-471b-978a-212f41b0c18a")
 	)
@@ -1525,6 +1517,10 @@
 	(no_connect
 		(at 40.64 91.44)
 		(uuid "b9a95337-2bb8-4e77-95d6-58420b6dce04")
+	)
+	(no_connect
+		(at 40.64 45.72)
+		(uuid "db5d50fc-6fa8-49f7-af5a-537f5b532da2")
 	)
 	(no_connect
 		(at 81.28 38.1)
@@ -1559,16 +1555,6 @@
 			(type default)
 		)
 		(uuid "0f824df0-cdd8-4098-bf62-05b2c0702fea")
-	)
-	(wire
-		(pts
-			(xy 40.64 99.06) (xy 41.91 99.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "11ffb009-efde-4046-ab51-086ed0a1b5e8")
 	)
 	(wire
 		(pts
@@ -1662,16 +1648,6 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 96.52) (xy 41.91 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a6aedc6-b271-4aa9-ab82-fdfe411f0085")
-	)
-	(wire
-		(pts
 			(xy 100.33 33.02) (xy 106.68 33.02)
 		)
 		(stroke
@@ -1679,16 +1655,6 @@
 			(type default)
 		)
 		(uuid "3eba84eb-fd46-46f0-8f92-2ff77b3bb824")
-	)
-	(wire
-		(pts
-			(xy 41.91 48.26) (xy 41.91 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "46dba790-2a9f-4176-9ee3-b029accbc85c")
 	)
 	(wire
 		(pts
@@ -1752,27 +1718,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 45.72) (xy 41.91 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f718df1-f6c0-4c28-a1f4-43d6e415cef2")
-	)
-	(wire
-		(pts
-			(xy 41.91 99.06) (xy 41.91 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "81f00a10-c0ee-4c77-8807-673cd704a18e")
-	)
-	(wire
-		(pts
-			(xy 41.91 96.52) (xy 43.18 96.52)
+			(xy 40.64 99.06) (xy 43.18 99.06)
 		)
 		(stroke
 			(width 0)
@@ -1832,16 +1778,6 @@
 	)
 	(wire
 		(pts
-			(xy 41.91 45.72) (xy 43.18 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "99b559cd-e29c-4632-860a-79b8080393ba")
-	)
-	(wire
-		(pts
 			(xy 88.9 86.36) (xy 88.9 87.63)
 		)
 		(stroke
@@ -1872,7 +1808,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 48.26) (xy 41.91 48.26)
+			(xy 40.64 48.26) (xy 43.18 48.26)
 		)
 		(stroke
 			(width 0)
@@ -2223,46 +2159,6 @@
 		)
 		(uuid "a2e6489d-8fd3-4b7b-9cac-56116040484a")
 	)
-	(text_box "@TODO(maybe just leave R2 unconnected as it could cause problems with TS connectors)"
-		(exclude_from_sim no)
-		(at 24.13 100.965 0)
-		(size 38.735 7.62)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type color)
-			(color 255 0 0 1)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "e7ca8db0-6ec3-436b-8910-f508f272ef5a")
-	)
-	(text_box "@TODO(maybe just leave R2 unconnected as it could cause problems with TS connectors)"
-		(exclude_from_sim no)
-		(at 24.13 50.165 0)
-		(size 38.735 7.62)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type color)
-			(color 255 0 0 1)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "edb20e89-f221-4002-953e-c079c3253d18")
-	)
 	(text "UART_RX"
 		(exclude_from_sim no)
 		(at 139.7 38.1 0)
@@ -2429,7 +2325,7 @@
 		(uuid "977981c1-db61-4306-9fe7-34721fd96c7c")
 	)
 	(label "MIDI_IN_SHIELD(2)"
-		(at 43.18 45.72 0)
+		(at 43.18 48.26 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2462,7 +2358,7 @@
 		(uuid "d43c6ffc-d68d-4448-8c74-30dd7f54b103")
 	)
 	(label "MIDI_OUT_SHIELD(2)"
-		(at 43.18 96.52 0)
+		(at 43.18 99.06 0)
 		(fields_autoplaced yes)
 		(effects
 			(font

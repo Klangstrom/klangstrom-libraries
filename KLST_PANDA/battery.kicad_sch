@@ -2497,16 +2497,6 @@
 	)
 	(wire
 		(pts
-			(xy 162.56 52.705) (xy 166.37 52.705)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1dc861b1-f388-47d6-be4c-7cb3dadf721b")
-	)
-	(wire
-		(pts
 			(xy 162.56 28.575) (xy 175.26 28.575)
 		)
 		(stroke
@@ -3107,7 +3097,7 @@
 	)
 	(wire
 		(pts
-			(xy 171.45 52.705) (xy 175.26 52.705)
+			(xy 162.56 52.705) (xy 175.26 52.705)
 		)
 		(stroke
 			(width 0)
@@ -3276,17 +3266,17 @@
 		)
 		(uuid "448e73b4-5027-4538-aa61-7b8b4c636889")
 	)
-	(text_box "SS14 diode is a problem and prevents charging"
+	(text_box "@todo maybe replace with something more durable like:\n\n- C2998806\n- C2998781\n- C145855\n- C17179519 (3A)\n- C2930976 (1A)\n- C223841 (300mA)\n- C778186 (1A, SMD)\n- C2884789 (6A, black)"
 		(exclude_from_sim no)
-		(at 171.45 47.625 0)
-		(size 34.925 9.525)
+		(at 73.025 83.82 0)
+		(size 48.895 32.385)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(fill
 			(type color)
-			(color 255 0 0 1)
+			(color 255 153 0 1)
 		)
 		(effects
 			(font
@@ -3294,18 +3284,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "ae0484a4-b954-4dc7-b92c-6b69826d2675")
-	)
-	(text "@TODO is this the ideal position for on/off-switch?"
-		(exclude_from_sim no)
-		(at 22.86 113.03 0)
-		(effects
-			(font
-				(size 0.9906 0.9906)
-			)
-			(justify left bottom)
-		)
-		(uuid "2d13b5c0-5a91-41fb-99c6-ca6b6e2d48b3")
+		(uuid "e2e35a69-ec13-41f3-8c6f-441d32a25d76")
 	)
 	(text "BATTERY + CHARGER"
 		(exclude_from_sim no)
@@ -3535,88 +3514,6 @@
 				)
 				(justify right)
 				(hide yes)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Schottky_Small")
-		(at 168.91 52.705 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00d62aa7-1779-4608-8ca0-97dfc250f7b6")
-		(property "Reference" "D18"
-			(at 168.91 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "SS14"
-			(at 168.91 50.165 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SMA"
-			(at 168.91 52.705 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://datasheet.lcsc.com/szlcsc/Changjiang-Electronics-Tech-CJ-B5819W_C8598.pdf"
-			(at 168.91 52.705 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 168.91 52.705 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB" "C2480"
-			(at 168.91 52.705 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c454c6ec-c8f4-4b8c-b98e-13e3bb96064a")
-		)
-		(pin "2"
-			(uuid "ac57c4e7-157a-4b71-a400-f88c64fd21c3")
-		)
-		(instances
-			(project "KLST_SHEEP"
-				(path "/7c1fd6fc-5c53-4ccb-a456-46fe6fc0bc71/00000000-0000-0000-0000-0000692bda67"
-					(reference "D18")
-					(unit 1)
-				)
-			)
-			(project "KLST_PANDA"
-				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/82e35567-f058-4d94-a9b9-5b3354666c47"
-					(reference "D8")
-					(unit 1)
-				)
 			)
 		)
 	)
