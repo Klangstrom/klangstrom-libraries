@@ -3,8 +3,8 @@
 #include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-OnBoardMic.h"
 
-extern SAI_HandleTypeDef hsai_BlockA4;
-extern PDM_Filter_Handler_t PDM1_filter_handler;
+//extern SAI_HandleTypeDef hsai_BlockA4;
+//extern PDM_Filter_Handler_t PDM1_filter_handler;
 
 #define KLANG_AUDIO_RATE 48000
 #define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
@@ -43,7 +43,7 @@ uint8_t fifo_read_enabled = 0;
 
 uint8_t onboardmic_setup() {
     HAL_StatusTypeDef status = HAL_OK;
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
+//    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI MIC RX: %i", status);
     }
@@ -61,28 +61,28 @@ void onboardmic_loop() {
 }
 
 void onboardmic_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-//        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
-//        for (int i = 0; i < 16; i++) {
-//            FifoWrite(MidBuffer[i]);
-//        }
-//        print_FIFO();
-    }
+//    if (hsai == &hsai_BlockA4) {
+////        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
+////        for (int i = 0; i < 16; i++) {
+////            FifoWrite(MidBuffer[i]);
+////        }
+////        print_FIFO();
+//    }
 }
 
 void onboardmic_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-//        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
-//        for (int i = 0; i < 16; i++) {
-//            FifoWrite(MidBuffer[i]);
-//        }
-//        print_FIFO();
-    }
+//    if (hsai == &hsai_BlockA4) {
+////        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
+////        for (int i = 0; i < 16; i++) {
+////            FifoWrite(MidBuffer[i]);
+////        }
+////        print_FIFO();
+//    }
 }
 
 void onboardmic_error_callback(SAI_HandleTypeDef *hsai) {
-    if (hsai == &hsai_BlockA4) {
-        println("### ERROR error in MIC SAI:BlockA4");
-    }
+//    if (hsai == &hsai_BlockA4) {
+//        println("### ERROR error in MIC SAI:BlockA4");
+//    }
 }
 

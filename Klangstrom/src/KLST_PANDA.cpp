@@ -93,10 +93,10 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-    MX_BDMA_Init();
-    MX_CRC_Init();
-    MX_PDM2PCM_Init();
-    MX_SAI4_Init();
+//    MX_BDMA_Init();
+//    MX_CRC_Init();
+//    MX_PDM2PCM_Init();
+//    MX_SAI4_Init();
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
 #ifdef KLST_PANDA_ENABLE_ENCODER

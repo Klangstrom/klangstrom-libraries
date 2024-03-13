@@ -32,9 +32,8 @@
 #endif
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-#include "pdm2pcm.h"
-#include "bdma.h"
-#include "crc.h"
+//#include "pdm2pcm.h"
+//#include "crc.h"
 #endif
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
