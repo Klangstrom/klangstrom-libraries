@@ -81,8 +81,6 @@ void LTDC_ER_IRQHandler(void);
 void DMA2D_IRQHandler(void);
 void OCTOSPI1_IRQHandler(void);
 void SDMMC2_IRQHandler(void);
-void BDMA_Channel0_IRQHandler(void);
-void SAI4_IRQHandler(void);
 void UART9_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 

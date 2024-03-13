@@ -61,10 +61,8 @@ extern LTDC_HandleTypeDef hltdc;
 extern OSPI_HandleTypeDef hospi1;
 extern DMA_HandleTypeDef hdma_sai1_a;
 extern DMA_HandleTypeDef hdma_sai1_b;
-extern DMA_HandleTypeDef hdma_sai4_a;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
-extern SAI_HandleTypeDef hsai_BlockA4;
 extern SD_HandleTypeDef hsd2;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
@@ -584,34 +582,6 @@ void SDMMC2_IRQHandler(void)
   /* USER CODE BEGIN SDMMC2_IRQn 1 */
 
   /* USER CODE END SDMMC2_IRQn 1 */
-}
-
-/**
-  * @brief This function handles BDMA channel0 global interrupt.
-  */
-void BDMA_Channel0_IRQHandler(void)
-{
-  /* USER CODE BEGIN BDMA_Channel0_IRQn 0 */
-
-  /* USER CODE END BDMA_Channel0_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_sai4_a);
-  /* USER CODE BEGIN BDMA_Channel0_IRQn 1 */
-
-  /* USER CODE END BDMA_Channel0_IRQn 1 */
-}
-
-/**
-  * @brief This function handles SAI4 global interrupt.
-  */
-void SAI4_IRQHandler(void)
-{
-  /* USER CODE BEGIN SAI4_IRQn 0 */
-
-  /* USER CODE END SAI4_IRQn 0 */
-
-  /* USER CODE BEGIN SAI4_IRQn 1 */
-
-  /* USER CODE END SAI4_IRQn 1 */
 }
 
 /**

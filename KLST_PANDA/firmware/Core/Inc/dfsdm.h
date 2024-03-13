@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    bdma.h
+  * @file    dfsdm.h
   * @brief   This file contains all the function prototypes for
-  *          the bdma.c file
+  *          the dfsdm.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __BDMA_H__
-#define __BDMA_H__
+#ifndef __DFSDM_H__
+#define __DFSDM_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,17 +28,17 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* DMA memory to memory transfer handles -------------------------------------*/
-
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
+
+extern DFSDM_Channel_HandleTypeDef hdfsdm1_channel0;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_BDMA_Init(void);
+void MX_DFSDM1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -48,5 +48,5 @@ void MX_BDMA_Init(void);
 }
 #endif
 
-#endif /* __BDMA_H__ */
+#endif /* __DFSDM_H__ */
 

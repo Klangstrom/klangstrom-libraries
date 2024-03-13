@@ -8157,22 +8157,22 @@
 	)
 	(global_label "GPIO_11"
 		(shape input)
-		(at 50.8 161.29 180)
+		(at 119.38 90.17 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "67f43da2-ff04-43fc-bf94-57b39f803508")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 40.0323 161.29 0)
+			(at 130.2271 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -8399,22 +8399,22 @@
 	)
 	(global_label "SPI_USR_SCK"
 		(shape input)
-		(at 119.38 173.99 0)
+		(at 50.8 156.21 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "74fb099d-179f-4be9-903e-2fde542670ce")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 134.9442 173.99 0)
+			(at 35.2358 156.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -8575,22 +8575,22 @@
 	)
 	(global_label "SPI_USR_CS"
 		(shape input)
-		(at 119.38 90.17 0)
+		(at 50.8 161.29 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "8f7b6c92-90ba-4c99-b0c7-966507221175")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 133.6742 90.17 0)
+			(at 36.5058 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -8641,22 +8641,22 @@
 	)
 	(global_label "SPI_USR_MISO"
 		(shape input)
-		(at 119.38 128.27 0)
+		(at 50.8 163.83 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "93db9ea4-6034-419a-9df0-90a0ef49b8ea")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 135.7115 128.27 0)
+			(at 34.3891 163.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -8859,24 +8859,24 @@
 			)
 		)
 	)
-	(global_label "GPIO_18_INT"
+	(global_label "GPIO_18"
 		(shape input)
-		(at 50.8 163.83 180)
+		(at 119.38 173.99 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "ac4d8f1c-5351-49f3-b203-16d8fc222862")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 36.0824 163.83 0)
+			(at 130.2271 173.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -8993,22 +8993,22 @@
 	)
 	(global_label "_AUDIO_MIC_DATA"
 		(shape input)
-		(at 50.8 166.37 180)
+		(at 119.38 130.81 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "ba989707-2a1f-4c7f-af5d-0f06dc255c43")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 31.626 166.37 0)
+			(at 138.6334 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -9609,29 +9609,7 @@
 	)
 	(global_label "SPI_USR_MOSI"
 		(shape input)
-		(at 119.38 130.81 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "f800e283-cafc-45b4-a3c2-a249f8707c99")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 135.7115 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "_AUDIO_MIC_CLK"
-		(shape input)
-		(at 50.8 156.21 180)
+		(at 50.8 166.37 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9639,14 +9617,36 @@
 			)
 			(justify right)
 		)
-		(uuid "f83993cd-4d4f-402e-930d-5e2c89db4db4")
+		(uuid "f800e283-cafc-45b4-a3c2-a249f8707c99")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 32.4727 156.21 0)
+			(at 34.3891 166.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_MIC_CLK"
+		(shape input)
+		(at 119.38 128.27 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f83993cd-4d4f-402e-930d-5e2c89db4db4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 137.7867 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
