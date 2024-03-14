@@ -250,8 +250,10 @@ void MPU_Config(void);
 #define _MIDI_ANALOG_OUT_GPIO_Port GPIOD
 #define _DISPLAY_LTDC_B2_Pin GPIO_PIN_2
 #define _DISPLAY_LTDC_B2_GPIO_Port GPIOD
-#define GPIO_18_Pin GPIO_PIN_4
+#define GPIO_18_Pin GPIO_PIN_3
 #define GPIO_18_GPIO_Port GPIOD
+#define GPIO_12_Pin GPIO_PIN_4
+#define GPIO_12_GPIO_Port GPIOD
 #define SERIAL_USR_TX_Pin GPIO_PIN_5
 #define SERIAL_USR_TX_GPIO_Port GPIOD
 #define _CARD_SDMMC_CK_Pin GPIO_PIN_6
