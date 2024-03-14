@@ -3266,26 +3266,6 @@
 		)
 		(uuid "448e73b4-5027-4538-aa61-7b8b4c636889")
 	)
-	(text_box "@todo maybe replace with something more durable like:\n\n- C2998806\n- C2998781\n- C145855\n- C17179519 (3A)\n- C2930976 (1A)\n- C223841 (300mA)\n- C778186 (1A, SMD)\n- C2884789 (6A, black)"
-		(exclude_from_sim no)
-		(at 73.025 83.82 0)
-		(size 48.895 32.385)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(fill
-			(type color)
-			(color 255 153 0 1)
-		)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left top)
-		)
-		(uuid "e2e35a69-ec13-41f3-8c6f-441d32a25d76")
-	)
 	(text "BATTERY + CHARGER"
 		(exclude_from_sim no)
 		(at 15.24 15.24 0)
