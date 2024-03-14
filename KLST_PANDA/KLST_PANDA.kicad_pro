@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 1.0,
-          "height": 1.7,
-          "width": 1.7
+          "drill": 0.0,
+          "height": 0.9,
+          "width": 1.25
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -431,12 +431,12 @@
       "different_unit_net": "error",
       "duplicate_reference": "error",
       "duplicate_sheet_names": "error",
-      "endpoint_off_grid": "warning",
+      "endpoint_off_grid": "ignore",
       "extra_units": "error",
       "global_label_dangling": "warning",
       "hier_label_mismatch": "error",
       "label_dangling": "error",
-      "lib_symbol_issues": "warning",
+      "lib_symbol_issues": "ignore",
       "missing_bidi_pin": "warning",
       "missing_input_pin": "warning",
       "missing_power_pin": "error",
@@ -586,6 +586,14 @@
       {
         "netclass": "Power",
         "pattern": "_USB_DEVICE_HOST_VBUS"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+1.8V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+1.8VA"
       }
     ]
   },
