@@ -30,28 +30,6 @@
 	)
 	(global_label "_IDC_SERIAL_00_TX"
 		(shape input)
-		(at 104.14 24.765 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "01b58a47-8a8b-4d45-8fa9-5fa239ba094d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 83.2729 24.765 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "_IDC_SERIAL_01_TX"
-		(shape input)
 		(at 39.37 24.765 180)
 		(fields_autoplaced yes)
 		(effects
@@ -62,7 +40,7 @@
 		)
 		(uuid "0332b320-61ac-4ef4-a22a-37808029f331")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 18.5029 24.765 0)
+			(at 18.4235 24.765 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -74,28 +52,6 @@
 	)
 	(global_label "_IDC_SERIAL_00_RX"
 		(shape input)
-		(at 104.14 22.225 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "2afe133b-d379-4eae-801e-cfe7830f8d77")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 82.9705 22.225 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "_IDC_SERIAL_01_RX"
-		(shape input)
 		(at 39.37 22.225 180)
 		(fields_autoplaced yes)
 		(effects
@@ -106,7 +62,7 @@
 		)
 		(uuid "aae7e0ef-fb62-4d95-abef-4a1da7a5edb1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 18.2005 22.225 0)
+			(at 18.1211 22.225 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -170,64 +126,6 @@
 			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0"
 					(page "11")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 104.14 20.955)
-		(size 33.02 5.08)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "91fd47dd-a581-4f6b-aa29-abb0b8099e11")
-		(property "Sheetname" "IDC_SERIAL_01"
-			(at 104.14 20.2434 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "IDC_serial.kicad_sch"
-			(at 104.14 26.6196 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(pin "UART_RX" input
-			(at 104.14 22.225 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "96e85b61-45b8-45d3-ba0f-e1960f6231c7")
-		)
-		(pin "UART_TX" input
-			(at 104.14 24.765 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "101445c4-0a2e-44d7-9d9f-7281faaa2318")
-		)
-		(instances
-			(project "KLST_CATERPILLAR"
-				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0"
-					(page "12")
 				)
 			)
 		)

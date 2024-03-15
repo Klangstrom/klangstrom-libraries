@@ -6663,6 +6663,26 @@
 		)
 		(uuid "1ef01e7d-acb0-482b-8ecd-a44bafde8bc5")
 	)
+	(text_box "@TODO(@maybe get rid of buttons)"
+		(exclude_from_sim no)
+		(at 187.96 186.69 0)
+		(size 201.295 14.605)
+		(stroke
+			(width -0.0001)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 1)
+		)
+		(effects
+			(font
+				(size 5.08 5.08)
+			)
+			(justify left top)
+		)
+		(uuid "65c74e1a-f6ee-4218-bdd6-d53c851398dd")
+	)
 	(text_box "VBAT: 1 μF ceramic and 100 nF close to the VBAT pin"
 		(exclude_from_sim no)
 		(at 205.74 49.53 0)
@@ -6681,6 +6701,26 @@
 			(justify left top)
 		)
 		(uuid "7c2dfe9b-2087-4582-839c-a45337f34e0a")
+	)
+	(text_box "@TODO(maybe PIN out fot GPIOs THT:C79866 or SMD:C601974/C2829932)"
+		(exclude_from_sim no)
+		(at 187.96 207.645 0)
+		(size 202.565 34.925)
+		(stroke
+			(width -0.0001)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 0 0 1)
+		)
+		(effects
+			(font
+				(size 5.08 5.08)
+			)
+			(justify left top)
+		)
+		(uuid "93d5e5c8-214c-4b31-81e5-aeef848e0120")
 	)
 	(text_box "VDDA: 1 μF ceramic and 100 nF as close as possible of the pin."
 		(exclude_from_sim no)
