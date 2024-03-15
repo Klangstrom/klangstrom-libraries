@@ -2497,7 +2497,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "R41")
 					(unit 1)
@@ -2588,7 +2588,7 @@
 			(uuid "0059ee6e-6ce5-4092-b013-fc263d648f40")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "J8")
 					(unit 1)
@@ -2654,7 +2654,7 @@
 			(uuid "96562ca3-33a2-46ad-b5de-60ddc907d38b")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR063")
 					(unit 1)
@@ -2739,7 +2739,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "C45")
 					(unit 1)
@@ -2823,7 +2823,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "R40")
 					(unit 1)
@@ -2905,7 +2905,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "R39")
 					(unit 1)
@@ -3001,7 +3001,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "U5")
 					(unit 1)
@@ -3092,7 +3092,7 @@
 			(uuid "8018c765-a3b8-4aad-ae7a-74c37cc70fcf")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "J7")
 					(unit 1)
@@ -3163,7 +3163,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR067")
 					(unit 1)
@@ -3235,7 +3235,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR065")
 					(unit 1)
@@ -3301,7 +3301,7 @@
 			(uuid "145cd0c1-6a52-4607-969f-c61e0eb63331")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR061")
 					(unit 1)
@@ -3367,7 +3367,7 @@
 			(uuid "e80bd49c-d5a0-4f11-8a15-cd31a7343517")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR066")
 					(unit 1)
@@ -3438,7 +3438,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR064")
 					(unit 1)
@@ -3522,7 +3522,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "R42")
 					(unit 1)
@@ -3593,7 +3593,7 @@
 					(unit 1)
 				)
 			)
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "#PWR062")
 					(unit 1)
@@ -3680,7 +3680,7 @@
 			(uuid "3f0fb29c-be92-486f-a543-d56e424db91e")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "U6")
 					(unit 1)
@@ -3758,7 +3758,7 @@
 			(uuid "98c56491-5982-48a4-8ec7-6deac7f43a3f")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/1f0020ca-bef6-4e88-99dd-cc88d8a9362c"
 					(reference "D11")
 					(unit 1)

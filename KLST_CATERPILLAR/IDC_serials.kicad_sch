@@ -167,7 +167,7 @@
 			(uuid "1d474ab9-2067-4c86-aa17-1fe83200552e")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0"
 					(page "11")
 				)
@@ -225,7 +225,7 @@
 			(uuid "101445c4-0a2e-44d7-9d9f-7281faaa2318")
 		)
 		(instances
-			(project "KLST_PANDA"
+			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/8093d0e6-fdc1-46b4-b622-445b9f3a15e0"
 					(page "12")
 				)
