@@ -2259,6 +2259,10 @@
 		(uuid "86d47598-b6cd-4571-8038-2f7f00d5b177")
 	)
 	(no_connect
+		(at 110.49 90.805)
+		(uuid "9ae0c265-489d-4a33-914a-c5264e954a18")
+	)
+	(no_connect
 		(at 266.7 173.99)
 		(uuid "a732abdf-973b-46b1-91bd-d73c003df4e7")
 	)
@@ -4242,17 +4246,6 @@
 			(justify left bottom)
 		)
 		(uuid "1c46551f-4632-49cf-b5e9-ea17dcef5fce")
-	)
-	(label "MIC_IN_RIGHT"
-		(at 110.49 90.805 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "20acb04c-e51f-400a-94fd-2b546bc87fdf")
 	)
 	(label "MIC_IN_MONO"
 		(at 190.5 166.37 0)

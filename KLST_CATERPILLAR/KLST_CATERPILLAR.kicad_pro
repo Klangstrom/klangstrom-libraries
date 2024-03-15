@@ -497,8 +497,8 @@
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
         "track_width": 0.25,
-        "via_diameter": 0.6,
-        "via_drill": 0.25,
+        "via_diameter": 0.5,
+        "via_drill": 0.2,
         "wire_width": 6
       },
       {
@@ -594,6 +594,14 @@
       {
         "netclass": "Power",
         "pattern": "+1.8VA"
+      },
+      {
+        "netclass": "Power Delivery",
+        "pattern": "/power/(PWR_1.8V)"
+      },
+      {
+        "netclass": "Power Delivery",
+        "pattern": "/power/(PWR_3.3V)"
       }
     ]
   },
