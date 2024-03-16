@@ -1680,6 +1680,44 @@
 		)
 	)
 	(sheet
+		(at 133.985 29.845)
+		(size 35.56 3.81)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "11a57f35-aeba-4795-bef6-4310323d05cc")
+		(property "Sheetname" "testpoints"
+			(at 133.985 29.1334 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "testpoints.kicad_sch"
+			(at 133.985 34.2396 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
 		(at 95.25 50.165)
 		(size 35.56 3.81)
 		(fields_autoplaced yes)

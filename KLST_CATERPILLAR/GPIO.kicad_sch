@@ -2081,9 +2081,9 @@
 		)
 		(uuid e0ccc5c5-bce6-46c4-9ab0-1460776e8f0c)
 	)
-	(text "@TODO(maybe replace THT with SMD connector e.g C601974 or C2829932)"
+	(text "@NOTE(THT: C79866 maybe or SMD: C601974 or C2829932)"
 		(exclude_from_sim no)
-		(at 26.67 88.9 0)
+		(at 15.24 97.155 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2102,28 +2102,6 @@
 			(justify left bottom)
 		)
 		(uuid "080bbf4d-49e7-477b-bf1e-f1518e734a18")
-	)
-	(text "@TODO(maybe replace THT with SMD connector e.g C601974 or C2829932)"
-		(exclude_from_sim no)
-		(at 127.635 88.9 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "0f5215ea-995a-4b83-8236-43a6e99aa291")
-	)
-	(text "@TODO(maybe replace THT with SMD connector e.g C601974 or C2829932)"
-		(exclude_from_sim no)
-		(at 127.635 170.815 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "24c76012-efbd-486b-9612-36973108e5a5")
 	)
 	(text "GPIO ( unused modules #1 )"
 		(exclude_from_sim no)
@@ -4001,7 +3979,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0a92c07b-557f-42a7-b099-89d63c3fe2e9")
@@ -4021,7 +3999,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_IDC:IDC-Header_2x17_P2.54mm_Horizontal"
+		(property "Footprint" "IDC-connector_SMD:IDC-PinHeader_2x17_P2.54mm_Vertical_SMD"
 			(at 62.23 54.61 0)
 			(effects
 				(font
@@ -4048,7 +4026,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C79866"
+		(property "JLCPCB" "C2829932"
 			(at 62.23 54.61 0)
 			(effects
 				(font
