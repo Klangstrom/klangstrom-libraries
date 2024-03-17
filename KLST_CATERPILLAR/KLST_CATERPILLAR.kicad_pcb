@@ -36985,7 +36985,7 @@
 		(tags "Surface mounted pin header SMD 2x17 2.54mm double row")
 		(property "Reference" "J13"
 			(at 0 22.65 180)
-			(layer "B.SilkS")
+			(layer "B.Fab")
 			(uuid "7100ffb1-1b36-4305-bcba-f3d6e6d9bd47")
 			(effects
 				(font
