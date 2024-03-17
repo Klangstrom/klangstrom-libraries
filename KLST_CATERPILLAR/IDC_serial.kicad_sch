@@ -786,26 +786,6 @@
 		)
 		(uuid "eaa913ac-028c-4a47-b2eb-392a208b4f27")
 	)
-	(text_box "@TODO(replaced THT with SMD connector C720733. check with footprint)"
-		(exclude_from_sim no)
-		(at 103.505 119.38 0)
-		(size 113.665 40.005)
-		(stroke
-			(width -0.0001)
-			(type default)
-		)
-		(fill
-			(type color)
-			(color 255 0 0 1)
-		)
-		(effects
-			(font
-				(size 5.08 5.08)
-			)
-			(justify left top)
-		)
-		(uuid "24ada527-1fc2-40bb-ba0c-aff54550e49c")
-	)
 	(hierarchical_label "UART_TX"
 		(shape input)
 		(at 156.21 104.14 0)
@@ -1098,7 +1078,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C720733"
+		(property "JLCPCB" "C492445"
 			(at 148.59 101.6 0)
 			(effects
 				(font

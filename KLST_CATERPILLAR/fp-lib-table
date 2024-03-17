@@ -15,4 +15,5 @@
   (lib (name "PEC11R-4015F-S0024")(type "KiCad")(uri "${KIPRJMOD}/library/PEC11R-4015F-S0024")(options "")(descr ""))
   (lib (name "MK-12F03-G015")(type "KiCad")(uri "${KIPRJMOD}/library/MK-12F03-G015")(options "")(descr ""))
   (lib (name "IDC-connector_SMD")(type "KiCad")(uri "${KIPRJMOD}/IDC-connector_SMD.pretty")(options "")(descr ""))
+  (lib (name "KLST")(type "KiCad")(uri "${KIPRJMOD}/library/KLST.pretty")(options "")(descr ""))
 )

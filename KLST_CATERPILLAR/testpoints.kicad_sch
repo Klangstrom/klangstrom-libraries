@@ -4,5 +4,1866 @@
 	(generator_version "8.0")
 	(uuid "91d57eb0-b84a-475a-8674-1039217a13e3")
 	(paper "A4")
-	(lib_symbols)
+	(lib_symbols
+		(symbol "Connector:TestPoint_Small"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0.762) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "TP"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint_Small"
+				(at 0 2.032 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TestPoint_Small_0_1"
+				(circle
+					(center 0 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_Small_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 0)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 49.53 106.68) (xy 60.325 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0db1c553-4333-4506-bf9a-55a74ba75d2f")
+	)
+	(wire
+		(pts
+			(xy 49.53 24.13) (xy 60.325 24.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13b03ace-9901-45a2-8700-64aeaf2e9b5f")
+	)
+	(wire
+		(pts
+			(xy 49.53 31.75) (xy 60.325 31.75)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1e6a1452-8fcc-4e17-94a0-492d5346cebd")
+	)
+	(wire
+		(pts
+			(xy 49.53 60.96) (xy 60.325 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2004e643-c539-41ee-8968-d04d220a1639")
+	)
+	(wire
+		(pts
+			(xy 49.53 66.04) (xy 60.325 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a67b89f-fcc0-497f-8b53-5f5cdb8189b4")
+	)
+	(wire
+		(pts
+			(xy 49.53 39.37) (xy 60.325 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5ba5910a-7995-403a-8608-53103b218e8b")
+	)
+	(wire
+		(pts
+			(xy 49.53 87.63) (xy 60.325 87.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6029e261-1fb5-48ba-865b-4398e6bb6ae0")
+	)
+	(wire
+		(pts
+			(xy 49.53 41.91) (xy 60.325 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "800980f2-47ab-422b-a180-5801fbe09689")
+	)
+	(wire
+		(pts
+			(xy 49.53 36.83) (xy 60.325 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d65b3a5-f873-44cd-833f-32e516900fb0")
+	)
+	(wire
+		(pts
+			(xy 49.53 26.67) (xy 60.325 26.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a14d2d54-9439-4ff9-8fc8-fb266358d887")
+	)
+	(wire
+		(pts
+			(xy 49.53 63.5) (xy 60.325 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9972b11-cfd1-4ee0-b59e-ccf31d02f05c")
+	)
+	(wire
+		(pts
+			(xy 49.53 68.58) (xy 60.325 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ab08b257-adc3-4955-9c23-dec9db35fb95")
+	)
+	(wire
+		(pts
+			(xy 49.53 34.29) (xy 60.325 34.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bed7cb0b-2d50-4a9d-97e3-47199a8d626a")
+	)
+	(wire
+		(pts
+			(xy 49.53 109.22) (xy 60.325 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c01e399e-a67c-4e5f-833e-c5cab595d6c6")
+	)
+	(wire
+		(pts
+			(xy 49.53 90.17) (xy 60.325 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d9ace479-09a8-4e22-94e9-6deb52df5d11")
+	)
+	(wire
+		(pts
+			(xy 49.53 71.12) (xy 60.325 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dcaf496e-49b2-4567-82f7-587272a938ca")
+	)
+	(wire
+		(pts
+			(xy 49.53 58.42) (xy 60.325 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb826d32-1558-4150-9fb1-fdd4f6b9d26b")
+	)
+	(rectangle
+		(start 18.415 18.415)
+		(end 95.885 49.53)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 9c9766e3-3562-4ceb-ba5e-27c4574df993)
+	)
+	(rectangle
+		(start 18.415 52.705)
+		(end 95.885 78.74)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid a02e3e2f-e70d-444c-9aea-aa8bc33b4aa8)
+	)
+	(rectangle
+		(start 18.415 100.965)
+		(end 95.885 116.84)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid f42f7ada-3f80-4504-99f8-0de41de83bb5)
+	)
+	(rectangle
+		(start 18.415 81.915)
+		(end 95.885 97.79)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid ff11b835-1989-425d-a3f4-160396d54e35)
+	)
+	(text "USB"
+		(exclude_from_sim no)
+		(at 18.415 81.915 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "07fa9959-693b-4552-8739-ea6bf95559e0")
+	)
+	(text "SD CARD"
+		(exclude_from_sim no)
+		(at 18.415 52.705 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "15abbfba-d7c0-4583-ba41-386373bdedbb")
+	)
+	(text "ON-BOARD MICROPHONE"
+		(exclude_from_sim no)
+		(at 18.415 100.965 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f1c1d388-84a5-4af5-b9fb-b541efbd444e")
+	)
+	(text "AUDIO CODEC"
+		(exclude_from_sim no)
+		(at 18.415 18.415 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f709d761-845a-4104-90e4-7e268bf2582a")
+	)
+	(global_label "_AUDIO_CODEC_SAI_SD_OUT"
+		(shape input)
+		(at 49.53 39.37 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0367655d-9c1f-4e3f-a79e-243ef45d3218")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 20.7819 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_SAI_FS"
+		(shape input)
+		(at 49.53 34.29 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "056c463f-559f-4c5d-9326-c88c0bb4c5ca")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 25.6389 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_USB_DEVICE_HOST_P"
+		(shape input)
+		(at 49.53 90.17 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "093596c3-83fa-450a-a7d4-cbeffa9f8ba5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 26.2249 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_D3"
+		(shape input)
+		(at 49.53 60.96 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "13d0aa8c-6c49-4b32-94b0-b9b7ab3d6a60")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.1836 60.8806 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_CMD"
+		(shape input)
+		(at 49.53 63.5 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "156bd1bb-c77a-4df3-962a-32edfa86ca31")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 28.1791 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_MIC_DATA"
+		(shape input)
+		(at 49.53 109.22 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "184184fc-8a94-4845-afe9-ff9e85a4204d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.2766 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_USB_DEVICE_HOST_N"
+		(shape input)
+		(at 49.53 87.63 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3709876f-9002-4447-900c-28a010ca98ae")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 26.1644 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_MIC_CLK"
+		(shape input)
+		(at 49.53 106.68 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3bbce11b-d155-4781-8af4-d6ee30d7de1d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 31.1233 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_I2C_SCL"
+		(shape input)
+		(at 49.53 24.13 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "51154eaf-e0dc-4a52-b7f4-ec1616e8c7be")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 24.1686 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_I2C_SDA"
+		(shape input)
+		(at 49.53 26.67 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5bfab22f-fa15-438b-b276-63474369ef6d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 24.1875 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_SAI_SCK"
+		(shape input)
+		(at 49.53 36.83 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "72a91167-2b7a-4425-8775-235708746467")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 24.1081 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_SAI_SD_IN"
+		(shape input)
+		(at 49.53 41.91 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "76833b53-d405-4f39-ae74-c9b5544a25c3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 22.4752 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_D1"
+		(shape input)
+		(at 49.53 71.12 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7b6418e2-16df-4ffe-9957-840df7cb8026")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.1836 71.0406 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_AUDIO_CODEC_SAI_MCLK"
+		(shape input)
+		(at 49.53 31.75 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "a467ce49-e741-4369-8054-63087aa449f2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 22.8381 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_CK"
+		(shape input)
+		(at 49.53 66.04 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b83312ca-b23f-41c6-91d6-6a72e593750d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 29.6305 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_D2"
+		(shape input)
+		(at 49.53 58.42 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f9f0d37b-7dfc-415a-8b63-b64a4cb55d89")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 29.6116 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "_CARD_SDMMC_D0"
+		(shape input)
+		(at 49.53 68.58 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ff42daff-fbf6-4130-a791-d451db2a45fb")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 30.1836 68.5006 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 87.63 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "13a74978-6241-4eb4-b495-c97804cebbe0")
+		(property "Reference" "TP14"
+			(at 54.61 86.36 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_USB_DEVICE_HOST_N"
+			(at 61.595 87.63 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "115792eb-2367-4d58-8324-4b1f0f9247df")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 58.42 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2b2681ab-7e91-42f6-9b5d-f1758a7d0ac1")
+		(property "Reference" "TP8"
+			(at 54.61 57.15 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_D2"
+			(at 61.595 58.42 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b0a387d8-a6a3-4b46-ac26-13a4f5e1fbe7")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 34.29 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2f7b5d33-26aa-40d9-8cbc-5243cb10016c")
+		(property "Reference" "TP4"
+			(at 54.61 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_SAI_FS"
+			(at 61.595 34.29 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a98beac6-bded-4d16-bdb7-f29abf75f3cf")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 90.17 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "36166f47-1d8a-4381-ae9b-c09dfed3fdf3")
+		(property "Reference" "TP15"
+			(at 54.61 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_USB_DEVICE_HOST_P"
+			(at 61.595 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "56eef499-8c8b-4a52-8e76-9c2b798919b5")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 66.04 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "440d3949-e958-4482-9575-24cddb6bfc63")
+		(property "Reference" "TP11"
+			(at 54.61 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_CK"
+			(at 61.595 66.04 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "26fcad80-6c6c-4f80-b1d6-f10c6aedd9db")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 39.37 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4536690e-b8f6-437e-be6f-ac431ab95ec1")
+		(property "Reference" "TP6"
+			(at 54.61 38.1 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_SAI_SD_OUT"
+			(at 61.595 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "dd527f60-e904-4433-81a3-d004eaa22169")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 24.13 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4fc3571d-0d26-4d79-997d-2b0a67b57596")
+		(property "Reference" "TP1"
+			(at 54.61 22.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_I2C_SCL"
+			(at 61.595 24.13 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4a6e7a13-a6fd-47f1-801c-98151c806755")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 68.58 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "52047bfb-7cb5-4ab2-94af-d8e14ea53b82")
+		(property "Reference" "TP12"
+			(at 54.61 67.31 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_D0"
+			(at 61.595 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "baafefda-4529-4d61-ae40-c1e67296af32")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 36.83 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6a187660-3b3b-4456-9e6d-29ba3332a24a")
+		(property "Reference" "TP5"
+			(at 54.61 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_SAI_SCK"
+			(at 61.595 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "626a3032-4611-4a74-b072-987fd2501ada")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 71.12 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "79212508-dba8-49b7-8b10-957e4c5993cb")
+		(property "Reference" "TP13"
+			(at 54.61 69.85 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_D1"
+			(at 61.595 71.12 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f2edc0e7-ad9a-49e9-afdc-9db3b5e7ee3e")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 31.75 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7b6c5381-34a5-4733-880d-b47dbd944eda")
+		(property "Reference" "TP3"
+			(at 54.61 30.48 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_SAI_MCLK"
+			(at 61.595 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "09b86ad7-86c5-4788-b883-b8625a093b76")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 109.22 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9eaa1829-4b44-42d6-897a-2f8fb1c864ac")
+		(property "Reference" "TP17"
+			(at 54.61 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_MIC_DATA"
+			(at 61.595 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "03d06aaf-b17d-41b5-b9de-ae59288e127e")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 63.5 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a0a6fe4f-cd77-4587-80df-e3d81f24ecc1")
+		(property "Reference" "TP10"
+			(at 54.61 62.23 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_CMD"
+			(at 61.595 63.5 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6b144528-1de0-4f5a-bf52-1f36aa3d725c")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 26.67 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a14e811c-bc58-47ac-9454-3fbf2e688b7d")
+		(property "Reference" "TP2"
+			(at 54.61 25.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_I2C_SCA"
+			(at 61.595 26.67 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5723a1ac-5774-48db-ad3f-2b6e53a60b06")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 60.96 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b0489bfe-c113-4ded-9d48-05c8af79f106")
+		(property "Reference" "TP9"
+			(at 54.61 59.69 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_CARD_SDMMC_D3"
+			(at 61.595 60.96 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "51b0570e-bc74-42eb-a327-fc39108c81be")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 106.68 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bb856c29-6e4e-4f3a-83a8-9f18f355cedc")
+		(property "Reference" "TP16"
+			(at 54.61 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_MIC_CLK"
+			(at 61.595 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1ea64d10-2a26-4925-b005-411e7663ab11")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 60.325 41.91 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f2c65922-fe14-45f0-a004-a6fb6030dcc2")
+		(property "Reference" "TP7"
+			(at 54.61 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TP_AUDIO_CODEC_SAI_SD_IN"
+			(at 61.595 41.91 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "KLST:TestPoint_Pad_D1.5mm"
+			(at 60.325 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 60.325 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 60.325 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "16e672cd-f671-4c7e-82f3-7425bb00ffb4")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/11a57f35-aeba-4795-bef6-4310323d05cc"
+					(reference "TP7")
+					(unit 1)
+				)
+			)
+		)
+	)
 )
