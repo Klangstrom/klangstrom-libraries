@@ -2578,7 +2578,7 @@
 	)
 	(wire
 		(pts
-			(xy 54.61 132.715) (xy 54.61 130.81)
+			(xy 67.31 132.715) (xy 67.31 130.81)
 		)
 		(stroke
 			(width 0)
@@ -2605,6 +2605,16 @@
 			(type default)
 		)
 		(uuid "b1dcb147-7530-4d6a-a6e8-d6264fa9557a")
+	)
+	(wire
+		(pts
+			(xy 60.96 132.715) (xy 67.31 132.715)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b27aa478-cc9e-444c-930a-b433dc614295")
 	)
 	(wire
 		(pts
@@ -2798,7 +2808,7 @@
 	)
 	(wire
 		(pts
-			(xy 52.705 132.715) (xy 54.61 132.715)
+			(xy 48.895 132.715) (xy 55.88 132.715)
 		)
 		(stroke
 			(width 0)
@@ -3071,7 +3081,7 @@
 	)
 	(global_label "_USB_DEVICE_HOST_VBUS"
 		(shape input)
-		(at 52.705 132.715 180)
+		(at 48.895 132.715 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3081,7 +3091,7 @@
 		)
 		(uuid "2b10e656-8734-41a3-87a5-9160a1649241")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 25.8507 132.715 0)
+			(at 22.0407 132.715 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3438,6 +3448,83 @@
 			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
 					(reference "FB1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 58.42 132.715 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "15b5dd6f-fe04-4ef9-b9f0-5cf274e3b0cc")
+		(property "Reference" "NT3"
+			(at 58.42 131.445 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 58.42 133.985 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "NetTie:NetTie-2_SMD_Pad2.0mm"
+			(at 58.42 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 58.42 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 58.42 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB" "DNF"
+			(at 58.42 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d85617bf-706f-48d6-86e7-50165734278c")
+		)
+		(pin "2"
+			(uuid "fb520420-93c3-4732-aa64-99c3360010da")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
+					(reference "NT3")
 					(unit 1)
 				)
 			)
@@ -4392,7 +4479,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 54.61 130.81 0)
+		(at 67.31 130.81 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4400,7 +4487,7 @@
 		(dnp no)
 		(uuid "65a7c44f-9b28-4d42-b689-177931312975")
 		(property "Reference" "#PWR049"
-			(at 54.61 134.62 0)
+			(at 67.31 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4409,7 +4496,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 54.61 127 0)
+			(at 67.31 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4417,7 +4504,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 54.61 130.81 0)
+			(at 67.31 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4426,7 +4513,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 54.61 130.81 0)
+			(at 67.31 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4435,7 +4522,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 54.61 130.81 0)
+			(at 67.31 130.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
