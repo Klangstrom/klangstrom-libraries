@@ -159,6 +159,8 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 
 ## Timers
 
+==@TODO==
+
 | TIMER | CHANNEL         | DESCRIPTION             |
 |-------|-----------------|-------------------------|
 | TIM1  | CH1+CH2+CH3     | ENCODER_00(+BUTTON)     |

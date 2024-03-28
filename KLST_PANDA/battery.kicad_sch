@@ -3228,6 +3228,27 @@
 		)
 		(uuid "1656c5fe-15ca-474b-ac28-f870f85aa931")
 	)
+	(text_box "NOTE: if battery is not fitted make sure to connect '_USB_DEVICE_HOST_VBUS' to '5V' net to power board from USB connector"
+		(exclude_from_sim no)
+		(at 15.24 166.37 0)
+		(size 57.785 27.94)
+		(stroke
+			(width -0.0001)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 0 0 0 1)
+		)
+		(effects
+			(font
+				(size 2.54 2.54)
+				(color 255 255 255 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "2d3b6803-9e21-480f-96b8-96d756f17e5a")
+	)
 	(text_box "for battery two symbols are required because clip comes as single items"
 		(exclude_from_sim no)
 		(at 175.26 56.515 0)
@@ -3487,7 +3508,7 @@
 		)
 		(uuid "f64a9c80-c7d9-45bd-a605-ae086b87c67b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 18.8657 23.495 0)
+			(at 18.7863 23.495 0)
 			(effects
 				(font
 					(size 1.27 1.27)
