@@ -1735,6 +1735,126 @@
 				)
 			)
 		)
+		(symbol "power:+5V"
+			(power)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+5V"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+5V\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+5V_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+5V_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0) hide
+					(name "+5V"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "power:GND"
 			(power)
 			(pin_names
@@ -2458,6 +2578,16 @@
 	)
 	(wire
 		(pts
+			(xy 54.61 132.715) (xy 54.61 130.81)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a760d25f-f595-4458-b56e-2f4f3224e62d")
+	)
+	(wire
+		(pts
 			(xy 161.29 51.435) (xy 177.165 51.435)
 		)
 		(stroke
@@ -2668,6 +2798,16 @@
 	)
 	(wire
 		(pts
+			(xy 52.705 132.715) (xy 54.61 132.715)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f63dcfde-174c-472f-96b6-0d52663a6080")
+	)
+	(wire
+		(pts
 			(xy 49.53 40.005) (xy 59.055 40.005)
 		)
 		(stroke
@@ -2711,6 +2851,18 @@
 			(type none)
 		)
 		(uuid 6c1e98f3-68b2-4f84-bb03-d6a15be12b81)
+	)
+	(rectangle
+		(start 15.875 121.92)
+		(end 78.74 142.875)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 74018ff3-1092-48c1-83ef-627d5fa5c376)
 	)
 	(rectangle
 		(start 104.14 69.215)
@@ -2785,6 +2937,17 @@
 		)
 		(uuid "1b9f2b15-3287-4ab9-942c-5c1fb99fa625")
 	)
+	(text "USB POWER to 5V"
+		(exclude_from_sim no)
+		(at 15.875 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1d821ef9-9eee-465a-a2c8-37480c4f2427")
+	)
 	(text "@NOTE(200mA rating)"
 		(exclude_from_sim no)
 		(at 114.3 80.01 0)
@@ -2840,6 +3003,17 @@
 		)
 		(uuid "c955797e-4afd-4918-bea6-3b21fac3778b")
 	)
+	(text "needs to be added to power 5V rail from USB-C connector"
+		(exclude_from_sim no)
+		(at 17.78 140.97 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d0d29e7d-2aeb-4249-b8d4-c5b308f7e773")
+	)
 	(text "VOLTAGE REGULATOR +1.8V"
 		(exclude_from_sim no)
 		(at 104.14 16.51 0)
@@ -2894,6 +3068,28 @@
 			(justify left bottom)
 		)
 		(uuid "d4da7170-d0b0-4604-a79e-8357a6fac705")
+	)
+	(global_label "_USB_DEVICE_HOST_VBUS"
+		(shape input)
+		(at 52.705 132.715 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "2b10e656-8734-41a3-87a5-9160a1649241")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 25.8507 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
@@ -4189,6 +4385,71 @@
 			(project "KLST_CATERPILLAR"
 				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
 					(reference "#PWR013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 54.61 130.81 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "65a7c44f-9b28-4d42-b689-177931312975")
+		(property "Reference" "#PWR049"
+			(at 54.61 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 54.61 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 54.61 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 54.61 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 54.61 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "590fd8a8-bd64-406e-a8d3-11c0a8647fde")
+		)
+		(instances
+			(project "KLST_CATERPILLAR"
+				(path "/b4513875-4c57-4720-bcc5-43ead67fe18f/efc23d99-04cc-4530-a8d8-9c096b510f30"
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
