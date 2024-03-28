@@ -24548,7 +24548,7 @@
 		(descr "Net tie, 2 pin, 0.5mm square SMD pads")
 		(tags "net tie")
 		(property "Reference" "NT3"
-			(at 0 -1.2 270)
+			(at 0 -1.2 -90)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "62823c3c-74ac-4b35-aafc-d3255b74cae6")
@@ -24560,7 +24560,7 @@
 			)
 		)
 		(property "Value" "NetTie_2"
-			(at 0 1.2 270)
+			(at 0 1.2 -90)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "d5384277-39a1-4a87-9f74-edf48df7e428")
