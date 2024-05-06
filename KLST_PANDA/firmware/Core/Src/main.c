@@ -21,7 +21,7 @@
  *
  * in `./Core/Src/main.c`
  *
- * - LINE 60: remove `static` from `void MPU_Config(void);`
+ * - LINE 75: remove `static` from `void MPU_Config(void);`
  *
  * in `./USB_HOST/Target/usbh_conf.h`
  *
@@ -182,7 +182,7 @@ void PeriphCommonClock_Config(void)
 
 /* USER CODE END 4 */
 
-/* MPU Configuration */
+ /* MPU Configuration */
 
 void MPU_Config(void)
 {
