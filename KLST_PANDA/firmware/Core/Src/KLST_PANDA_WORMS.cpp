@@ -1,4 +1,9 @@
+// TODO move this into another folder
+
+#if (KLST_BOARD==KLST_BOARD_WORMS)
+
 #include "ApplicationStub.h" // this is important for C++
+
 #include "KLST.h"
 #include "KLST-MechanicalKey.h"
 
@@ -22,3 +27,5 @@ void event(int event_type, uint8_t event_data) {
 
 //void WEAK event(int event_type, uint8_t event_data) {}
 //void WEAK encoder_event() {}
+
+#endif // (KLST_BOARD==KLST_BOARD_WORMS)
