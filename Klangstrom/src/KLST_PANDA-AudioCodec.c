@@ -1,3 +1,22 @@
+/*
+ * Klangstrom
+ *
+ * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
+ * Copyright (c) 2024 Dennis P Paul.
+ *
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "stm32h7xx_hal.h"
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-SerialDebug.h"
@@ -284,7 +303,7 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
         uint16_t out = FifoRead();
         mTXBuffer[i] = ((uint32_t) out) << 0 | ((uint32_t) out) << 16;
 #else
-        const float mAmplitude = 0.9f;
+        const float mAmplitude = 1.0f;
 
         float mLeftf = (float) sin(left_osc_phi * 6.2832f) * mAmplitude;
         left_osc_phi += left_osc_phi_inc;
