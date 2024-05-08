@@ -17,27 +17,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_H_
-#define INC_KLST_PANDA_H_
+#pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdint.h>
 
-#include "KLST_PANDA-Config.h"
+#include "KLST-MechanicalKey.h"
+#include "KLST_PANDA-RotaryEncoder.h"
 
-#if defined(KLST_PANDA_ENABLE_USB_HOST) && defined(KLST_PANDA_ENABLE_USB_DEVICE)
-#error "KLST_PANDA: USB Host and Device cannot be enabled at the same time"
-#endif
-
-#if !defined(KLST_PANDA_ENABLE_EXTERNAL_MEMORY) && defined(KLST_PANDA_ENABLE_DISPLAY)
-#error "KLST_PANDA: external memory must be enabled when display is enabled"
-#endif
-
-#include "Klangstrom.h"
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* INC_KLST_PANDA_H_ */
+class KlangstromPeripherals {
+public:
+    KlangstromPeripherals();
+    ~KlangstromPeripherals();
+    const uint8_t number_of_encoders;
+    RotaryEncoder **encoders;
+    const uint8_t number_of_mechanicalkeys;
+    MechanicalKey **mechanicalkeys;
+};

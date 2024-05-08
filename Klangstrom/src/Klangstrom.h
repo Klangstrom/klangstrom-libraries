@@ -17,12 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLANGSTROM_H_
-#define INC_KLANGSTROM_H_
+#pragma once
 
 #include <stdint.h>
 
-#include "KLST-Peripherals.h"
+#include "KlangstromEnvironment.h"
+#include "KlangstromDefines.h"
+#include "KlangstromPeripherals.h"
+
 #include "KLST-MechanicalKey.h"
 
 class Klangstrom {
@@ -49,10 +51,8 @@ extern "C" {
 void KLST_BSP_init();
 void KLST_BSP_setup();
 void KLST_BSP_loop();
-extern KLST_Peripherals peripherals;
+extern KlangstromPeripherals peripherals;
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* INC_KLANGSTROM_H_ */

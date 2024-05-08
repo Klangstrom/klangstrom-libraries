@@ -22,7 +22,7 @@ extern "C" {
 #endif
 
 #include "main.h"
-#include "KLST.h"
+#include "Klangstrom.h"
 #include "KLST_PANDA-Includes.h"
 #include "KLST_PANDA.h"
 #include "KLST_PANDA-Backlight.h"

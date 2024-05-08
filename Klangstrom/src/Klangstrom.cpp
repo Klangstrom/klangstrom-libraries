@@ -17,9 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KLST.h"
+#include "Klangstrom.h"
 
-KLST_Peripherals peripherals;
+KlangstromPeripherals peripherals;
 
 Klangstrom::Klangstrom() :
         is_initialized(false) {
