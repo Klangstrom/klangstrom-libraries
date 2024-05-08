@@ -4,7 +4,7 @@
 
 #include "ApplicationStub.h" // this is important for C++
 
-#include <Klangstrom.h>
+#include "Klangstrom.h"
 #include "KLST-MechanicalKey.h"
 
 Klangstrom klst;
