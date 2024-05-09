@@ -27,9 +27,8 @@ KLST_ENV = KLST_ARCH + KLST_BOARD
 
 .
 ├── KLST_ARCH                       (=0x10)
-│   ├── KLST_ARCH_STM32             (=0x20) (Arduino,MCU)
-│   ├── KLST_ARCH_EMU               (=0x30) (Arduino,CPU)
-│   └── KLST_ARCH_WORMS             (=0x40) (STM32CubeIDE)
+│   ├── KLST_ARCH_STM32             (=0x20) (Arduino,MCU) + (STM32CubeIDE,MCU)
+│   └── KLST_ARCH_EMU               (=0x30) (Arduino,CPU)
 └── KLST_BOARD                      (=0x01)
     ├── KLST_BOARD_KLST_CORE        (=0x02) (STM32H743+WM8731)
     ├── KLST_BOARD_KLST_TINY        (=0x03) (STM32F446+WM8731)

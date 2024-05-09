@@ -5,7 +5,6 @@ archs = {
     '':                 '0x10',
     'STM32':            '0x20',
     'EMU':              '0x30',
-    'WORMS':            '0x40',
     'MASK':             '0xF0'
 }
 
@@ -47,7 +46,7 @@ with open(header_file, 'w') as file:
     file.write(copyright_notice + "\n")
     file.write("#pragma once\n\n")
     
-    file.write("#define KLST_DEBUG_ENVIRONMENT\n\n")
+    file.write("// #define KLST_DEBUG_ENVIRONMENT\n\n")
     
     # Write architecture defines
     all_keys = [f"KLST_ARCH_{key}" for key in archs] + [f"KLST_BOARD_{key}" for key in boards]
@@ -75,7 +74,13 @@ with open(header_file, 'w') as file:
         for arch in arch_keys:
             define = f"{board}_{arch}"
             file.write(f"#if ((KLST_ENV & KLST_BOARD_MASK) == KLST_BOARD_{board}) && ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_{arch})\n")
-            file.write(f"#define {define}\n")
+            file.write(f"#define {define} ")
+            file.write(f"// = ")
+            arch_value = int(archs[arch], 16) 
+            board_value = int(boards[board], 16)
+            combined_value = arch_value | board_value
+            file.write(hex(combined_value))
+            file.write(f"\n")
             file.write(f"#ifdef KLST_DEBUG_ENVIRONMENT\n")
             file.write(f'#warning "+++ klangstrom platform: {define}"\n')
             file.write(f"#endif // KLST_DEBUG_ENVIRONMENT\n")
