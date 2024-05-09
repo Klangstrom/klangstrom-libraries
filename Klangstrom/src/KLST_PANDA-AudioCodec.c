@@ -17,15 +17,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "stm32h7xx_hal.h"
-#include "KLST_PANDA-AudioCodec.h"
-#include "KLST_PANDA-SerialDebug.h"
-#include "WM8904.h"
+#include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+#include "stm32h7xx_hal.h"
+#include "KLST_PANDA-AudioCodec.h"
+#include "KLST_PANDA-SerialDebug.h"
+#include "WM8904.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
@@ -49,7 +51,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence);
 static void setup_default_start_sequence();
 static void setup_manually();
 
-uint8_t audiocodec_setup() {
+uint8_t KLST_BSP_audiocodec_setup() {
     if (WM8904_init(&hi2c4) != HAL_OK) {
         println("could not initialize audiocodec");
         return HAL_ERROR;

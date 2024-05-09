@@ -17,10 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "KlangstromMechanicalKey.h"
 
-void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_error_callback(SAI_HandleTypeDef *hsai);
+MechanicalKey::MechanicalKey(int mechanical_key_id) {
+}
+
+void MechanicalKey::setup() {
+}

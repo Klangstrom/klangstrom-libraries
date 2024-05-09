@@ -24,8 +24,7 @@
 #include "KlangstromEnvironment.h"
 #include "KlangstromDefines.h"
 #include "KlangstromPeripherals.h"
-
-#include "KLST-MechanicalKey.h"
+#include "KlangstromMechanicalKey.h"
 
 class Klangstrom {
 public:

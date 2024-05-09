@@ -21,7 +21,7 @@
 
 #include <stdint.h>
 
-#include "KLST-MechanicalKey.h"
+#include "KlangstromMechanicalKey.h"
 #include "KLST_PANDA-RotaryEncoder.h"
 
 class KlangstromPeripherals {

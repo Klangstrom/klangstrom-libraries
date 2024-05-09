@@ -19,8 +19,23 @@
 
 #pragma once
 
-void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void audiocodec_error_callback(SAI_HandleTypeDef *hsai);
+#include <stdint.h>
+
+class AudioCodec {
+public:
+    AudioCodec();
+    void setup();
+private:
+    bool isInitialized;
+};
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+uint8_t KLST_BSP_audiocodec_setup();
+
+#ifdef __cplusplus
+}
+#endif
+

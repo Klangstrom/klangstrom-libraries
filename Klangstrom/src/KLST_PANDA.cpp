@@ -307,7 +307,8 @@ internalmemory_test_all();
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
-    audiocodec_setup();
+    println("( is now happening in `AudioCodec` class, and needs to be called explicitly )");
+//    KLST_BSP_audiocodec_setup(); // TODO this should happen in `AudioCodec` class
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
 //    printf("***** WARNING REMOVE THE LINES BELOW *****");
