@@ -5,21 +5,24 @@
 #include "ApplicationStub.h" // this is important for C++
 
 #include "Klangstrom.h"
-#include "KLST-MechanicalKey.h"
+#include "KlangstromMechanicalKey.h"
+#include "KlangstromAudioCodec.h"
 
-Klangstrom klst;
+Klangstrom klangstrom;
 #define MECHANICAL_KEY_00 0
 MechanicalKey *mMechanicalKey;
+AudioCodec audiocodec;
 
 void setup() {
-    klst.init();
-    mMechanicalKey = klst.create_mechancial_key(MECHANICAL_KEY_00);
-    klst.setup();
+    klangstrom.init();
+    mMechanicalKey = klangstrom.create_mechancial_key(MECHANICAL_KEY_00);
+    klangstrom.setup();
+    audiocodec.setup();
 //    klst.create_encoder(ENCODER_00);
 }
 
 void loop() {
-    klst.loop();
+    klangstrom.loop();
 }
 
 void event(int event_type, uint8_t event_data) {
