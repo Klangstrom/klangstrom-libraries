@@ -1,5 +1,3 @@
-#if (KLST_BOARD==KLST_BOARD_WORMS)
-
 #include "ApplicationStub.h"
 
 int main(void) {
@@ -8,5 +6,3 @@ int main(void) {
         loop();
     }
 }
-
-#endif // (KLST_BOARD==KLST_BOARD_WORMS)

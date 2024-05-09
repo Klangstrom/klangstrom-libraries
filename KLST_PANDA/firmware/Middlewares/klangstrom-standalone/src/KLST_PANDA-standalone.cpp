@@ -1,6 +1,6 @@
-// TODO move this into another folder
+#include "KlangstromEnvironment.h"
 
-#if (KLST_BOARD==KLST_BOARD_WORMS)
+#ifdef KLST_PANDA_STM32
 
 #include "ApplicationStub.h" // this is important for C++
 
@@ -28,4 +28,4 @@ void event(int event_type, uint8_t event_data) {
 //void WEAK event(int event_type, uint8_t event_data) {}
 //void WEAK encoder_event() {}
 
-#endif // (KLST_BOARD==KLST_BOARD_WORMS)
+#endif // KLST_PANDA_STM32
