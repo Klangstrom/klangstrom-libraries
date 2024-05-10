@@ -17,6 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+
+#ifdef KLST_PANDA_STM32
+
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
@@ -28,6 +32,8 @@
 #include "KLST_PANDA-AudioCodec.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "WM8904.h"
+
+#include "KlangstromAudioCodec.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
@@ -352,8 +358,10 @@ void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
     KLST_ISH_fill_buffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+    // TODO audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -362,8 +370,10 @@ void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
     KLST_ISH_fill_buffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+    // TODO audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -388,3 +398,5 @@ void audiocodec_error_callback(SAI_HandleTypeDef *hsai) {
         println("### ERROR error in TX SAI:BlockB1");
     }
 }
+
+#endif // KLST_PANDA_STM32

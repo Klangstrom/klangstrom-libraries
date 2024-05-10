@@ -21,21 +21,34 @@
 
 #include <stdint.h>
 
-class AudioCodec {
-public:
-    AudioCodec();
-    void setup();
-private:
-    bool isInitialized;
-};
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* --- callback_interface --- */
+
+typedef struct AudioCodec AudioCodec;
+void audiocodec_callback_class(uint32_t *output, uint32_t *input, uint16_t length);
+void audiocodec_register_class(AudioCodec *pClass);
+
+/* --- callback_interface --- */
 
 uint8_t KLST_BSP_audiocodec_setup();
 
 #ifdef __cplusplus
 }
 #endif
+
+#ifdef __cplusplus
+class AudioCodec {
+public:
+    AudioCodec();
+    void setup();
+    /* --- callback_interface --- */
+    void callback_class(uint32_t *output, uint32_t *input, uint16_t length);
+    /* --- callback_interface --- */
+private:
+    bool isInitialized;
+};
+#endif // __cplusplus
 

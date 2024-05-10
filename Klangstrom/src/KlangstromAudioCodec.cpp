@@ -19,8 +19,31 @@
 
 #include "KlangstromAudioCodec.h"
 
+/* --- callback_interface --- */
+
+extern "C" {
+static AudioCodec *mAudioCodecClass = nullptr;
+
+void audiocodec_register_class(AudioCodec *pAudioCodecClass) {
+    mAudioCodecClass = pAudioCodecClass;
+}
+
+void audiocodec_callback_class(uint32_t *output, uint32_t *input, uint16_t length) {
+    if (mAudioCodecClass) {
+        mAudioCodecClass->callback_class(output, input, length);
+    }
+}
+}
+
+void AudioCodec::callback_class(uint32_t *output, uint32_t *input, uint16_t length) {
+    // TODO trigger registered application callback e.g `audioblock()`
+}
+
+/* --- callback_interface --- */
+
 AudioCodec::AudioCodec() :
         isInitialized(false) {
+    audiocodec_register_class(this);
 }
 
 void AudioCodec::setup() {

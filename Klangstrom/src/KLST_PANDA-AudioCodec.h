@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include "stm32h7xx_hal.h"
+
 void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai);
 void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai);
 void audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai);
