@@ -20,6 +20,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "KlangstromCallbackDefinitions.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,8 +48,18 @@ public:
     /* --- callback_interface --- */
     void callback_class(uint32_t *output, uint32_t *input, uint16_t length);
     /* --- callback_interface --- */
+    void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
+        callback_audioblock = callback;
+    }
+    void start() {
+        // TODO implement
+    }
+    void pause() {
+        // TODO implement
+    }
 private:
     bool isInitialized;
+    Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback_audioblock;
 };
 #endif // __cplusplus
 

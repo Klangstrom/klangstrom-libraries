@@ -273,7 +273,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 
-#define SANITY_TEST             1
+#define SANITY_TEST             0
 #define SANITY_TEST_PASSTHROUGH 0
 #define SANITY_TEST_NOISE       0
 #define SANITY_TEST_MIC         0
@@ -358,10 +358,9 @@ void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-        audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-    KLST_ISH_fill_buffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-    // TODO audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+//        KLST_ISH_fill_buffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -370,10 +369,9 @@ void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-        audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-    KLST_ISH_fill_buffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-    // TODO audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+//        KLST_ISH_fill_buffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
