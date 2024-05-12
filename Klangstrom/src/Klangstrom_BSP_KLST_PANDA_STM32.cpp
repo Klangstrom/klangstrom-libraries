@@ -17,13 +17,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include "main.h"
-#include "KLST_PANDA-Includes.h"
-#include "KLST_PANDA.h"
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Includes.h"
+#include "Klangstrom_BSP_KLST_PANDA_STM32.h"
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
 #include "KLST_PANDA-InternalMemory.h"
@@ -31,7 +34,7 @@ extern "C" {
 #include "KLST_PANDA-LTDC.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-Touch.h"
-#include "KLST_PANDA-AudioCodec.h"
+#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-IDC_Serial.h"
@@ -539,5 +542,5 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 }
 #endif
 
-/* ----------------------------------------------------------------------------------------------------------------- */
+#endif // KLST_PANDA_STM32
 

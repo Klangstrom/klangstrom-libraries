@@ -18,7 +18,6 @@
  */
 
 #include "KlangstromEnvironment.h"
-
 #ifdef KLST_PANDA_STM32
 
 #include <stdint.h>
@@ -29,7 +28,7 @@
 #include <time.h>
 
 #include "stm32h7xx_hal.h"
-#include "KLST_PANDA-AudioCodec.h"
+#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
 #include "KLST_PANDA-SerialDebug.h"
 #include "WM8904.h"
 

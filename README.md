@@ -94,3 +94,19 @@ programatically identifiable e.g
 #if defined(KLST_BOARD_KLST_PANDA)
 #endif // KLST_BOARD_KLST_PANDA
 ```
+
+## Board-Specific (BSP) implementations
+
+all boards need to implement the following functions
+
+```
+KLST_BSP_init()
+KLST_BSP_setup()
+KLST_BSP_loop()
+```
+
+in a file called `Klangstrom_BSP_XXX.cpp` where `XXX` is the board and architecture ( e.g `KLST_PANDA_STM32` ).
+
+### STM32
+
+on `STM32` architecture this file usually also includes the HAL callbacks.

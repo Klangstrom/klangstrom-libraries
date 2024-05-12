@@ -17,8 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_CONFIG_H_
-#define INC_KLST_PANDA_CONFIG_H_
+#pragma once
+
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
 
 #define KLST_PANDA_ENABLE_GPIO
 #define KLST_PANDA_ENABLE_SERIAL_DEBUG
@@ -91,4 +93,4 @@
 #endif // KLST_DEBUG_CONFIG_MODE
 */
 
-#endif /* INC_KLST_PANDA_CONFIG_H_ */
+#endif // KLST_PANDA_STM32

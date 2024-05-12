@@ -17,10 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_INCLUDES_H_
-#define INC_KLST_PANDA_INCLUDES_H_
+#pragma once
 
-#include "KLST_PANDA-Config.h"
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
 
 #if defined(KLST_PANDA_ENABLE_GPIO) || defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_SD_CARD) || defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "gpio.h"
@@ -78,4 +80,4 @@
 #include "usb_device.h"
 #endif
 
-#endif /* INC_KLST_PANDA_INCLUDES_H_ */
+#endif // KLST_PANDA_STM32
