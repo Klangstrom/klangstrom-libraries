@@ -3,18 +3,20 @@
 # Define architectures and boards with their corresponding values
 archs = {
     '':                 '0x10',
-    'STM32':            '0x20',
-    'EMU':              '0x30',
+    'RESERVED':         '0x20',
+    'STM32':            '0x30',
+    'EMU':              '0x40',
     'MASK':             '0xF0'
 }
 
 boards = {
     '':                 '0x01',
-    'KLST_CORE':        '0x02',
-    'KLST_TINY':        '0x03',
-    'KLST_SHEEP':       '0x04',
-    'KLST_PANDA':       '0x05',
-    'KLST_CATERPILLAR': '0x06',
+    'GENERIC':          '0x02',
+    'KLST_CORE':        '0x03',
+    'KLST_TINY':        '0x04',
+    'KLST_SHEEP':       '0x05',
+    'KLST_PANDA':       '0x06',
+    'KLST_CATERPILLAR': '0x07',
     'MASK':             '0x0F'
 }
 
