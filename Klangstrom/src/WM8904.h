@@ -17,15 +17,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_WM8904_H_
-#define INC_WM8904_H_
+#pragma once
+
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 #include "stm32h7xx_hal.h"
-#include "stdint.h"
 
 #define WM8904_I2C_ADDRESS       0x34 // (p120)
 
@@ -1334,4 +1339,5 @@ uint8_t WM8904_set_flag(uint8_t register_address, uint16_t flag_bit, uint8_t fla
 }
 #endif
 
-#endif /* INC_WM8904_H_ */
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#endif // KLST_PANDA_STM32

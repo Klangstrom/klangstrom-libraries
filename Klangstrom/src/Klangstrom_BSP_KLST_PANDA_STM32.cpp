@@ -17,6 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+// TODO maybe move `KLST_PANDA_MX_Init_Modules` to init and make it configurable
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
@@ -25,16 +26,18 @@ extern "C" {
 #endif
 
 #include "main.h"
+
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Includes.h"
 #include "Klangstrom_BSP_KLST_PANDA_STM32.h"
+#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
+#include "KlangstromSerialDebug.h"
+
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
 #include "KLST_PANDA-InternalMemory.h"
 #include "KLST_PANDA-LED.h"
 #include "KLST_PANDA-LTDC.h"
-#include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-Touch.h"
-#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
 #include "KLST_PANDA-RotaryEncoder.h"
 #include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-IDC_Serial.h"
@@ -63,7 +66,7 @@ static void KLST_PANDA_MX_Init_Modules();
 
 static uint32_t frame_counter = 0;
 
-// TODO move KLST_PANDA components to generic ( i.e no conection to STM32 ) classes
+// TODO move KLST_PANDA components to generic ( i.e no connection to STM32 ) classes
 // TODO distribute callbacks
 
 void KLST_BSP_init() {
@@ -210,10 +213,9 @@ void KLST_BSP_setup() {
     KLST_PANDA_MX_Init_Modules();
 
     /* --- serial debug (USART3)*/
-#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
-    serialdebug_setup();
-#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
-
+//#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
+//    serialdebug_setup();
+//#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     /* --- TODO move mechanical keys to file */
     println("initializing mechanical keys (MX:TIM4)");
@@ -221,23 +223,23 @@ void KLST_BSP_setup() {
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
 #ifdef KLST_PANDA_ENABLE_GPIO
-    println("initializing GPIO");
-    println("initializing LEDs");
+    KLST_BSP_serialdebug_println("initializing GPIO");
+    KLST_BSP_serialdebug_println("initializing LEDs");
     LED_setup();
     LED_turn_off(LED_00);
     LED_turn_off(LED_01);
 #endif // KLST_PANDA_ENABLE_GPIO
 
 #ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
-    println("initializing external RAM (MX:OCTOSPI1)");
+    KLST_BSP_serialdebug_println("initializing external RAM (MX:OCTOSPI1)");
     externalmemory_setup();
 
     println("testing external RAM");
     externalmemory_test();
 
 #ifdef KLST_PANDA_TEST_INTERNAL_MEMORY
-println("test internal RAM");
-internalmemory_test_all();
+    KLST_BSP_serialdebug_println("test internal RAM");
+    internalmemory_test_all();
 #endif
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
@@ -283,6 +285,18 @@ internalmemory_test_all();
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
+//    void print_I2C_show_devices(I2C_HandleTypeDef *hi2c) {
+//        for (uint8_t i = 0; i < 255; i++) {
+//            HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000);
+//    //        if (hi2c->ErrorCode & HAL_I2C_ERROR_TIMEOUT) {
+//    //            println("- I2C DEVICE TIMED OUT: 0x%02X", i);
+//    //        }
+//            if (!status) {
+//                KLST_BSP_serialdebug_println("- I2C DEVICE READY: 0x%02X", i);
+//            }
+//        }
+//    }
+
 //#if defined(KLST_PANDA_ENABLE_DISPLAY) || defined(KLST_PANDA_ENABLE_AUDIOCODEC)
 //    TODO somehow this causes issues
 //    println("looking for I2C devices on I2C4");
@@ -309,8 +323,8 @@ internalmemory_test_all();
 #endif // KLST_PANDA_ENABLE_DISPLAY
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
-    println("( is now happening in `AudioCodec` class, and needs to be called explicitly )");
+    KLST_BSP_serialdebug_println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
+    KLST_BSP_serialdebug_println("( is now happening in `AudioCodec` class, and needs to be called explicitly )");
 //    KLST_BSP_audiocodec_setup(); // TODO this should happen in `AudioCodec` class
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
@@ -331,9 +345,9 @@ internalmemory_test_all();
     /* --- --------------------- --- */
     /* --- end setup, begin loop --- */
     /* --- --------------------- --- */
-    println("");
-    println("begin loop");
-    println("");
+//    KLST_BSP_serialdebug_println("");
+//    KLST_BSP_serialdebug_println("begin loop");
+//    KLST_BSP_serialdebug_println("");
 }
 
 void KLST_BSP_loop() {
@@ -360,12 +374,12 @@ void KLST_BSP_loop() {
     const float mDACvalue = (float) (frame_counter % mDACPeriod) / (float) mDACPeriod;
     DAC_write(mDACvalue);
     float mADCValue = ADC_read();
-    println("ADC: %f", mADCValue);
+    KLST_BSP_serialdebug_println("ADC: %f", mADCValue);
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
 #ifdef KLST_PANDA_ENABLE_GPIO
-    LED_toggle(LED_00);
-    LED_toggle(LED_01);
+//    LED_toggle(LED_00);
+//    LED_toggle(LED_01);
 #endif // KLST_PANDA_ENABLE_GPIO
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
@@ -377,7 +391,8 @@ void KLST_BSP_loop() {
     MX_USB_HOST_Process();
     HAL_Delay(10);
 #else
-    println("EOF");
+    KLST_BSP_serialdebug_timestamp();
+    KLST_BSP_serialdebug_println("EOF");
     HAL_Delay(500);
 #endif // KLST_PANDA_ENABLE_USB_HOST
 }
@@ -395,9 +410,9 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 //#define  HAL_UART_ERROR_ORE              (0x00000008U)    /*!< Overrun error           */
 //#define  HAL_UART_ERROR_DMA              (0x00000010U)    /*!< DMA transfer error      */
 //#define  HAL_UART_ERROR_RTO              (0x00000020U)    /*!< Receiver Timeout error  */
-    println("HAL_UART_ErrorCallback: %i", huart->ErrorCode);
+    KLST_BSP_serialdebug_println("HAL_UART_ErrorCallback: %i", huart->ErrorCode);
     if (huart->Instance == UART9) {
-        println("UART9");
+        KLST_BSP_serialdebug_println("UART9");
         RX_00_counter = 0;
         IDC_serial_handle_rx(UART9, 0);
         return;
@@ -407,12 +422,12 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
         return;
     }
     if (huart->Instance == UART4) {
-        println("UART4");
+        KLST_BSP_serialdebug_println("UART4");
         MIDI_analog_handle_start_receive();
         return;
     }
 
-    println("unknown serial port");
+    KLST_BSP_serialdebug_println("unknown serial port");
 }
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
@@ -437,7 +452,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 //        return;
 //    }
 
-    println("unknown serial port");
+    KLST_BSP_serialdebug_println("unknown serial port");
 }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
@@ -453,7 +468,8 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
         MIDI_analog_handle_rx(Size);
         return;
     }
-    println("unknown serial port");
+    // TODO maybe add UART3 i.e SerialDebug for RX
+    KLST_BSP_serialdebug_println("unknown serial port");
 }
 
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
@@ -501,19 +517,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    audiocodec_TX_full_complete_callback(hsai);
+    KLST_PANDA_audiocodec_TX_full_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 }
 
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    audiocodec_TX_half_complete_callback(hsai);
+    KLST_PANDA_audiocodec_TX_half_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 }
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    audiocodec_RX_full_complete_callback(hsai);
+    KLST_PANDA_audiocodec_RX_full_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     onboardmic_RX_full_complete_callback(hsai);
@@ -522,7 +538,7 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
 
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    audiocodec_RX_half_complete_callback(hsai);
+    KLST_PANDA_audiocodec_RX_half_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     onboardmic_RX_half_complete_callback(hsai);
@@ -531,7 +547,7 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 
 void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-    audiocodec_error_callback(hsai);
+    KLST_PANDA_audiocodec_error_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     onboardmic_error_callback(hsai);

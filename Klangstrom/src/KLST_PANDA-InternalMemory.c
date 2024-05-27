@@ -20,20 +20,21 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
-
 #include <stdio.h>
+
 #include "stm32h7xx_hal.h"
+
+#include "KlangstromSerialDebug.h"
 #include "KLST_PANDA-InternalMemory.h"
-#include "KLST_PANDA-SerialDebug.h"
 
 static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR);
 
 static void run_test(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
     printf("REGION: 0x%08" PRIX32 " - 0x%08" PRIX32 "\r\n", RAM_START_ADDR, RAM_END_ADDR);
     if (test_interal_ram(RAM_START_ADDR, RAM_END_ADDR) != 0) {
-        println("        FAILED");
+        KLST_BSP_serialdebug_println("        FAILED");
     } else {
-        println("        OK");
+        KLST_BSP_serialdebug_println("        OK");
     }
 }
 
@@ -73,7 +74,7 @@ static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
             printf(".");
         }
     }
-    println("");
+    KLST_BSP_serialdebug_println("");
 
     return errorFlag; // Return 0 if the RAM is okay, 1 if there is an error
 }

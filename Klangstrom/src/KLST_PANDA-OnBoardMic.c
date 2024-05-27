@@ -28,8 +28,7 @@
 //extern SAI_HandleTypeDef hsai_BlockA4;
 //extern PDM_Filter_Handler_t PDM1_filter_handler;
 
-#define KLANG_AUDIO_RATE 48000
-#define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
+#include "KlangstromDefines.h"
 
 #define PDM_BUFFER_SIZE 128
 uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];

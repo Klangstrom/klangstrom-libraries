@@ -18,7 +18,8 @@
  */
 
 #include "main.h"
-#include "KLST_PANDA-SerialDebug.h"
+
+#include "KlangstromSerialDebug.h"
 #include "KLST_PANDA-Touch.h"
 #include "FT5206.h"
 

@@ -19,6 +19,14 @@
 
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+
+#include "KlangstromDefines.h"
+
+#if (KLANG_AUDIO_RATE!=48000) // TODO make the setup sequence aware of the current audio rate … currently fixed at 48KHz e.g `setup_SCLK_FLL()`
+#warning "currently the audio codec only supports 48000Hz audio rate. KLANG_AUDIO_RATE is not set to 48000."
+#endif
 
 #include <stdint.h>
 #include <string.h>
@@ -28,18 +36,17 @@
 #include <time.h>
 
 #include "stm32h7xx_hal.h"
-#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
-#include "KLST_PANDA-SerialDebug.h"
-#include "WM8904.h"
 
+#include "KlangstromDefines.h"
+#include "KlangstromSerialDebug.h"
 #include "KlangstromAudioCodec.h"
+#include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
+#include "WM8904.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
 
-#define KLANG_AUDIO_RATE 48000
-#define KLANG_SAMPLES_PER_AUDIO_BLOCK 256
 #define I2S_BUFFER_SIZE (KLANG_SAMPLES_PER_AUDIO_BLOCK * 2)
 
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
@@ -58,7 +65,7 @@ static void setup_manually();
 
 uint8_t KLST_BSP_audiocodec_setup() {
     if (WM8904_init(&hi2c4) != HAL_OK) {
-        println("could not initialize audiocodec");
+        KLST_BSP_serialdebug_println("could not initialize audiocodec");
         return HAL_ERROR;
     } else {
         setup_SAI(); /* NOTE this is required to start the master clock */
@@ -97,9 +104,9 @@ static void setup_manually() {
     /* --- AUDIO_INTERFACE ------------------------------------------------------------------------------------------ */
 
 #ifdef TEST_WM8904_SET
-    println("TEST register values below should not be the same");
+    KLST_BSP_serialdebug_println("TEST register values below should not be the same");
     print("WM8904_R25_AUDIO_INTERFACE_1: ");
-    print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+    console_binary(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1), 16); // TEST
 #endif
 
     WM8904_write_register(WM8904_R25_AUDIO_INTERFACE_1, WM8904_AIF_WL_16BIT | WM8904_AIF_FMT_I2S);
@@ -154,7 +161,7 @@ static void setup_manually() {
 
 #ifdef TEST_WM8904_SET
     print("WM8904_R25_AUDIO_INTERFACE_1: ");
-    print_binary16ui(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1)); // TEST
+    console_binary(WM8904_read_register(WM8904_R25_AUDIO_INTERFACE_1), 16); // TEST
 #endif
 }
 
@@ -174,17 +181,17 @@ static void setup_default_start_sequence() {
     WM8904_write_register(WM8904_R111_WM8904_WRITE_SEQUENCER_3, WM8904_WSEQ_START);
 
 #ifdef TEST_WM8904_SET
-    println("starting WM8904_WSEQ_START");
-    println("TEST register values below should not be the same");
+    KLST_BSP_serialdebug_println("starting WM8904_WSEQ_START");
+    KLST_BSP_serialdebug_println("TEST register values below should not be the same");
     print("WM8904_R5_VMID_CONTROL_0: ");
-    print_binary16ui(WM8904_read_register(WM8904_R5_VMID_CONTROL_0)); // TEST
+    console_binary(WM8904_read_register(WM8904_R5_VMID_CONTROL_0), 16); // TEST
 #endif
     /* "... this sequence takes approximately 300ms to run." ( at 12.288MHz ) */
     delay_ms(333);
 #ifdef TEST_WM8904_SET
     print("WM8904_R5_VMID_CONTROL_0: ");
-    print_binary16ui(WM8904_read_register(WM8904_R5_VMID_CONTROL_0)); // TEST
-    println("finished WM8904_WSEQ_START");
+    console_binary(WM8904_read_register(WM8904_R5_VMID_CONTROL_0), 16); // TEST
+    KLST_BSP_serialdebug_println("finished WM8904_WSEQ_START");
 #endif
 }
 
@@ -251,7 +258,7 @@ static void setup_FLL() {
 }
 
 static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
-    println("configuring WM8904 at I2C 0x%02X", WM8904_I2C_ADDRESS);
+    KLST_BSP_serialdebug_println("configuring WM8904 at I2C 0x%02X", WM8904_I2C_ADDRESS);
     if (use_FLL) {
         setup_FLL();
     }
@@ -267,7 +274,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
     } else {
         setup_SCLK_MCLK();
     }
-    println("OK.");
+    KLST_BSP_serialdebug_println("OK.");
 }
 
 /* ------------------------------------------------------------------------------------------------------------------ */
@@ -332,7 +339,7 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
 #endif
 
 static void setup_SAI() {
-    println("setting up SAI");
+    KLST_BSP_serialdebug_println("setting up SAI");
 
     srand(time(NULL));
 
@@ -342,58 +349,59 @@ static void setup_SAI() {
     HAL_StatusTypeDef status;
     status = HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t*) dma_TX_buffer, I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
-        println("### ERROR initializing SAI TX: %i", status);
+        KLST_BSP_serialdebug_println("### ERROR initializing SAI TX: %i", status);
     }
 
     status = HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t*) dma_RX_buffer, I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
-        println("### ERROR initializing SAI RX: %i", status);
+        KLST_BSP_serialdebug_println("### ERROR initializing SAI RX: %i", status);
     }
 
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
 }
 
-void audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-//        KLST_ISH_fill_buffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
 
-void audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
-//        KLST_ISH_fill_buffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
 
-void audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA1) {
+        // TODO maybe better copy input buffer?
         mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
     }
 }
 
-void audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA1) {
+        // TODO maybe better copy input buffer?
         mCurrentRXBuffer = &(dma_RX_buffer[0]);
     }
 }
 
-void audiocodec_error_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef *hsai) {
     if (hsai == &hsai_BlockA1) {
-        println("### ERROR error in RX SAI:BlockA1");
+        KLST_BSP_serialdebug_println("### ERROR error in RX SAI:BlockA1");
     }
     if (hsai == &hsai_BlockB1) {
-        println("### ERROR error in TX SAI:BlockB1");
+        KLST_BSP_serialdebug_println("### ERROR error in TX SAI:BlockB1");
     }
 }
 
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 #endif // KLST_PANDA_STM32

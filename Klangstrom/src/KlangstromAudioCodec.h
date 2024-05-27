@@ -20,11 +20,14 @@
 #pragma once
 
 #include <stdint.h>
+
 #include "KlangstromCallbackDefinitions.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+uint8_t KLST_BSP_audiocodec_setup();
 
 /* --- callback_interface --- */
 
@@ -33,8 +36,6 @@ void audiocodec_callback_class(uint32_t *output, uint32_t *input, uint16_t lengt
 void audiocodec_register_class(AudioCodec *pClass);
 
 /* --- callback_interface --- */
-
-uint8_t KLST_BSP_audiocodec_setup();
 
 #ifdef __cplusplus
 }
@@ -46,7 +47,7 @@ public:
     AudioCodec();
     void setup();
     /* --- callback_interface --- */
-    void callback_class(uint32_t *output, uint32_t *input, uint16_t length);
+    void callback_class(uint32_t *input, uint32_t *output, uint16_t length);
     /* --- callback_interface --- */
     void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
         callback_audioblock = callback;
@@ -62,4 +63,3 @@ private:
     Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback_audioblock;
 };
 #endif // __cplusplus
-

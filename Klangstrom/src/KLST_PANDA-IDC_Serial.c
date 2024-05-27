@@ -17,11 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "stdio.h"
-#include "stdbool.h"
+#include <stdbool.h>
+
 #include "main.h"
+
+#include "KlangstromSerialDebug.h"
 #include "KLST_PANDA-IDC_Serial.h"
-#include "KLST_PANDA-SerialDebug.h"
 
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
@@ -42,12 +43,12 @@ uint8_t UART9_00_buffer[1];
 //uint8_t UART8_01_buffer[1];
 
 static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t buffer_size) {
-    printf("%s (", name);
+    KLST_BSP_serialdebug_printf("%s (", name);
     for (int i = 0; i < buffer_size; i++) {
         printf("0x%02X, ", buffer[i]);
         buffer[i] = 0;
     }
-    printf(") ");
+    KLST_BSP_serialdebug_printf(") ");
 }
 
 static void evaluate_receive_flags() {
@@ -55,7 +56,7 @@ static void evaluate_receive_flags() {
 //            || RX_01_counter > 0
             ;
     if (mReceivedData) {
-        print("data_receive : (");
+        KLST_BSP_serialdebug_printf("data_receive : (");
     }
     if (RX_00_counter > 0) {
         print_and_clear_buffer("UART9", RX_00_buffer, RX_00_counter);
@@ -79,7 +80,7 @@ void IDC_serial_setup() {
     IDC_serial_handle_rx(UART8, 0);
     IDC_serial_handle_rx(UART9, 0);
 
-    println("UART: note, UART8 is configured for DMA + UART9 is configured for interrupt");
+    KLST_BSP_serialdebug_println("UART: note, UART8 is configured for DMA + UART9 is configured for interrupt");
 }
 
 void IDC_serial_loop() {
@@ -87,7 +88,7 @@ void IDC_serial_loop() {
 
 #define TX_BUFFER_SIZE 3
     uint8_t data[TX_BUFFER_SIZE];
-    println("data_transmit: UART9 + UART8");
+    KLST_BSP_serialdebug_println("data_transmit: UART9 + UART8");
     data[0] = 0xF2;
     data[1] = 0x20;
     data[2] = 0x01;
@@ -116,9 +117,9 @@ uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length) {
     if (uart_instance == UART8) {
         if (length > 0) {
             // TODO write to persistent buffer
-            print("data_receive : (");
+            KLST_BSP_serialdebug_printf("data_receive : (");
             print_and_clear_buffer("UART8[DMA]", RX_01_DMA_buffer, length);
-            printf("\r\n");
+            KLST_BSP_serialdebug_printf("\r\n");
         }
 
         HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);

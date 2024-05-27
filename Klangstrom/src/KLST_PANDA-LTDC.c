@@ -20,8 +20,9 @@
 #include "stm32h7xx_hal.h"
 
 #include "main.h"
+
+#include "KlangstromSerialDebug.h"
 #include "KLST_PANDA-LTDC.h"
-#include "KLST_PANDA-SerialDebug.h"
 
 // from main
 //#define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
@@ -37,7 +38,6 @@
 /* FB1 :: 0x90000000
  * FB2 :: 0x9007F800
  */
-
 
 //  values for ER-TFT043A2-3 display with ST7282 driver
 //
@@ -135,12 +135,12 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *handle) {
 //	SCB_CleanInvalidateDCache(); // todo is this necessary
     /* USER CODE END DMA2D_XferCpltCallback */
     HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-    println("DMA2D_XferCpltCallback");
+    KLST_BSP_serialdebug_println("DMA2D_XferCpltCallback");
 }
 
 void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef *handle) {
-    println("DMA2D_XferErrorCallback");
-    println(0);
+    KLST_BSP_serialdebug_println("DMA2D_XferErrorCallback");
+    KLST_BSP_serialdebug_println(0);
 }
 
 void LTDC_setup() {

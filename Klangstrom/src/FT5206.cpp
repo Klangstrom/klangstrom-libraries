@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromSerialDebug.h"
 #include "FT5206.h"
-#include "KLST_PANDA-SerialDebug.h"
 
 static HAL_StatusTypeDef ret;
 static I2C_HandleTypeDef *hi2c = 0;
@@ -49,7 +49,7 @@ void FT5206_init(I2C_HandleTypeDef *hi2c_handle) {
 	ret = HAL_I2C_Master_Transmit(hi2c, FT5206_I2C_ADDRESS, buf, 2, FT5206_TIMEOUT);
 
 	if (ret != HAL_OK) {
-		println("FT5206: transmit I2C ERROR");
+	    KLST_BSP_serialdebug_println("FT5206: transmit I2C ERROR");
 	}
 }
 
@@ -61,19 +61,19 @@ void FT5206_read() {
 	uint8_t buf[FT5206_NUMBER_OF_REGISTERS];
 	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
 	if (ret != HAL_OK) {
-		println("FT5206: receive I2C ERROR");
+	    KLST_BSP_serialdebug_println("FT5206: receive I2C ERROR");
 		return;
 	}
 
-	println("gesture id   : %i", buf[FT5206_GEST_ID]);
+	KLST_BSP_serialdebug_println("gesture id   : %i", buf[FT5206_GEST_ID]);
 
 	uint8_t nr_of_touches = buf[FT5206_TD_STATUS] & 0xF;
-	println("nr_of_touches: %i", nr_of_touches);
+	KLST_BSP_serialdebug_println("nr_of_touches: %i", nr_of_touches);
 
 	for (uint8_t i = 0; i < nr_of_touches; i++) {
 		const uint16_t x = word(buf[FT5206_TOUCH_XH + i * 6] & 0x0f, buf[FT5206_TOUCH_XL + i * 6]);
 		const uint16_t y = word(buf[FT5206_TOUCH_YH + i * 6] & 0x0f, buf[FT5206_TOUCH_YL + i * 6]);
-		println("touch %X      : %i, %i", i, x, y);
+		KLST_BSP_serialdebug_println("touch %X      : %i, %i", i, x, y);
 	}
 }
 
@@ -84,9 +84,9 @@ void FT5206_print_info() {
 	uint8_t buf[FT5206_NUMBER_OF_TOTAL_REGISTERS];
 	ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, FT5206_TIMEOUT);
 	if (ret != HAL_OK) {
-		println("FT5206: receive I2C ERROR");
+	    KLST_BSP_serialdebug_println("FT5206: receive I2C ERROR");
 		return;
 	}
 
-	println("Library version: %i.%i", buf[FS5206_TOUCH_LIB_VERSION_H], buf[FS5206_TOUCH_LIB_VERSION_L]);
+	KLST_BSP_serialdebug_println("Library version: %i.%i", buf[FS5206_TOUCH_LIB_VERSION_H], buf[FS5206_TOUCH_LIB_VERSION_L]);
 }

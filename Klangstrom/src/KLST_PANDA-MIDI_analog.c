@@ -17,11 +17,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "stdio.h"
-#include "stdbool.h"
+#include <stdio.h>
+#include <stdbool.h>
+
 #include "main.h"
+
+#include "KlangstromSerialDebug.h"
 #include "KLST_PANDA-MIDI_analog.h"
-#include "KLST_PANDA-SerialDebug.h"
 
 extern UART_HandleTypeDef huart4;
 extern DMA_HandleTypeDef hdma_uart4_rx;
@@ -37,7 +39,7 @@ void MIDI_analog_setup() {
 }
 
 void MIDI_analog_loop() {
-    println("MIDI: UART4");
+    KLST_BSP_serialdebug_println("MIDI: UART4");
 #define MIDI_TX_BUFFER_SIZE 3
     uint8_t data[MIDI_TX_BUFFER_SIZE];
     toogle_note = !toogle_note;
@@ -62,7 +64,7 @@ static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t bu
 void MIDI_analog_handle_rx(uint16_t length) {
     if (length > 0) {
         // TODO write to persistent buffer
-        print("data_receive : (");
+        KLST_BSP_serialdebug_printf("data_receive : (");
         print_and_clear_buffer("UART4[DMA]", RX_MIDI_DMA_buffer, length);
         printf("\r\n");
     }
@@ -79,6 +81,6 @@ void MIDI_analog_handle_start_receive() {
      HAL_BUSY     = 0x02,
      HAL_TIMEOUT  = 0x03*/
     if (status) {
-        println("MIDI: Error %i", status);
+        KLST_BSP_serialdebug_println("MIDI: Error %i", status);
     }
 }

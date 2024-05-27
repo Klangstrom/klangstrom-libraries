@@ -18,7 +18,9 @@
  */
 
 #include "main.h"
-#include "KLST_PANDA-SerialDebug.h"
+
+#include "KlangstromSerialDebug.h"
+
 #include "KLST_PANDA-ADCDAC.h"
 
 extern DAC_HandleTypeDef hdac1;
@@ -36,7 +38,7 @@ void ADC_setup() {
 void DAC_setup() {
     HAL_StatusTypeDef status = HAL_DAC_Start(&hdac1, DAC1_CHANNEL_1);
     if (status) {
-        println("DAC: error at start time: %i", status);
+        KLST_BSP_serialdebug_println("DAC: error at start time: %i", status);
     }
 //    HAL_DAC_Stop(&hdac1, DAC1_CHANNEL_1);
 }

@@ -17,19 +17,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_SERIALDEBUG_H_
-#define INC_KLST_PANDA_SERIALDEBUG_H_
+#include "KlangstromSerialDebug.h"
 
-#include "stm32h7xx_hal.h"
+#include <stdarg.h>
+#include <string.h>
 
-void serialdebug_setup();
-void serialdebug_loop();
-void print(const char *format, ...);
-void println(const char *format, ...);
-void print_I2C_show_devices(I2C_HandleTypeDef *hi2c);
-void print_binary(uint16_t value);
-void print_binary8ui(uint8_t value);
-void print_binary16ui(uint16_t value);
-void print_binary32ui(uint32_t value);
+void SerialDebug::init() {
+    KLST_BSP_serialdebug_init();
+}
 
-#endif /* INC_KLST_PANDA_SERIALDEBUG_H_ */
+void SerialDebug::info() {
+    KLST_BSP_serialdebug_info();
+}
+
+void SerialDebug::timestamp() {
+    KLST_BSP_serialdebug_timestamp();
+}
+
+void SerialDebug::print(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    KLST_BSP_serialdebug_printf(format, args);
+    va_end(args);
+}
+
+void SerialDebug::println(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    KLST_BSP_serialdebug_println(format, args);
+    va_end(args);
+}
