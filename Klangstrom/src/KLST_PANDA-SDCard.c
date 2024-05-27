@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#ifdef KLST_PANDA_ENABLE_SD_CARD
+
 #include <string.h>
 #include "main.h"
 
@@ -164,3 +167,5 @@ void sdcard_write_test_file(bool format_volume) {
     println("SDCard: ... unmounting FS");
     f_mount(&SDFatFS, (TCHAR const*) NULL, 0);
 }
+
+#endif // KLST_PANDA_ENABLE_SD_CARD

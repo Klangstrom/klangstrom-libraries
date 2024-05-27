@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
+
 #include "string.h"
 #include "pdm2pcm.h"
 #include "KLST_PANDA-SerialDebug.h"
@@ -104,4 +107,6 @@ void onboardmic_error_callback(SAI_HandleTypeDef *hsai) {
 //        println("### ERROR error in MIC SAI:BlockA4");
 //    }
 }
+
+#endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
