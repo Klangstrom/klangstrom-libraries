@@ -19,8 +19,6 @@
 
 #include "Klangstrom.h"
 
-KlangstromPeripherals peripherals;
-
 Klangstrom::Klangstrom() :
         is_initialized(false) {
 }
@@ -48,14 +46,4 @@ void Klangstrom::loop() {
     }
 }
 
-MechanicalKey* Klangstrom::create_mechancial_key(int mechanical_key_id) {
-    if (mechanical_key_id >= 0 && mechanical_key_id < peripherals.number_of_mechanicalkeys) {
-        if (peripherals.mechanicalkeys[mechanical_key_id] != nullptr) {
-            delete peripherals.mechanicalkeys[mechanical_key_id];
-        }
-        peripherals.mechanicalkeys[mechanical_key_id] = new MechanicalKey(mechanical_key_id);
-        return peripherals.mechanicalkeys[mechanical_key_id];
-    }
-    return nullptr;
-}
 

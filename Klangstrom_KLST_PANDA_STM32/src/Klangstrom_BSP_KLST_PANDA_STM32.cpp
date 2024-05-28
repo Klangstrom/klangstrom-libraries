@@ -64,7 +64,7 @@ static void KLST_PANDA_MX_Init_Modules();
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-static uint32_t frame_counter = 0;
+//static uint32_t frame_counter = 0;
 
 // TODO move KLST_PANDA components to generic ( i.e no connection to STM32 ) classes
 // TODO distribute callbacks
@@ -351,7 +351,7 @@ void KLST_BSP_setup() {
 }
 
 void KLST_BSP_loop() {
-    frame_counter++;
+//    frame_counter++;
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
 #endif // KLST_PANDA_ENABLE_DISPLAY
@@ -393,7 +393,7 @@ void KLST_BSP_loop() {
 #else
     KLST_BSP_serialdebug_timestamp();
     KLST_BSP_serialdebug_println("EOF");
-    HAL_Delay(500);
+//    HAL_Delay(500);
 #endif // KLST_PANDA_ENABLE_USB_HOST
 }
 

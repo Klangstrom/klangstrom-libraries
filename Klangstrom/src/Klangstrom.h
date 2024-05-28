@@ -23,7 +23,6 @@
 
 #include "KlangstromEnvironment.h"
 #include "KlangstromDefines.h"
-#include "KlangstromPeripherals.h"
 #include "KlangstromMechanicalKey.h"
 
 class Klangstrom {
@@ -33,10 +32,6 @@ public:
     void setup();
     void loop();
 
-    /**
-     * creates a mechanical key according to
-     */
-    MechanicalKey* create_mechancial_key(int mechanical_key_id);
 private:
     bool is_initialized;
 };
@@ -50,7 +45,6 @@ extern "C" {
 void KLST_BSP_init();
 void KLST_BSP_setup();
 void KLST_BSP_loop();
-extern KlangstromPeripherals peripherals;
 
 #ifdef __cplusplus
 }

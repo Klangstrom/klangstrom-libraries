@@ -1,6 +1,6 @@
 # klangstrom-libraries
 
-all libraries are maintained in one repository called `klangstrom-libraries` that can be cloned as a submodule into architectures:
+all libraries are maintained in one repository called `klangstrom-libraries` which may be cloned as a submodule into architectures:
 
 ```
 .
@@ -9,6 +9,15 @@ all libraries are maintained in one repository called `klangstrom-libraries` tha
 ├── ...
 └── USBHost
 ```
+
+## notes ==@todo==
+
+- first initialize the hardware layer with `.init()` then setup the devices with `.setup()`
+- each board-specific (BSP) implementation is stored in it’s own library ( e.g `‌Klangstrom_KLST_PANDA_STM32` )
+
+## environment
+
+==@todo==
 
 ## Klangstrom
 
