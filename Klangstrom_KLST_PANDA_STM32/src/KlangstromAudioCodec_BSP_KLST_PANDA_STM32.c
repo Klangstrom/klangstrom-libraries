@@ -36,6 +36,7 @@
 #include <time.h>
 
 #include "stm32h7xx_hal.h"
+#include "sai.h"
 
 #include "KlangstromDefines.h"
 #include "KlangstromSerialDebug.h"
@@ -63,11 +64,12 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence);
 static void setup_default_start_sequence();
 static void setup_manually();
 
-uint8_t KLST_BSP_audiocodec_setup() {
+uint8_t KLST_BSP_audiocodec_init() {
     if (WM8904_init(&hi2c4) != HAL_OK) {
         KLST_BSP_serialdebug_println("could not initialize audiocodec");
         return HAL_ERROR;
     } else {
+        MX_SAI1_Init();
         setup_SAI(); /* NOTE this is required to start the master clock */
         delay_ms(100);
         setup_WM8904(true, false);

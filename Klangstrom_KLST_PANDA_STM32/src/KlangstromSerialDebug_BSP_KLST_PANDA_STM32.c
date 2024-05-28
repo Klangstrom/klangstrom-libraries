@@ -28,6 +28,7 @@
 #include <inttypes.h>
 
 #include "stm32h7xx_hal.h"
+#include "usart.h"
 
 #include "KlangstromSerialDebug.h"
 
@@ -39,8 +40,7 @@ int _write(int file, char *data, int len) {
 }
 
 void KLST_BSP_serialdebug_init() {
-    // TODO maybe initialize peripheral here with
-    // MX_USART3_UART_Init();
+    MX_USART3_UART_Init();
 }
 
 void KLST_BSP_serialdebug_println(const char *format, ...) {

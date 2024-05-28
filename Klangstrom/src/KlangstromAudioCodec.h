@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-uint8_t KLST_BSP_audiocodec_setup();
+uint8_t KLST_BSP_audiocodec_init();
 
 /* --- callback_interface --- */
 
@@ -42,10 +42,11 @@ void audiocodec_register_class(AudioCodec *pClass);
 #endif
 
 #ifdef __cplusplus
+
 class AudioCodec {
 public:
     AudioCodec();
-    void setup();
+    void init();
     /* --- callback_interface --- */
     void callback_class(uint32_t *input, uint32_t *output, uint16_t length);
     /* --- callback_interface --- */

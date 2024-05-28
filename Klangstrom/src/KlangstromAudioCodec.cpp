@@ -98,9 +98,9 @@ AudioCodec::AudioCodec() :
     audiocodec_register_class(this);
 }
 
-void AudioCodec::setup() {
+void AudioCodec::init() {
     if (!isInitialized) {
-        KLST_BSP_audiocodec_setup();
+        KLST_BSP_audiocodec_init();
         isInitialized = true;
     } else {
 //        KLST_BSP_serialdebug_println("Audio Codec already initialized.");
