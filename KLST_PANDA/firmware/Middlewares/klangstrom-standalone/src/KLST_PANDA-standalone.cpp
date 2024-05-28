@@ -8,16 +8,19 @@
 #include "KlangstromMechanicalKey.h"
 #include "KlangstromAudioCodec.h"
 #include "KlangstromSerialDebug.h"
+#include "KlangstromLEDs.h"
 #include "Wavetable.h"
 
 Klangstrom klangstrom;
 AudioCodec audiocodec;
 SerialDebug console;
+LEDs leds;
 
 float *wavetable = new float[512];
 Wavetable oscillator { wavetable, 512, 48000 };
 
-int mFrequency = 110;
+int mFrequency = 27.5;
+float mIntensity = 0.0f;
 
 void setup() {
     /* init section */
@@ -27,6 +30,7 @@ void setup() {
     console.timestamp();
     console.println("starting init");
     audiocodec.init();
+    leds.init();
 
     console.timestamp();
     console.println("finished init");
@@ -45,11 +49,19 @@ void setup() {
 
 void loop() {
     klangstrom.loop();
-    mFrequency *= 1.11;
+    mFrequency *= 2;
     if (mFrequency > 440) {
-        mFrequency = 110;
+        mFrequency = 27.5;
     }
     oscillator.set_frequency(mFrequency);
+
+    mIntensity += 0.1f;
+    if (mIntensity > 1.0f) {
+        mIntensity = 0.0f;
+    }
+    leds.set(0, mIntensity);
+    leds.toggle(1);
+    console.println("LED intensity: %f", leds.get(0));
 
     console.timestamp();
     console.println("EOF");
