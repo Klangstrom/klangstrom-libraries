@@ -13,8 +13,6 @@
 void audioblock(float **input_signal, float **output_signal, uint16_t length);
 
 Klangstrom klangstrom;
-#define MECHANICAL_KEY_00 0
-MechanicalKey *mMechanicalKey;
 AudioCodec audiocodec;
 SerialDebug console;
 
@@ -25,8 +23,6 @@ int mFrequency = 110;
 
 void setup() {
     klangstrom.init(); // TODO maybe pass hardware configuration here for MX init?
-    mMechanicalKey = klangstrom.create_mechancial_key(MECHANICAL_KEY_00);
-
     klangstrom.setup();
 
     console.info();
@@ -48,6 +44,7 @@ void loop() {
         mFrequency = 110;
     }
     oscillator.set_frequency(mFrequency);
+    delay(500);
 }
 
 void event(int event_type, uint8_t event_data) {
