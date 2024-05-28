@@ -111,8 +111,5 @@ void AudioCodec::init() {
         KLST_BSP_audiocodec_init();
         register_audioblock(audioblock);
         isInitialized = true;
-    } else {
-//        KLST_BSP_serialdebug_println("Audio Codec already initialized.");
-        // TODO print warning
     }
 }

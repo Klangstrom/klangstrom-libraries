@@ -62,11 +62,6 @@ static void KLST_PANDA_MX_Init_Modules();
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
-/* ----------------------------------------------------------------------------------------------------------------- */
-
-//static uint32_t frame_counter = 0;
-// TODO move KLST_PANDA components to generic ( i.e no connection to STM32 ) classes
-// TODO distribute callbacks
 void KLST_BSP_init() {
     /* MPU Configuration--------------------------------------------------------*/
     MPU_Config();
@@ -97,8 +92,6 @@ void KLST_BSP_init() {
 }
 
 static void KLST_PANDA_MX_Init_Modules() {
-//    bool mEnabledDMA = false;
-//    bool mEnabledI2C4 = false;
 #ifdef KLST_PANDA_ENABLE_GPIO
     MX_GPIO_Init();
 #endif // KLST_PANDA_ENABLE_GPIO
@@ -114,10 +107,6 @@ static void KLST_PANDA_MX_Init_Modules() {
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     MX_TIM4_Init();
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
-
-//#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
-////    MX_USART3_UART_Init();
-//#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 
 #ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     MX_OCTOSPI1_Init();
@@ -142,19 +131,11 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
-//    if (!mEnabledDMA) {
-//        MX_DMA_Init();
-//        mEnabledDMA = true;
-//    }
     MX_UART9_Init();
     MX_UART8_Init();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
 #ifdef KLST_PANDA_ENABLE_MIDI
-//    if (!mEnabledDMA) {
-//        MX_DMA_Init();
-//        mEnabledDMA = true;
-//    }
     MX_UART4_Init();
 #endif // KLST_PANDA_ENABLE_MIDI
 
@@ -176,11 +157,9 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
-//    if (!mEnabledI2C4) {
-//        MX_I2C4_Init();
-//        mEnabledI2C4 = true;
-//    }
-#else
+#endif // KLST_PANDA_ENABLE_DISPLAY
+
+#ifndef KLST_PANDA_ENABLE_DISPLAY
     /* turn display and backlight off when display is not used */
     static const uint8_t _DISPLAY_ON_OFF_Pin_ID = 4; // PC4
     GPIOC->MODER &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID * 2));
@@ -203,27 +182,9 @@ static void KLST_PANDA_MX_Init_Modules() {
     //    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
 #endif // KLST_PANDA_ENABLE_DISPLAY
-
-//#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-////    if (!mEnabledDMA) {
-////        MX_DMA_Init();
-////        mEnabledDMA = true;
-////    }
-////    if (!mEnabledI2C4) {
-////        MX_I2C4_Init();
-////        mEnabledI2C4 = true;
-////    }
-////    MX_SAI1_Init();
-//#endif // KLST_PANDA_ENABLE_AUDIOCODEC
 }
 
 void KLST_BSP_setup() {
-//    KLST_PANDA_MX_Init_Modules();
-
-    /* --- serial debug (USART3)*/
-//#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
-//    serialdebug_setup();
-//#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     /* --- TODO move mechanical keys to file */
     println("initializing mechanical keys (MX:TIM4)");
@@ -329,37 +290,9 @@ void KLST_BSP_setup() {
     backlight_setup();
     backlight_set_brightness(0.5f);
 #endif // KLST_PANDA_ENABLE_DISPLAY
-
-//#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-//    KLST_BSP_serialdebug_println("initializing audiocodec (WM8904) (MX:DMA+SAI1+I2C4)");
-//    KLST_BSP_serialdebug_println("( is now happening in `AudioCodec` class, and needs to be called explicitly )");
-////    KLST_BSP_audiocodec_setup(); // TODO this should happen in `AudioCodec` class
-//#endif // KLST_PANDA_ENABLE_AUDIOCODEC
-
-//    printf("***** WARNING REMOVE THE LINES BELOW *****");
-//    printf("***** TESTING MIDI ANALOG UART *****");
-//    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
-//    /*Configure GPIO pin : _MIDI_ANALOG_OUT_Pin */
-//    GPIO_InitStruct.Pin = _MIDI_ANALOG_OUT_Pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//    GPIO_InitStruct.Pull = GPIO_NOPULL;
-//    HAL_GPIO_Init(_MIDI_ANALOG_OUT_GPIO_Port, &GPIO_InitStruct);
-//    /*Configure GPIO pin : _MIDI_ANALOG_IN_Pin */
-//    GPIO_InitStruct.Pin = _MIDI_ANALOG_IN_Pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-//    GPIO_InitStruct.Pull = GPIO_NOPULL;
-//    HAL_GPIO_Init(_MIDI_ANALOG_IN_GPIO_Port, &GPIO_InitStruct);
-
-    /* --- --------------------- --- */
-    /* --- end setup, begin loop --- */
-    /* --- --------------------- --- */
-//    KLST_BSP_serialdebug_println("");
-//    KLST_BSP_serialdebug_println("begin loop");
-//    KLST_BSP_serialdebug_println("");
 }
 
 void KLST_BSP_loop() {
-//    frame_counter++;
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     LTDC_loop();
 #endif // KLST_PANDA_ENABLE_DISPLAY
@@ -385,23 +318,12 @@ void KLST_BSP_loop() {
     KLST_BSP_serialdebug_println("ADC: %f", mADCValue);
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
-//#ifdef KLST_PANDA_ENABLE_GPIO
-////    LED_toggle(LED_00);
-////    LED_toggle(LED_01);
-//#endif // KLST_PANDA_ENABLE_GPIO
-
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
     onboardmic_loop();
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
-    // TODO make LED task
 #ifdef KLST_PANDA_ENABLE_USB_HOST
     MX_USB_HOST_Process();
-//    HAL_Delay(10);
-#else
-    KLST_BSP_serialdebug_timestamp();
-    KLST_BSP_serialdebug_println("EOF");
-//    HAL_Delay(500);
 #endif // KLST_PANDA_ENABLE_USB_HOST
 }
 
@@ -410,7 +332,6 @@ void KLST_BSP_loop() {
 /* ----------------------------------------------------------------------------------------------------------------- */
 
 // TODO add #ifdef to all callbacks
-
 // void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 //#define  HAL_UART_ERROR_NONE             (0x00000000U)    /*!< No error                */
