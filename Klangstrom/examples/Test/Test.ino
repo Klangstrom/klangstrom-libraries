@@ -10,6 +10,7 @@
 #include "Klangstrom.h"
 #include "KlangstromAudioCodec.h"
 #include "KlangstromSerialDebug.h"
+#include "KlangstromLEDs.h"
 #include "Wavetable.h"
 
 void audioblock(float **input_signal, float **output_signal, uint16_t length);
@@ -17,37 +18,42 @@ void audioblock(float **input_signal, float **output_signal, uint16_t length);
 Klangstrom klangstrom;
 AudioCodec audiocodec;
 SerialDebug console;
+LEDs leds;
 
 float *wavetable = new float[512];
 Wavetable oscillator{ wavetable, 512, 48000 };
 
 void setup() {
-  pinMode(PB14, OUTPUT);
-
+  /* init section */
   klangstrom.init();
+  console.init();
+  console.info();
+  console.timestamp();
+  console.println("starting init");
+  audiocodec.init();
+  leds.init();
+
+  console.timestamp();
+  console.println("finished init");
+
+  /* setup section */
+  console.timestamp();
+  console.println("starting setup");
   klangstrom.setup();
 
-  console.info();
-
-  audiocodec.setup();
-  audiocodec.register_audioblock(audioblock);
-
   Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
-  oscillator.set_frequency(110);
 
-  console.println("finished setup");
   console.timestamp();
-  console.println("ARDUINO IDE");
+  console.println("finished setup");
+  console.println("---------------------------------------------------------");
 }
 
 void loop() {
-  digitalWrite(PB14, HIGH);
-  oscillator.set_frequency(110);
-  delay(1000);
-  digitalWrite(PB14, LOW);
-  oscillator.set_frequency(220);
-  delay(1000);
+  leds.toggle(LEDs::ALL);
+  console.println("LED: %d", leds.get(0));
+
   klangstrom.loop();
+  delay(100);
 }
 
 void audioblock(float **input_signal, float **output_signal, uint16_t length) {

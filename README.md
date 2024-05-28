@@ -12,7 +12,7 @@ all libraries are maintained in one repository called `klangstrom-libraries` whi
 
 ## notes ==@todo==
 
-- first initialize the hardware layer with `.init()` then setup device and peripherals with `.setup()` ( i.e start timers, data transfer, callbacks etcetera ). 
+- first initialize the hardware layer with `.init()` then setup device and peripherals with `.setup()` ( e.g start timers, data transfer, and callbacks )
 - each board-specific (BSP) implementation is stored in it’s own library ( e.g `‌Klangstrom_KLST_PANDA_STM32` )
 
 ## environment

@@ -35,7 +35,7 @@ extern "C" {
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
 #include "KLST_PANDA-InternalMemory.h"
-#include "KLST_PANDA-LED.h"
+//#include "KLST_PANDA-LED.h"
 #include "KLST_PANDA-LTDC.h"
 #include "KLST_PANDA-Touch.h"
 #include "KLST_PANDA-RotaryEncoder.h"
@@ -191,13 +191,13 @@ void KLST_BSP_setup() {
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
-#ifdef KLST_PANDA_ENABLE_GPIO
-    KLST_BSP_serialdebug_println("initializing GPIO");
-    KLST_BSP_serialdebug_println("initializing LEDs");
-    LED_setup();
-    LED_turn_off(LED_00);
-    LED_turn_off(LED_01);
-#endif // KLST_PANDA_ENABLE_GPIO
+//#ifdef KLST_PANDA_ENABLE_GPIO
+//    KLST_BSP_serialdebug_println("initializing GPIO");
+//    KLST_BSP_serialdebug_println("initializing LEDs");
+//    LED_setup();
+//    LED_turn_off(LED_00);
+//    LED_turn_off(LED_01);
+//#endif // KLST_PANDA_ENABLE_GPIO
 
 #ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     KLST_BSP_serialdebug_println("initializing external RAM (MX:OCTOSPI1)");
@@ -361,10 +361,6 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
     KLST_BSP_serialdebug_println("unknown serial port");
 }
 
-//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-//    LED_toggle(LED_01);
-//}
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == UART9) {
         RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9, 0);
@@ -404,22 +400,16 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     KLST_BSP_serialdebug_println("unknown serial port");
 }
 
-#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
-// TODO move to own file
-static bool MECH_00_state = false;
-static bool MECH_01_state = false;
-#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
-
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
-    if (htim == &htim4) {
-        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
-            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
-        }
-    }
-#endif
 #ifdef KLST_PANDA_ENABLE_ENCODER
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+//#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
+//    if (htim == &htim4) {
+//        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+//            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
+//            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
+//        }
+//    }
+//#endif
     if (htim == &htim1) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
             println("ENCODER_00: BUTTON");
@@ -430,14 +420,25 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
             println("ENCODER_01: BUTTON");
         }
     }
-#endif // KLST_PANDA_ENABLE_ENCODER
 }
+#endif // KLST_PANDA_ENABLE_ENCODER
+
+#if defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_DISPLAY)
+
+#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
+// TODO move to own file
+static bool MECH_00_state = false;
+static bool MECH_01_state = false;
+#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
         MECH_00_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_00_GPIO_Port, _MECH_BUTTON_00_Pin);
         println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
+    } else if (GPIO_Pin == _MECH_BUTTON_01_Pin) {
+        MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
+        println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
     }
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 #ifdef KLST_PANDA_ENABLE_DISPLAY
@@ -446,6 +447,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     }
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }
+#endif // defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {

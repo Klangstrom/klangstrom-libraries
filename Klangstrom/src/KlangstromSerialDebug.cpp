@@ -19,8 +19,11 @@
 
 #include "KlangstromSerialDebug.h"
 
-#include <stdarg.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
+
+#define SERIAL_DEBUG_BUFFER_SIZE 128
 
 void SerialDebug::init() {
     KLST_BSP_serialdebug_init();
@@ -35,15 +38,19 @@ void SerialDebug::timestamp() {
 }
 
 void SerialDebug::print(const char *format, ...) {
+    char buffer[SERIAL_DEBUG_BUFFER_SIZE];
     va_list args;
     va_start(args, format);
-    KLST_BSP_serialdebug_printf(format, args);
+    vsnprintf(buffer, SERIAL_DEBUG_BUFFER_SIZE, format, args);
     va_end(args);
+    KLST_BSP_serialdebug_printf("%s", buffer);
 }
 
 void SerialDebug::println(const char *format, ...) {
+    char buffer[SERIAL_DEBUG_BUFFER_SIZE];
     va_list args;
     va_start(args, format);
-    KLST_BSP_serialdebug_println(format, args);
+    vsnprintf(buffer, SERIAL_DEBUG_BUFFER_SIZE, format, args);
     va_end(args);
+    KLST_BSP_serialdebug_printf("%s\r\n", buffer);
 }
