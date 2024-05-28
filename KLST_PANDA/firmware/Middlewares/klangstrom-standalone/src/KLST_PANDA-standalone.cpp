@@ -24,7 +24,6 @@ void setup() {
     klangstrom.init();
     console.init();
     console.info();
-
     console.timestamp();
     console.println("starting init");
     audiocodec.init();
@@ -51,6 +50,9 @@ void loop() {
         mFrequency = 110;
     }
     oscillator.set_frequency(mFrequency);
+
+    console.timestamp();
+    console.println("EOF");
     delay(500);
 }
 
