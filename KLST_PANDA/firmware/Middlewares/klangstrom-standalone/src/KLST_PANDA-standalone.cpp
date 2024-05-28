@@ -22,24 +22,34 @@ Wavetable oscillator { wavetable, 512, 48000 };
 int mFrequency = 110;
 
 void setup() {
-    klangstrom.init(); // TODO maybe pass hardware configuration here for MX init?
-    klangstrom.setup();
-
+    /* init section */
+    klangstrom.init();
+    console.init();
     console.info();
 
-    audiocodec.setup();
+    console.timestamp();
+    console.println("starting init");
+    audiocodec.init();
+
+    console.timestamp();
+    console.println("finished init");
+
+    /* setup section */
+    console.timestamp();
+    console.println("starting setup");
+    klangstrom.setup();
     audiocodec.register_audioblock(audioblock);
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
 
     console.timestamp();
     console.println("finished setup");
-    console.println("---");
+    console.println("---------------------------------------------------------");
 }
 
 void loop() {
     klangstrom.loop();
-    mFrequency*=1.11;
+    mFrequency *= 1.11;
     if (mFrequency > 440) {
         mFrequency = 110;
     }
