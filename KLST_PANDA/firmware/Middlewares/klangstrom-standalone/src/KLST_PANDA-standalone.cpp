@@ -10,8 +10,6 @@
 #include "KlangstromSerialDebug.h"
 #include "Wavetable.h"
 
-void audioblock(float **input_signal, float **output_signal, uint16_t length);
-
 Klangstrom klangstrom;
 AudioCodec audiocodec;
 SerialDebug console;
@@ -38,7 +36,6 @@ void setup() {
     console.timestamp();
     console.println("starting setup");
     klangstrom.setup();
-    audiocodec.register_audioblock(audioblock);
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
 
