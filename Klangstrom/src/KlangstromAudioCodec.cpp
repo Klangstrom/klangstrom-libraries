@@ -39,6 +39,14 @@ void audiocodec_callback_class(uint32_t *input, uint32_t *output, uint16_t lengt
 }
 }
 
+void WEAK audioblock(float **input_signal, float **output_signal, uint16_t length) {
+    for (int i = 0; i < length; ++i) {
+        for (int j = 0; j < KLANG_OUTPUT_CHANNELS; ++j) {
+            output_signal[j][i] = 0.0;
+        }
+    }
+}
+
 // TODO clean up the code below. flexible bit depth, buffer length etcetera
 
 static const uint8_t M_NUM_OF_BITS = KLANG_AUDIO_BIT_DEPTH;
@@ -101,6 +109,7 @@ AudioCodec::AudioCodec() :
 void AudioCodec::init() {
     if (!isInitialized) {
         KLST_BSP_audiocodec_init();
+        register_audioblock(audioblock);
         isInitialized = true;
     } else {
 //        KLST_BSP_serialdebug_println("Audio Codec already initialized.");

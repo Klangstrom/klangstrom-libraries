@@ -43,6 +43,8 @@ void audiocodec_register_class(AudioCodec *pClass);
 
 #ifdef __cplusplus
 
+void audioblock(float **input_signal, float **output_signal, uint16_t length);
+
 class AudioCodec {
 public:
     AudioCodec();
