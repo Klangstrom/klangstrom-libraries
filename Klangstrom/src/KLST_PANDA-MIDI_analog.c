@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -84,3 +87,5 @@ void MIDI_analog_handle_start_receive() {
         KLST_BSP_serialdebug_println("MIDI: Error %i", status);
     }
 }
+
+#endif // KLST_PANDA_STM32

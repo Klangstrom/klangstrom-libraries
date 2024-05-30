@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_SD_CARD
 
@@ -169,3 +172,5 @@ void sdcard_write_test_file(bool format_volume) {
 }
 
 #endif // KLST_PANDA_ENABLE_SD_CARD
+
+#endif KLST_PANDA_STM32

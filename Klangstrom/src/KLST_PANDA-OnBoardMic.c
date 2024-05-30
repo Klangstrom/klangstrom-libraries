@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
 
@@ -109,3 +112,4 @@ void onboardmic_error_callback(SAI_HandleTypeDef *hsai) {
 
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
+#endif // KLST_PANDA_STM32

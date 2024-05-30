@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "stm32h7xx_hal.h"
 
 #include "main.h"
@@ -188,3 +191,5 @@ void LTDC_loop() {
 
 //	println("VSYNC duration: %li\r\n", fVSYNCDuration);
 }
+
+#endif // KLST_PANDA_STM32

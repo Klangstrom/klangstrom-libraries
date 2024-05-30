@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "main.h"
 
 #include "KlangstromSerialDebug.h"
@@ -61,3 +64,5 @@ float ADC_read() {
     HAL_ADC_Stop(&hadc3);
     return (float) mData / (float) ADC_DAC_RESOLUTION;
 }
+
+#endif // KLST_PANDA_STM32

@@ -17,8 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_MIDI_ANALOG_H_
-#define INC_KLST_PANDA_MIDI_ANALOG_H_
+#pragma once
 
 #include "stdint.h"
 
@@ -30,5 +29,3 @@ void MIDI_analog_setup();
 void MIDI_analog_loop();
 void MIDI_analog_handle_start_receive();
 void MIDI_analog_handle_rx(uint16_t length);
-
-#endif /* INC_KLST_PANDA_MIDI_ANALOG_H_ */

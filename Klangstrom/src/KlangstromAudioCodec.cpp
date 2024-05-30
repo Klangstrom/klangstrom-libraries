@@ -32,6 +32,9 @@ void audiocodec_register_class(AudioCodec *pAudioCodecClass) {
     mAudioCodecClass = pAudioCodecClass;
 }
 
+/**
+ * callback for underlying hardware layer
+*/
 void audiocodec_callback_class(uint32_t *input, uint32_t *output, uint16_t length) {
     if (mAudioCodecClass) {
         mAudioCodecClass->callback_class(input, output, length);

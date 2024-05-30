@@ -67,7 +67,7 @@ void KLST_BSP_leds_set(const int id, float intensity) {
     }
 }
 
-const uint8_t KLST_BSP_leds_total() {
+uint8_t KLST_BSP_leds_total() {
     return 2;
 }
 

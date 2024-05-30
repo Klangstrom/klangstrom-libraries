@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include <stdbool.h>
 
 #include "main.h"
@@ -127,3 +130,5 @@ uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length) {
     }
     return mValue;
 }
+
+#endif // KLST_PANDA_STM32

@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
@@ -93,3 +96,5 @@ void internalmemory_test_all() {
     run_test(0x30000000, 0x30007FFF);
     run_test(0x38000000, 0x38003FFF);
 }
+
+#endif // KLST_PANDA_STM32

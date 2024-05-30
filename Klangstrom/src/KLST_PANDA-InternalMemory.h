@@ -17,9 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SRC_KLST_PANDA_INTERNALMEMORY_H_
-#define SRC_KLST_PANDA_INTERNALMEMORY_H_
+#pragma once
 
 void internalmemory_test_all();
-
-#endif /* SRC_KLST_PANDA_INTERNALMEMORY_H_ */

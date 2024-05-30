@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "main.h"
 #include "KLST_PANDA-ExternalMemory.h"
 
@@ -108,3 +111,5 @@ void externalmemory_test() {
 //		*(__IO uint8_t*) (SDRAM_ADDRESS_START + M_FRAMEBUFFER_SIZE + (counter + 3)) = 255;
 //	}
 }
+
+#endif // KLST_PANDA_STM32

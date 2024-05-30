@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
@@ -49,3 +52,5 @@ void backlight_set_brightness(float brightness) {
 	KLST_BSP_serialdebug_println("backlight brightness: %f %li/%li", brightness, mPhase, fPeriod);
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
 }
+
+#endif // KLST_PANDA_STM32

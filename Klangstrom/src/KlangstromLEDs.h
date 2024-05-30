@@ -28,7 +28,7 @@ extern "C" {
 
 void KLST_BSP_leds_init();
 void KLST_BSP_leds_set(int id, float intensity);
-const uint8_t KLST_BSP_leds_total();
+uint8_t KLST_BSP_leds_total();
 
 #ifdef __cplusplus
 }

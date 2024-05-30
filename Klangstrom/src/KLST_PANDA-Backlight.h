@@ -17,11 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INC_KLST_PANDA_BACKLIGHT_H_
-#define INC_KLST_PANDA_BACKLIGHT_H_
+#pragma once
 
 void backlight_setup();
 void backlight_loop();
 void backlight_set_brightness(float brightness);
-
-#endif /* INC_KLST_PANDA_BACKLIGHT_H_ */

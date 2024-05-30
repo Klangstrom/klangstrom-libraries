@@ -17,28 +17,40 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+// #if defined(KLST_PANDA_EMU) || defined(KLST_CATERPILLAR_EMU)
 
-#include "stdint.h"
-#include "main.h"
+#include <stdint.h>
 
-#define BUFFER_SIZE 256
-#define DMA_BUFFER_SIZE 64
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-extern uint8_t RX_00_buffer[BUFFER_SIZE];
-//extern  uint8_t RX_01_buffer[BUFFER_SIZE];
-extern uint8_t __attribute__((section(".dma_buffer"))) RX_01_DMA_buffer[DMA_BUFFER_SIZE];
-extern uint8_t __attribute__((section(".dma_buffer"))) TX_01_DMA_buffer[DMA_BUFFER_SIZE];
+void KLST_BSP_leds_init() {}
 
-extern volatile uint8_t RX_00_counter;
-//extern volatile uint8_t RX_01_counter;
+void KLST_BSP_leds_set(int id, float intensity) {}
 
-// TODO make C++
-void IDC_serial_setup();
-void IDC_serial_loop();
-uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length);
+uint8_t KLST_BSP_leds_total() {
+    #if defined(GENERIC_EMU)
+    return 0;
+    #elif defined(KLST_CORE_EMU)
+    return 3;
+    #elif defined(KLST_TINY_EMU)
+    return 2;
+    #elif defined(KLST_SHEEP_EMU)
+    return 16;
+    #elif defined(KLST_PANDA_EMU)
+    return 2;
+    #elif defined(KLST_CATERPILLAR_EMU)
+    return 2;
+    #else
+    return 0;
+    #endif
+}
 
-#endif // KLST_PANDA_STM32
+#ifdef __cplusplus
+}
+#endif
+
+#endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)

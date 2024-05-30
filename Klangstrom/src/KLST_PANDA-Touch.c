@@ -17,6 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_PANDA_STM32
+
 #include "main.h"
 
 #include "KlangstromSerialDebug.h"
@@ -25,13 +28,14 @@
 
 extern I2C_HandleTypeDef hi2c4;
 
-void touch_setup() {
+void touch_setup()
+{
     FT5206_init(&hi2c4);
     FT5206_print_info();
 
 #ifdef TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
     /* GPIO */
-    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOD_CLK_ENABLE();
@@ -45,10 +49,13 @@ void touch_setup() {
 #endif
 }
 
-void touch_read() {
+void touch_read()
+{
     // TODO return values
-//	if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
-//		FT5206_read();
-//	}
+    //	if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
+    //		FT5206_read();
+    //	}
     FT5206_read();
 }
+
+#endif // KLST_PANDA_STM32

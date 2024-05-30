@@ -15,9 +15,9 @@
 
 void audioblock(float **input_signal, float **output_signal, uint16_t length);
 
+SerialDebug console;
 Klangstrom klangstrom;
 AudioCodec audiocodec;
-SerialDebug console;
 LEDs leds;
 
 float *wavetable = new float[512];

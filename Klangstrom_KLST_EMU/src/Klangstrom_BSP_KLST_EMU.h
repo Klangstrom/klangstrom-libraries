@@ -20,25 +20,17 @@
 #pragma once
 
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+// #if defined(KLST_PANDA_EMU) || defined(KLST_CATERPILLAR_EMU)
 
-#include "stdint.h"
-#include "main.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#define BUFFER_SIZE 256
-#define DMA_BUFFER_SIZE 64
+#include "Klangstrom.h"
 
-extern uint8_t RX_00_buffer[BUFFER_SIZE];
-//extern  uint8_t RX_01_buffer[BUFFER_SIZE];
-extern uint8_t __attribute__((section(".dma_buffer"))) RX_01_DMA_buffer[DMA_BUFFER_SIZE];
-extern uint8_t __attribute__((section(".dma_buffer"))) TX_01_DMA_buffer[DMA_BUFFER_SIZE];
+#ifdef __cplusplus
+}
+#endif
 
-extern volatile uint8_t RX_00_counter;
-//extern volatile uint8_t RX_01_counter;
-
-// TODO make C++
-void IDC_serial_setup();
-void IDC_serial_loop();
-uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length);
-
-#endif // KLST_PANDA_STM32
+#endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
