@@ -32,8 +32,9 @@ uint8_t KLST_BSP_audiocodec_init();
 /* --- callback_interface --- */
 
 typedef struct AudioCodec AudioCodec;
-void audiocodec_callback_class(uint32_t *output, uint32_t *input, uint16_t length);
-void audiocodec_register_class(AudioCodec *pClass);
+
+void audiocodec_callback_class(uint32_t* output, uint32_t* input, uint16_t length);
+void audiocodec_register_class(AudioCodec* pClass);
 
 /* --- callback_interface --- */
 
@@ -43,14 +44,17 @@ void audiocodec_register_class(AudioCodec *pClass);
 
 #ifdef __cplusplus
 
-void audioblock(float **input_signal, float **output_signal, uint16_t length);
+#include <iostream>
+#include <functional>
+
+void audioblock(float** input_signal, float** output_signal, uint16_t length);
 
 class AudioCodec {
 public:
     AudioCodec();
     void init();
     /* --- callback_interface --- */
-    void callback_class(uint32_t *input, uint32_t *output, uint16_t length);
+    void callback_class(uint32_t* input, uint32_t* output, uint16_t length);
     /* --- callback_interface --- */
     void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
         callback_audioblock = callback;
@@ -61,8 +65,11 @@ public:
     void pause() {
         // TODO implement
     }
+    void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
+
 private:
-    bool isInitialized;
-    Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback_audioblock;
+    bool                                       isInitialized;
+    Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16    callback_audioblock;
+    std::function<void(float**, float**, int)> mBoundCallback;
 };
 #endif // __cplusplus

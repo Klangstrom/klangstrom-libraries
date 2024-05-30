@@ -173,4 +173,4 @@ void sdcard_write_test_file(bool format_volume) {
 
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
-#endif KLST_PANDA_STM32
+#endif // KLST_PANDA_STM32

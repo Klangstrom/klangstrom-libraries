@@ -18,23 +18,18 @@
  */
 
 #include "KlangstromEnvironment.h"
-#if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
-
-#include <stdint.h>
-
-#include "KlangstromAudioCodec.h"
+#ifdef KLST_PANDA_STM32
+#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 
 #ifdef __cplusplus
-extern "C" {
-#endif
 
-//         audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
-uint8_t KLST_BSP_audiocodec_init() {
-    return 0;
+#include <iostream>
+#include <functional>
+
+void register_audio_device(const std::function<void(float**, float**, int)> callback) {
 }
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+#endif // __cplusplus
+#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#endif // KLST_PANDA_STM32
