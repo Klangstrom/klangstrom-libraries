@@ -33,8 +33,9 @@ uint8_t KLST_BSP_audiocodec_init();
 
 typedef struct AudioCodec AudioCodec;
 
-void audiocodec_callback_class(uint32_t* output, uint32_t* input, uint16_t length);
-void audiocodec_register_class(AudioCodec* pClass);
+void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
+void audiocodec_callback_class_f(float** input, float** output, uint16_t length);
+void audiocodec_register_audio_device_c(AudioCodec* pClass);
 
 /* --- callback_interface --- */
 
@@ -55,6 +56,7 @@ public:
     void init();
     /* --- callback_interface --- */
     void callback_class(uint32_t* input, uint32_t* output, uint16_t length);
+    void callback_class_f(float** input, float** output, uint16_t length);
     /* --- callback_interface --- */
     void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
         callback_audioblock = callback;

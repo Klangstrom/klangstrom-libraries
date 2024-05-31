@@ -28,7 +28,6 @@
 extern "C" {
 #endif
 
-//         audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
 uint8_t KLST_BSP_audiocodec_init() {
     return 0;
 }

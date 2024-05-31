@@ -367,7 +367,7 @@ void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -377,7 +377,7 @@ void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
+        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
