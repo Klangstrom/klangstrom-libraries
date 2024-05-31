@@ -28,14 +28,21 @@ extern "C" {
 #endif
 
 uint8_t KLST_BSP_audiocodec_init();
+uint8_t KLST_BSP_audiocodec_start();
+uint8_t KLST_BSP_audiocodec_stop();
 
 /* --- callback_interface --- */
 
+/* NOTE this is a bit of a hack but it allows to pass a pointer to a class ( C++ ) as a pointer to a struct ( C ) in a C context */
+/* and might produce a linker error under the "Microsoft C++ ABI" */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmismatched-tags"
 typedef struct AudioCodec AudioCodec;
+#pragma GCC diagnostic pop
 
 void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
 void audiocodec_callback_class_f(float** input, float** output, uint16_t length);
-void audiocodec_register_audio_device_c(AudioCodec* pClass);
+void audiocodec_register_audio_device(AudioCodec* pClass);
 
 /* --- callback_interface --- */
 
@@ -62,10 +69,10 @@ public:
         callback_audioblock = callback;
     }
     void start() {
-        // TODO implement
+        // TODO implement KLST_BSP_audiocodec_start
     }
-    void pause() {
-        // TODO implement
+    void stop() {
+        // TODO implement KLST_BSP_audiocodec_stop
     }
     void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
 

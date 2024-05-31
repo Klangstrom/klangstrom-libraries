@@ -28,7 +28,7 @@
 extern "C" {
 static AudioCodec* mAudioCodecClass = nullptr;
 
-void audiocodec_register_audio_device_c(AudioCodec* pAudioCodecClass) {
+void audiocodec_register_audio_device(AudioCodec* pAudioCodecClass) {
     mAudioCodecClass = pAudioCodecClass;
 }
 
@@ -126,7 +126,6 @@ void AudioCodec::callback_class_f(float** input, float** output, uint16_t length
         const uint16_t remainingSamples = length % blockSize;
 
         for (uint8_t i = 0; i < mIterations; i++) {
-            // Create temporary arrays for each section
             float* mInputSection[KLANG_INPUT_CHANNELS];
             float* mOutputSection[KLANG_OUTPUT_CHANNELS];
 
@@ -141,7 +140,7 @@ void AudioCodec::callback_class_f(float** input, float** output, uint16_t length
             callback_audioblock(mInputSection, mOutputSection, blockSize);
         }
 
-        // Process any remaining samples
+        /* process any remaining samples */
         if (remainingSamples > 0) {
             float* mInputSection[KLANG_INPUT_CHANNELS];
             float* mOutputSection[KLANG_OUTPUT_CHANNELS];
@@ -171,21 +170,12 @@ void AudioCodec::callback_audioblock_method(float** input_signal, float** output
 
 AudioCodec::AudioCodec() : isInitialized(false) {
     // TODO check if it is ok to move this to `.init()`
-    // audiocodec_register_audio_device_c(this);
+    // audiocodec_register_audio_device(this);
 }
-
-// extern void audiocodec_register_audio_device_cpp(const std::function<void(float**, float**, int)> callback);
 
 void AudioCodec::init() {
     if (!isInitialized) {
-        // 1. callback from c ( for STM32 )
-        audiocodec_register_audio_device_c(this);
-        // // 2. callback from c++ ( for EMU )
-        // audiocodec_register_audio_device_cpp(std::bind(&AudioCodec::callback_audioblock_method,
-        //                                                this,
-        //                                                std::placeholders::_1,
-        //                                                std::placeholders::_2,
-        //                                                std::placeholders::_3));
+        audiocodec_register_audio_device(this);
         register_audioblock(audioblock);
         KLST_BSP_audiocodec_init();
         isInitialized = true;
