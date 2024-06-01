@@ -33,13 +33,14 @@ void audiocodec_register_audio_device(AudioCodec* pAudioCodecClass) {
 }
 
 /**
- * callback for underlying hardware layer … either with uint32 or float type
+ * callback for underlying hardware layer … with either uint32 or float type
 */
 void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length) {
     if (mAudioCodecClass) {
         mAudioCodecClass->callback_class(input, output, length);
     }
 }
+
 void audiocodec_callback_class_f(float** input, float** output, uint16_t length) {
     if (mAudioCodecClass) {
         mAudioCodecClass->callback_class_f(input, output, length);

@@ -38,4 +38,8 @@ void KLST_BSP_loop() {
 }
 #endif
 
+#include "Umgebung.h"
+
+using namespace umgebung;
+
 #endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)

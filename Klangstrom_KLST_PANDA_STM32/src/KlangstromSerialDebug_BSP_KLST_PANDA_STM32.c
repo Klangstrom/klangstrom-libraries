@@ -34,7 +34,7 @@
 
 extern UART_HandleTypeDef huart3; // TODO maybe pass this as a parameter
 
-int _write(int file, char *data, int len) {
+int _write(int file, char* data, int len) {
     HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 10);
     return (status == HAL_OK ? len : 0);
 }
@@ -43,7 +43,7 @@ void KLST_BSP_serialdebug_init() {
     MX_USART3_UART_Init();
 }
 
-void KLST_BSP_serialdebug_println(const char *format, ...) {
+void KLST_BSP_serialdebug_println(const char* format, ...) {
     va_list args;
     va_start(args, format);
     vprintf(format, args);
@@ -53,7 +53,7 @@ void KLST_BSP_serialdebug_println(const char *format, ...) {
 
 void KLST_BSP_serialdebug_info() {
     printf("\r\n---------------------------------------------------------\r\n\r\n");
-    printf("KLST_PANDA-STM32H723ZGT-BSP @ %liMHz (%s)\r\n", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
+    printf("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)\r\n", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
     printf("\r\n---------------------------------------------------------\r\n\r\n");
 }
 
@@ -61,7 +61,7 @@ void KLST_BSP_serialdebug_timestamp() {
     printf("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
 }
 
-void KLST_BSP_serialdebug_printf(const char *format, ...) {
+void KLST_BSP_serialdebug_printf(const char* format, ...) {
     va_list args;
     va_start(args, format);
     vprintf(format, args);
@@ -76,4 +76,3 @@ void console_binary(uint32_t value, uint8_t number_of_bits) {
 
 #endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
 #endif // KLST_PANDA_STM32
-

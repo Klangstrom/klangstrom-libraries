@@ -37,8 +37,8 @@ void SerialDebug::timestamp() {
     KLST_BSP_serialdebug_timestamp();
 }
 
-void SerialDebug::print(const char *format, ...) {
-    char buffer[SERIAL_DEBUG_BUFFER_SIZE];
+void SerialDebug::print(const char* format, ...) {
+    char    buffer[SERIAL_DEBUG_BUFFER_SIZE];
     va_list args;
     va_start(args, format);
     vsnprintf(buffer, SERIAL_DEBUG_BUFFER_SIZE, format, args);
@@ -46,8 +46,8 @@ void SerialDebug::print(const char *format, ...) {
     KLST_BSP_serialdebug_printf("%s", buffer);
 }
 
-void SerialDebug::println(const char *format, ...) {
-    char buffer[SERIAL_DEBUG_BUFFER_SIZE];
+void SerialDebug::println(const char* format, ...) {
+    char    buffer[SERIAL_DEBUG_BUFFER_SIZE];
     va_list args;
     va_start(args, format);
     vsnprintf(buffer, SERIAL_DEBUG_BUFFER_SIZE, format, args);

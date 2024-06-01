@@ -21,17 +21,51 @@
 #if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
 // #if defined(KLST_PANDA_EMU) || defined(KLST_CATERPILLAR_EMU)
 
+#include "KlangstromEmulator.h"
+#include <iostream>
+#include <vector>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void KLST_BSP_serialdebug_init() {}
+#ifndef SERIAL_DEBUG_BUFFER_SIZE
+#define SERIAL_DEBUG_BUFFER_SIZE 128
+#endif
 
-void KLST_BSP_serialdebug_printf(const char *format, ...) {}
+void KLST_BSP_serialdebug_init() {
+    // KlangstromEmulator::instance()->foobar();
+}
 
-void KLST_BSP_serialdebug_println(const char *format, ...) {}
+void KLST_BSP_serialdebug_printf(const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    std::vector<char> buffer(SERIAL_DEBUG_BUFFER_SIZE);
+    vsnprintf(buffer.data(), buffer.size(), format, args);
+    va_end(args);
+    std::cout
+        << buffer.data()
+        << std::flush;
+}
 
-void KLST_BSP_serialdebug_info() {}
+void KLST_BSP_serialdebug_println(const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    std::vector<char> buffer(SERIAL_DEBUG_BUFFER_SIZE);
+    vsnprintf(buffer.data(), buffer.size(), format, args);
+    va_end(args);
+    std::cout
+        << buffer.data()
+        << std::endl
+        << std::flush;
+}
+
+void KLST_BSP_serialdebug_info() {
+    std::string mName = KlangstromEmulator::instance()->get_emulator_name();
+    KLST_BSP_serialdebug_printf("\r\n---------------------------------------------------------\r\n\r\n");
+    KLST_BSP_serialdebug_printf("KLST_EMU as %s (%s)\r\n", mName.c_str(), __TIME__);
+    KLST_BSP_serialdebug_printf("\r\n---------------------------------------------------------\r\n\r\n");
+}
 
 void KLST_BSP_serialdebug_timestamp() {}
 

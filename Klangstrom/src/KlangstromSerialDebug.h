@@ -26,8 +26,8 @@ extern "C" {
 #endif
 
 void KLST_BSP_serialdebug_init();
-void KLST_BSP_serialdebug_printf(const char *format, ...);
-void KLST_BSP_serialdebug_println(const char *format, ...);
+void KLST_BSP_serialdebug_printf(const char* format, ...);
+void KLST_BSP_serialdebug_println(const char* format, ...); /* for debugging only */
 void KLST_BSP_serialdebug_info();
 void KLST_BSP_serialdebug_timestamp();
 
@@ -42,8 +42,8 @@ public:
     void init();
     void info();
     void timestamp();
-    void print(const char *format, ...);
-    void println(const char *format, ...);
+    void print(const char* format, ...);
+    void println(const char* format, ...);
 
     void print_binary(uint32_t value, uint8_t number_of_bits) {
         for (int i = (number_of_bits - 1); i >= 0; i--) {
@@ -52,4 +52,3 @@ public:
     }
 };
 #endif // __cplusplus
-
