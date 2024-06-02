@@ -44,10 +44,15 @@ void setup() {
 
 void loop() {
     leds.toggle(LEDs::ALL);
-    console.println("LED: %f", leds.get(0));
+    console.println("LED   : %f", leds.get(0));
+    console.println("micros: %li", micros());
+    console.println("sqrt  : %f", sqrt(24));
+    console.println("sin   : %f", sin(2));
+    console.println("random: %li", random(255));
+    console.println("random: %li", random(0, 255));
 
     klangstrom.loop();
-    delay(100);
+    delay(1000);
 }
 
 void audioblock(float** input_signal, float** output_signal, uint16_t length) {
