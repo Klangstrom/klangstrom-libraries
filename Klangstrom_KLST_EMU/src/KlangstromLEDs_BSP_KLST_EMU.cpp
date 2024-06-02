@@ -32,21 +32,21 @@ void KLST_BSP_leds_init() {}
 void KLST_BSP_leds_set(int id, float intensity) {}
 
 uint8_t KLST_BSP_leds_total() {
-    #if defined(GENERIC_EMU)
+#if defined(GENERIC_EMU)
     return 0;
-    #elif defined(KLST_CORE_EMU)
+#elif defined(KLST_CORE_EMU)
     return 3;
-    #elif defined(KLST_TINY_EMU)
+#elif defined(KLST_TINY_EMU)
     return 2;
-    #elif defined(KLST_SHEEP_EMU)
+#elif defined(KLST_SHEEP_EMU)
     return 16;
-    #elif defined(KLST_PANDA_EMU)
+#elif defined(KLST_PANDA_EMU)
     return 2;
-    #elif defined(KLST_CATERPILLAR_EMU)
+#elif defined(KLST_CATERPILLAR_EMU)
     return 2;
-    #else
+#else
     return 0;
-    #endif
+#endif
 }
 
 #ifdef __cplusplus
