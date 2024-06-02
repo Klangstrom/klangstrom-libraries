@@ -179,6 +179,7 @@ void AudioCodec::init() {
         audiocodec_register_audio_device(this);
         register_audioblock(audioblock);
         KLST_BSP_audiocodec_init();
+        KLST_BSP_init();
         isInitialized = true;
     }
 }

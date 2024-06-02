@@ -11,6 +11,7 @@ SerialDebug console;
 Klangstrom  klangstrom;
 AudioCodec  audiocodec;
 LEDs        leds;
+uint8_t     fLEDIntensity = 0;
 
 float*    wavetable = new float[512];
 Wavetable oscillator{wavetable, 512, 48000};
@@ -43,13 +44,11 @@ void setup() {
 }
 
 void loop() {
-    leds.toggle(LEDs::ALL);
-    console.println("LED   : %f", leds.get(0));
-    console.println("micros: %li", micros());
-    console.println("sqrt  : %f", sqrt(24));
-    console.println("sin   : %f", sin(2));
-    console.println("random: %li", random(255));
-    console.println("random: %li", random(0, 255));
+    fLEDIntensity += 10;
+    leds.set(0, fLEDIntensity / 255.0);
+    leds.toggle(1);
+    console.println("LED 0 : %f", leds.get(0));
+    console.println("LED 1 : %f", leds.get(1));
 
     klangstrom.loop();
     delay(1000);

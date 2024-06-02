@@ -28,7 +28,7 @@
 #include "KlangstromSerialDebug.h"
 
 void KLST_BSP_leds_init() {
-    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -38,9 +38,9 @@ void KLST_BSP_leds_init() {
     HAL_GPIO_WritePin(GPIOB, _LED_00_Pin | _LED_01_Pin, GPIO_PIN_RESET);
 
     /*Configure GPIO pins : _LED_00_Pin _LED_01_Pin */
-    GPIO_InitStruct.Pin = _LED_00_Pin | _LED_01_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Pin   = _LED_00_Pin | _LED_01_Pin;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -70,6 +70,10 @@ void KLST_BSP_leds_set(const int id, float intensity) {
 uint8_t KLST_BSP_leds_total() {
     return 2;
 }
+
+#include "KlangstromLEDs.h"
+
+void LEDs::KLST_BSP_init() {}
 
 #endif // KLST_PANDA_ENABLE_LEDS
 #endif // KLST_PANDA_STM32

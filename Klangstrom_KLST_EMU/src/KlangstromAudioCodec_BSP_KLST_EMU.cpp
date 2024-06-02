@@ -36,4 +36,24 @@ uint8_t KLST_BSP_audiocodec_init() {
 }
 #endif
 
+#include "KlangstromEmulator.h"
+#include "KlangstromAudioCodec.h"
+
+class DrawableAudioCodec : public Drawable {
+public:
+    DrawableAudioCodec(AudioCodec* audiocodec) : mAudioCodec(audiocodec) {}
+
+    void draw(PGraphics* g) override {
+        // TODO draw audio codec
+    }
+
+private:
+    AudioCodec* mAudioCodec;
+};
+
+void AudioCodec::KLST_BSP_init() {
+    KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(this));
+}
+
+
 #endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)

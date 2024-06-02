@@ -61,6 +61,8 @@ class AudioCodec {
 public:
     AudioCodec();
     void init();
+    void KLST_BSP_init();
+
     /* --- callback_interface --- */
     void callback_class(uint32_t* input, uint32_t* output, uint16_t length);
     void callback_class_f(float** input, float** output, uint16_t length);

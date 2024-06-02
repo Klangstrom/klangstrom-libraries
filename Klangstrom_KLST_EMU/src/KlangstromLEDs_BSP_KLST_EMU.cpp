@@ -53,4 +53,35 @@ uint8_t KLST_BSP_leds_total() {
 }
 #endif
 
+#include "KlangstromEmulator.h"
+#include "KlangstromLEDs.h"
+
+class DrawableLEDs : public Drawable {
+public:
+    DrawableLEDs(LEDs* leds) : mLEDs(leds) {}
+
+    void draw(PGraphics* g) override {
+        const float mRadius  = 50;
+        const float y        = 100;
+        const float x_offset = 25 + mRadius / 2;
+        for (uint8_t i = 0; i < KLST_BSP_leds_total(); ++i) {
+            const float mIntensity = mLEDs->get(i);
+            const float x          = x_offset + i * mRadius * 1.5f;
+            g->fill(255, mIntensity);
+            g->noStroke();
+            g->ellipse(x, y, mRadius, mRadius);
+            g->noFill();
+            g->stroke(255);
+            g->ellipse(x, y, mRadius, mRadius);
+        }
+    }
+
+private:
+    LEDs* mLEDs;
+};
+
+void LEDs::KLST_BSP_init() {
+    KlangstromEmulator::instance()->register_drawable(new DrawableLEDs(this));
+}
+
 #endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)

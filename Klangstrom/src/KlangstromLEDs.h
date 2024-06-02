@@ -48,8 +48,11 @@ public:
         delete[] fIntensities;
     }
 
+    void KLST_BSP_init();
+
     void init() {
         KLST_BSP_leds_init();
+        KLST_BSP_init();
     }
 
     void set(const int id, float intensity) {
