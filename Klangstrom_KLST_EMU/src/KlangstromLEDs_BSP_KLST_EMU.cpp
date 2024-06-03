@@ -67,11 +67,11 @@ public:
         for (uint8_t i = 0; i < KLST_BSP_leds_total(); ++i) {
             const float mIntensity = mLEDs->get(i);
             const float x          = x_offset + i * mRadius * 1.5f;
-            g->fill(255, mIntensity);
+            g->fill(1, mIntensity);
             g->noStroke();
             g->ellipse(x, y, mRadius, mRadius);
             g->noFill();
-            g->stroke(255);
+            g->stroke(1);
             g->ellipse(x, y, mRadius, mRadius);
         }
     }

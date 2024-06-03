@@ -24,7 +24,7 @@
 
 #include "KlangstromDefines.h"
 
-#if (KLANG_AUDIO_RATE!=48000) // TODO make the setup sequence aware of the current audio rate … currently fixed at 48KHz e.g `setup_SCLK_FLL()`
+#if (KLANG_AUDIO_RATE != 48000) // TODO make the setup sequence aware of the current audio rate … currently fixed at 48KHz e.g `setup_SCLK_FLL()`
 #warning "currently the audio codec only supports 48000Hz audio rate. KLANG_AUDIO_RATE is not set to 48000."
 #endif
 
@@ -52,7 +52,7 @@ extern SAI_HandleTypeDef hsai_BlockB1;
 
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
-uint32_t *mCurrentRXBuffer;
+uint32_t*                                        mCurrentRXBuffer;
 
 static void delay_ms(uint32_t duration) {
     HAL_Delay(duration);
@@ -115,10 +115,10 @@ static void setup_manually() {
     WM8904_write_register(WM8904_R26_AUDIO_INTERFACE_2, 0);
     WM8904_write_register(WM8904_R27_AUDIO_INTERFACE_3, 0);
     WM8904_write_register(WM8904_R18_WM8904_POWER_MANAGEMENT_6,
-    WM8904_DACL_ENA |
-    WM8904_DACR_ENA |
-    WM8904_ADCL_ENA |
-    WM8904_ADCR_ENA);
+                          WM8904_DACL_ENA |
+                              WM8904_DACR_ENA |
+                              WM8904_ADCL_ENA |
+                              WM8904_ADCR_ENA);
     delay_ms(5);
 
     /* --- INPUT_OUTPUT --------------------------------------------------------------------------------------------- */
@@ -126,38 +126,38 @@ static void setup_manually() {
     WM8904_write_register(WM8904_ANALOGUE_LEFT_INPUT_0, WM8904_LIN_VOL(0x10));
     WM8904_write_register(WM8904_ANALOGUE_RIGHT_INPUT_0, WM8904_RIN_VOL(0x10));
     WM8904_write_register(WM8904_R67_DC_SERVO_0,
-    WM8904_DCS_ENA_CHAN_3 |
-    WM8904_DCS_ENA_CHAN_2 |
-    WM8904_DCS_ENA_CHAN_1 |
-    WM8904_DCS_ENA_CHAN_0);
+                          WM8904_DCS_ENA_CHAN_3 |
+                              WM8904_DCS_ENA_CHAN_2 |
+                              WM8904_DCS_ENA_CHAN_1 |
+                              WM8904_DCS_ENA_CHAN_0);
     WM8904_write_register(WM8904_R68_DC_SERVO_1,
-    WM8904_DCS_TRIG_STARTUP_3 |
-    WM8904_DCS_TRIG_STARTUP_2 |
-    WM8904_DCS_TRIG_STARTUP_1 |
-    WM8904_DCS_TRIG_STARTUP_0);
+                          WM8904_DCS_TRIG_STARTUP_3 |
+                              WM8904_DCS_TRIG_STARTUP_2 |
+                              WM8904_DCS_TRIG_STARTUP_1 |
+                              WM8904_DCS_TRIG_STARTUP_0);
     delay_ms(100);
 
     /* --- LINE_OUT ------------------------------------------------------------------------------------------------- */
 
     WM8904_write_register(WM8904_R94_WM8904_ANALOGUE_LINEOUT_0,
-    WM8904_LINEOUTL_ENA_OUTP |
-    WM8904_LINEOUTL_ENA_DLY |
-    WM8904_LINEOUTL_ENA |
-    WM8904_LINEOUTR_ENA_OUTP |
-    WM8904_LINEOUTR_ENA_DLY |
-    WM8904_LINEOUTR_ENA);
+                          WM8904_LINEOUTL_ENA_OUTP |
+                              WM8904_LINEOUTL_ENA_DLY |
+                              WM8904_LINEOUTL_ENA |
+                              WM8904_LINEOUTR_ENA_OUTP |
+                              WM8904_LINEOUTR_ENA_DLY |
+                              WM8904_LINEOUTR_ENA);
     set_lineout_volume(0x32, 0x32); // TODO check if this is 80% ( with max 0x40 )
     delay_ms(100);
 
     /* --- HEADPHONES ----------------------------------------------------------------------------------------------- */
 
     WM8904_write_register(WM8904_R90_WM8904_ANALOGUE_HP_0,
-    WM8904_HPL_ENA_OUTP |
-    WM8904_HPL_ENA_DLY |
-    WM8904_HPL_ENA |
-    WM8904_HPR_ENA_OUTP |
-    WM8904_HPR_ENA_DLY |
-    WM8904_HPR_ENA);
+                          WM8904_HPL_ENA_OUTP |
+                              WM8904_HPL_ENA_DLY |
+                              WM8904_HPL_ENA |
+                              WM8904_HPR_ENA_OUTP |
+                              WM8904_HPR_ENA_DLY |
+                              WM8904_HPR_ENA);
     set_headphone_volume(0xFF, 0xFF);
     delay_ms(100);
 
@@ -281,22 +281,22 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 
-#define SANITY_TEST             0
+#define SANITY_TEST 0
 #define SANITY_TEST_PASSTHROUGH 0
-#define SANITY_TEST_NOISE       0
-#define SANITY_TEST_MIC         0
+#define SANITY_TEST_NOISE 0
+#define SANITY_TEST_MIC 0
 
 #if SANITY_TEST
 
-static const float M_MAX_FREQUENCEY = 440.0;
-float mFreqL = M_MAX_FREQUENCEY * 0.25;
-float mFreqR = M_MAX_FREQUENCEY * 0.5;
-float left_osc_phi = 0;
-float right_osc_phi = 0;
-float left_osc_phi_inc = 0;
-float right_osc_phi_inc = 0;
+static const float M_MAX_FREQUENCEY  = 440.0;
+float              mFreqL            = M_MAX_FREQUENCEY * 0.25;
+float              mFreqR            = M_MAX_FREQUENCEY * 0.5;
+float              left_osc_phi      = 0;
+float              right_osc_phi     = 0;
+float              left_osc_phi_inc  = 0;
+float              right_osc_phi_inc = 0;
 
-void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
+void FillBuffer(uint32_t* mTXBuffer, uint32_t* mRXBuffer, uint16_t len) {
     mFreqL++;
     mFreqR++;
     if (mFreqL > M_MAX_FREQUENCEY) {
@@ -305,7 +305,7 @@ void FillBuffer(uint32_t *mTXBuffer, uint32_t *mRXBuffer, uint16_t len) {
     if (mFreqR > M_MAX_FREQUENCEY) {
         mFreqR = M_MAX_FREQUENCEY * 0.25;
     }
-    left_osc_phi_inc = mFreqL / (float) KLANG_AUDIO_RATE;
+    left_osc_phi_inc  = mFreqL / (float) KLANG_AUDIO_RATE;
     right_osc_phi_inc = mFreqR / (float) KLANG_AUDIO_RATE;
 
     for (uint16_t i = 0; i < len; i++) {
@@ -362,7 +362,7 @@ static void setup_SAI() {
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
 }
 
-void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
@@ -372,7 +372,7 @@ void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai) {
     }
 }
 
-void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
@@ -382,21 +382,21 @@ void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai) {
     }
 }
 
-void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockA1) {
         // TODO maybe better copy input buffer?
         mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
     }
 }
 
-void KLST_PANDA_audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_RX_half_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockA1) {
         // TODO maybe better copy input buffer?
         mCurrentRXBuffer = &(dma_RX_buffer[0]);
     }
 }
 
-void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef *hsai) {
+void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockA1) {
         KLST_BSP_serialdebug_println("### ERROR error in RX SAI:BlockA1");
     }
