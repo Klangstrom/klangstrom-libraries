@@ -61,9 +61,11 @@ public:
     DrawableLEDs(LEDs* leds) : mLEDs(leds) {}
 
     void draw(PGraphics* g) override {
-        const float mRadius  = 50;
-        const float y        = 100;
-        const float x_offset = 25 + mRadius / 2;
+        g->pushMatrix();
+        g->translate(25, 80);
+        const float mRadius  = 40;
+        const float y        = 0;
+        const float x_offset = mRadius / 2;
         for (uint8_t i = 0; i < KLST_BSP_leds_total(); ++i) {
             const float mIntensity = mLEDs->get(i);
             const float x          = x_offset + i * mRadius * 1.5f;
@@ -74,6 +76,7 @@ public:
             g->stroke(1);
             g->ellipse(x, y, mRadius, mRadius);
         }
+        g->popMatrix();
     }
 
 private:

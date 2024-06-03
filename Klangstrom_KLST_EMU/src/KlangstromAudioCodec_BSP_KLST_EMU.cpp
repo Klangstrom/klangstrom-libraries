@@ -44,7 +44,32 @@ public:
     DrawableAudioCodec(AudioCodec* audiocodec) : mAudioCodec(audiocodec) {}
 
     void draw(PGraphics* g) override {
-        // TODO draw audio codec
+        (void) mAudioCodec;
+        g->stroke(1);
+        g->noFill();
+        g->pushMatrix();
+        g->translate(20, 225);
+        const int   mStrafe  = 16;
+        const float mHeight  = 200;
+        const float mWidth   = 512 - 20;
+        float**     mBuffers = KlangstromEmulator::instance()->get_audio_output_buffers();
+        for (int i = 0; i < audio_output_channels; i++) {
+            g->stroke(1, 0.5);
+            g->rect(0, i * mHeight - mHeight * 0.5, mWidth, mHeight);
+            g->line(0, i * mHeight, mWidth, i * mHeight);
+            g->stroke(1);
+            for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
+                float       mSample0 = mBuffers[i][j - mStrafe];
+                float       mSample1 = mBuffers[i][j];
+                const float x0       = mWidth * (float) (j - mStrafe) / DEFAULT_FRAMES_PER_BUFFER;
+                const float y0       = i * mHeight + mSample0 * mHeight;
+                const float x1       = mWidth * (float) j / DEFAULT_FRAMES_PER_BUFFER;
+                const float y1       = i * mHeight + mSample1 * mHeight;
+                g->line(x0, y0, x1, y1);
+                g->line(x0, y0, x0, i * mHeight);
+            }
+        }
+        g->popMatrix();
     }
 
 private:

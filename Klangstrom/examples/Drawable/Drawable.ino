@@ -14,6 +14,7 @@ LEDs        leds;
 
 float*    wavetable = new float[512];
 Wavetable oscillator{wavetable, 512, 48000};
+Wavetable lfo{wavetable, 512, 48000};
 
 void setup() {
     klangstrom.init();
@@ -24,6 +25,9 @@ void setup() {
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
     oscillator.set_amplitude(0.1);
+    oscillator.set_frequency(187.5);
+    lfo.set_frequency(1);
+    lfo.set_oscillation_range(177.5, 197.5);
     audiocodec.start();
 }
 
@@ -36,6 +40,7 @@ void loop() {
 
 void audioblock(float** input_signal, float** output_signal, uint16_t length) {
     for (int i = 0; i < length; ++i) {
+        oscillator.set_frequency(lfo.process());
         output_signal[0][i] = oscillator.process();
         output_signal[1][i] = output_signal[0][i];
     }
