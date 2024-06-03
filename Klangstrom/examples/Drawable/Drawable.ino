@@ -24,7 +24,7 @@ void setup() {
     klangstrom.setup();
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
-    oscillator.set_amplitude(0.1);
+    oscillator.set_amplitude(0.25);
     oscillator.set_frequency(187.5);
     lfo.set_frequency(1);
     lfo.set_oscillation_range(177.5, 197.5);
