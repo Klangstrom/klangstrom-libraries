@@ -3,6 +3,7 @@
 #include "Arduino.h"
 #include "Klangstrom.h"
 #include "KlangstromSerialDebug.h"
+#include "KlangstromEnvironment.h"
 
 SerialDebug console;
 Klangstrom  klangstrom;
@@ -12,6 +13,7 @@ void setup() {
 }
 
 void loop() {
+#ifdef KLST_ARCH_IS_EMU
     std::cout << "abs(-5) = " << abs(-5) << std::endl;
     std::cout << "constrain(10, 0, 5) = " << constrain(10, 0, 5) << std::endl;
     std::cout << "map(5, 0, 10, 0, 100) = " << map(5, 0, 10, 0, 100) << std::endl;
@@ -42,23 +44,21 @@ void loop() {
     std::cout << "isUpperCase('A') = " << isUpperCase(testChar) << std::endl;
     std::cout << "isWhitespace('A') = " << isWhitespace(testChar) << std::endl;
 
-
     uint8_t value = 0b10101010;
-    std::cout << "bit(3) = " << std::bitset<8>(bit(3)) << std::endl;
-    bitClear(value, 1);
-    std::cout << "After bitClear(value, 1): " << std::bitset<8>(value) << std::endl;
-    std::cout << "bitRead(value, 2) = " << bitRead(value, 2) << std::endl;
-    bitSet(value, 1);
-    std::cout << "After bitSet(value, 1): " << std::bitset<8>(value) << std::endl;
-    bitWrite(value, 2, false);
-    std::cout << "After bitWrite(value, 2, false): " << std::bitset<8>(value) << std::endl;
-    bitWrite(value, 2, true);
-    std::cout << "After bitWrite(value, 2, true): " << std::bitset<8>(value) << std::endl;
+    std::cout << "After bitClear(value, 1): " << std::bitset<8>(bitClear(value, 1)) << std::endl;
+    std::cout << "bitRead(value, 2) = " << std::bitset<8>(bitRead(value, 2)) << std::endl;
+    std::cout << "After bitSet(value, 1): " << std::bitset<8>(bitSet(value, 1)) << std::endl;
+    std::cout << "After bitWrite(value, 2, false): " << std::bitset<8>(bitWrite(value, 2, false)) << std::endl;
+    std::cout << "After bitWrite(value, 2, true): " << std::bitset<8>(bitWrite(value, 2, true)) << std::endl;
     uint16_t number = 0xABCD;
     std::cout << "highByte(0xABCD) = " << std::bitset<8>(highByte(number)) << std::endl;
     std::cout << "lowByte(0xABCD) = " << std::bitset<8>(lowByte(number)) << std::endl;
 
     std::cout << std::endl
               << std::flush;
+#else
+    console.println("this sketch is KLST_EMU only");
+#endif // KLST_ARCH_IS_EMU
+
     delay(1000);
 }
