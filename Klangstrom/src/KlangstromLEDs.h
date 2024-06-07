@@ -26,8 +26,8 @@
 extern "C" {
 #endif
 
-void KLST_BSP_leds_init();
-void KLST_BSP_leds_set(int id, float intensity);
+void    KLST_BSP_leds_init();
+void    KLST_BSP_leds_set(int id, float intensity);
 uint8_t KLST_BSP_leds_total();
 
 #ifdef __cplusplus
@@ -40,17 +40,19 @@ class LEDs {
 public:
     static const int8_t ALL = -1;
 
-    LEDs() :
-            fTotal(KLST_BSP_leds_total()) {
-        fIntensities = new float[fTotal] { 0 };
+    LEDs() : fTotal(KLST_BSP_leds_total()) {
+        fIntensities = new float[fTotal]{0};
     }
 
     virtual ~LEDs() {
         delete[] fIntensities;
     }
 
+    void KLST_BSP_init();
+
     void init() {
         KLST_BSP_leds_init();
+        KLST_BSP_init();
     }
 
     void set(const int id, float intensity) {
@@ -100,9 +102,9 @@ public:
             KLST_BSP_leds_set(id, fIntensities[id]);
         }
     }
+
 private:
     const uint8_t fTotal;
-    float *fIntensities;
+    float*        fIntensities;
 };
 #endif // __cplusplus
-
