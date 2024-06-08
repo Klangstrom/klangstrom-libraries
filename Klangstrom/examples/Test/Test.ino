@@ -3,6 +3,7 @@
 #include "KlangstromAudioCodec.h"
 #include "KlangstromSerialDebug.h"
 #include "KlangstromLEDs.h"
+#include "KlangstromSDCard.h"
 #include "Wavetable.h"
 
 void audioblock(float** input_signal, float** output_signal, uint16_t length);
@@ -10,10 +11,11 @@ void audioblock(float** input_signal, float** output_signal, uint16_t length);
 SerialDebug console;
 Klangstrom  klangstrom;
 AudioCodec  audiocodec;
+SDCard      sdcard;
 LEDs        leds;
 uint8_t     fLEDIntensity = 0;
 
-float*    wavetable = new float[512];
+float     wavetable[512];
 Wavetable oscillator{wavetable, 512, 48000};
 
 void setup() {
@@ -24,7 +26,8 @@ void setup() {
     console.timestamp();
     console.println("starting init");
     audiocodec.init();
-    leds.init();
+    // leds.init(); // TODO interferes with audiocodec
+    sdcard.init();
 
     console.timestamp();
     console.println("finished init");
@@ -41,14 +44,30 @@ void setup() {
     console.println("---------------------------------------------------------");
 
     audiocodec.start();
+
+    /* SD Card */
+    sdcard.status();
+
+    // sdcard.mount();
+    // sdcard.format();
+
+    // sdcard.mount();
+    // std::vector<std::string> files;
+    // std::vector<std::string> directories;
+    // sdcard.list("/", files, directories);
+    // console.println("Files: %i", files.size());
+    // console.println("Directories: %i", directories.size());
+    // sdcard.open("KLST.TXT");
+    console.println("---------------------------------------------------------");
 }
 
 void loop() {
     fLEDIntensity += 10;
     leds.set(0, fLEDIntensity / 255.0);
     leds.toggle(1);
-    console.println("LED 0 : %f", leds.get(0));
-    console.println("LED 1 : %f", leds.get(1));
+    // console.println("LED 0 : %f", leds.get(0));
+    // console.println("LED 1 : %f", leds.get(1));
+    oscillator.set_frequency(random(1, 4) * 55);
 
     klangstrom.loop();
     delay(1000);

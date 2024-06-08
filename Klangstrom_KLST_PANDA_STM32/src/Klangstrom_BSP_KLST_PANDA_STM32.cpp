@@ -35,28 +35,26 @@ extern "C" {
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
 #include "KLST_PANDA-InternalMemory.h"
-//#include "KLST_PANDA-LED.h"
 #include "KLST_PANDA-LTDC.h"
 #include "KLST_PANDA-Touch.h"
 #include "KLST_PANDA-RotaryEncoder.h"
-#include "KLST_PANDA-SDCard.h"
 #include "KLST_PANDA-IDC_Serial.h"
 #include "KLST_PANDA-MIDI_analog.h"
 #include "KLST_PANDA-ADCDAC.h"
 #include "KLST_PANDA-OnBoardMic.h"
 
 #include <sys/time.h>
-int _gettimeofday(struct timeval *tv, void *tzvp) {
+int _gettimeofday(struct timeval* tv, void* tzvp) {
     return 0;
 }
 
-extern TIM_HandleTypeDef htim1;
-extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef  htim1;
+extern TIM_HandleTypeDef  htim2;
+extern TIM_HandleTypeDef  htim4;
 extern UART_HandleTypeDef huart4;
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
-extern DMA_HandleTypeDef hdma_uart8_rx;
+extern DMA_HandleTypeDef  hdma_uart8_rx;
 
 static void KLST_PANDA_MX_Init_Modules();
 
@@ -126,8 +124,8 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_ENCODER
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
-    MX_FATFS_Init();
-    MX_SDMMC2_SD_Init();
+    // MX_FATFS_Init();
+    // MX_SDMMC2_SD_Init();
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
@@ -191,13 +189,13 @@ void KLST_BSP_setup() {
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
-//#ifdef KLST_PANDA_ENABLE_GPIO
-//    KLST_BSP_serialdebug_println("initializing GPIO");
-//    KLST_BSP_serialdebug_println("initializing LEDs");
-//    LED_setup();
-//    LED_turn_off(LED_00);
-//    LED_turn_off(LED_01);
-//#endif // KLST_PANDA_ENABLE_GPIO
+    //#ifdef KLST_PANDA_ENABLE_GPIO
+    //    KLST_BSP_serialdebug_println("initializing GPIO");
+    //    KLST_BSP_serialdebug_println("initializing LEDs");
+    //    LED_setup();
+    //    LED_turn_off(LED_00);
+    //    LED_turn_off(LED_01);
+    //#endif // KLST_PANDA_ENABLE_GPIO
 
 #ifdef KLST_PANDA_ENABLE_EXTERNAL_MEMORY
     KLST_BSP_serialdebug_println("initializing external RAM (MX:OCTOSPI1)");
@@ -232,10 +230,10 @@ void KLST_BSP_setup() {
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
     /* --- SD card (SDMMC) */
-    println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
-    sdcard_setup();
-    sdcard_check_status();
-    sdcard_write_test_file(false);
+    // println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
+    // sdcard_setup();
+    // sdcard_check_status();
+    // sdcard_write_test_file(false);
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
@@ -254,23 +252,23 @@ void KLST_BSP_setup() {
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
 
-//    void print_I2C_show_devices(I2C_HandleTypeDef *hi2c) {
-//        for (uint8_t i = 0; i < 255; i++) {
-//            HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000);
-//    //        if (hi2c->ErrorCode & HAL_I2C_ERROR_TIMEOUT) {
-//    //            println("- I2C DEVICE TIMED OUT: 0x%02X", i);
-//    //        }
-//            if (!status) {
-//                KLST_BSP_serialdebug_println("- I2C DEVICE READY: 0x%02X", i);
-//            }
-//        }
-//    }
+    //    void print_I2C_show_devices(I2C_HandleTypeDef *hi2c) {
+    //        for (uint8_t i = 0; i < 255; i++) {
+    //            HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000);
+    //    //        if (hi2c->ErrorCode & HAL_I2C_ERROR_TIMEOUT) {
+    //    //            println("- I2C DEVICE TIMED OUT: 0x%02X", i);
+    //    //        }
+    //            if (!status) {
+    //                KLST_BSP_serialdebug_println("- I2C DEVICE READY: 0x%02X", i);
+    //            }
+    //        }
+    //    }
 
-//#if defined(KLST_PANDA_ENABLE_DISPLAY) || defined(KLST_PANDA_ENABLE_AUDIOCODEC)
-//    TODO somehow this causes issues
-//    println("looking for I2C devices on I2C4");
-//    print_I2C_show_devices(&hi2c4);
-//#endif
+    //#if defined(KLST_PANDA_ENABLE_DISPLAY) || defined(KLST_PANDA_ENABLE_AUDIOCODEC)
+    //    TODO somehow this causes issues
+    //    println("looking for I2C devices on I2C4");
+    //    print_I2C_show_devices(&hi2c4);
+    //#endif
 
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     println("initializing display (LTDC) (MX:LTDC+DMA2D)");
@@ -282,7 +280,7 @@ void KLST_BSP_setup() {
     println("initializing touch panel (FT5206) (MX:I2C4)");
     display_switch_on(); // TODO maybe turn off?
     touch_setup();
-//    touch_read();
+    //    touch_read();
 
     /* --- backlight */
 
@@ -312,7 +310,7 @@ void KLST_BSP_loop() {
 
 #ifdef KLST_PANDA_ENABLE_ADC_DAC
     static const uint8_t mDACPeriod = 25;
-    const float mDACvalue = (float) (frame_counter % mDACPeriod) / (float) mDACPeriod;
+    const float          mDACvalue  = (float) (frame_counter % mDACPeriod) / (float) mDACPeriod;
     DAC_write(mDACvalue);
     float mADCValue = ADC_read();
     KLST_BSP_serialdebug_println("ADC: %f", mADCValue);
@@ -333,14 +331,14 @@ void KLST_BSP_loop() {
 
 // TODO add #ifdef to all callbacks
 // void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {}
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
-//#define  HAL_UART_ERROR_NONE             (0x00000000U)    /*!< No error                */
-//#define  HAL_UART_ERROR_PE               (0x00000001U)    /*!< Parity error            */
-//#define  HAL_UART_ERROR_NE               (0x00000002U)    /*!< Noise error             */
-//#define  HAL_UART_ERROR_FE               (0x00000004U)    /*!< Frame error             */
-//#define  HAL_UART_ERROR_ORE              (0x00000008U)    /*!< Overrun error           */
-//#define  HAL_UART_ERROR_DMA              (0x00000010U)    /*!< DMA transfer error      */
-//#define  HAL_UART_ERROR_RTO              (0x00000020U)    /*!< Receiver Timeout error  */
+void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
+    //#define  HAL_UART_ERROR_NONE             (0x00000000U)    /*!< No error                */
+    //#define  HAL_UART_ERROR_PE               (0x00000001U)    /*!< Parity error            */
+    //#define  HAL_UART_ERROR_NE               (0x00000002U)    /*!< Noise error             */
+    //#define  HAL_UART_ERROR_FE               (0x00000004U)    /*!< Frame error             */
+    //#define  HAL_UART_ERROR_ORE              (0x00000008U)    /*!< Overrun error           */
+    //#define  HAL_UART_ERROR_DMA              (0x00000010U)    /*!< DMA transfer error      */
+    //#define  HAL_UART_ERROR_RTO              (0x00000020U)    /*!< Receiver Timeout error  */
     KLST_BSP_serialdebug_println("HAL_UART_ErrorCallback: %i", huart->ErrorCode);
     if (huart->Instance == UART9) {
         KLST_BSP_serialdebug_println("UART9");
@@ -361,28 +359,28 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
     KLST_BSP_serialdebug_println("unknown serial port");
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
     if (huart->Instance == UART9) {
         RX_00_buffer[RX_00_counter] = IDC_serial_handle_rx(UART9, 0);
         RX_00_counter++;
         return;
     }
-//    if (huart->Instance == UART8) {
-//        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8, 0);
-//        RX_01_counter++;
-//        return;
-//    }
+    //    if (huart->Instance == UART8) {
+    //        RX_01_buffer[RX_01_counter] = IDC_serial_handle_rx(UART8, 0);
+    //        RX_01_counter++;
+    //        return;
+    //    }
 
-//    if (huart->Instance == UART4) { // (huart == &huart4)
-//        RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4, 0);
-//        RX_MIDI_counter++;
-//        return;
-//    }
+    //    if (huart->Instance == UART4) { // (huart == &huart4)
+    //        RX_MIDI_buffer[RX_MIDI_counter] = IDC_serial_handle_rx(UART4, 0);
+    //        RX_MIDI_counter++;
+    //        return;
+    //    }
 
     KLST_BSP_serialdebug_println("unknown serial port");
 }
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
     if (huart->Instance == UART8) {
         IDC_serial_handle_rx(UART8, Size);
         return;
@@ -401,15 +399,15 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
 }
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-//#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
-//    if (htim == &htim4) {
-//        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-//            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
-//            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
-//        }
-//    }
-//#endif
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
+    //#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
+    //    if (htim == &htim4) {
+    //        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+    //            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
+    //            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
+    //        }
+    //    }
+    //#endif
     if (htim == &htim1) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
             println("ENCODER_00: BUTTON");
@@ -450,17 +448,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 #endif // defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
-void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai) {
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai) {
     KLST_PANDA_audiocodec_TX_full_complete_callback(hsai);
 }
 
-void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
     KLST_PANDA_audiocodec_TX_half_complete_callback(hsai);
 }
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined (KLST_PANDA_ENABLE_ON_BOARD_MIC)
-void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_ON_BOARD_MIC)
+void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     KLST_PANDA_audiocodec_RX_full_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
@@ -469,7 +467,7 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai) {
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 }
 
-void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
+void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     KLST_PANDA_audiocodec_RX_half_complete_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
@@ -478,7 +476,7 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai) {
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 }
 
-void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
+void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
     KLST_PANDA_audiocodec_error_callback(hsai);
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
@@ -493,4 +491,3 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 #endif
 
 #endif // KLST_PANDA_STM32
-
