@@ -2,7 +2,21 @@
 
 void setup() {
   Serial.begin(115200);
+  Serial8.begin(115200);
+  Serial9.begin(115200);
   Serial.println("Hello!");
+#ifdef ENABLE_HWSERIAL4
+  Serial.println("MIDI Analog");
+#endif  // ENABLE_HWSERIAL1
+#ifdef ENABLE_HWSERIAL4
+  Serial.println("MIDI Analog");
+#endif  // ENABLE_HWSERIAL1
+#ifdef ENABLE_HWSERIAL4
+  Serial.println("MIDI Analog");
+#endif  // ENABLE_HWSERIAL1
+#ifdef ENABLE_HWSERIAL4
+  Serial.println("MIDI Analog");
+#endif  // ENABLE_HWSERIAL1
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
