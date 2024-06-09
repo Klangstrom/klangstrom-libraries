@@ -32,3 +32,4 @@ Core/Src/syscalls.c
 Core/Src/sysmem.c
 Core/Src/tim.c
 Core/Src/usart.c
+Middlewares/klangstrom-libraries/Klangstrom/src/KlangstromEnvironment.h

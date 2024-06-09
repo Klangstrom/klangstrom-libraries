@@ -21,7 +21,7 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-
+#if (KLST_ENV==0x36) // KLST_PANDA
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -374,5 +374,5 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
+#endif // KLST_ENV=0x36
 /* USER CODE END 1 */
