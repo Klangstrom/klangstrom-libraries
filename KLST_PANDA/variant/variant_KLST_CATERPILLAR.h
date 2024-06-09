@@ -214,16 +214,15 @@
 #define NUM_ANALOG_INPUTS       28
 
 // On-board LED pin number
-#define LED_GREEN               PB0  // LD1
-#define LED_YELLOW              PE1  // LD2
-#define LED_RED                 PB14 // LD3
+#define LED_00                  PB14  
+#define LED_01                  PB15  
 #ifndef LED_BUILTIN
-  #define LED_BUILTIN           LED_GREEN
+  #define LED_BUILTIN           LED_00
 #endif
 
 // On-board user button
 #ifndef USER_BTN
-  #define USER_BTN              PC13
+  #define USER_BTN              PNUM_NOT_DEFINED
 #endif
 
 // Timer Definitions
@@ -237,7 +236,7 @@
 
 // UART Definitions
 #ifndef SERIAL_UART_INSTANCE
-  #define SERIAL_UART_INSTANCE  3 //Connected to ST-Link
+  #define SERIAL_UART_INSTANCE  3 // Connected to ST-Link
 #endif
 
 // Serial pin used for console (ex: ST-Link)
@@ -252,7 +251,7 @@
 // HSE default value is 25MHz in HAL
 // By default HSE_BYPASS is based on HSI/2 from STLink
 #ifndef HSE_BYPASS_NOT_USED
-  #define HSE_VALUE             8000000
+  #define HSE_VALUE             16000000
 #endif
 
 // Extra HAL modules
@@ -292,3 +291,24 @@
   #define SERIAL_PORT_MONITOR     Serial
   #define SERIAL_PORT_HARDWARE    Serial
 #endif
+
+#define ENABLE_HWSERIAL4        // MIDI Analog
+#define PIN_SERIAL4_TX          PD1 
+#define PIN_SERIAL4_RX          PC11
+
+#define ENABLE_HWSERIAL8        // IDC Serial 00
+#define PIN_SERIAL8_TX          PE1  
+#define PIN_SERIAL8_RX          PE0  
+
+#define ENABLE_HWSERIAL9        // IDC Serial 01
+#define PIN_SERIAL9_TX          PG1
+#define PIN_SERIAL9_RX          PG0
+
+#define ENABLE_HWSERIAL2        // Serial User
+#define PIN_SERIAL2_TX          PG1
+#define PIN_SERIAL2_RX          PG0
+
+#define ENABLE_HWSERIAL3        // Serial Debug
+#define PIN_SERIAL3_TX          PD8
+#define PIN_SERIAL3_RX          PD9
+

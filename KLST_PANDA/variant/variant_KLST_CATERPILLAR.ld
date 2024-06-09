@@ -49,7 +49,6 @@ MEMORY
   RAM_D1  (xrw)    : ORIGIN = 0x24000000,   LENGTH = 320K
   RAM_D2  (xrw)    : ORIGIN = 0x30000000,   LENGTH = 32K
   RAM_D3  (xrw)    : ORIGIN = 0x38000000,   LENGTH = 16K
-  EXT_MEM (xrw)    : ORIGIN = 0x90000000,   LENGTH = 16M
 }
 
 /* Define output sections */
@@ -151,22 +150,6 @@ SECTIONS
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
   } >RAM_D1
-
-  /* Uninitialized data section called "external_memory" */
-  /* Variables, etc. must be explicitly placed here */
-  /* can be assigned by using: */
-  /* int variable __attribute__((section(".external_memory"))) foo; */
-  .external_memory (NOLOAD) :
-  {
-      . = ALIGN(4);
-      _sexternal_memory = .;
-      PROVIDE(__external_memory_start = _sexternal_memory);
-      *(.external_memory)
-      *(.external_memory*)
-      . = ALIGN(4);
-      _eexternal_memory = .;
-      PROVIDE(__external_memory_end = _eexternal_memory);
-  } >EXT_MEM
 
   /* can be assigned by using: */
   /* int variable __attribute__((section(".dma_buffer"))) foo; */
