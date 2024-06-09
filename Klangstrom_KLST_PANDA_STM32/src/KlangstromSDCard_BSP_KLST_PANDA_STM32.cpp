@@ -231,7 +231,17 @@ bool SDCard::init() {
         println("SDCard: init failed");
         return false;
     }
-    println("SDCard: int completed");
+    println("SDCard: init completed");
+    return true;
+}
+
+bool SDCard::deinit() {
+    FATFS_UnLinkDriver(SDPath);
+    if (HAL_SD_DeInit(&hsd2) != HAL_OK) {
+        println("SDCard: deinit failed");
+        return false;
+    }
+    println("SDCard: deinit completed");
     return true;
 }
 
@@ -299,12 +309,16 @@ bool SDCard::status() {
     println("SDCard: LogBlockNbr ............. : %li", card_info.LogBlockNbr);
     println("SDCard: LogBlockSize ............ : %li", card_info.LogBlockSize);
     println("SDCard: CardSpeed ............... : %li", card_info.CardSpeed);
+
+    println("SDCard: SDPath .................. : %c%c%c%c", SDPath[0], SDPath[1], SDPath[2], SDPath[3]);
+    println("SDCard: _MAX_SS ................. : %i", _MAX_SS);
+
     return true;
 }
 
-bool SDCard::mount() {
+bool SDCard::mount(bool immediately) {
     println("SDCard: mounting FS ...");
-    if (f_mount(&SDFatFS, (TCHAR const*) SDPath, 0) != FR_OK) {
+    if (f_mount(&SDFatFS, (TCHAR const*) SDPath, immediately ? 0 : 1) != FR_OK) {
         println("SDCard: f_mount failed");
         return false;
     }
@@ -391,6 +405,15 @@ uint32_t SDCard::read(uint8_t* bytes, uint32_t bytes_to_read) {
 
 bool SDCard::close_file() {
     FRESULT res = f_close(&SDFile);
+    //    FRESULT res;
+    //    do {
+    //        res = f_close(&SDFile);
+    //        if (res != FR_OK) {
+    //            println("SDCard: closing file failed : %i", res);
+    //            HAL_Delay(500);
+    //        }
+    //    } while (res != FR_OK);
+
     if (res != FR_OK) {
         println("SDCard: closing file failed : %i", res);
         return false;
