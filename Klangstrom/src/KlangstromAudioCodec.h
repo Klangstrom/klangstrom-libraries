@@ -28,6 +28,7 @@ extern "C" {
 #endif
 
 uint8_t KLST_BSP_audiocodec_init();
+uint8_t KLST_BSP_audiocodec_deinit();
 uint8_t KLST_BSP_audiocodec_start();
 uint8_t KLST_BSP_audiocodec_stop();
 
