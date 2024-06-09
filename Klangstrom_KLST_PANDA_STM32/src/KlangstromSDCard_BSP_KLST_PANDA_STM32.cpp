@@ -311,6 +311,7 @@ bool SDCard::status() {
     println("SDCard: CardSpeed ............... : %li", card_info.CardSpeed);
 
     println("SDCard: SDPath .................. : %c%c%c%c", SDPath[0], SDPath[1], SDPath[2], SDPath[3]);
+    println("SDCard: _MAX_SS ................. : %i", _MAX_SS);
 
     return true;
 }
@@ -404,14 +405,14 @@ uint32_t SDCard::read(uint8_t* bytes, uint32_t bytes_to_read) {
 
 bool SDCard::close_file() {
     FRESULT res = f_close(&SDFile);
-//    FRESULT res;
-//    do {
-//        res = f_close(&SDFile);
-//        if (res != FR_OK) {
-//            println("SDCard: closing file failed : %i", res);
-//            HAL_Delay(500);
-//        }
-//    } while (res != FR_OK);
+    //    FRESULT res;
+    //    do {
+    //        res = f_close(&SDFile);
+    //        if (res != FR_OK) {
+    //            println("SDCard: closing file failed : %i", res);
+    //            HAL_Delay(500);
+    //        }
+    //    } while (res != FR_OK);
 
     if (res != FR_OK) {
         println("SDCard: closing file failed : %i", res);
