@@ -47,10 +47,11 @@ public:
     SDCard() {}
     ~SDCard() {}
     bool     init();
+    bool     deinit();
     bool     reinit();
     bool     detected();
     bool     status();
-    bool     mount();
+    bool     mount(bool immediately=true);
     bool     unmount();
     bool     format();
     bool     list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories);

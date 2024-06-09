@@ -44,6 +44,7 @@ public:
     void timestamp();
     void print(const char* format, ...);
     void println(const char* format, ...);
+    void clear() { println("\033[H\033[J"); }
 
     void print_binary(uint32_t value, uint8_t number_of_bits) {
         for (int i = (number_of_bits - 1); i >= 0; i--) {
