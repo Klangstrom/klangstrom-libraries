@@ -111,3 +111,5 @@ KLST_PANDA/~KLST_PANDA.kicad_pcb.lck
 KLST_PANDA/~_autosave-KLST_PANDA.kicad_pcb.lck
 *.lck
 KLST_PANDA/variant/.vscode/
+KLST_PANDA/firmware/cmake-build-debug/
+KLST_PANDA/firmware/.idea/
