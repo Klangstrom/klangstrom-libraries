@@ -312,3 +312,17 @@
 #define PIN_SERIAL3_TX          PD8
 #define PIN_SERIAL3_RX          PD9
 
+#ifdef SD_INSTANCE
+#error "SD_INSTANCE already defined"
+#endif
+
+#define SD_INSTANCE             SDMMC2
+#define SD_BUS_WIDE             SD_BUS_WIDE_4B
+#define SD_CLK_DIV              SDMMC_NSPEED_CLK_DIV
+#define SD_DETECT_PIN           PG15
+#define SDX_D0                  PG9
+#define SDX_D1                  PG10
+#define SDX_D2                  PG11
+#define SDX_D3                  PG12
+#define SDX_CMD                 PD6
+#define SDX_CK                  PD7
