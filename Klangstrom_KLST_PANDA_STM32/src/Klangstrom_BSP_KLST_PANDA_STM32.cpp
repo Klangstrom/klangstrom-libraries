@@ -98,7 +98,10 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_I2C4_Init();
 #endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
+    defined(KLST_PANDA_ENABLE_IDC_SERIAL) || \
+    defined(KLST_PANDA_ENABLE_SD_CARD) || \
+    defined(KLST_PANDA_ENABLE_MIDI)
     MX_DMA_Init();
 #endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)
 
