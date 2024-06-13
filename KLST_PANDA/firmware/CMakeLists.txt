@@ -19,9 +19,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 #Uncomment for hardware floating point
-#add_compile_definitions(ARM_MATH_CM4;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING)
-#add_compile_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
-#add_link_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
+add_compile_definitions(ARM_MATH_CM4;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING)
+add_compile_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
+add_link_options(-mfloat-abi=hard -mfpu=fpv4-sp-d16)
 
 #Uncomment for software floating point
 #add_compile_options(-mfloat-abi=soft)
@@ -49,11 +49,58 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc FATFS/Target FATFS/App PDM2PCM/App Drivers/STM32H7xx_HAL_Driver/Inc Drivers/STM32H7xx_HAL_Driver/Inc/Legacy Middlewares/Third_Party/FatFs/src Middlewares/ST/STM32_Audio/Addons/PDM/Inc Drivers/CMSIS/Device/ST/STM32H7xx/Include Drivers/CMSIS/Include USB_DEVICE/App USB_DEVICE/Target Middlewares/ST/STM32_USB_Device_Library/Core/Inc Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc USB_HOST/App USB_HOST/Target Middlewares/ST/STM32_USB_Host_Library/Core/Inc Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc Middlewares/klangstrom-libraries/Klangstrom/src Middlewares/klangstrom-libraries/Klangstrom_KLST_PANDA_STM32/src Middlewares/klangstrom-standalone/include Core/Inc FATFS/Target FATFS/App PDM2PCM/App USB_HOST/App USB_HOST/Target Drivers/STM32H7xx_HAL_Driver/Inc Drivers/STM32H7xx_HAL_Driver/Inc/Legacy Middlewares/Third_Party/FatFs/src Middlewares/ST/STM32_Audio/Addons/PDM/Inc Middlewares/ST/STM32_USB_Host_Library/Core/Inc Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc Drivers/CMSIS/Device/ST/STM32H7xx/Include Drivers/CMSIS/Include)
+include_directories(
+    Core/Inc 
+    FATFS/Target 
+    FATFS/App 
+    PDM2PCM/App 
+    Drivers/STM32H7xx_HAL_Driver/Inc 
+    Drivers/STM32H7xx_HAL_Driver/Inc/Legacy 
+    Middlewares/Third_Party/FatFs/src 
+    Middlewares/ST/STM32_Audio/Addons/PDM/Inc 
+    Drivers/CMSIS/Device/ST/STM32H7xx/Include 
+    Drivers/CMSIS/Include 
+    USB_DEVICE/App 
+    USB_DEVICE/Target 
+    Middlewares/ST/STM32_USB_Device_Library/Core/Inc 
+    Middlewares/ST/STM32_USB_Device_Library/Class/HID/Inc 
+    USB_HOST/App 
+    USB_HOST/Target 
+    Middlewares/ST/STM32_USB_Host_Library/Core/Inc 
+    Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc 
+    Middlewares/klangstrom-libraries/Klangstrom/src 
+    Middlewares/klangstrom-libraries/Klangstrom_KLST_PANDA_STM32/src 
+    Middlewares/klangstrom-standalone/include 
+    Core/Inc 
+    FATFS/Target FATFS/App 
+    PDM2PCM/App 
+    USB_HOST/App 
+    USB_HOST/Target 
+    Drivers/STM32H7xx_HAL_Driver/Inc 
+    Drivers/STM32H7xx_HAL_Driver/Inc/Legacy 
+    Middlewares/Third_Party/FatFs/src 
+    Middlewares/ST/STM32_Audio/Addons/PDM/Inc 
+    Middlewares/ST/STM32_USB_Host_Library/Core/Inc 
+    Middlewares/ST/STM32_USB_Host_Library/Class/HID/Inc 
+    Drivers/CMSIS/Device/ST/STM32H7xx/Include 
+    Drivers/CMSIS/Include
+)
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32H723xx -DKLST_ENV=0x36 -DDEBUG -DUSE_HAL_DRIVER -DSTM32H723xx)
 
-file(GLOB_RECURSE SOURCES "Core/*.*" "Drivers/*.*" "Middlewares/*.*" "PDM2PCM/*.*" "USB_HOST/*.*" "PDM2PCM/*.*" "USB_HOST/*.*" "Core/*.*" "FATFS/*.*" "Middlewares/*.*" "Drivers/*.*")
+file(GLOB_RECURSE SOURCES 
+    "Core/*.*" 
+    "Drivers/*.*" 
+    "Middlewares/*.*" 
+    "PDM2PCM/*.*" 
+    "USB_HOST/*.*" 
+    "PDM2PCM/*.*" 
+    "USB_HOST/*.*" 
+    "Core/*.*" 
+    "FATFS/*.*" 
+    "Middlewares/*.*" 
+    "Drivers/*.*"
+)
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32H723ZGTX_FLASH.ld)
 
