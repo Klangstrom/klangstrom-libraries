@@ -1,3 +1,5 @@
+#if defined(ARDUINO_KLST_PANDA)
+
 /*-----------------------------------------------------------------------*/
 /* Low level disk I/O module skeleton for FatFs     (C)ChaN, 2017        */
 /*                                                                       */
@@ -142,3 +144,4 @@ __weak DWORD get_fattime (void)
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
+#endif // defined(ARDUINO_KLST_PANDA)

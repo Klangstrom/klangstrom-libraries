@@ -20,6 +20,7 @@
   *
  ******************************************************************************
  */
+#if defined(ARDUINO_KLST_PANDA)
 /* USER CODE END Header */
 
 /* USER CODE BEGIN FirstSection */
@@ -303,5 +304,5 @@ __weak uint8_t BSP_SD_IsDetected(void)
 }
 
 /* USER CODE BEGIN AdditionalCode */
-/* user code can be inserted here */
+#endif // defined(ARDUINO_KLST_PANDA)
 /* USER CODE END AdditionalCode */

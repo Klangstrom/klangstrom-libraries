@@ -29,7 +29,7 @@
 #elif ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
 #include "Klangstrom_BSP_KLST_EMU.h"
 #else
-#warning
+#warning "no implementation for Klangstrom found ( this might be intentional )"
 #endif
 
 class Klangstrom {
