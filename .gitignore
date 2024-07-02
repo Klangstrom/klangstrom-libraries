@@ -114,3 +114,6 @@ KLST_PANDA/variant/.vscode/
 KLST_PANDA/firmware/cmake-build-debug/
 KLST_PANDA/firmware/.idea/
 KLST_PANDA/firmware/build
+KLST_PANDA/firmware/.vscode/	
+KLST_PANDA/firmware/.vscode
+KLST_PANDA/firmware/CMakePresets.json
