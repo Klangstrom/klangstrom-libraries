@@ -56,6 +56,10 @@ extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
 extern DMA_HandleTypeDef  hdma_uart8_rx;
 
+extern void MPU_Config();
+extern void SystemClock_Config();
+extern void PeriphCommonClock_Config();
+
 static void KLST_PANDA_MX_Init_Modules();
 
 /* ----------------------------------------------------------------------------------------------------------------- */
