@@ -68,6 +68,10 @@ void setup() {
     sdcard.open_file("KLST.TXT", SDCard::READ);
     uint8_t bytes_read_buffer[length];
     sdcard.read(bytes_read_buffer, length);
+    for (uint32_t i = 0; i < length; ++i) {
+        console.print("%c", bytes_read_buffer[i]);
+    }
+    console.println("");
     sdcard.close_file();
 
     sdcard.unmount();
@@ -98,7 +102,7 @@ void loop() {
 
     if (sdcard.detected()) {
         sdcard.mount();
-        sdcard.open_file("KLST2.TXT", SDCard::READ);
+        sdcard.open_file("KLST.TXT", SDCard::READ);
         uint8_t bytes_read_buffer[length];
         sdcard.read(bytes_read_buffer, length);
         sdcard.close_file();
