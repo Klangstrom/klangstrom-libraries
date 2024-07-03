@@ -29,4 +29,4 @@ target_include_directories(klangstrom PUBLIC
 )
 
 target_compile_definitions(klangstrom PRIVATE KLST_ENV=${KLST_ENV})
-target_link_libraries(klangstrom PRIVATE klangstrom_KLST_EMU)
+#target_link_libraries(klangstrom PRIVATE klangstrom_KLST_EMU)
