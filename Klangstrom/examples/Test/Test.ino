@@ -51,17 +51,19 @@ void setup() {
     // sdcard.mount();
     // sdcard.format();
 
-    // sdcard.mount();
-    // std::vector<std::string> files;
-    // std::vector<std::string> directories;
-    // sdcard.list("/", files, directories);
-    // console.println("Files: %i", files.size());
-    // console.println("Directories: %i", directories.size());
+    sdcard.mount();
+    std::vector<std::string> files;
+    std::vector<std::string> directories;
+    sdcard.list("/", files, directories);
+    console.println("Files: %i", files.size());
+    console.println("Directories: %i", directories.size());
     // sdcard.open("KLST.TXT");
     console.println("---------------------------------------------------------");
 }
 
 void loop() {
+    console.println("---");
+
     fLEDIntensity += 10;
     leds.set(0, fLEDIntensity / 255.0);
     leds.toggle(1);

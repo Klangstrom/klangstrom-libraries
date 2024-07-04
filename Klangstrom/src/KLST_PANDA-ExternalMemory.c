@@ -20,6 +20,8 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
+#include <stdio.h>
+
 #include "main.h"
 #include "KLST_PANDA-ExternalMemory.h"
 
