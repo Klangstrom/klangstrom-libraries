@@ -26,6 +26,7 @@
 
 #ifdef KLST_PANDA_STM32
 #include "Klangstrom_BSP_KLST_PANDA_STM32.h"
+// #include "Klangstrom_KLST_PANDA_STM32_CubeMX.h"
 #elif ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
 #include "Klangstrom_BSP_KLST_EMU.h"
 #else
