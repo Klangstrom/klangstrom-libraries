@@ -21,6 +21,7 @@
 #ifdef KLST_PANDA_STM32
 
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "main.h"
 
