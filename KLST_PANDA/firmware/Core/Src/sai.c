@@ -243,3 +243,7 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* saiHandle)
 /**
   * @}
   */
+
+/* USER CODE BEGIN 1 */
+#endif // defined(KLST_PANDA_STM32)
+/* USER CODE END 1 */

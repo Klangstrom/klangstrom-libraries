@@ -330,3 +330,7 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+/* USER CODE BEGIN 7 */
+#endif // defined(ARDUINO_KLST_PANDA) // TODO this will not persist after code generation
+/* USER CODE END 7 */
