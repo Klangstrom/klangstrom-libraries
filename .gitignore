@@ -117,3 +117,4 @@ KLST_PANDA/firmware/build
 KLST_PANDA/firmware/.vscode/	
 KLST_PANDA/firmware/.vscode
 KLST_PANDA/firmware/CMakePresets.json
+KLST_PANDA/firmware/.osx.project
