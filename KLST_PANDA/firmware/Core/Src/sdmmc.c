@@ -48,21 +48,22 @@ void MX_SDMMC2_SD_Init(void)
   /* USER CODE BEGIN SDMMC2_Init 2 */
   hsd2.Init.ClockDiv = SDMMC_INIT_CLK_DIV;
   /* USER CODE END SDMMC2_Init 2 */
+
 }
 
-void HAL_SD_MspInit(SD_HandleTypeDef *sdHandle)
+void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if (sdHandle->Instance == SDMMC2)
+  if(sdHandle->Instance==SDMMC2)
   {
-    /* USER CODE BEGIN SDMMC2_MspInit 0 */
+  /* USER CODE BEGIN SDMMC2_MspInit 0 */
 
-    /* USER CODE END SDMMC2_MspInit 0 */
+  /* USER CODE END SDMMC2_MspInit 0 */
 
-    /** Initializes the peripherals clock
-     */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SDMMC;
     PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -83,21 +84,21 @@ void HAL_SD_MspInit(SD_HandleTypeDef *sdHandle)
     PG11     ------> SDMMC2_D2
     PG12     ------> SDMMC2_D3
     */
-    GPIO_InitStruct.Pin = _CARD_SDMMC_CK_Pin | _CARD_SDMMC_CMD_Pin;
+    GPIO_InitStruct.Pin = _CARD_SDMMC_CK_Pin|_CARD_SDMMC_CMD_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_SDMMC2;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _CARD_SDMMC_D0_Pin | _CARD_SDMMC_D1_Pin;
+    GPIO_InitStruct.Pin = _CARD_SDMMC_D0_Pin|_CARD_SDMMC_D1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF11_SDMMC2;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _CARD_SDMMC_D2_Pin | _CARD_SDMMC_D3_Pin;
+    GPIO_InitStruct.Pin = _CARD_SDMMC_D2_Pin|_CARD_SDMMC_D3_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -107,20 +108,20 @@ void HAL_SD_MspInit(SD_HandleTypeDef *sdHandle)
     /* SDMMC2 interrupt Init */
     HAL_NVIC_SetPriority(SDMMC2_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(SDMMC2_IRQn);
-    /* USER CODE BEGIN SDMMC2_MspInit 1 */
+  /* USER CODE BEGIN SDMMC2_MspInit 1 */
 
-    /* USER CODE END SDMMC2_MspInit 1 */
+  /* USER CODE END SDMMC2_MspInit 1 */
   }
 }
 
-void HAL_SD_MspDeInit(SD_HandleTypeDef *sdHandle)
+void HAL_SD_MspDeInit(SD_HandleTypeDef* sdHandle)
 {
 
-  if (sdHandle->Instance == SDMMC2)
+  if(sdHandle->Instance==SDMMC2)
   {
-    /* USER CODE BEGIN SDMMC2_MspDeInit 0 */
+  /* USER CODE BEGIN SDMMC2_MspDeInit 0 */
 
-    /* USER CODE END SDMMC2_MspDeInit 0 */
+  /* USER CODE END SDMMC2_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_SDMMC2_CLK_DISABLE();
 
@@ -132,15 +133,15 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef *sdHandle)
     PG11     ------> SDMMC2_D2
     PG12     ------> SDMMC2_D3
     */
-    HAL_GPIO_DeInit(GPIOD, _CARD_SDMMC_CK_Pin | _CARD_SDMMC_CMD_Pin);
+    HAL_GPIO_DeInit(GPIOD, _CARD_SDMMC_CK_Pin|_CARD_SDMMC_CMD_Pin);
 
-    HAL_GPIO_DeInit(GPIOG, _CARD_SDMMC_D0_Pin | _CARD_SDMMC_D1_Pin | _CARD_SDMMC_D2_Pin | _CARD_SDMMC_D3_Pin);
+    HAL_GPIO_DeInit(GPIOG, _CARD_SDMMC_D0_Pin|_CARD_SDMMC_D1_Pin|_CARD_SDMMC_D2_Pin|_CARD_SDMMC_D3_Pin);
 
     /* SDMMC2 interrupt Deinit */
     HAL_NVIC_DisableIRQ(SDMMC2_IRQn);
-    /* USER CODE BEGIN SDMMC2_MspDeInit 1 */
+  /* USER CODE BEGIN SDMMC2_MspDeInit 1 */
 
-    /* USER CODE END SDMMC2_MspDeInit 1 */
+  /* USER CODE END SDMMC2_MspDeInit 1 */
   }
 }
 

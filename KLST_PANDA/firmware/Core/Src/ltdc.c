@@ -82,17 +82,18 @@ void MX_LTDC_Init(void)
   /* USER CODE BEGIN LTDC_Init 2 */
 
   /* USER CODE END LTDC_Init 2 */
+
 }
 
-void HAL_LTDC_MspInit(LTDC_HandleTypeDef *ltdcHandle)
+void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if (ltdcHandle->Instance == LTDC)
+  if(ltdcHandle->Instance==LTDC)
   {
-    /* USER CODE BEGIN LTDC_MspInit 0 */
+  /* USER CODE BEGIN LTDC_MspInit 0 */
 
-    /* USER CODE END LTDC_MspInit 0 */
+  /* USER CODE END LTDC_MspInit 0 */
     /* LTDC clock enable */
     __HAL_RCC_LTDC_CLK_ENABLE();
 
@@ -132,42 +133,44 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *ltdcHandle)
     PB8     ------> LTDC_B6
     PB9     ------> LTDC_B7
     */
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R5_Pin | _DISPLAY_LTDC_G5_Pin | _DISPLAY_LTDC_HSYNC_Pin | _DISPLAY_LTDC_G6_Pin | _DISPLAY_LTDC_R2_Pin | _DISPLAY_LTDC_R6_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R5_Pin|_DISPLAY_LTDC_G5_Pin|_DISPLAY_LTDC_HSYNC_Pin|_DISPLAY_LTDC_G6_Pin
+                          |_DISPLAY_LTDC_R2_Pin|_DISPLAY_LTDC_R6_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R1_Pin | _DISPLAY_LTDC_R4_Pin | _DISPLAY_LTDC_G2_Pin | _DISPLAY_LTDC_VSYNC_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_R1_Pin|_DISPLAY_LTDC_R4_Pin|_DISPLAY_LTDC_G2_Pin|_DISPLAY_LTDC_VSYNC_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_G1_Pin | _DISPLAY_LTDC_G0_Pin | _DISPLAY_LTDC_G4_Pin | _DISPLAY_LTDC_B6_Pin | _DISPLAY_LTDC_B7_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_G1_Pin|_DISPLAY_LTDC_G0_Pin|_DISPLAY_LTDC_G4_Pin|_DISPLAY_LTDC_B6_Pin
+                          |_DISPLAY_LTDC_B7_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_B4_Pin | _DISPLAY_LTDC_DE_Pin | _DISPLAY_LTDC_R7_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_B4_Pin|_DISPLAY_LTDC_DE_Pin|_DISPLAY_LTDC_R7_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_B3_Pin | _DISPLAY_LTDC_B1_Pin | _DISPLAY_LTDC_B2_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_B3_Pin|_DISPLAY_LTDC_B1_Pin|_DISPLAY_LTDC_B2_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _DISPLAY_LTDC_CLK_Pin | _DISPLAY_LTDC_G7_Pin | _DISPLAY_LTDC_R0_Pin | _DISPLAY_LTDC_B0_Pin;
+    GPIO_InitStruct.Pin = _DISPLAY_LTDC_CLK_Pin|_DISPLAY_LTDC_G7_Pin|_DISPLAY_LTDC_R0_Pin|_DISPLAY_LTDC_B0_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -200,20 +203,20 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef *ltdcHandle)
     HAL_NVIC_EnableIRQ(LTDC_IRQn);
     HAL_NVIC_SetPriority(LTDC_ER_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(LTDC_ER_IRQn);
-    /* USER CODE BEGIN LTDC_MspInit 1 */
+  /* USER CODE BEGIN LTDC_MspInit 1 */
 
-    /* USER CODE END LTDC_MspInit 1 */
+  /* USER CODE END LTDC_MspInit 1 */
   }
 }
 
-void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef *ltdcHandle)
+void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* ltdcHandle)
 {
 
-  if (ltdcHandle->Instance == LTDC)
+  if(ltdcHandle->Instance==LTDC)
   {
-    /* USER CODE BEGIN LTDC_MspDeInit 0 */
+  /* USER CODE BEGIN LTDC_MspDeInit 0 */
 
-    /* USER CODE END LTDC_MspDeInit 0 */
+  /* USER CODE END LTDC_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_LTDC_CLK_DISABLE();
 
@@ -247,24 +250,27 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef *ltdcHandle)
     PB8     ------> LTDC_B6
     PB9     ------> LTDC_B7
     */
-    HAL_GPIO_DeInit(GPIOC, _DISPLAY_LTDC_R5_Pin | _DISPLAY_LTDC_G5_Pin | _DISPLAY_LTDC_HSYNC_Pin | _DISPLAY_LTDC_G6_Pin | _DISPLAY_LTDC_G3_Pin | _DISPLAY_LTDC_R2_Pin | _DISPLAY_LTDC_R6_Pin);
+    HAL_GPIO_DeInit(GPIOC, _DISPLAY_LTDC_R5_Pin|_DISPLAY_LTDC_G5_Pin|_DISPLAY_LTDC_HSYNC_Pin|_DISPLAY_LTDC_G6_Pin
+                          |_DISPLAY_LTDC_G3_Pin|_DISPLAY_LTDC_R2_Pin|_DISPLAY_LTDC_R6_Pin);
 
-    HAL_GPIO_DeInit(GPIOA, _DISPLAY_LTDC_R1_Pin | _DISPLAY_LTDC_R4_Pin | _DISPLAY_LTDC_G2_Pin | _DISPLAY_LTDC_VSYNC_Pin | _DISPLAY_LTDC_R3_Pin);
+    HAL_GPIO_DeInit(GPIOA, _DISPLAY_LTDC_R1_Pin|_DISPLAY_LTDC_R4_Pin|_DISPLAY_LTDC_G2_Pin|_DISPLAY_LTDC_VSYNC_Pin
+                          |_DISPLAY_LTDC_R3_Pin);
 
-    HAL_GPIO_DeInit(GPIOB, _DISPLAY_LTDC_G1_Pin | _DISPLAY_LTDC_G0_Pin | _DISPLAY_LTDC_G4_Pin | _DISPLAY_LTDC_B5_Pin | _DISPLAY_LTDC_B6_Pin | _DISPLAY_LTDC_B7_Pin);
+    HAL_GPIO_DeInit(GPIOB, _DISPLAY_LTDC_G1_Pin|_DISPLAY_LTDC_G0_Pin|_DISPLAY_LTDC_G4_Pin|_DISPLAY_LTDC_B5_Pin
+                          |_DISPLAY_LTDC_B6_Pin|_DISPLAY_LTDC_B7_Pin);
 
-    HAL_GPIO_DeInit(GPIOE, _DISPLAY_LTDC_B4_Pin | _DISPLAY_LTDC_DE_Pin | _DISPLAY_LTDC_R7_Pin);
+    HAL_GPIO_DeInit(GPIOE, _DISPLAY_LTDC_B4_Pin|_DISPLAY_LTDC_DE_Pin|_DISPLAY_LTDC_R7_Pin);
 
-    HAL_GPIO_DeInit(GPIOD, _DISPLAY_LTDC_B3_Pin | _DISPLAY_LTDC_B1_Pin | _DISPLAY_LTDC_B2_Pin);
+    HAL_GPIO_DeInit(GPIOD, _DISPLAY_LTDC_B3_Pin|_DISPLAY_LTDC_B1_Pin|_DISPLAY_LTDC_B2_Pin);
 
-    HAL_GPIO_DeInit(GPIOG, _DISPLAY_LTDC_CLK_Pin | _DISPLAY_LTDC_G7_Pin | _DISPLAY_LTDC_R0_Pin | _DISPLAY_LTDC_B0_Pin);
+    HAL_GPIO_DeInit(GPIOG, _DISPLAY_LTDC_CLK_Pin|_DISPLAY_LTDC_G7_Pin|_DISPLAY_LTDC_R0_Pin|_DISPLAY_LTDC_B0_Pin);
 
     /* LTDC interrupt Deinit */
     HAL_NVIC_DisableIRQ(LTDC_IRQn);
     HAL_NVIC_DisableIRQ(LTDC_ER_IRQn);
-    /* USER CODE BEGIN LTDC_MspDeInit 1 */
+  /* USER CODE BEGIN LTDC_MspDeInit 1 */
 
-    /* USER CODE END LTDC_MspDeInit 1 */
+  /* USER CODE END LTDC_MspDeInit 1 */
   }
 }
 

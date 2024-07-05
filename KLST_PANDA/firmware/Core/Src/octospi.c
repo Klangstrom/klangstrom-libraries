@@ -81,21 +81,22 @@ void MX_OCTOSPI1_Init(void)
   /* USER CODE BEGIN OCTOSPI1_Init 2 */
 
   /* USER CODE END OCTOSPI1_Init 2 */
+
 }
 
-void HAL_OSPI_MspInit(OSPI_HandleTypeDef *ospiHandle)
+void HAL_OSPI_MspInit(OSPI_HandleTypeDef* ospiHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if (ospiHandle->Instance == OCTOSPI1)
+  if(ospiHandle->Instance==OCTOSPI1)
   {
-    /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
+  /* USER CODE BEGIN OCTOSPI1_MspInit 0 */
 
-    /* USER CODE END OCTOSPI1_MspInit 0 */
+  /* USER CODE END OCTOSPI1_MspInit 0 */
 
-    /** Initializes the peripherals clock
-     */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI;
     PeriphClkInitStruct.PLL2.PLL2M = 2;
     PeriphClkInitStruct.PLL2.PLL2N = 75;
@@ -155,7 +156,7 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef *ospiHandle)
     GPIO_InitStruct.Alternate = GPIO_AF10_OCTOSPIM_P1;
     HAL_GPIO_Init(_EXT_MEMORY_DQS_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _EXT_MEMORY_A4_Pin | _EXT_MEMORY_A5_Pin | _EXT_MEMORY_A6_Pin | _EXT_MEMORY_A7_Pin;
+    GPIO_InitStruct.Pin = _EXT_MEMORY_A4_Pin|_EXT_MEMORY_A5_Pin|_EXT_MEMORY_A6_Pin|_EXT_MEMORY_A7_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -193,20 +194,20 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef *ospiHandle)
     /* OCTOSPI1 interrupt Init */
     HAL_NVIC_SetPriority(OCTOSPI1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(OCTOSPI1_IRQn);
-    /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
+  /* USER CODE BEGIN OCTOSPI1_MspInit 1 */
 
-    /* USER CODE END OCTOSPI1_MspInit 1 */
+  /* USER CODE END OCTOSPI1_MspInit 1 */
   }
 }
 
-void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef *ospiHandle)
+void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef* ospiHandle)
 {
 
-  if (ospiHandle->Instance == OCTOSPI1)
+  if(ospiHandle->Instance==OCTOSPI1)
   {
-    /* USER CODE BEGIN OCTOSPI1_MspDeInit 0 */
+  /* USER CODE BEGIN OCTOSPI1_MspDeInit 0 */
 
-    /* USER CODE END OCTOSPI1_MspDeInit 0 */
+  /* USER CODE END OCTOSPI1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_OCTOSPIM_CLK_DISABLE();
     __HAL_RCC_OSPI1_CLK_DISABLE();
@@ -224,13 +225,13 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef *ospiHandle)
     PD12     ------> OCTOSPIM_P1_IO1
     PG6     ------> OCTOSPIM_P1_NCS
     */
-    HAL_GPIO_DeInit(GPIOF, _EXT_MEMORY_A3_Pin | _EXT_MEMORY_CLK_Pin);
+    HAL_GPIO_DeInit(GPIOF, _EXT_MEMORY_A3_Pin|_EXT_MEMORY_CLK_Pin);
 
     HAL_GPIO_DeInit(_EXT_MEMORY_DQS_GPIO_Port, _EXT_MEMORY_DQS_Pin);
 
-    HAL_GPIO_DeInit(GPIOE, _EXT_MEMORY_A4_Pin | _EXT_MEMORY_A5_Pin | _EXT_MEMORY_A6_Pin | _EXT_MEMORY_A7_Pin);
+    HAL_GPIO_DeInit(GPIOE, _EXT_MEMORY_A4_Pin|_EXT_MEMORY_A5_Pin|_EXT_MEMORY_A6_Pin|_EXT_MEMORY_A7_Pin);
 
-    HAL_GPIO_DeInit(GPIOB, _EXT_MEMORY_A0_Pin | _EXT_MEMORY_A2_Pin);
+    HAL_GPIO_DeInit(GPIOB, _EXT_MEMORY_A0_Pin|_EXT_MEMORY_A2_Pin);
 
     HAL_GPIO_DeInit(_EXT_MEMORY_A1_GPIO_Port, _EXT_MEMORY_A1_Pin);
 
@@ -238,9 +239,9 @@ void HAL_OSPI_MspDeInit(OSPI_HandleTypeDef *ospiHandle)
 
     /* OCTOSPI1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(OCTOSPI1_IRQn);
-    /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
+  /* USER CODE BEGIN OCTOSPI1_MspDeInit 1 */
 
-    /* USER CODE END OCTOSPI1_MspDeInit 1 */
+  /* USER CODE END OCTOSPI1_MspDeInit 1 */
   }
 }
 

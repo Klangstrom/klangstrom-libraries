@@ -78,26 +78,27 @@ void MX_SAI1_Init(void)
   /* USER CODE BEGIN SAI1_Init 2 */
 
   /* USER CODE END SAI1_Init 2 */
-}
-static uint32_t SAI1_client = 0;
 
-void HAL_SAI_MspInit(SAI_HandleTypeDef *saiHandle)
+}
+static uint32_t SAI1_client =0;
+
+void HAL_SAI_MspInit(SAI_HandleTypeDef* saiHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct;
-  /* SAI1 */
-  if (saiHandle->Instance == SAI1_Block_A)
-  {
+/* SAI1 */
+    if(saiHandle->Instance==SAI1_Block_A)
+    {
     /* SAI1 clock enable */
     if (SAI1_client == 0)
     {
-      __HAL_RCC_SAI1_CLK_ENABLE();
+       __HAL_RCC_SAI1_CLK_ENABLE();
 
-      /* Peripheral interrupt init*/
-      HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
-      HAL_NVIC_EnableIRQ(SAI1_IRQn);
+    /* Peripheral interrupt init*/
+    HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(SAI1_IRQn);
     }
-    SAI1_client++;
+    SAI1_client ++;
 
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
@@ -128,21 +129,21 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef *saiHandle)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(saiHandle, hdmarx, hdma_sai1_a);
-    __HAL_LINKDMA(saiHandle, hdmatx, hdma_sai1_a);
-  }
-  if (saiHandle->Instance == SAI1_Block_B)
-  {
-    /* SAI1 clock enable */
-    if (SAI1_client == 0)
+    __HAL_LINKDMA(saiHandle,hdmarx,hdma_sai1_a);
+    __HAL_LINKDMA(saiHandle,hdmatx,hdma_sai1_a);
+    }
+    if(saiHandle->Instance==SAI1_Block_B)
     {
-      __HAL_RCC_SAI1_CLK_ENABLE();
+      /* SAI1 clock enable */
+      if (SAI1_client == 0)
+      {
+       __HAL_RCC_SAI1_CLK_ENABLE();
 
       /* Peripheral interrupt init*/
       HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
       HAL_NVIC_EnableIRQ(SAI1_IRQn);
-    }
-    SAI1_client++;
+      }
+    SAI1_client ++;
 
     /**SAI1_B_Block_B GPIO Configuration
     PE3     ------> SAI1_SD_B
@@ -157,7 +158,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef *saiHandle)
     GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
     HAL_GPIO_Init(_AUDIO_CODEC_SAI_SD_OUT_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = _AUDIO_CODEC_SAI_MCLK_Pin | _AUDIO_CODEC_SAI_SCK_Pin | _AUDIO_CODEC_SAI_FS_Pin;
+    GPIO_InitStruct.Pin = _AUDIO_CODEC_SAI_MCLK_Pin|_AUDIO_CODEC_SAI_SCK_Pin|_AUDIO_CODEC_SAI_FS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -183,24 +184,24 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef *saiHandle)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(saiHandle, hdmarx, hdma_sai1_b);
-    __HAL_LINKDMA(saiHandle, hdmatx, hdma_sai1_b);
-  }
+    __HAL_LINKDMA(saiHandle,hdmarx,hdma_sai1_b);
+    __HAL_LINKDMA(saiHandle,hdmatx,hdma_sai1_b);
+    }
 }
 
-void HAL_SAI_MspDeInit(SAI_HandleTypeDef *saiHandle)
+void HAL_SAI_MspDeInit(SAI_HandleTypeDef* saiHandle)
 {
 
-  /* SAI1 */
-  if (saiHandle->Instance == SAI1_Block_A)
-  {
-    SAI1_client--;
-    if (SAI1_client == 0)
+/* SAI1 */
+    if(saiHandle->Instance==SAI1_Block_A)
     {
+    SAI1_client --;
+    if (SAI1_client == 0)
+      {
       /* Peripheral clock disable */
-      __HAL_RCC_SAI1_CLK_DISABLE();
+       __HAL_RCC_SAI1_CLK_DISABLE();
       HAL_NVIC_DisableIRQ(SAI1_IRQn);
-    }
+      }
 
     /**SAI1_A_Block_A GPIO Configuration
     PB2     ------> SAI1_SD_A
@@ -209,16 +210,16 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef *saiHandle)
 
     HAL_DMA_DeInit(saiHandle->hdmarx);
     HAL_DMA_DeInit(saiHandle->hdmatx);
-  }
-  if (saiHandle->Instance == SAI1_Block_B)
-  {
-    SAI1_client--;
-    if (SAI1_client == 0)
+    }
+    if(saiHandle->Instance==SAI1_Block_B)
     {
+    SAI1_client --;
+      if (SAI1_client == 0)
+      {
       /* Peripheral clock disable */
       __HAL_RCC_SAI1_CLK_DISABLE();
       HAL_NVIC_DisableIRQ(SAI1_IRQn);
-    }
+      }
 
     /**SAI1_B_Block_B GPIO Configuration
     PE3     ------> SAI1_SD_B
@@ -228,18 +229,17 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef *saiHandle)
     */
     HAL_GPIO_DeInit(_AUDIO_CODEC_SAI_SD_OUT_GPIO_Port, _AUDIO_CODEC_SAI_SD_OUT_Pin);
 
-    HAL_GPIO_DeInit(GPIOF, _AUDIO_CODEC_SAI_MCLK_Pin | _AUDIO_CODEC_SAI_SCK_Pin | _AUDIO_CODEC_SAI_FS_Pin);
+    HAL_GPIO_DeInit(GPIOF, _AUDIO_CODEC_SAI_MCLK_Pin|_AUDIO_CODEC_SAI_SCK_Pin|_AUDIO_CODEC_SAI_FS_Pin);
 
     HAL_DMA_DeInit(saiHandle->hdmarx);
     HAL_DMA_DeInit(saiHandle->hdmatx);
-  }
+    }
 }
 
 /**
- * @}
- */
+  * @}
+  */
 
 /**
- * @}
- */
-#endif // defined(ARDUINO_KLST_PANDA) // TODO this will not persist after regeneration
+  * @}
+  */

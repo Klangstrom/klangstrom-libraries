@@ -110,25 +110,26 @@ void MX_DFSDM1_Init(void)
   /* USER CODE BEGIN DFSDM1_Init 2 */
 
   /* USER CODE END DFSDM1_Init 2 */
+
 }
 
-static uint32_t HAL_RCC_DFSDM1_CLK_ENABLED = 0;
+static uint32_t HAL_RCC_DFSDM1_CLK_ENABLED=0;
 
 static uint32_t DFSDM1_Init = 0;
 
-void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
+void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef* dfsdm_filterHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if (DFSDM1_Init == 0)
+  if(DFSDM1_Init == 0)
   {
-    /* USER CODE BEGIN DFSDM1_MspInit 0 */
+  /* USER CODE BEGIN DFSDM1_MspInit 0 */
 
-    /* USER CODE END DFSDM1_MspInit 0 */
+  /* USER CODE END DFSDM1_MspInit 0 */
 
-    /** Initializes the peripherals clock
-     */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_DFSDM1;
     PeriphClkInitStruct.Dfsdm1ClockSelection = RCC_DFSDM1CLKSOURCE_D2PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -138,8 +139,7 @@ void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
 
     /* DFSDM1 clock enable */
     HAL_RCC_DFSDM1_CLK_ENABLED++;
-    if (HAL_RCC_DFSDM1_CLK_ENABLED == 1)
-    {
+    if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
       __HAL_RCC_DFSDM1_CLK_ENABLE();
     }
 
@@ -162,16 +162,15 @@ void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
     GPIO_InitStruct.Alternate = GPIO_AF3_DFSDM1;
     HAL_GPIO_Init(_AUDIO_MIC_DATA_GPIO_Port, &GPIO_InitStruct);
 
-    /* USER CODE BEGIN DFSDM1_MspInit 1 */
+  /* USER CODE BEGIN DFSDM1_MspInit 1 */
 
-    /* USER CODE END DFSDM1_MspInit 1 */
-    DFSDM1_Init++;
+  /* USER CODE END DFSDM1_MspInit 1 */
+  DFSDM1_Init++;
   }
 
-  /* DFSDM1 DMA Init */
-  /* DFSDM1_FLT0 Init */
-  if (dfsdm_filterHandle->Instance == DFSDM1_Filter0)
-  {
+    /* DFSDM1 DMA Init */
+    /* DFSDM1_FLT0 Init */
+  if(dfsdm_filterHandle->Instance == DFSDM1_Filter0){
     hdma_dfsdm1_flt0.Instance = DMA2_Stream0;
     hdma_dfsdm1_flt0.Init.Request = DMA_REQUEST_DFSDM1_FLT0;
     hdma_dfsdm1_flt0.Init.Direction = DMA_PERIPH_TO_MEMORY;
@@ -189,13 +188,12 @@ void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(dfsdm_filterHandle, hdmaInj, hdma_dfsdm1_flt0);
-    __HAL_LINKDMA(dfsdm_filterHandle, hdmaReg, hdma_dfsdm1_flt0);
+    __HAL_LINKDMA(dfsdm_filterHandle,hdmaInj,hdma_dfsdm1_flt0);
+    __HAL_LINKDMA(dfsdm_filterHandle,hdmaReg,hdma_dfsdm1_flt0);
   }
 
-  /* DFSDM1_FLT1 Init */
-  if (dfsdm_filterHandle->Instance == DFSDM1_Filter1)
-  {
+    /* DFSDM1_FLT1 Init */
+  if(dfsdm_filterHandle->Instance == DFSDM1_Filter1){
     hdma_dfsdm1_flt1.Instance = DMA2_Stream1;
     hdma_dfsdm1_flt1.Init.Request = DMA_REQUEST_DFSDM1_FLT1;
     hdma_dfsdm1_flt1.Init.Direction = DMA_PERIPH_TO_MEMORY;
@@ -213,24 +211,25 @@ void HAL_DFSDM_FilterMspInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
 
     /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
-    __HAL_LINKDMA(dfsdm_filterHandle, hdmaInj, hdma_dfsdm1_flt1);
-    __HAL_LINKDMA(dfsdm_filterHandle, hdmaReg, hdma_dfsdm1_flt1);
+    __HAL_LINKDMA(dfsdm_filterHandle,hdmaInj,hdma_dfsdm1_flt1);
+    __HAL_LINKDMA(dfsdm_filterHandle,hdmaReg,hdma_dfsdm1_flt1);
   }
+
 }
 
-void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef *dfsdm_channelHandle)
+void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef* dfsdm_channelHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-  if (DFSDM1_Init == 0)
+  if(DFSDM1_Init == 0)
   {
-    /* USER CODE BEGIN DFSDM1_MspInit 0 */
+  /* USER CODE BEGIN DFSDM1_MspInit 0 */
 
-    /* USER CODE END DFSDM1_MspInit 0 */
+  /* USER CODE END DFSDM1_MspInit 0 */
 
-    /** Initializes the peripherals clock
-     */
+  /** Initializes the peripherals clock
+  */
     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_DFSDM1;
     PeriphClkInitStruct.Dfsdm1ClockSelection = RCC_DFSDM1CLKSOURCE_D2PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -240,8 +239,7 @@ void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef *dfsdm_channelHandle)
 
     /* DFSDM1 clock enable */
     HAL_RCC_DFSDM1_CLK_ENABLED++;
-    if (HAL_RCC_DFSDM1_CLK_ENABLED == 1)
-    {
+    if(HAL_RCC_DFSDM1_CLK_ENABLED==1){
       __HAL_RCC_DFSDM1_CLK_ENABLE();
     }
 
@@ -264,22 +262,22 @@ void HAL_DFSDM_ChannelMspInit(DFSDM_Channel_HandleTypeDef *dfsdm_channelHandle)
     GPIO_InitStruct.Alternate = GPIO_AF3_DFSDM1;
     HAL_GPIO_Init(_AUDIO_MIC_DATA_GPIO_Port, &GPIO_InitStruct);
 
-    /* USER CODE BEGIN DFSDM1_MspInit 1 */
+  /* USER CODE BEGIN DFSDM1_MspInit 1 */
 
-    /* USER CODE END DFSDM1_MspInit 1 */
-    DFSDM1_Init++;
+  /* USER CODE END DFSDM1_MspInit 1 */
+  DFSDM1_Init++;
   }
 }
 
-void HAL_DFSDM_FilterMspDeInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
+void HAL_DFSDM_FilterMspDeInit(DFSDM_Filter_HandleTypeDef* dfsdm_filterHandle)
 {
 
-  DFSDM1_Init--;
-  if (DFSDM1_Init == 0)
-  {
-    /* USER CODE BEGIN DFSDM1_MspDeInit 0 */
+  DFSDM1_Init-- ;
+  if(DFSDM1_Init == 0)
+    {
+  /* USER CODE BEGIN DFSDM1_MspDeInit 0 */
 
-    /* USER CODE END DFSDM1_MspDeInit 0 */
+  /* USER CODE END DFSDM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DFSDM1_CLK_DISABLE();
 
@@ -287,27 +285,27 @@ void HAL_DFSDM_FilterMspDeInit(DFSDM_Filter_HandleTypeDef *dfsdm_filterHandle)
     PC2_C     ------> DFSDM1_CKOUT
     PC3_C     ------> DFSDM1_DATIN1
     */
-    HAL_GPIO_DeInit(GPIOC, _AUDIO_MIC_CLK_Pin | _AUDIO_MIC_DATA_Pin);
+    HAL_GPIO_DeInit(GPIOC, _AUDIO_MIC_CLK_Pin|_AUDIO_MIC_DATA_Pin);
 
     /* DFSDM1 DMA DeInit */
     HAL_DMA_DeInit(dfsdm_filterHandle->hdmaInj);
     HAL_DMA_DeInit(dfsdm_filterHandle->hdmaReg);
 
-    /* USER CODE BEGIN DFSDM1_MspDeInit 1 */
+  /* USER CODE BEGIN DFSDM1_MspDeInit 1 */
 
-    /* USER CODE END DFSDM1_MspDeInit 1 */
+  /* USER CODE END DFSDM1_MspDeInit 1 */
   }
 }
 
-void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef *dfsdm_channelHandle)
+void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef* dfsdm_channelHandle)
 {
 
-  DFSDM1_Init--;
-  if (DFSDM1_Init == 0)
-  {
-    /* USER CODE BEGIN DFSDM1_MspDeInit 0 */
+  DFSDM1_Init-- ;
+  if(DFSDM1_Init == 0)
+    {
+  /* USER CODE BEGIN DFSDM1_MspDeInit 0 */
 
-    /* USER CODE END DFSDM1_MspDeInit 0 */
+  /* USER CODE END DFSDM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DFSDM1_CLK_DISABLE();
 
@@ -315,11 +313,11 @@ void HAL_DFSDM_ChannelMspDeInit(DFSDM_Channel_HandleTypeDef *dfsdm_channelHandle
     PC2_C     ------> DFSDM1_CKOUT
     PC3_C     ------> DFSDM1_DATIN1
     */
-    HAL_GPIO_DeInit(GPIOC, _AUDIO_MIC_CLK_Pin | _AUDIO_MIC_DATA_Pin);
+    HAL_GPIO_DeInit(GPIOC, _AUDIO_MIC_CLK_Pin|_AUDIO_MIC_DATA_Pin);
 
-    /* USER CODE BEGIN DFSDM1_MspDeInit 1 */
+  /* USER CODE BEGIN DFSDM1_MspDeInit 1 */
 
-    /* USER CODE END DFSDM1_MspDeInit 1 */
+  /* USER CODE END DFSDM1_MspDeInit 1 */
   }
 }
 

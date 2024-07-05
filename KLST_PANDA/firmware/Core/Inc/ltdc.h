@@ -22,8 +22,7 @@
 #define __LTDC_H__
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -32,22 +31,23 @@ extern "C"
 /* USER CODE BEGIN Includes */
 #include "KlangstromEnvironment.h"
 #if defined(KLST_PANDA_STM32)
-  /* USER CODE END Includes */
+/* USER CODE END Includes */
 
-  extern LTDC_HandleTypeDef hltdc;
+extern LTDC_HandleTypeDef hltdc;
 
-  /* USER CODE BEGIN Private defines */
+/* USER CODE BEGIN Private defines */
 
-  /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
-  void MX_LTDC_Init(void);
+void MX_LTDC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 #endif // defined(ARDUINO_KLST_PANDA)
-  /* USER CODE END Prototypes */
+/* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __LTDC_H__ */
+
