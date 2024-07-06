@@ -93,8 +93,7 @@ void MX_USB_HOST_Process(void);
 #define KLST_OMIT_MAIN
 #ifdef KLST_OMIT_MAIN
 static void _empty_main(void) __attribute__((unused));
-static void _empty_main()
-{
+static void _empty_main() {
 #else
 /* USER CODE END 0 */
 
@@ -155,13 +154,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+    while (1) {
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
-  }
+    }
 #endif // KLST_OMIT_MAIN
   /* USER CODE END 3 */
 }
@@ -305,12 +303,11 @@ void MPU_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  printf(":(\r\n");
-  /* User can add their own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+    printf(":(\r\n");
+    /* User can add their own implementation to report the HAL error return state */
+    __disable_irq();
+    while (1) {
+    }
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -325,7 +322,7 @@ void Error_Handler(void)
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+    /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }

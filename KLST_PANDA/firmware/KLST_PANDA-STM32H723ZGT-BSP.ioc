@@ -1385,3 +1385,4 @@ VP_SYS_VS_Systick.Signal=SYS_VS_Systick
 VP_USB_HOST_VS_USB_HOST_HID_HS.Mode=HID_HS
 VP_USB_HOST_VS_USB_HOST_HID_HS.Signal=USB_HOST_VS_USB_HOST_HID_HS
 board=custom
+isbadioc=false

@@ -96,9 +96,8 @@ void NMI_Handler(void)
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-  while (1)
-  {
-  }
+    while (1) {
+    }
   /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
@@ -197,7 +196,7 @@ void PendSV_Handler(void)
 
   /* USER CODE END PendSV_IRQn 0 */
   /* USER CODE BEGIN PendSV_IRQn 1 */
-  // NOTE this only works if `PendSV_Handler` is locate above `SysTick_Handler`
+    // NOTE this only works if `PendSV_Handler` is locate above `SysTick_Handler`
 #if !defined(ARDUINO_KLST_PANDA)
   /* USER CODE END PendSV_IRQn 1 */
 }
