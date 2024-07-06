@@ -2046,7 +2046,7 @@ static void get_xdir_info(
         if (di >= _MAX_LFN) {
             di = 0;
             break;
-        }                   /* Buffer overflow --> inaccessible object name */
+        } /* Buffer overflow --> inaccessible object name */
         fno->fname[di] = w; /* Store it */
     }
 #else
@@ -2405,7 +2405,7 @@ static FRESULT dir_find(        /* FR_OK(0):succeeded, !=0:error */
         if (c == 0) {
             res = FR_NO_FILE;
             break;
-        }         /* Reached to end of table */
+        } /* Reached to end of table */
 #if _USE_LFN != 0 /* LFN configuration */
         dp->obj.attr = a = dp->dir[DIR_Attr] & AM_MASK;
         if (c == DDEM || ((a & AM_VOL) && a != AM_LFN)) { /* An entry without valid data */
@@ -2658,7 +2658,7 @@ static void get_fileinfo(             /* No return code */
                 if (w == 0) {
                     i = 0;
                     break;
-                }                          /* No LFN if it could not be converted */
+                } /* No LFN if it could not be converted */
                 if (_DF1S && w >= 0x100) { /* Put 1st byte if it is a DBC (always false at SBCS cfg) */
                     fno->fname[i++] = (char) (w >> 8);
                 }
