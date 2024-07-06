@@ -15,7 +15,6 @@
   *
   ******************************************************************************
 */
-#if defined(ARDUINO_KLST_PANDA)
 /* USER CODE END Header */
 #include "fatfs_platform.h"
 
@@ -30,4 +29,3 @@ uint8_t BSP_PlatformIsDetected(void) {
     /* USER CODE END 1 */
     return status;
 }
-#endif // defined(ARDUINO_KLST_PANDA)

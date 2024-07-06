@@ -44,7 +44,7 @@ void MX_ADC1_Init(void) {
     /* USER CODE END ADC1_Init 1 */
 
     /** Common config
-   */
+  */
     hadc1.Instance                      = ADC1;
     hadc1.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV4;
     hadc1.Init.Resolution               = ADC_RESOLUTION_16B;
@@ -60,19 +60,20 @@ void MX_ADC1_Init(void) {
     hadc1.Init.Overrun                  = ADC_OVR_DATA_PRESERVED;
     hadc1.Init.LeftBitShift             = ADC_LEFTBITSHIFT_NONE;
     hadc1.Init.OversamplingMode         = DISABLE;
+    hadc1.Init.Oversampling.Ratio       = 1;
     if (HAL_ADC_Init(&hadc1) != HAL_OK) {
         Error_Handler();
     }
 
     /** Configure the ADC multi-mode
-   */
+  */
     multimode.Mode = ADC_MODE_INDEPENDENT;
     if (HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode) != HAL_OK) {
         Error_Handler();
     }
 
     /** Configure Regular Channel
-   */
+  */
     sConfig.Channel                = ADC_CHANNEL_2;
     sConfig.Rank                   = ADC_REGULAR_RANK_1;
     sConfig.SamplingTime           = ADC_SAMPLETIME_1CYCLE_5;
@@ -101,7 +102,7 @@ void MX_ADC2_Init(void) {
     /* USER CODE END ADC2_Init 1 */
 
     /** Common config
-   */
+  */
     hadc2.Instance                      = ADC2;
     hadc2.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV4;
     hadc2.Init.Resolution               = ADC_RESOLUTION_16B;
@@ -117,12 +118,13 @@ void MX_ADC2_Init(void) {
     hadc2.Init.Overrun                  = ADC_OVR_DATA_PRESERVED;
     hadc2.Init.LeftBitShift             = ADC_LEFTBITSHIFT_NONE;
     hadc2.Init.OversamplingMode         = DISABLE;
+    hadc2.Init.Oversampling.Ratio       = 1;
     if (HAL_ADC_Init(&hadc2) != HAL_OK) {
         Error_Handler();
     }
 
     /** Configure Regular Channel
-   */
+  */
     sConfig.Channel                = ADC_CHANNEL_2;
     sConfig.Rank                   = ADC_REGULAR_RANK_1;
     sConfig.SamplingTime           = ADC_SAMPLETIME_1CYCLE_5;
@@ -151,7 +153,7 @@ void MX_ADC3_Init(void) {
     /* USER CODE END ADC3_Init 1 */
 
     /** Common config
-   */
+  */
     hadc3.Instance                      = ADC3;
     hadc3.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV1;
     hadc3.Init.Resolution               = ADC_RESOLUTION_12B;
@@ -170,12 +172,13 @@ void MX_ADC3_Init(void) {
     hadc3.Init.Overrun                  = ADC_OVR_DATA_PRESERVED;
     hadc3.Init.LeftBitShift             = ADC_LEFTBITSHIFT_NONE;
     hadc3.Init.OversamplingMode         = DISABLE;
+    hadc3.Init.Oversampling.Ratio       = ADC3_OVERSAMPLING_RATIO_2;
     if (HAL_ADC_Init(&hadc3) != HAL_OK) {
         Error_Handler();
     }
 
     /** Configure Regular Channel
-   */
+  */
     sConfig.Channel      = ADC_CHANNEL_4;
     sConfig.Rank         = ADC_REGULAR_RANK_1;
     sConfig.SamplingTime = ADC3_SAMPLETIME_2CYCLES_5;
@@ -203,7 +206,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle) {
         /* USER CODE END ADC1_MspInit 0 */
 
         /** Initializes the peripherals clock
-     */
+  */
         PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
         PeriphClkInitStruct.AdcClockSelection    = RCC_ADCCLKSOURCE_CLKP;
         if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
@@ -234,7 +237,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle) {
         /* USER CODE END ADC2_MspInit 0 */
 
         /** Initializes the peripherals clock
-     */
+  */
         PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
         PeriphClkInitStruct.AdcClockSelection    = RCC_ADCCLKSOURCE_CLKP;
         if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
@@ -265,7 +268,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle) {
         /* USER CODE END ADC3_MspInit 0 */
 
         /** Initializes the peripherals clock
-     */
+  */
         PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_ADC;
         PeriphClkInitStruct.AdcClockSelection    = RCC_ADCCLKSOURCE_CLKP;
         if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {

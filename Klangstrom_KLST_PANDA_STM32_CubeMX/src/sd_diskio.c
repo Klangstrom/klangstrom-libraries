@@ -15,7 +15,6 @@
   *
   ******************************************************************************
   */
-#if defined(ARDUINO_KLST_PANDA)
 /* USER CODE END Header */
 
 /* Note: code generation based on sd_diskio_dma_template_bspv1.c v2.1.4
@@ -476,5 +475,4 @@ void BSP_SD_ErrorCallback(void)
 
 /* USER CODE BEGIN lastSection */
 /* can be used to modify / undefine previous code or add new code */
-#endif // defined(ARDUINO_KLST_PANDA)
 /* USER CODE END lastSection */

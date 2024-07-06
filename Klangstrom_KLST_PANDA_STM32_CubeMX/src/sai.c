@@ -221,10 +221,13 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* saiHandle) {
 }
 
 /**
- * @}
- */
+  * @}
+  */
 
 /**
- * @}
- */
-#endif // defined(ARDUINO_KLST_PANDA) // TODO this will not persist after regeneration
+  * @}
+  */
+
+/* USER CODE BEGIN 1 */
+#endif // defined(KLST_PANDA_STM32)
+/* USER CODE END 1 */

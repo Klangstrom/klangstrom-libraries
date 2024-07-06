@@ -89,7 +89,7 @@ void HAL_OSPI_MspInit(OSPI_HandleTypeDef* ospiHandle) {
         /* USER CODE END OCTOSPI1_MspInit 0 */
 
         /** Initializes the peripherals clock
-     */
+  */
         PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_OSPI;
         PeriphClkInitStruct.PLL2.PLL2M           = 2;
         PeriphClkInitStruct.PLL2.PLL2N           = 75;

@@ -43,7 +43,7 @@ void MX_DMA2D_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 #endif // defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END Prototypes */
+/* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }

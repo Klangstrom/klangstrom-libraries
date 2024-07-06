@@ -15,7 +15,6 @@
   *
   ******************************************************************************
   */
-#if defined(ARDUINO_KLST_PANDA)
 /* USER CODE END Header */
 #include "fatfs.h"
 
@@ -49,5 +48,5 @@ DWORD get_fattime(void) {
 }
 
 /* USER CODE BEGIN Application */
-#endif // defined(ARDUINO_KLST_PANDA)
+
 /* USER CODE END Application */

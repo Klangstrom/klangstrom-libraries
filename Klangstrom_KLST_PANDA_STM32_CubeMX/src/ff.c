@@ -1,5 +1,3 @@
-#if defined(ARDUINO_KLST_PANDA)
-
 /*----------------------------------------------------------------------------/
 /  FatFs - Generic FAT file system module  R0.12c                             /
 /-----------------------------------------------------------------------------/
@@ -74,7 +72,7 @@
 #define _DS2E 0xFE
 
 #elif _CODE_PAGE == 437 /* U.S. */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x45, 0x41, 0x8E, 0x41, 0x8F, 0x80, 0x45, 0x45, 0x45, 0x49, 0x49, 0x49, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0x4F, 0x99, 0x4F, 0x55, 0x55, 0x59, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x41, 0x49, 0x4F, 0x55, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -85,7 +83,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 720 /* Arabic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -96,7 +94,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 737 /* Greek */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, \
                 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, 0x90, 0x91, 0xAA, 0x92, 0x93, 0x94, 0x95, 0x96, \
@@ -107,7 +105,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 771 /* KBL */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
@@ -118,7 +116,7 @@
                 0xF0, 0xF0, 0xF2, 0xF2, 0xF4, 0xF4, 0xF6, 0xF6, 0xF8, 0xF8, 0xFA, 0xFA, 0xFC, 0xFC, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 775 /* Baltic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x91, 0xA0, 0x8E, 0x95, 0x8F, 0x80, 0xAD, 0xED, 0x8A, 0x8A, 0xA1, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0xE2, 0x99, 0x95, 0x96, 0x97, 0x97, 0x99, 0x9A, 0x9D, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0xA0, 0xA1, 0xE0, 0xA3, 0xA3, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -129,7 +127,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 850 /* Latin 1 */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x43, 0x55, 0x45, 0x41, 0x41, 0x41, 0x41, 0x43, 0x45, 0x45, 0x45, 0x49, 0x49, 0x49, 0x41, 0x41, \
                 0x45, 0x92, 0x92, 0x4F, 0x4F, 0x4F, 0x55, 0x55, 0x59, 0x4F, 0x55, 0x4F, 0x9C, 0x4F, 0x9E, 0x9F, \
                 0x41, 0x49, 0x4F, 0x55, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -140,7 +138,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 852 /* Latin 2 */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x90, 0xB6, 0x8E, 0xDE, 0x8F, 0x80, 0x9D, 0xD3, 0x8A, 0x8A, 0xD7, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x91, 0xE2, 0x99, 0x95, 0x95, 0x97, 0x97, 0x99, 0x9A, 0x9B, 0x9B, 0x9D, 0x9E, 0xAC, \
                 0xB5, 0xD6, 0xE0, 0xE9, 0xA4, 0xA4, 0xA6, 0xA6, 0xA8, 0xA8, 0xAA, 0x8D, 0xAC, 0xB8, 0xAE, 0xAF, \
@@ -151,7 +149,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xEB, 0xFC, 0xFC, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 855 /* Cyrillic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x81, 0x81, 0x83, 0x83, 0x85, 0x85, 0x87, 0x87, 0x89, 0x89, 0x8B, 0x8B, 0x8D, 0x8D, 0x8F, 0x8F, \
                 0x91, 0x91, 0x93, 0x93, 0x95, 0x95, 0x97, 0x97, 0x99, 0x99, 0x9B, 0x9B, 0x9D, 0x9D, 0x9F, 0x9F, \
                 0xA1, 0xA1, 0xA3, 0xA3, 0xA5, 0xA5, 0xA7, 0xA7, 0xA9, 0xA9, 0xAB, 0xAB, 0xAD, 0xAD, 0xAE, 0xAF, \
@@ -162,7 +160,7 @@
                 0xF0, 0xF2, 0xF2, 0xF4, 0xF4, 0xF6, 0xF6, 0xF8, 0xF8, 0xFA, 0xFA, 0xFC, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 857 /* Turkish */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x90, 0xB6, 0x8E, 0xB7, 0x8F, 0x80, 0xD2, 0xD3, 0xD4, 0xD8, 0xD7, 0x49, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0xE2, 0x99, 0xE3, 0xEA, 0xEB, 0x98, 0x99, 0x9A, 0x9D, 0x9C, 0x9D, 0x9E, 0x9E, \
                 0xB5, 0xD6, 0xE0, 0xE9, 0xA5, 0xA5, 0xA6, 0xA6, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -173,7 +171,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 860 /* Portuguese */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x90, 0x8F, 0x8E, 0x91, 0x86, 0x80, 0x89, 0x89, 0x92, 0x8B, 0x8C, 0x98, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x8C, 0x99, 0xA9, 0x96, 0x9D, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x86, 0x8B, 0x9F, 0x96, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -184,7 +182,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 861 /* Icelandic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x90, 0x41, 0x8E, 0x41, 0x8F, 0x80, 0x45, 0x45, 0x45, 0x8B, 0x8B, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0x4F, 0x99, 0x8D, 0x55, 0x97, 0x97, 0x99, 0x9A, 0x9D, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0xA4, 0xA5, 0xA6, 0xA7, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -195,7 +193,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 862 /* Hebrew */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x41, 0x49, 0x4F, 0x55, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -206,7 +204,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 863 /* Canadian-French */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x43, 0x55, 0x45, 0x41, 0x41, 0x41, 0x86, 0x43, 0x45, 0x45, 0x45, 0x49, 0x49, 0x8D, 0x41, 0x8F, \
                 0x45, 0x45, 0x45, 0x4F, 0x45, 0x49, 0x55, 0x55, 0x98, 0x4F, 0x55, 0x9B, 0x9C, 0x55, 0x55, 0x9F, \
                 0xA0, 0xA1, 0x4F, 0x55, 0xA4, 0xA5, 0xA6, 0xA7, 0x49, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -217,7 +215,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 864 /* Arabic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x45, 0x41, 0x8E, 0x41, 0x8F, 0x80, 0x45, 0x45, 0x45, 0x49, 0x49, 0x49, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0x4F, 0x99, 0x4F, 0x55, 0x55, 0x59, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x41, 0x49, 0x4F, 0x55, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -228,7 +226,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 865 /* Nordic */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x9A, 0x90, 0x41, 0x8E, 0x41, 0x8F, 0x80, 0x45, 0x45, 0x45, 0x49, 0x49, 0x49, 0x8E, 0x8F, \
                 0x90, 0x92, 0x92, 0x4F, 0x99, 0x4F, 0x55, 0x55, 0x59, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x41, 0x49, 0x4F, 0x55, 0xA5, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -239,7 +237,7 @@
                 0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5, 0xF6, 0xF7, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 866 /* Russian */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x9B, 0x9C, 0x9D, 0x9E, 0x9F, \
                 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
@@ -250,7 +248,7 @@
                 0xF0, 0xF0, 0xF2, 0xF2, 0xF4, 0xF4, 0xF6, 0xF6, 0xF8, 0xF9, 0xFA, 0xFB, 0xFC, 0xFD, 0xFE, 0xFF}
 
 #elif _CODE_PAGE == 869 /* Greek 2 */
-#define _DF1S 0
+#define _DF1S  0
 #define _EXCVT {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, \
                 0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9A, 0x86, 0x9C, 0x8D, 0x8F, 0x90, \
                 0x91, 0x90, 0x92, 0x95, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, \
@@ -300,157 +298,157 @@
 
 
 /* Additional file attribute bits for internal use */
-#define AM_VOL 0x08  /* Volume label */
-#define AM_LFN 0x0F  /* LFN entry */
+#define AM_VOL  0x08 /* Volume label */
+#define AM_LFN  0x0F /* LFN entry */
 #define AM_MASK 0x3F /* Mask of defined bits */
 
 
 /* Additional file access control and file status flags for internal use */
-#define FA_SEEKEND 0x20  /* Seek to end of the file on file open */
+#define FA_SEEKEND  0x20 /* Seek to end of the file on file open */
 #define FA_MODIFIED 0x40 /* File has been modified */
-#define FA_DIRTY 0x80    /* FIL.buf[] needs to be written-back */
+#define FA_DIRTY    0x80 /* FIL.buf[] needs to be written-back */
 
 
 /* Name status flags in fn[] */
-#define NSFLAG 11      /* Index of the name status byte */
-#define NS_LOSS 0x01   /* Out of 8.3 format */
-#define NS_LFN 0x02    /* Force to create LFN entry */
-#define NS_LAST 0x04   /* Last segment */
-#define NS_BODY 0x08   /* Lower case flag (body) */
-#define NS_EXT 0x10    /* Lower case flag (ext) */
-#define NS_DOT 0x20    /* Dot entry */
-#define NS_NOLFN 0x40  /* Do not find LFN */
+#define NSFLAG    11   /* Index of the name status byte */
+#define NS_LOSS   0x01 /* Out of 8.3 format */
+#define NS_LFN    0x02 /* Force to create LFN entry */
+#define NS_LAST   0x04 /* Last segment */
+#define NS_BODY   0x08 /* Lower case flag (body) */
+#define NS_EXT    0x10 /* Lower case flag (ext) */
+#define NS_DOT    0x20 /* Dot entry */
+#define NS_NOLFN  0x40 /* Do not find LFN */
 #define NS_NONAME 0x80 /* Not followed */
 
 
 /* Limits and boundaries */
-#define MAX_DIR 0x200000      /* Max size of FAT directory */
+#define MAX_DIR    0x200000   /* Max size of FAT directory */
 #define MAX_DIR_EX 0x10000000 /* Max size of exFAT directory */
-#define MAX_FAT12 0xFF5       /* Max FAT12 clusters (differs from specs, but correct for real DOS/Windows behavior) */
-#define MAX_FAT16 0xFFF5      /* Max FAT16 clusters (differs from specs, but correct for real DOS/Windows behavior) */
-#define MAX_FAT32 0x0FFFFFF5  /* Max FAT32 clusters (not specified, practical limit) */
-#define MAX_EXFAT 0x7FFFFFFD  /* Max exFAT clusters (differs from specs, implementation limit) */
+#define MAX_FAT12  0xFF5      /* Max FAT12 clusters (differs from specs, but correct for real DOS/Windows behavior) */
+#define MAX_FAT16  0xFFF5     /* Max FAT16 clusters (differs from specs, but correct for real DOS/Windows behavior) */
+#define MAX_FAT32  0x0FFFFFF5 /* Max FAT32 clusters (not specified, practical limit) */
+#define MAX_EXFAT  0x7FFFFFFD /* Max exFAT clusters (differs from specs, implementation limit) */
 
 
 /* FatFs refers the FAT structure as simple byte array instead of structure member
 / because the C structure is not binary compatible between different platforms */
 
-#define BS_JmpBoot 0      /* x86 jump instruction (3-byte) */
-#define BS_OEMName 3      /* OEM name (8-byte) */
-#define BPB_BytsPerSec 11 /* Sector size [byte] (WORD) */
-#define BPB_SecPerClus 13 /* Cluster size [sector] (BYTE) */
-#define BPB_RsvdSecCnt 14 /* Size of reserved area [sector] (WORD) */
-#define BPB_NumFATs 16    /* Number of FATs (BYTE) */
-#define BPB_RootEntCnt 17 /* Size of root directory area for FAT12/16 [entry] (WORD) */
-#define BPB_TotSec16 19   /* Volume size (16-bit) [sector] (WORD) */
-#define BPB_Media 21      /* Media descriptor byte (BYTE) */
-#define BPB_FATSz16 22    /* FAT size (16-bit) [sector] (WORD) */
-#define BPB_SecPerTrk 24  /* Track size for int13h [sector] (WORD) */
-#define BPB_NumHeads 26   /* Number of heads for int13h (WORD) */
-#define BPB_HiddSec 28    /* Volume offset from top of the drive (DWORD) */
-#define BPB_TotSec32 32   /* Volume size (32-bit) [sector] (DWORD) */
-#define BS_DrvNum 36      /* Physical drive number for int13h (BYTE) */
-#define BS_NTres 37       /* Error flag (BYTE) */
-#define BS_BootSig 38     /* Extended boot signature (BYTE) */
-#define BS_VolID 39       /* Volume serial number (DWORD) */
-#define BS_VolLab 43      /* Volume label string (8-byte) */
-#define BS_FilSysType 54  /* File system type string (8-byte) */
-#define BS_BootCode 62    /* Boot code (448-byte) */
-#define BS_55AA 510       /* Signature word (WORD) */
+#define BS_JmpBoot     0   /* x86 jump instruction (3-byte) */
+#define BS_OEMName     3   /* OEM name (8-byte) */
+#define BPB_BytsPerSec 11  /* Sector size [byte] (WORD) */
+#define BPB_SecPerClus 13  /* Cluster size [sector] (BYTE) */
+#define BPB_RsvdSecCnt 14  /* Size of reserved area [sector] (WORD) */
+#define BPB_NumFATs    16  /* Number of FATs (BYTE) */
+#define BPB_RootEntCnt 17  /* Size of root directory area for FAT12/16 [entry] (WORD) */
+#define BPB_TotSec16   19  /* Volume size (16-bit) [sector] (WORD) */
+#define BPB_Media      21  /* Media descriptor byte (BYTE) */
+#define BPB_FATSz16    22  /* FAT size (16-bit) [sector] (WORD) */
+#define BPB_SecPerTrk  24  /* Track size for int13h [sector] (WORD) */
+#define BPB_NumHeads   26  /* Number of heads for int13h (WORD) */
+#define BPB_HiddSec    28  /* Volume offset from top of the drive (DWORD) */
+#define BPB_TotSec32   32  /* Volume size (32-bit) [sector] (DWORD) */
+#define BS_DrvNum      36  /* Physical drive number for int13h (BYTE) */
+#define BS_NTres       37  /* Error flag (BYTE) */
+#define BS_BootSig     38  /* Extended boot signature (BYTE) */
+#define BS_VolID       39  /* Volume serial number (DWORD) */
+#define BS_VolLab      43  /* Volume label string (8-byte) */
+#define BS_FilSysType  54  /* File system type string (8-byte) */
+#define BS_BootCode    62  /* Boot code (448-byte) */
+#define BS_55AA        510 /* Signature word (WORD) */
 
-#define BPB_FATSz32 36     /* FAT32: FAT size [sector] (DWORD) */
-#define BPB_ExtFlags32 40  /* FAT32: Extended flags (WORD) */
-#define BPB_FSVer32 42     /* FAT32: File system version (WORD) */
-#define BPB_RootClus32 44  /* FAT32: Root directory cluster (DWORD) */
-#define BPB_FSInfo32 48    /* FAT32: Offset of FSINFO sector (WORD) */
+#define BPB_FATSz32     36 /* FAT32: FAT size [sector] (DWORD) */
+#define BPB_ExtFlags32  40 /* FAT32: Extended flags (WORD) */
+#define BPB_FSVer32     42 /* FAT32: File system version (WORD) */
+#define BPB_RootClus32  44 /* FAT32: Root directory cluster (DWORD) */
+#define BPB_FSInfo32    48 /* FAT32: Offset of FSINFO sector (WORD) */
 #define BPB_BkBootSec32 50 /* FAT32: Offset of backup boot sector (WORD) */
-#define BS_DrvNum32 64     /* FAT32: Physical drive number for int13h (BYTE) */
-#define BS_NTres32 65      /* FAT32: Error flag (BYTE) */
-#define BS_BootSig32 66    /* FAT32: Extended boot signature (BYTE) */
-#define BS_VolID32 67      /* FAT32: Volume serial number (DWORD) */
-#define BS_VolLab32 71     /* FAT32: Volume label string (8-byte) */
+#define BS_DrvNum32     64 /* FAT32: Physical drive number for int13h (BYTE) */
+#define BS_NTres32      65 /* FAT32: Error flag (BYTE) */
+#define BS_BootSig32    66 /* FAT32: Extended boot signature (BYTE) */
+#define BS_VolID32      67 /* FAT32: Volume serial number (DWORD) */
+#define BS_VolLab32     71 /* FAT32: Volume label string (8-byte) */
 #define BS_FilSysType32 82 /* FAT32: File system type string (8-byte) */
-#define BS_BootCode32 90   /* FAT32: Boot code (420-byte) */
+#define BS_BootCode32   90 /* FAT32: Boot code (420-byte) */
 
-#define BPB_ZeroedEx 11      /* exFAT: MBZ field (53-byte) */
-#define BPB_VolOfsEx 64      /* exFAT: Volume offset from top of the drive [sector] (QWORD) */
-#define BPB_TotSecEx 72      /* exFAT: Volume size [sector] (QWORD) */
-#define BPB_FatOfsEx 80      /* exFAT: FAT offset from top of the volume [sector] (DWORD) */
-#define BPB_FatSzEx 84       /* exFAT: FAT size [sector] (DWORD) */
-#define BPB_DataOfsEx 88     /* exFAT: Data offset from top of the volume [sector] (DWORD) */
-#define BPB_NumClusEx 92     /* exFAT: Number of clusters (DWORD) */
-#define BPB_RootClusEx 96    /* exFAT: Root directory start cluster (DWORD) */
-#define BPB_VolIDEx 100      /* exFAT: Volume serial number (DWORD) */
-#define BPB_FSVerEx 104      /* exFAT: File system version (WORD) */
-#define BPB_VolFlagEx 106    /* exFAT: Volume flags (BYTE) */
-#define BPB_ActFatEx 107     /* exFAT: Active FAT flags (BYTE) */
+#define BPB_ZeroedEx     11  /* exFAT: MBZ field (53-byte) */
+#define BPB_VolOfsEx     64  /* exFAT: Volume offset from top of the drive [sector] (QWORD) */
+#define BPB_TotSecEx     72  /* exFAT: Volume size [sector] (QWORD) */
+#define BPB_FatOfsEx     80  /* exFAT: FAT offset from top of the volume [sector] (DWORD) */
+#define BPB_FatSzEx      84  /* exFAT: FAT size [sector] (DWORD) */
+#define BPB_DataOfsEx    88  /* exFAT: Data offset from top of the volume [sector] (DWORD) */
+#define BPB_NumClusEx    92  /* exFAT: Number of clusters (DWORD) */
+#define BPB_RootClusEx   96  /* exFAT: Root directory start cluster (DWORD) */
+#define BPB_VolIDEx      100 /* exFAT: Volume serial number (DWORD) */
+#define BPB_FSVerEx      104 /* exFAT: File system version (WORD) */
+#define BPB_VolFlagEx    106 /* exFAT: Volume flags (BYTE) */
+#define BPB_ActFatEx     107 /* exFAT: Active FAT flags (BYTE) */
 #define BPB_BytsPerSecEx 108 /* exFAT: Log2 of sector size in unit of byte (BYTE) */
 #define BPB_SecPerClusEx 109 /* exFAT: Log2 of cluster size in unit of sector (BYTE) */
-#define BPB_NumFATsEx 110    /* exFAT: Number of FATs (BYTE) */
-#define BPB_DrvNumEx 111     /* exFAT: Physical drive number for int13h (BYTE) */
-#define BPB_PercInUseEx 112  /* exFAT: Percent in use (BYTE) */
-#define BPB_RsvdEx 113       /* exFAT: Reserved (7-byte) */
-#define BS_BootCodeEx 120    /* exFAT: Boot code (390-byte) */
+#define BPB_NumFATsEx    110 /* exFAT: Number of FATs (BYTE) */
+#define BPB_DrvNumEx     111 /* exFAT: Physical drive number for int13h (BYTE) */
+#define BPB_PercInUseEx  112 /* exFAT: Percent in use (BYTE) */
+#define BPB_RsvdEx       113 /* exFAT: Reserved (7-byte) */
+#define BS_BootCodeEx    120 /* exFAT: Boot code (390-byte) */
 
-#define DIR_Name 0            /* Short file name (11-byte) */
-#define DIR_Attr 11           /* Attribute (BYTE) */
-#define DIR_NTres 12          /* Lower case flag (BYTE) */
-#define DIR_CrtTime10 13      /* Created time sub-second (BYTE) */
-#define DIR_CrtTime 14        /* Created time (DWORD) */
-#define DIR_LstAccDate 18     /* Last accessed date (WORD) */
-#define DIR_FstClusHI 20      /* Higher 16-bit of first cluster (WORD) */
-#define DIR_ModTime 22        /* Modified time (DWORD) */
-#define DIR_FstClusLO 26      /* Lower 16-bit of first cluster (WORD) */
-#define DIR_FileSize 28       /* File size (DWORD) */
-#define LDIR_Ord 0            /* LFN: LFN order and LLE flag (BYTE) */
-#define LDIR_Attr 11          /* LFN: LFN attribute (BYTE) */
-#define LDIR_Type 12          /* LFN: Entry type (BYTE) */
-#define LDIR_Chksum 13        /* LFN: Checksum of the SFN (BYTE) */
-#define LDIR_FstClusLO 26     /* LFN: MBZ field (WORD) */
-#define XDIR_Type 0           /* exFAT: Type of exFAT directory entry (BYTE) */
-#define XDIR_NumLabel 1       /* exFAT: Number of volume label characters (BYTE) */
-#define XDIR_Label 2          /* exFAT: Volume label (11-WORD) */
-#define XDIR_CaseSum 4        /* exFAT: Sum of case conversion table (DWORD) */
-#define XDIR_NumSec 1         /* exFAT: Number of secondary entries (BYTE) */
-#define XDIR_SetSum 2         /* exFAT: Sum of the set of directory entries (WORD) */
-#define XDIR_Attr 4           /* exFAT: File attribute (WORD) */
-#define XDIR_CrtTime 8        /* exFAT: Created time (DWORD) */
-#define XDIR_ModTime 12       /* exFAT: Modified time (DWORD) */
-#define XDIR_AccTime 16       /* exFAT: Last accessed time (DWORD) */
-#define XDIR_CrtTime10 20     /* exFAT: Created time subsecond (BYTE) */
-#define XDIR_ModTime10 21     /* exFAT: Modified time subsecond (BYTE) */
-#define XDIR_CrtTZ 22         /* exFAT: Created timezone (BYTE) */
-#define XDIR_ModTZ 23         /* exFAT: Modified timezone (BYTE) */
-#define XDIR_AccTZ 24         /* exFAT: Last accessed timezone (BYTE) */
-#define XDIR_GenFlags 33      /* exFAT: General secondary flags (WORD) */
-#define XDIR_NumName 35       /* exFAT: Number of file name characters (BYTE) */
-#define XDIR_NameHash 36      /* exFAT: Hash of file name (WORD) */
+#define DIR_Name           0  /* Short file name (11-byte) */
+#define DIR_Attr           11 /* Attribute (BYTE) */
+#define DIR_NTres          12 /* Lower case flag (BYTE) */
+#define DIR_CrtTime10      13 /* Created time sub-second (BYTE) */
+#define DIR_CrtTime        14 /* Created time (DWORD) */
+#define DIR_LstAccDate     18 /* Last accessed date (WORD) */
+#define DIR_FstClusHI      20 /* Higher 16-bit of first cluster (WORD) */
+#define DIR_ModTime        22 /* Modified time (DWORD) */
+#define DIR_FstClusLO      26 /* Lower 16-bit of first cluster (WORD) */
+#define DIR_FileSize       28 /* File size (DWORD) */
+#define LDIR_Ord           0  /* LFN: LFN order and LLE flag (BYTE) */
+#define LDIR_Attr          11 /* LFN: LFN attribute (BYTE) */
+#define LDIR_Type          12 /* LFN: Entry type (BYTE) */
+#define LDIR_Chksum        13 /* LFN: Checksum of the SFN (BYTE) */
+#define LDIR_FstClusLO     26 /* LFN: MBZ field (WORD) */
+#define XDIR_Type          0  /* exFAT: Type of exFAT directory entry (BYTE) */
+#define XDIR_NumLabel      1  /* exFAT: Number of volume label characters (BYTE) */
+#define XDIR_Label         2  /* exFAT: Volume label (11-WORD) */
+#define XDIR_CaseSum       4  /* exFAT: Sum of case conversion table (DWORD) */
+#define XDIR_NumSec        1  /* exFAT: Number of secondary entries (BYTE) */
+#define XDIR_SetSum        2  /* exFAT: Sum of the set of directory entries (WORD) */
+#define XDIR_Attr          4  /* exFAT: File attribute (WORD) */
+#define XDIR_CrtTime       8  /* exFAT: Created time (DWORD) */
+#define XDIR_ModTime       12 /* exFAT: Modified time (DWORD) */
+#define XDIR_AccTime       16 /* exFAT: Last accessed time (DWORD) */
+#define XDIR_CrtTime10     20 /* exFAT: Created time subsecond (BYTE) */
+#define XDIR_ModTime10     21 /* exFAT: Modified time subsecond (BYTE) */
+#define XDIR_CrtTZ         22 /* exFAT: Created timezone (BYTE) */
+#define XDIR_ModTZ         23 /* exFAT: Modified timezone (BYTE) */
+#define XDIR_AccTZ         24 /* exFAT: Last accessed timezone (BYTE) */
+#define XDIR_GenFlags      33 /* exFAT: General secondary flags (WORD) */
+#define XDIR_NumName       35 /* exFAT: Number of file name characters (BYTE) */
+#define XDIR_NameHash      36 /* exFAT: Hash of file name (WORD) */
 #define XDIR_ValidFileSize 40 /* exFAT: Valid file size (QWORD) */
-#define XDIR_FstClus 52       /* exFAT: First cluster of the file data (DWORD) */
-#define XDIR_FileSize 56      /* exFAT: File/Directory size (QWORD) */
+#define XDIR_FstClus       52 /* exFAT: First cluster of the file data (DWORD) */
+#define XDIR_FileSize      56 /* exFAT: File/Directory size (QWORD) */
 
-#define SZDIRE 32  /* Size of a directory entry */
-#define DDEM 0xE5  /* Deleted directory entry mark set to DIR_Name[0] */
-#define RDDEM 0x05 /* Replacement of the character collides with DDEM */
-#define LLEF 0x40  /* Last long entry flag in LDIR_Ord */
+#define SZDIRE 32   /* Size of a directory entry */
+#define DDEM   0xE5 /* Deleted directory entry mark set to DIR_Name[0] */
+#define RDDEM  0x05 /* Replacement of the character collides with DDEM */
+#define LLEF   0x40 /* Last long entry flag in LDIR_Ord */
 
-#define FSI_LeadSig 0      /* FAT32 FSI: Leading signature (DWORD) */
-#define FSI_StrucSig 484   /* FAT32 FSI: Structure signature (DWORD) */
+#define FSI_LeadSig    0   /* FAT32 FSI: Leading signature (DWORD) */
+#define FSI_StrucSig   484 /* FAT32 FSI: Structure signature (DWORD) */
 #define FSI_Free_Count 488 /* FAT32 FSI: Number of free clusters (DWORD) */
-#define FSI_Nxt_Free 492   /* FAT32 FSI: Last allocated cluster (DWORD) */
+#define FSI_Nxt_Free   492 /* FAT32 FSI: Last allocated cluster (DWORD) */
 
-#define MBR_Table 446 /* MBR: Offset of partition table in the MBR */
-#define SZ_PTE 16     /* MBR: Size of a partition table entry */
-#define PTE_Boot 0    /* MBR PTE: Boot indicator */
-#define PTE_StHead 1  /* MBR PTE: Start head */
-#define PTE_StSec 2   /* MBR PTE: Start sector */
-#define PTE_StCyl 3   /* MBR PTE: Start cylinder */
-#define PTE_System 4  /* MBR PTE: System ID */
-#define PTE_EdHead 5  /* MBR PTE: End head */
-#define PTE_EdSec 6   /* MBR PTE: End sector */
-#define PTE_EdCyl 7   /* MBR PTE: End cylinder */
-#define PTE_StLba 8   /* MBR PTE: Start in LBA */
-#define PTE_SizLba 12 /* MBR PTE: Size in LBA */
+#define MBR_Table  446 /* MBR: Offset of partition table in the MBR */
+#define SZ_PTE     16  /* MBR: Size of a partition table entry */
+#define PTE_Boot   0   /* MBR PTE: Boot indicator */
+#define PTE_StHead 1   /* MBR PTE: Start head */
+#define PTE_StSec  2   /* MBR PTE: Start sector */
+#define PTE_StCyl  3   /* MBR PTE: Start cylinder */
+#define PTE_System 4   /* MBR PTE: System ID */
+#define PTE_EdHead 5   /* MBR PTE: End head */
+#define PTE_EdSec  6   /* MBR PTE: End sector */
+#define PTE_EdCyl  7   /* MBR PTE: End cylinder */
+#define PTE_StLba  8   /* MBR PTE: Start in LBA */
+#define PTE_SizLba 12  /* MBR PTE: Size in LBA */
 
 
 /* Post process after fatal error on file operation */
@@ -6920,5 +6918,3 @@ int f_printf(
 
 #endif /* !_FS_READONLY */
 #endif /* _USE_STRFUNC */
-
-#endif // defined(ARDUINO_KLST_PANDA)

@@ -52,13 +52,13 @@ extern PARTITION VolToPart[]; /* Volume - Partition resolution table */
 #endif
 #ifndef _INC_TCHAR
 typedef WCHAR TCHAR;
-#define _T(x) L##x
+#define _T(x)    L##x
 #define _TEXT(x) L##x
 #endif
 #else /* ANSI/OEM string */
 #ifndef _INC_TCHAR
 typedef char TCHAR;
-#define _T(x) x
+#define _T(x)    x
 #define _TEXT(x) x
 #endif
 #endif
@@ -263,13 +263,13 @@ int     f_puts(const TCHAR* str, FIL* cp);                                      
 int     f_printf(FIL* fp, const TCHAR* str, ...);                                    /* Put a formatted string to the file */
 TCHAR*  f_gets(TCHAR* buff, int len, FIL* fp);                                       /* Get a string from the file */
 
-#define f_eof(fp) ((int) ((fp)->fptr == (fp)->obj.objsize))
-#define f_error(fp) ((fp)->err)
-#define f_tell(fp) ((fp)->fptr)
-#define f_size(fp) ((fp)->obj.objsize)
-#define f_rewind(fp) f_lseek((fp), 0)
+#define f_eof(fp)       ((int) ((fp)->fptr == (fp)->obj.objsize))
+#define f_error(fp)     ((fp)->err)
+#define f_tell(fp)      ((fp)->fptr)
+#define f_size(fp)      ((fp)->obj.objsize)
+#define f_rewind(fp)    f_lseek((fp), 0)
 #define f_rewinddir(dp) f_readdir((dp), 0)
-#define f_rmdir(path) f_unlink(path)
+#define f_rmdir(path)   f_unlink(path)
 
 #ifndef EOF
 #define EOF (-1)
@@ -308,23 +308,23 @@ int  ff_del_syncobj(_SYNC_t sobj);            /* Delete a sync object */
 
 
 /* File access mode and open method flags (3rd argument of f_open) */
-#define FA_READ 0x01
-#define FA_WRITE 0x02
+#define FA_READ          0x01
+#define FA_WRITE         0x02
 #define FA_OPEN_EXISTING 0x00
-#define FA_CREATE_NEW 0x04
+#define FA_CREATE_NEW    0x04
 #define FA_CREATE_ALWAYS 0x08
-#define FA_OPEN_ALWAYS 0x10
-#define FA_OPEN_APPEND 0x30
+#define FA_OPEN_ALWAYS   0x10
+#define FA_OPEN_APPEND   0x30
 
 /* Fast seek controls (2nd argument of f_lseek) */
 #define CREATE_LINKMAP ((FSIZE_t) 0 - 1)
 
 /* Format options (2nd argument of f_mkfs) */
-#define FM_FAT 0x01
+#define FM_FAT   0x01
 #define FM_FAT32 0x02
 #define FM_EXFAT 0x04
-#define FM_ANY 0x07
-#define FM_SFD 0x08
+#define FM_ANY   0x07
+#define FM_SFD   0x08
 
 /* Filesystem type (FATFS.fs_type) */
 #define FS_FAT12 1

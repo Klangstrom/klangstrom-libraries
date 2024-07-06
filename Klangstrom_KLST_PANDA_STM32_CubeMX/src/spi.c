@@ -77,7 +77,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle) {
         /* USER CODE END SPI4_MspInit 0 */
 
         /** Initializes the peripherals clock
-     */
+  */
         PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SPI4;
         PeriphClkInitStruct.Spi45ClockSelection  = RCC_SPI45CLKSOURCE_D2PCLK1;
         if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {

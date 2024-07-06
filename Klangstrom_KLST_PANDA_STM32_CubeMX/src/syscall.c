@@ -1,4 +1,3 @@
-#if defined(ARDUINO_KLST_PANDA)
 /*------------------------------------------------------------------------*/
 /* Sample code of OS dependent controls for FatFs                         */
 /* (C)ChaN, 2014                                                          */
@@ -164,5 +163,3 @@ void ff_memfree(
 }
 
 #endif
-
-#endif // defined(ARDUINO_KLST_PANDA)
