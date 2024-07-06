@@ -49,4 +49,3 @@ void MX_SDMMC2_SD_Init(void);
 #endif
 
 #endif /* __SDMMC_H__ */
-
