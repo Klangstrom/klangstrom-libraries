@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "KlangstromEnvironment.h"
 #include "KlangstromDefines.h"
@@ -37,8 +37,8 @@ class Klangstrom {
 public:
     Klangstrom();
     void init();
-    void setup();
-    void loop();
+    void setup() const;
+    void loop() const;
 
 private:
     bool is_initialized;

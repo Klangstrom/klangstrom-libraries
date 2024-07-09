@@ -19,11 +19,11 @@
 
 #pragma once
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 void KLST_BSP_serialdebug_init();
 void KLST_BSP_serialdebug_printf(const char* format, ...);

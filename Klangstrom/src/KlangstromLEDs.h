@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <cmath>
 
 #ifdef __cplusplus
@@ -56,13 +56,13 @@ public:
     }
 
     void set(const int id, float intensity) {
-        intensity = fmax(fmin(intensity, 1), 0);
+        intensity = static_cast<float>(fmax(fmin(intensity, 1), 0));
         if (id < 0) {
             for (uint8_t i = 0; i < fTotal; ++i) {
                 fIntensities[i] = intensity;
                 KLST_BSP_leds_set(i, intensity);
             }
-        } else if (id >= 0 && id < fTotal) {
+        } else if ((id >= 0) && id < fTotal) {
             fIntensities[id] = intensity;
             KLST_BSP_leds_set(id, intensity);
         }

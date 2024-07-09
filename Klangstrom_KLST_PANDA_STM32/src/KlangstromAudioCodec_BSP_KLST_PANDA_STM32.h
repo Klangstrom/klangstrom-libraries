@@ -24,10 +24,10 @@
 
 #include "stm32h7xx_hal.h"
 
-void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void KLST_PANDA_audiocodec_RX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef *hsai);
+void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai);
+void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai);
+void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef* hsai);
+void KLST_PANDA_audiocodec_RX_half_complete_callback(SAI_HandleTypeDef* hsai);
+void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef* hsai);
 
 #endif // KLST_PANDA_STM32

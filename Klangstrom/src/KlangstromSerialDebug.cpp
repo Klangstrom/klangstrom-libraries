@@ -19,9 +19,8 @@
 
 #include "KlangstromSerialDebug.h"
 
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
+#include <cstdio>
+#include <cstdarg>
 
 #define SERIAL_DEBUG_BUFFER_SIZE 128
 

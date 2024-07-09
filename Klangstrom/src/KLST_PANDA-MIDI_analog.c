@@ -29,8 +29,8 @@
 #include "KLST_PANDA-MIDI_analog.h"
 
 extern UART_HandleTypeDef huart4;
-extern DMA_HandleTypeDef hdma_uart4_rx;
-extern DMA_HandleTypeDef hdma_uart4_tx;
+extern DMA_HandleTypeDef  hdma_uart4_rx;
+extern DMA_HandleTypeDef  hdma_uart4_tx;
 
 uint8_t __attribute__((section(".dma_buffer"))) RX_MIDI_DMA_buffer[MIDI_ANALOG_DMA_BUFFER_SIZE];
 uint8_t __attribute__((section(".dma_buffer"))) TX_MIDI_DMA_buffer[MIDI_ANALOG_DMA_BUFFER_SIZE];
@@ -46,16 +46,16 @@ void MIDI_analog_loop() {
 #define MIDI_TX_BUFFER_SIZE 3
     uint8_t data[MIDI_TX_BUFFER_SIZE];
     toogle_note = !toogle_note;
-    data[0] = toogle_note ? 0x90 : 0x80; // note on : off
-    data[1] = 0x3C; // middle C, chanel 1
-    data[2] = 0x50; // velocity: 80
+    data[0]     = toogle_note ? 0x90 : 0x80; // note on : off
+    data[1]     = 0x3C;                      // middle C, chanel 1
+    data[2]     = 0x50;                      // velocity: 80
     for (uint8_t i = 0; i < MIDI_TX_BUFFER_SIZE; i++) {
         TX_MIDI_DMA_buffer[i] = data[i];
     }
     HAL_UART_Transmit_DMA(&huart4, TX_MIDI_DMA_buffer, MIDI_TX_BUFFER_SIZE);
 }
 
-static void print_and_clear_buffer(const char *name, uint8_t *buffer, uint8_t buffer_size) {
+static void print_and_clear_buffer(const char* name, uint8_t* buffer, uint8_t buffer_size) {
     printf("%s (", name);
     for (int i = 0; i < buffer_size; i++) {
         printf("0x%02X, ", buffer[i]);

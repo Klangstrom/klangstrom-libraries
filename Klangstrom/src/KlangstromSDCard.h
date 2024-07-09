@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
-#include <string.h>
+#include <cstring>
 #include <vector>
 
 #ifdef __cplusplus
@@ -44,14 +44,14 @@ public:
     static const uint8_t OPEN_ALWAYS   = 0x10; // opens a file if it exists. If the file does not exist, it will create a new file.
     static const uint8_t OPEN_APPEND   = 0x30; // opens a file for appending. If the file exists, the file write pointer will be set to the end of the file. If the file does not exist, it will create a new file. It is a combination of FA_WRITE and setting the file pointer to the end of the file.
 
-    SDCard() {}
-    ~SDCard() {}
+    SDCard() = default;
+    ~SDCard() = default;
     bool     init();
     bool     deinit();
     bool     reinit();
     bool     detected();
     bool     status();
-    bool     mount(bool immediately=true);
+    bool     mount(bool immediately = true);
     bool     unmount();
     bool     format();
     bool     list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories);

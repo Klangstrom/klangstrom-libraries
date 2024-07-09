@@ -37,9 +37,9 @@
 uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
 
 uint16_t fifobuf[256];
-uint8_t fifo_w_ptr = 0;
-uint8_t fifo_r_ptr = 0;
-uint8_t fifo_read_enabled = 0;
+uint8_t  fifo_w_ptr        = 0;
+uint8_t  fifo_r_ptr        = 0;
+uint8_t  fifo_read_enabled = 0;
 
 //uint16_t MidBuffer[16];
 //uint8_t txstate = 0;
@@ -67,7 +67,7 @@ uint8_t fifo_read_enabled = 0;
 
 uint8_t onboardmic_setup() {
     HAL_StatusTypeDef status = HAL_OK;
-//    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
+    //    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
     if (HAL_OK != status) {
         println("### ERROR initializing SAI MIC RX: %i", status);
     }
@@ -84,30 +84,30 @@ void onboardmic_loop() {
     printf("\r\n");
 }
 
-void onboardmic_RX_full_complete_callback(SAI_HandleTypeDef *hsai) {
-//    if (hsai == &hsai_BlockA4) {
-////        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
-////        for (int i = 0; i < 16; i++) {
-////            FifoWrite(MidBuffer[i]);
-////        }
-////        print_FIFO();
-//    }
+void onboardmic_RX_full_complete_callback(SAI_HandleTypeDef* hsai) {
+    //    if (hsai == &hsai_BlockA4) {
+    ////        PDM_Filter(&pdmRxBuf[64], &MidBuffer[0], &PDM1_filter_handler);
+    ////        for (int i = 0; i < 16; i++) {
+    ////            FifoWrite(MidBuffer[i]);
+    ////        }
+    ////        print_FIFO();
+    //    }
 }
 
-void onboardmic_RX_half_complete_callback(SAI_HandleTypeDef *hsai) {
-//    if (hsai == &hsai_BlockA4) {
-////        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
-////        for (int i = 0; i < 16; i++) {
-////            FifoWrite(MidBuffer[i]);
-////        }
-////        print_FIFO();
-//    }
+void onboardmic_RX_half_complete_callback(SAI_HandleTypeDef* hsai) {
+    //    if (hsai == &hsai_BlockA4) {
+    ////        PDM_Filter(&pdmRxBuf[0], &MidBuffer[0], &PDM1_filter_handler);
+    ////        for (int i = 0; i < 16; i++) {
+    ////            FifoWrite(MidBuffer[i]);
+    ////        }
+    ////        print_FIFO();
+    //    }
 }
 
-void onboardmic_error_callback(SAI_HandleTypeDef *hsai) {
-//    if (hsai == &hsai_BlockA4) {
-//        println("### ERROR error in MIC SAI:BlockA4");
-//    }
+void onboardmic_error_callback(SAI_HandleTypeDef* hsai) {
+    //    if (hsai == &hsai_BlockA4) {
+    //        println("### ERROR error in MIC SAI:BlockA4");
+    //    }
 }
 
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC

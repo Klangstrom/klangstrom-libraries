@@ -18,7 +18,6 @@
  */
 
 #include <cstddef>
-#include <cmath>
 
 #include "KlangstromDefines.h"
 #include "KlangstromAudioCodec.h"
@@ -49,6 +48,7 @@ void audiocodec_callback_class_f(float** input, float** output, uint16_t length)
 } // extern "C"
 
 void WEAK audioblock(float** input_signal, float** output_signal, uint16_t length) {
+    (void) input_signal;
     for (int i = 0; i < length; ++i) {
         for (int j = 0; j < KLANG_OUTPUT_CHANNELS; ++j) {
             output_signal[j][i] = 0.0;
@@ -82,10 +82,10 @@ void AudioCodec::callback_class(uint32_t* input, uint32_t* output, uint16_t leng
     /* unpack receive buffer to sample */
     for (int i = 0; i < KLANG_SAMPLES_PER_AUDIO_BLOCK; i++) {
         const uint32_t p                      = input[i];
-        const int16_t  mLeftInt               = (p & M_MASK_LEFT);
-        const int16_t  mRightInt              = (p & M_MASK_RIGHT) >> M_NUM_OF_BITS;
-        fInputBuffers[KLANG_CHANNEL_LEFT][i]  = mLeftInt / M_INT_SCALE;
-        fInputBuffers[KLANG_CHANNEL_RIGHT][i] = mRightInt / M_INT_SCALE;
+        const auto     mLeftInt               = (int16_t) (p & M_MASK_LEFT);
+        const auto     mRightInt              = (int16_t) (p & M_MASK_RIGHT) >> M_NUM_OF_BITS;
+        fInputBuffers[KLANG_CHANNEL_LEFT][i]  = static_cast<float>(mLeftInt) / M_INT_SCALE;
+        fInputBuffers[KLANG_CHANNEL_RIGHT][i] = static_cast<float>(mRightInt) / M_INT_SCALE;
     }
 
     /* calculate next audio block */
@@ -102,9 +102,9 @@ void AudioCodec::callback_class(uint32_t* input, uint32_t* output, uint16_t leng
 
     /* pack sample for transmit buffer */
     for (int i = 0; i < KLANG_SAMPLES_PER_AUDIO_BLOCK; i++) {
-        int16_t mLeftInt  = (int16_t) (fOutputBuffers[KLANG_CHANNEL_LEFT][i] * M_INT_SCALE);
-        int16_t mRightInt = (int16_t) (fOutputBuffers[KLANG_CHANNEL_RIGHT][i] * M_INT_SCALE);
-        output[i]         = ((uint32_t) (uint16_t) mLeftInt) << 0 | ((uint32_t) (uint16_t) mRightInt) << M_NUM_OF_BITS;
+        auto mLeftInt  = (int16_t) (fOutputBuffers[KLANG_CHANNEL_LEFT][i] * M_INT_SCALE);
+        auto mRightInt = (int16_t) (fOutputBuffers[KLANG_CHANNEL_RIGHT][i] * M_INT_SCALE);
+        output[i]      = ((uint32_t) (uint16_t) mLeftInt) << 0 | ((uint32_t) (uint16_t) mRightInt) << M_NUM_OF_BITS;
     }
 }
 
@@ -113,8 +113,10 @@ void AudioCodec::callback_class(uint32_t* input, uint32_t* output, uint16_t leng
  */
 void AudioCodec::callback_class_f(float** input, float** output, uint16_t length) {
     if (!callback_audioblock) {
-        for (int i = 0; i < length; i++) {
-            output[i] = 0;
+        for (int j = 0; j < KLANG_OUTPUT_CHANNELS; ++j) {
+            for (int i = 0; i < length; i++) {
+                output[j][i] = 0;
+            }
         }
         return;
     }
@@ -169,7 +171,7 @@ void AudioCodec::callback_audioblock_method(float** input_signal, float** output
     }
 }
 
-AudioCodec::AudioCodec() : isInitialized(false) {
+AudioCodec::AudioCodec() : isInitialized(false), callback_audioblock(nullptr) {
     // TODO check if it is ok to move this to `.init()`
     // audiocodec_register_audio_device(this);
 }

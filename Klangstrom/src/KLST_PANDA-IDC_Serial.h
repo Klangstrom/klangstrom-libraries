@@ -37,8 +37,8 @@ extern volatile uint8_t RX_00_counter;
 //extern volatile uint8_t RX_01_counter;
 
 // TODO make C++
-void IDC_serial_setup();
-void IDC_serial_loop();
-uint8_t IDC_serial_handle_rx(USART_TypeDef *uart_instance, uint16_t length);
+void    IDC_serial_setup();
+void    IDC_serial_loop();
+uint8_t IDC_serial_handle_rx(USART_TypeDef* uart_instance, uint16_t length);
 
 #endif // KLST_PANDA_STM32

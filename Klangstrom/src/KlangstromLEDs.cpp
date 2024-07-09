@@ -18,4 +18,3 @@
  */
 
 #include "KlangstromLEDs.h"
-

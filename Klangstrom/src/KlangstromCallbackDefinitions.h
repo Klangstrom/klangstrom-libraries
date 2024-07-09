@@ -19,13 +19,13 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
-#ifndef   WEAK
-  #define WEAK                                 __attribute__((weak))
+#ifndef WEAK
+#define WEAK __attribute__((weak))
 #endif
 
-typedef void (*Callback_0_VOID)(void);
+typedef void (*Callback_0_VOID)();
 typedef void (*Callback_1_UI8)(uint8_t);
 typedef void (*Callback_1_UI16)(uint16_t);
 

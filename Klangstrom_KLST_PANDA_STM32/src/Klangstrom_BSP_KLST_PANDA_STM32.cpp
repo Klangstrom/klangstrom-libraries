@@ -51,14 +51,14 @@ int _gettimeofday(struct timeval* tv, void* tzvp) {
 extern TIM_HandleTypeDef  htim1;
 extern TIM_HandleTypeDef  htim2;
 extern TIM_HandleTypeDef  htim4;
-extern UART_HandleTypeDef huart4;
-extern UART_HandleTypeDef huart8;
-extern UART_HandleTypeDef huart9;
+//extern UART_HandleTypeDef huart4;
+//extern UART_HandleTypeDef huart8;
+//extern UART_HandleTypeDef huart9;
 extern DMA_HandleTypeDef  hdma_uart8_rx;
 
-extern void MPU_Config();
-extern void SystemClock_Config();
-extern void PeriphCommonClock_Config();
+//extern void MPU_Config();
+//extern void SystemClock_Config();
+//extern void PeriphCommonClock_Config();
 
 static void KLST_PANDA_MX_Init_Modules();
 
@@ -104,7 +104,7 @@ static void KLST_PANDA_MX_Init_Modules() {
 
 #if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
     defined(KLST_PANDA_ENABLE_IDC_SERIAL) || \
-    defined(KLST_PANDA_ENABLE_SD_CARD) || \
+    defined(KLST_PANDA_ENABLE_SD_CARD) ||    \
     defined(KLST_PANDA_ENABLE_MIDI)
     MX_DMA_Init();
 #endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)

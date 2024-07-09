@@ -19,7 +19,7 @@
 
 #pragma once
 
-void ADC_setup();
-void DAC_setup();
-void DAC_write(float value);
+void  ADC_setup();
+void  DAC_setup();
+void  DAC_write(float value);
 float ADC_read();

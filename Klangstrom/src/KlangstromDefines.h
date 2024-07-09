@@ -22,13 +22,13 @@
 #ifdef KLANG_AUDIO_RATE
 #warning "KLANG_AUDIO_RATE is already defined"
 #else
-#define KLANG_AUDIO_RATE              48000
+#define KLANG_AUDIO_RATE 48000
 #endif
 
 #ifdef KLANG_AUDIO_BIT_DEPTH
 #warning "KLANG_AUDIO_BIT_DEPTH is already defined"
 #else
-#define KLANG_AUDIO_BIT_DEPTH         16
+#define KLANG_AUDIO_BIT_DEPTH 16
 #endif
 
 #ifdef KLANG_SAMPLES_PER_AUDIO_BLOCK
@@ -40,14 +40,14 @@
 #ifdef KLANG_OUTPUT_CHANNELS
 #warning "KLANG_OUTPUT_CHANNELS is already defined"
 #else
-#define KLANG_OUTPUT_CHANNELS         2
+#define KLANG_OUTPUT_CHANNELS 2
 #endif
 
 #ifdef KLANG_INPUT_CHANNELS
 #warning "KLANG_INPUT_CHANNELS is already defined"
 #else
-#define KLANG_INPUT_CHANNELS          2
+#define KLANG_INPUT_CHANNELS 2
 #endif
 
-#define KLANG_CHANNEL_LEFT            0
-#define KLANG_CHANNEL_RIGHT           1
+#define KLANG_CHANNEL_LEFT 0
+#define KLANG_CHANNEL_RIGHT 1

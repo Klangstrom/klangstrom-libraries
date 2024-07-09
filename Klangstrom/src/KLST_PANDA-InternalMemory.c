@@ -47,16 +47,16 @@ static void run_test(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
  * @return 0 on success, non-zero on failure
  */
 static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
-    volatile uint32_t *pMem;
-    uint32_t testVal = 0;
-    int errorFlag = 0;
-    uint32_t i;
+    volatile uint32_t* pMem;
+    uint32_t           testVal   = 0;
+    int                errorFlag = 0;
+    uint32_t           i;
 
     // Write phase: fill RAM with a test pattern
     printf("WRITE : ");
     for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR; pMem++) {
-        *pMem = (uint32_t) pMem;  // Example pattern: address of the cell itself
-        i = *pMem;
+        *pMem = (uint32_t) pMem; // Example pattern: address of the cell itself
+        i     = *pMem;
         if ((i % 1024) == 0) {
             printf(".");
         }
@@ -68,7 +68,7 @@ static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
     for (pMem = (uint32_t*) RAM_START_ADDR; pMem <= (uint32_t*) RAM_END_ADDR; pMem++) {
         testVal = *pMem;
         if (testVal != (uint32_t) pMem) {
-            errorFlag = 1;  // Memory error detected
+            errorFlag = 1; // Memory error detected
             printf(" at %p", pMem);
             break;
         }
@@ -92,7 +92,7 @@ void internalmemory_test_all() {
     // FLASH   :: 0x08000000     , 0x080FFFFF   , 1024KB
     run_test(0x00000000, 0x0000FFFF);
     run_test(0x20000000, 0x2001FFFF);
-//	run_test(0x24000000 + 0x1000, 0x2404FFFF - 0x400);
+    //	run_test(0x24000000 + 0x1000, 0x2404FFFF - 0x400);
     run_test(0x30000000, 0x30007FFF);
     run_test(0x38000000, 0x38003FFF);
 }

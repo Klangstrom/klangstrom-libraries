@@ -19,8 +19,7 @@
 
 #include "Klangstrom.h"
 
-Klangstrom::Klangstrom() :
-        is_initialized(false) {
+Klangstrom::Klangstrom() : is_initialized(false) {
 }
 
 void Klangstrom::init() {
@@ -28,22 +27,20 @@ void Klangstrom::init() {
         KLST_BSP_init();
         is_initialized = true;
     } else {
-//        println("Klangstrom: already initialized");
+        //        println("Klangstrom: already initialized");
     }
 }
 
-void Klangstrom::setup() {
+void Klangstrom::setup() const {
     if (is_initialized) {
         KLST_BSP_setup();
     } else {
-//        println("Klangstrom: system needs to be initialized with `init()` before `setup()` is called");
+        //        println("Klangstrom: system needs to be initialized with `init()` before `setup()` is called");
     }
 }
 
-void Klangstrom::loop() {
+void Klangstrom::loop() const {
     if (is_initialized) {
         KLST_BSP_loop();
     }
 }
-
-

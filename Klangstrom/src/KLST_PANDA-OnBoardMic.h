@@ -26,9 +26,9 @@
 #include "main.h"
 
 uint8_t onboardmic_setup();
-void onboardmic_loop();
-void onboardmic_RX_full_complete_callback(SAI_HandleTypeDef *hsai);
-void onboardmic_RX_half_complete_callback(SAI_HandleTypeDef *hsai);
-void onboardmic_error_callback(SAI_HandleTypeDef *hsai);
+void    onboardmic_loop();
+void    onboardmic_RX_full_complete_callback(SAI_HandleTypeDef* hsai);
+void    onboardmic_RX_half_complete_callback(SAI_HandleTypeDef* hsai);
+void    onboardmic_error_callback(SAI_HandleTypeDef* hsai);
 
 #endif // KLST_PANDA_STM32

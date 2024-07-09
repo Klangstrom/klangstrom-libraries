@@ -32,10 +32,10 @@ extern ADC_HandleTypeDef hadc3;
 static uint16_t ADC_DAC_RESOLUTION = (1 << 12);
 
 void ADC_setup() {
-//    HAL_StatusTypeDef status = HAL_ADC_Start(&hadc3);
-//    if (status) {
-//        println("ADC: error at start time: %i", status);
-//    }
+    //    HAL_StatusTypeDef status = HAL_ADC_Start(&hadc3);
+    //    if (status) {
+    //        println("ADC: error at start time: %i", status);
+    //    }
 }
 
 void DAC_setup() {
@@ -43,7 +43,7 @@ void DAC_setup() {
     if (status) {
         KLST_BSP_serialdebug_println("DAC: error at start time: %i", status);
     }
-//    HAL_DAC_Stop(&hdac1, DAC1_CHANNEL_1);
+    //    HAL_DAC_Stop(&hdac1, DAC1_CHANNEL_1);
 }
 
 void DAC_write(float value) {
