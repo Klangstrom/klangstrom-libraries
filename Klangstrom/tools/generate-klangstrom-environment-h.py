@@ -27,7 +27,7 @@ header_file = "../src/KlangstromEnvironment.h"
 copyright_notice = """/*
  * Klangstrom
  *
- * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
+ * This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
  * Copyright (c) 2024 Dennis P Paul.
  *
  * This library is free software: you can redistribute it and/or modify
