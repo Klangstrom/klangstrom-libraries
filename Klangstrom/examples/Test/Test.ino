@@ -26,7 +26,7 @@ void setup() {
     console.timestamp();
     console.println("starting init");
     audiocodec.init();
-    // leds.init(); // TODO interferes with audiocodec
+    leds.init(); // TODO interferes with audiocodec
     sdcard.init();
 
     console.timestamp();
@@ -67,8 +67,8 @@ void loop() {
     fLEDIntensity += 10;
     leds.set(0, fLEDIntensity / 255.0);
     leds.toggle(1);
-    // console.println("LED 0 : %f", leds.get(0));
-    // console.println("LED 1 : %f", leds.get(1));
+    console.println("LED 0 : %f", leds.get(0)); // println/printf with float might not work
+    console.println("LED 1 : %f", leds.get(1));
     oscillator.set_frequency(random(1, 4) * 55);
 
     klangstrom.loop();

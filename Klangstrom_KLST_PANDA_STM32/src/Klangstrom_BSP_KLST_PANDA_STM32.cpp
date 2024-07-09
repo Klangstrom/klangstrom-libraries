@@ -45,8 +45,8 @@ extern "C" {
 
 #include <sys/time.h>
 [[maybe_unused]] int _gettimeofday(struct timeval* tv, void* tzvp) {
-    (void)  tv;
-    (void)  tzvp;
+    (void) tv;
+    (void) tzvp;
     return 0;
 }
 
@@ -104,6 +104,7 @@ static void KLST_PANDA_MX_Init_Modules() {
     MX_I2C4_Init();
 #endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
+    /* initialize DMA */
 #if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
     defined(KLST_PANDA_ENABLE_IDC_SERIAL) || \
     defined(KLST_PANDA_ENABLE_SD_CARD) ||    \
@@ -121,10 +122,10 @@ static void KLST_PANDA_MX_Init_Modules() {
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-//    MX_BDMA_Init();
-//    MX_CRC_Init();
-//    MX_PDM2PCM_Init();
-//    MX_SAI4_Init();
+    // MX_BDMA_Init();
+    MX_CRC_Init();
+    MX_PDM2PCM_Init();
+    // MX_SAI4_Init();
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
@@ -194,7 +195,7 @@ static void KLST_PANDA_MX_Init_Modules() {
 void KLST_BSP_setup() {
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     /* --- TODO move mechanical keys to file */
-    println("initializing mechanical keys (MX:TIM4)");
+    KLST_BSP_serialdebug_println("initializing mechanical keys (MX:TIM4)");
     HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 
@@ -210,7 +211,7 @@ void KLST_BSP_setup() {
     KLST_BSP_serialdebug_println("initializing external RAM (MX:OCTOSPI1)");
     externalmemory_setup();
 
-    println("testing external RAM");
+    KLST_BSP_serialdebug_println("testing external RAM");
     externalmemory_test();
 
 #ifdef KLST_PANDA_TEST_INTERNAL_MEMORY
@@ -220,12 +221,12 @@ void KLST_BSP_setup() {
 #endif // KLST_PANDA_ENABLE_EXTERNAL_MEMORY
 
 #ifdef KLST_PANDA_ENABLE_ON_BOARD_MIC
-    println("initializing MEMS microphones (MX:BDMA+CRC+PDM2PCM+SAI4)");
+    KLST_BSP_serialdebug_println("initializing MEMS microphones (MX:CRC+PDM2PCM)");
     onboardmic_setup();
 #endif // KLST_PANDA_ENABLE_ON_BOARD_MIC
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
-    println("initializing rotary encoders (MX:TIM1+TIM2)");
+    KLST_BSP_serialdebug_println("initializing rotary encoders (MX:TIM1+TIM2)");
     if (peripherals.encoders[0] != nullptr) {
         peripherals.encoders[0]->setup(); // TODO implement
     }
@@ -239,24 +240,24 @@ void KLST_BSP_setup() {
 
 #ifdef KLST_PANDA_ENABLE_SD_CARD
     /* --- SD card (SDMMC) */
-    // println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
+    // KLST_BSP_serialdebug_println("initializing SD card (SDMMC) (MX:FATFS+SDMMC2_SD)");
     // sdcard_setup();
     // sdcard_check_status();
     // sdcard_write_test_file(false);
 #endif // KLST_PANDA_ENABLE_SD_CARD
 
 #ifdef KLST_PANDA_ENABLE_IDC_SERIAL
-    println("initializing IDC serial (MX:DMA+UART8+UART9)");
+    KLST_BSP_serialdebug_println("initializing IDC serial (MX:DMA+UART8+UART9)");
     IDC_serial_setup();
 #endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
 #ifdef KLST_PANDA_ENABLE_MIDI
-    println("initializing MIDI analog (MX:DMA+UART4)");
+    KLST_BSP_serialdebug_println("initializing MIDI analog (MX:DMA+UART4)");
     MIDI_analog_setup();
 #endif // KLST_PANDA_ENABLE_MIDI
 
 #ifdef KLST_PANDA_ENABLE_ADC_DAC
-    println("initializing ADC + DAC (MX:ADC3+DAC1)");
+    KLST_BSP_serialdebug_println("initializing ADC + DAC (MX:ADC3+DAC1)");
     ADC_setup();
     DAC_setup();
 #endif // KLST_PANDA_ENABLE_ADC_DAC
@@ -265,7 +266,7 @@ void KLST_BSP_setup() {
     //        for (uint8_t i = 0; i < 255; i++) {
     //            HAL_StatusTypeDef status = HAL_I2C_IsDeviceReady(hi2c, i, 100, 1000);
     //    //        if (hi2c->ErrorCode & HAL_I2C_ERROR_TIMEOUT) {
-    //    //            println("- I2C DEVICE TIMED OUT: 0x%02X", i);
+    //    //            KLST_BSP_serialdebug_println("- I2C DEVICE TIMED OUT: 0x%02X", i);
     //    //        }
     //            if (!status) {
     //                KLST_BSP_serialdebug_println("- I2C DEVICE READY: 0x%02X", i);
@@ -275,25 +276,25 @@ void KLST_BSP_setup() {
 
     //#if defined(KLST_PANDA_ENABLE_DISPLAY) || defined(KLST_PANDA_ENABLE_AUDIOCODEC)
     //    TODO somehow this causes issues
-    //    println("looking for I2C devices on I2C4");
+    //    KLST_BSP_serialdebug_println("looking for I2C devices on I2C4");
     //    print_I2C_show_devices(&hi2c4);
     //#endif
 
 #ifdef KLST_PANDA_ENABLE_DISPLAY
-    println("initializing display (LTDC) (MX:LTDC+DMA2D)");
+    KLST_BSP_serialdebug_println("initializing display (LTDC) (MX:LTDC+DMA2D)");
     display_switch_off();
     LTDC_setup();
 
     /* --- touch panel */
 
-    println("initializing touch panel (FT5206) (MX:I2C4)");
+    KLST_BSP_serialdebug_println("initializing touch panel (FT5206) (MX:I2C4)");
     display_switch_on(); // TODO maybe turn off?
     touch_setup();
     //    touch_read();
 
     /* --- backlight */
 
-    println("initializing LCD backlight PWM (MX:TIM3)");
+    KLST_BSP_serialdebug_println("initializing LCD backlight PWM (MX:TIM3)");
     backlight_setup();
     backlight_set_brightness(0.5f);
 #endif // KLST_PANDA_ENABLE_DISPLAY
@@ -313,8 +314,8 @@ void KLST_BSP_loop() {
 #endif // KLST_PANDA_ENABLE_MIDI
 
 #ifdef KLST_PANDA_ENABLE_ENCODER
-    println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
-    println("ENCODER_01: %i", ((TIM2->CNT) >> 2));
+    KLST_BSP_serialdebug_println("ENCODER_00: %i", ((TIM1->CNT) >> 2));
+    KLST_BSP_serialdebug_println("ENCODER_01: %i", ((TIM2->CNT) >> 2));
 #endif // KLST_PANDA_ENABLE_ENCODER
 
 #ifdef KLST_PANDA_ENABLE_ADC_DAC
@@ -413,18 +414,18 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim) {
     //    if (htim == &htim4) {
     //        if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
     //            MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
-    //            println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
+    //            KLST_BSP_serialdebug_println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
     //        }
     //    }
     //#endif
     if (htim == &htim1) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
-            println("ENCODER_00: BUTTON");
+            KLST_BSP_serialdebug_println("ENCODER_00: BUTTON");
         }
     }
     if (htim == &htim2) {
         if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-            println("ENCODER_01: BUTTON");
+            KLST_BSP_serialdebug_println("ENCODER_01: BUTTON");
         }
     }
 }
@@ -442,15 +443,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 #ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
     if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
         MECH_00_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_00_GPIO_Port, _MECH_BUTTON_00_Pin);
-        println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
+        KLST_BSP_serialdebug_println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
     } else if (GPIO_Pin == _MECH_BUTTON_01_Pin) {
         MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
-        println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
+        KLST_BSP_serialdebug_println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
     }
 #endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
 #ifdef KLST_PANDA_ENABLE_DISPLAY
     if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
-        println("TOUCH");
+        KLST_BSP_serialdebug_println("TOUCH");
     }
 #endif // KLST_PANDA_ENABLE_DISPLAY
 }

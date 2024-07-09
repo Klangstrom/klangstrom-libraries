@@ -44,7 +44,7 @@ public:
     static const uint8_t OPEN_ALWAYS   = 0x10; // opens a file if it exists. If the file does not exist, it will create a new file.
     static const uint8_t OPEN_APPEND   = 0x30; // opens a file for appending. If the file exists, the file write pointer will be set to the end of the file. If the file does not exist, it will create a new file. It is a combination of FA_WRITE and setting the file pointer to the end of the file.
 
-    SDCard() = default;
+    SDCard()  = default;
     ~SDCard() = default;
     bool     init();
     bool     deinit();

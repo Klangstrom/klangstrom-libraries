@@ -19,6 +19,7 @@
 
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
+
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
 
@@ -33,7 +34,8 @@
 
 extern UART_HandleTypeDef huart3; // TODO maybe pass this as a parameter
 
-int _write(int file, char* data, int len) {
+extern "C" int _write(int file, char* data, int len) {
+    // @note needs to be implemented with `extern "C"` for printf to work
     (void) file;
     HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 10);
     return (status == HAL_OK ? len : 0);

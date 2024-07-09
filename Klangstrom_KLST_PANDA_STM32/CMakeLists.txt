@@ -13,7 +13,7 @@ add_library(Klangstrom_KLST_PANDA_STM32
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromAudioCodec_BSP_KLST_PANDA_STM32.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromLEDs_BSP_KLST_PANDA_STM32.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSDCard_BSP_KLST_PANDA_STM32.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSerialDebug_BSP_KLST_PANDA_STM32.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSerialDebug_BSP_KLST_PANDA_STM32.cpp
 )
 
 target_include_directories(Klangstrom_KLST_PANDA_STM32 PUBLIC

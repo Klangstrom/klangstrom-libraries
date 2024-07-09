@@ -25,7 +25,6 @@
 
 #include "string.h"
 #include "pdm2pcm.h"
-#include "KLST_PANDA-SerialDebug.h"
 #include "KLST_PANDA-OnBoardMic.h"
 
 //extern SAI_HandleTypeDef hsai_BlockA4;
@@ -69,7 +68,7 @@ uint8_t onboardmic_setup() {
     HAL_StatusTypeDef status = HAL_OK;
     //    status = HAL_SAI_Receive_DMA(&hsai_BlockA4, (uint8_t*) pdmRxBuf, PDM_BUFFER_SIZE);
     if (HAL_OK != status) {
-        println("### ERROR initializing SAI MIC RX: %i", status);
+        printf("### ERROR initializing SAI MIC RX: %i", status);
     }
 
     memset(pdmRxBuf, 0, sizeof(pdmRxBuf));
