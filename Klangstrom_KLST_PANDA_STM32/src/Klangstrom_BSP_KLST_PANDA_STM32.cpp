@@ -44,17 +44,19 @@ extern "C" {
 #include "KLST_PANDA-OnBoardMic.h"
 
 #include <sys/time.h>
-int _gettimeofday(struct timeval* tv, void* tzvp) {
+[[maybe_unused]] int _gettimeofday(struct timeval* tv, void* tzvp) {
+    (void)  tv;
+    (void)  tzvp;
     return 0;
 }
 
-extern TIM_HandleTypeDef  htim1;
-extern TIM_HandleTypeDef  htim2;
-extern TIM_HandleTypeDef  htim4;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim4;
 //extern UART_HandleTypeDef huart4;
 //extern UART_HandleTypeDef huart8;
 //extern UART_HandleTypeDef huart9;
-extern DMA_HandleTypeDef  hdma_uart8_rx;
+extern DMA_HandleTypeDef hdma_uart8_rx;
 
 //extern void MPU_Config();
 //extern void SystemClock_Config();

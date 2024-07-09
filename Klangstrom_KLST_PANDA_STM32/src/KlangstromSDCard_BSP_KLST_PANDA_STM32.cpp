@@ -24,7 +24,6 @@
 
 #include <stdarg.h>
 #include <stdio.h>
-#include <string.h>
 #include <vector>
 
 #include "main.h"
@@ -109,7 +108,7 @@ static void println(const char* format, ...) {
 // sdcard_check_status();
 // sdcard_write_test_file(false);
 //    println("SDCard: NOTE that DMA is disabled.");
-//    println("SDCard: if DMA is enabled DCache must handled properly");
+//    println("SDCard: if DMA is enabled DCache must be handled properly");
 //    println("SDCard: e.g stored in `section(\".dma_buffer\")`");
 
 // static uint8_t  rtext[_MAX_SS];

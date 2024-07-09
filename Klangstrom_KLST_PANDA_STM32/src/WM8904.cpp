@@ -32,7 +32,7 @@ extern "C" {
 #define WM8904_TIMEOUT HAL_MAX_DELAY
 //#define WM8904_TIMEOUT     1000
 
-static I2C_HandleTypeDef* hi2c = 0;
+static I2C_HandleTypeDef* hi2c = nullptr;
 
 uint8_t WM8904_write_register(uint8_t register_address, uint16_t data) {
     if (!hi2c) {

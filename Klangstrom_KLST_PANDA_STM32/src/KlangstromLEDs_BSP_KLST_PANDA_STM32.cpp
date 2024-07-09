@@ -71,8 +71,6 @@ uint8_t KLST_BSP_leds_total() {
     return 2;
 }
 
-#include "KlangstromLEDs.h"
-
 void LEDs::KLST_BSP_init() {}
 
 #endif // KLST_PANDA_ENABLE_LEDS

@@ -38,7 +38,6 @@ extern "C" {
 
 #include <stdint.h>
 #include <string.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -46,9 +45,7 @@ extern "C" {
 #include "stm32h7xx_hal.h"
 #include "sai.h"
 
-#include "KlangstromDefines.h"
 #include "KlangstromSerialDebug.h"
-#include "KlangstromAudioCodec.h"
 #include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
 #include "WM8904.h"
 
@@ -295,7 +292,6 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 #define SANITY_TEST_MIC 0
 
 #if SANITY_TEST
-
 static const float M_MAX_FREQUENCEY  = 440.0;
 float              mFreqL            = M_MAX_FREQUENCEY * 0.25;
 float              mFreqR            = M_MAX_FREQUENCEY * 0.5;
@@ -346,7 +342,7 @@ void FillBuffer(uint32_t* mTXBuffer, uint32_t* mRXBuffer, uint16_t len) {
 #endif // SANITY_TEST_PASSTHROUGH
     }
 }
-#endif
+#endif // SANITY_TEST
 
 static void setup_SAI() {
     KLST_BSP_serialdebug_println("setting up SAI");
@@ -416,7 +412,6 @@ void KLST_PANDA_audiocodec_error_callback(SAI_HandleTypeDef* hsai) {
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif // KLST_PANDA_ENABLE_AUDIOCODEC
 #endif // KLST_PANDA_STM32
