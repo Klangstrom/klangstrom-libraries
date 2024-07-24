@@ -21,20 +21,28 @@
 
 #include <cstdint>
 
-#ifndef WEAK
-#define WEAK __attribute__((weak))
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-struct AudioBlock;
+typedef struct AudioInfo {
+    uint32_t sample_rate     = 48000;
+    uint8_t  output_channels = 2;
+    uint8_t  input_channels  = 1;
+    uint16_t block_size      = 128;
+    uint8_t  bit_depth       = 16;
+} AudioInfo;
 
-typedef void (*Callback_0_VOID)();
-typedef void (*Callback_1_UI8)(uint8_t);
-typedef void (*Callback_1_UI16)(uint16_t);
+typedef struct AudioBlock {
+    uint32_t sample_rate;
+    uint8_t  output_channels;
+    uint8_t  input_channels;
+    uint16_t block_size;
+    float**  output;
+    float**  input;
+    uint8_t  device;
+} AudioBlock;
 
-typedef void (*Callback_2_UI8)(uint8_t, uint8_t);
-typedef void (*Callback_2_UI8_I16)(uint8_t, uint16_t);
-typedef void (*Callback_2_UI8_VOIDPTR)(const uint8_t, const void*);
-
-typedef void (*Callback_3_UI8)(uint8_t, uint8_t, uint8_t);
-typedef void (*Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16)(float**, float**, uint16_t);
-typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
+#ifdef __cplusplus
+}
+#endif

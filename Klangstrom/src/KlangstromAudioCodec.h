@@ -22,28 +22,41 @@
 #include <cstdint>
 
 #include "KlangstromCallbackDefinitions.h"
+#include "KlangstromAudio.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-uint8_t KLST_BSP_audiocodec_init();
+uint8_t KLST_BSP_audiocodec_init(AudioInfo* audioinfo);
 uint8_t KLST_BSP_audiocodec_deinit();
 uint8_t KLST_BSP_audiocodec_start();
 uint8_t KLST_BSP_audiocodec_stop();
 
 /* --- callback_interface --- */
 
-/* NOTE this is a bit of a hack but it allows to pass a pointer to a class ( C++ ) as a pointer to a struct ( C ) in a C context */
-/* and might produce a linker error under the "Microsoft C++ ABI" */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmismatched-tags"
-typedef struct AudioCodec AudioCodec;
-#pragma GCC diagnostic pop
+/**
+ * callback for BSP to request audio data
+ * TODO will there also be an integer version to reduce overhead on MCU
+ */
+void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR);
 
-void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
-void audiocodec_callback_class_f(float** input, float** output, uint16_t length);
-void audiocodec_register_audio_device(AudioCodec* pClass);
+/**
+ * called by Low Level BSP to process audio block data
+ * @param audio_block
+ */
+void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block);
+
+///* NOTE this is a bit of a hack but it allows to pass a pointer to a class ( C++ ) as a pointer to a struct ( C ) in a C context */
+///* and might produce a linker error under the "Microsoft C++ ABI" */
+//#pragma GCC diagnostic push
+//#pragma GCC diagnostic ignored "-Wmismatched-tags"
+//typedef struct AudioCodec AudioCodec;
+//#pragma GCC diagnostic pop
+//
+//void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
+//void audiocodec_callback_class_f(float** input, float** output, uint16_t length);
+//void audiocodec_register_audio_device(AudioCodec* pClass);
 
 /* --- callback_interface --- */
 
@@ -56,32 +69,55 @@ void audiocodec_register_audio_device(AudioCodec* pClass);
 #include <iostream>
 #include <functional>
 
-void audioblock(float** input_signal, float** output_signal, uint16_t length);
+/**
+ * weak callback for client application ( i.e sketch ) to implement
+ * @param audio_block
+ */
+WEAK void audioblock(AudioBlock* audio_block);
+//void audioblock(float** input_signal, float** output_signal, uint16_t length);
 
 class AudioCodec {
 public:
+    static const uint8_t AUDIO_DEVICE_INIT_ERROR = 255;
+
     AudioCodec();
-    void init();
-    void KLST_BSP_init();
+    ~AudioCodec();
+    uint8_t init(uint32_t sample_rate     = 48000,
+                 uint8_t  output_channels = 2,
+                 uint8_t  input_channels  = 1,
+                 uint16_t block_size      = 128,
+                 uint8_t  bit_depth       = 16);
+    uint8_t init(AudioInfo* audioinfo = nullptr);
+    void    BSP_init(AudioInfo* audioinfo = nullptr);
 
     /* --- callback_interface --- */
-    void callback_class(uint32_t* input, uint32_t* output, uint16_t length);
-    void callback_class_f(float** input, float** output, uint16_t length);
+
+    void        callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
+    void        callback_class_f(float** input, float** output, uint16_t length);
+    static void process_audioblock_data(AudioBlock* audio_block);
+
     /* --- callback_interface --- */
-    void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
-        callback_audioblock = callback;
-    }
+
+    //    void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
+    //        callback_audioblock = callback;
+    //    }
     void start() {
         // TODO implement KLST_BSP_audiocodec_start
     }
     void stop() {
         // TODO implement KLST_BSP_audiocodec_stop
     }
-    void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
+    //    void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
 
 private:
-    bool                                       isInitialized;
-    Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16    callback_audioblock;
-    std::function<void(float**, float**, int)> mBoundCallback;
+    static std::vector<AudioCodec*> instances;
+    static std::mutex               instances_mutex;
+    static bool                     fRegisteredCallback;
+
+    uint8_t                  id;
+    bool                     isInitialized;
+    AudioInfo*               fAudioInfo;
+    bool                     mDeleteAudioInfo;
+    Callback_1_AUDIOBLOCKPTR callback_audioblock;
 };
 #endif // __cplusplus
