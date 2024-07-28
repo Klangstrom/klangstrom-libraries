@@ -21,7 +21,7 @@
 
 #include "KlangstromEnvironment.h"
 #if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
-// #if defined(KLST_PANDA_EMU) || defined(KLST_CATERPILLAR_EMU)
+// #if defined(KLST_PANDA_EMU) || defined(KLST_CATERPILLAR_EMU)
 
 #ifdef __cplusplus
 extern "C" {

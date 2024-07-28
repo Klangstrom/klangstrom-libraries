@@ -96,6 +96,7 @@ private:
 
 void AudioCodec::BSP_init(AudioInfo* audioinfo) {
     (void)audioinfo;
+    // TODO interprete `audioinfo` and set up the audio codec
     KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(this));
 }
 

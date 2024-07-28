@@ -32,10 +32,6 @@ extern "C" {
 
 #include "KlangstromDefines.h"
 
-#if (KLANG_AUDIO_RATE != 48000) // TODO make the setup sequence aware of the current audio rate … currently fixed at 48KHz e.g `setup_SCLK_FLL()`
-#warning "currently the audio codec only supports 48000Hz audio rate. KLANG_AUDIO_RATE is not set to 48000."
-#endif
-
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
@@ -290,6 +286,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 #define SANITY_TEST_PASSTHROUGH 0
 #define SANITY_TEST_NOISE 0
 #define SANITY_TEST_MIC 0
+#defome SANITY_TEST_AUIOD_RATE 48000
 
 #if SANITY_TEST
 static const float M_MAX_FREQUENCEY  = 440.0;
@@ -309,8 +306,8 @@ void FillBuffer(uint32_t* mTXBuffer, uint32_t* mRXBuffer, uint16_t len) {
     if (mFreqR > M_MAX_FREQUENCEY) {
         mFreqR = M_MAX_FREQUENCEY * 0.25;
     }
-    left_osc_phi_inc  = mFreqL / (float) KLANG_AUDIO_RATE;
-    right_osc_phi_inc = mFreqR / (float) KLANG_AUDIO_RATE;
+    left_osc_phi_inc  = mFreqL / (float) SANITY_TEST_AUIOD_RATE;
+    right_osc_phi_inc = mFreqR / (float) SANITY_TEST_AUIOD_RATE;
 
     for (uint16_t i = 0; i < len; i++) {
 #if SANITY_TEST_PASSTHROUGH

@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <cstdint>
+#include <iostream>
+#include <functional>
 
 #include "KlangstromCallbackDefinitions.h"
 #include "KlangstromAudio.h"
@@ -28,6 +29,12 @@
 extern "C" {
 #endif
 
+/**
+ * initializes audio codec. this function is required to interpret `AudioInfo`
+ * and start the underlying audio hardware.
+ * @param audioinfo configuration for audio codec
+ * @return ID of audio codec
+ */
 uint8_t KLST_BSP_audiocodec_init(AudioInfo* audioinfo);
 uint8_t KLST_BSP_audiocodec_deinit();
 uint8_t KLST_BSP_audiocodec_start();
@@ -36,13 +43,14 @@ uint8_t KLST_BSP_audiocodec_stop();
 /* --- callback_interface --- */
 
 /**
- * callback for BSP to request audio data
- * TODO will there also be an integer version to reduce overhead on MCU
+ * register callback to `AudioCodec::process_audioblock_data` for BSP.
+ * this function is called the first time an audio codec is instantiated.
+ * TODO will there also be an integer version to reduce overhead on MCU?
  */
 void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR);
 
 /**
- * called by Low Level BSP to process audio block data
+ * called by Low Level BSP when new audio data is requested or provided.
  * @param audio_block
  */
 void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block);
@@ -66,34 +74,36 @@ void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block);
 
 #ifdef __cplusplus
 
-#include <iostream>
-#include <functional>
-
 /**
  * weak callback for client application ( i.e sketch ) to implement
  * @param audio_block
  */
 WEAK void audioblock(AudioBlock* audio_block);
-//void audioblock(float** input_signal, float** output_signal, uint16_t length);
 
 class AudioCodec {
 public:
-    static const uint8_t AUDIO_DEVICE_INIT_ERROR = 255;
-
     AudioCodec();
     ~AudioCodec();
+
     uint8_t init(uint32_t sample_rate     = 48000,
                  uint8_t  output_channels = 2,
                  uint8_t  input_channels  = 1,
                  uint16_t block_size      = 128,
-                 uint8_t  bit_depth       = 16);
+                 uint8_t  bit_depth       = 16,
+                 uint8_t  device_type     = AUDIO_DEVICE_UNDEFINED);
     uint8_t init(AudioInfo* audioinfo = nullptr);
     void    BSP_init(AudioInfo* audioinfo = nullptr);
 
     /* --- callback_interface --- */
 
-    void        callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
-    void        callback_class_f(float** input, float** output, uint16_t length);
+    void callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
+    void callback_class_f(float** input, float** output, uint16_t length);
+    /**
+     * static callback for all audio codecs ( or devices ). the ID specified in
+     * `audio_block` is used to determine the device and will forward the call
+     * to it.
+     * @param audio_block
+     */
     static void process_audioblock_data(AudioBlock* audio_block);
 
     /* --- callback_interface --- */
@@ -108,6 +118,10 @@ public:
         // TODO implement KLST_BSP_audiocodec_stop
     }
     //    void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
+
+    void set_callback(Callback_1_AUDIOBLOCKPTR callback) {
+        callback_audioblock = callback;
+    }
 
 private:
     static std::vector<AudioCodec*> instances;

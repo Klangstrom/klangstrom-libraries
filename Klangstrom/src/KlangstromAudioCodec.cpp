@@ -17,7 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KlangstromDefines.h"
 #include "KlangstromAudioCodec.h"
 
 /* --- callback_interface --- */
@@ -65,7 +64,7 @@ void WEAK audioblock(AudioBlock* audio_block) {
 
 // TODO clean up the code below. flexible bit depth, buffer length etcetera
 
-static const uint8_t  M_NUM_OF_BITS = KLANG_AUDIO_BIT_DEPTH;
+static const uint8_t  M_NUM_OF_BITS = 16;
 static const float    M_INT_SCALE   = (1 << (M_NUM_OF_BITS - 1)); // - 1.0;  // @todo(see if `-1.0` is required)
 static const uint32_t M_MASK_LEFT   = (1 << M_NUM_OF_BITS) - 1;
 static const uint32_t M_MASK_RIGHT  = ~(M_MASK_LEFT);
@@ -172,7 +171,7 @@ static const uint32_t M_MASK_RIGHT  = ~(M_MASK_LEFT);
  * TODO look into implementinng an integer version as in `callback_class_i` for more efficient MCU
  */
 void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
-    const uint8_t               id = audio_block->device;
+    const uint8_t               id = audio_block->device_id;
     std::lock_guard<std::mutex> lock(instances_mutex);
     if (id >= 0 && id < instances.size() && instances[id]) {
         if (instances[id]->callback_audioblock) {
@@ -196,12 +195,11 @@ bool                     AudioCodec::fRegisteredCallback = false;
 AudioCodec::AudioCodec() : isInitialized(false),
                            fAudioInfo(nullptr),
                            mDeleteAudioInfo(false),
-                           callback_audioblock(nullptr) {
+                           callback_audioblock(audioblock) {
     if (!fRegisteredCallback) {
         audiocodec_register_callback(AudioCodec::process_audioblock_data);
         fRegisteredCallback = true;
     }
-    callback_audioblock = audioblock;
 }
 
 AudioCodec::~AudioCodec() {
@@ -216,7 +214,12 @@ AudioCodec::~AudioCodec() {
     }
 }
 
-uint8_t AudioCodec::init(uint32_t sample_rate, uint8_t output_channels, uint8_t input_channels, uint16_t block_size, uint8_t bit_depth) {
+uint8_t AudioCodec::init(uint32_t sample_rate,
+                         uint8_t  output_channels,
+                         uint8_t  input_channels,
+                         uint16_t block_size,
+                         uint8_t  bit_depth,
+                         uint8_t  device_type) {
     if (!isInitialized) {
         fAudioInfo                  = new AudioInfo();
         fAudioInfo->sample_rate     = sample_rate;
@@ -224,6 +227,7 @@ uint8_t AudioCodec::init(uint32_t sample_rate, uint8_t output_channels, uint8_t 
         fAudioInfo->input_channels  = input_channels;
         fAudioInfo->block_size      = block_size;
         fAudioInfo->bit_depth       = bit_depth;
+        fAudioInfo->device_type     = device_type;
         mDeleteAudioInfo            = true;
         return init(fAudioInfo);
     }
