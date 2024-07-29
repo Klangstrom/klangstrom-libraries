@@ -172,7 +172,7 @@ static const uint32_t M_MASK_RIGHT  = ~(M_MASK_LEFT);
  */
 void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
     const uint8_t id = audio_block->device_id;
-#if USE_MUTEX
+#ifdef USE_MUTEX
     std::lock_guard<std::mutex> lock(instances_mutex);
 #endif
     if (id >= 0 && id < instances.size() && instances[id]) {
@@ -192,7 +192,7 @@ void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
 
 std::vector<AudioCodec*> AudioCodec::instances;
 bool                     AudioCodec::fRegisteredCallback = false;
-#if USE_MUTEX
+#ifdef USE_MUTEX
 std::mutex AudioCodec::instances_mutex;
 #endif
 
@@ -256,7 +256,7 @@ uint8_t AudioCodec::init(AudioInfo* audioinfo) {
             id            = deviceID;
             /* register instance in collector */
             {
-#if USE_MUTEX
+#ifdef USE_MUTEX
                 std::lock_guard<std::mutex> lock(instances_mutex);
 #endif
                 if (instances.size() <= id) {
