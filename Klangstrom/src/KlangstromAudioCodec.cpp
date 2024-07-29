@@ -243,19 +243,21 @@ uint8_t AudioCodec::init(AudioInfo* audioinfo) {
         } else {
             fAudioInfo = audioinfo;
         }
-        //        KLST_BSP_audiocodec_register_callback(this);
-        //        register_audioblock(audioblock);
         deviceID = KLST_BSP_audiocodec_init(fAudioInfo);
-        BSP_init(fAudioInfo);
-        isInitialized = true;
-        id            = deviceID;
-        /* register instance in collector */
-        {
-            std::lock_guard<std::mutex> lock(instances_mutex);
-            if (instances.size() <= id) {
-                instances.resize(id + 1, nullptr);
+        if (deviceID == AUDIO_DEVICE_INIT_ERROR) {
+            return deviceID;
+        } else {
+            BSP_init(fAudioInfo);
+            isInitialized = true;
+            id            = deviceID;
+            /* register instance in collector */
+            {
+                std::lock_guard<std::mutex> lock(instances_mutex);
+                if (instances.size() <= id) {
+                    instances.resize(id + 1, nullptr);
+                }
+                instances[id] = this;
             }
-            instances[id] = this;
         }
     }
     return deviceID;

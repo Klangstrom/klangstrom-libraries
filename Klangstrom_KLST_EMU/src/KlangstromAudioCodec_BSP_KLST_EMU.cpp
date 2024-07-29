@@ -30,7 +30,12 @@ extern "C" {
 #endif
 
 uint8_t KLST_BSP_audiocodec_init(AudioInfo* audioinfo) {
-    return KlangstromEmulator::instance()->register_audio_device(audioinfo);
+    /* interpret `AudioInfo` e.g check if `device_type` is supported */
+    if (audioinfo->device_type == AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC) {
+        return KlangstromEmulator::instance()->register_audio_device(audioinfo);
+    }
+    std::cerr << "KlangstromEmulatorAudioDevice: device type not supported" << std::endl;
+    return AUDIO_DEVICE_INIT_ERROR;
 }
 
 #ifdef __cplusplus
@@ -95,8 +100,7 @@ private:
 };
 
 void AudioCodec::BSP_init(AudioInfo* audioinfo) {
-    (void)audioinfo;
-    // TODO interprete `audioinfo` and set up the audio codec
+    (void) audioinfo;
     KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(this));
 }
 

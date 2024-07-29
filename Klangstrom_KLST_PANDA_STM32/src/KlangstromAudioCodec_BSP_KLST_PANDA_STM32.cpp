@@ -49,7 +49,7 @@ extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
 
-#define I2S_BUFFER_SIZE (KLANG_SAMPLES_PER_AUDIO_BLOCK * 2)
+#define I2S_BUFFER_SIZE (KLANG_SAMPLES_PER_AUDIO_BLOCK * 2) // TODO replace this with configurable version
 
 uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
 uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
