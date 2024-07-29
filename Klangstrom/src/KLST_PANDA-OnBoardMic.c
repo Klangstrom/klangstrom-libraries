@@ -30,8 +30,6 @@
 //extern SAI_HandleTypeDef hsai_BlockA4;
 //extern PDM_Filter_Handler_t PDM1_filter_handler;
 
-#include "KlangstromDefines.h"
-
 #define PDM_BUFFER_SIZE 128
 uint16_t __attribute__((section(".dma_buffer"))) pdmRxBuf[PDM_BUFFER_SIZE];
 

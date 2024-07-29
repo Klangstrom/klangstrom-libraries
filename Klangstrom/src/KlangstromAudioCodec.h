@@ -19,8 +19,18 @@
 
 #pragma once
 
+#if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+#define USE_MUTEX 1
+#else
+#define USE_MUTEX 0
+#endif
+
 #include <iostream>
 #include <functional>
+#if USE_MUTEX
+#include <mutex>
+#endif
+
 
 #include "KlangstromCallbackDefinitions.h"
 #include "KlangstromAudio.h"
@@ -125,8 +135,10 @@ public:
 
 private:
     static std::vector<AudioCodec*> instances;
-    static std::mutex               instances_mutex;
-    static bool                     fRegisteredCallback;
+#if USE_MUTEX
+    static std::mutex instances_mutex;
+#endif
+    static bool fRegisteredCallback;
 
     uint8_t                  id;
     bool                     isInitialized;

@@ -30,8 +30,6 @@ void AudioCodec::KLST_BSP_init() {}
 extern "C" {
 #endif
 
-#include "KlangstromDefines.h"
-
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
@@ -286,7 +284,7 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence) {
 #define SANITY_TEST_PASSTHROUGH 0
 #define SANITY_TEST_NOISE 0
 #define SANITY_TEST_MIC 0
-#defome SANITY_TEST_AUIOD_RATE 48000
+#define SANITY_TEST_AUIOD_RATE 48000
 
 #if SANITY_TEST
 static const float M_MAX_FREQUENCEY  = 440.0;

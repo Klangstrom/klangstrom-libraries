@@ -171,8 +171,10 @@ static const uint32_t M_MASK_RIGHT  = ~(M_MASK_LEFT);
  * TODO look into implementinng an integer version as in `callback_class_i` for more efficient MCU
  */
 void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
-    const uint8_t               id = audio_block->device_id;
+    const uint8_t id = audio_block->device_id;
+#if USE_MUTEX
     std::lock_guard<std::mutex> lock(instances_mutex);
+#endif
     if (id >= 0 && id < instances.size() && instances[id]) {
         if (instances[id]->callback_audioblock) {
             instances[id]->callback_audioblock(audio_block);
@@ -189,8 +191,10 @@ void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
 //}
 
 std::vector<AudioCodec*> AudioCodec::instances;
-std::mutex               AudioCodec::instances_mutex;
 bool                     AudioCodec::fRegisteredCallback = false;
+#if USE_MUTEX
+std::mutex AudioCodec::instances_mutex;
+#endif
 
 AudioCodec::AudioCodec() : isInitialized(false),
                            fAudioInfo(nullptr),
@@ -252,7 +256,9 @@ uint8_t AudioCodec::init(AudioInfo* audioinfo) {
             id            = deviceID;
             /* register instance in collector */
             {
+#if USE_MUTEX
                 std::lock_guard<std::mutex> lock(instances_mutex);
+#endif
                 if (instances.size() <= id) {
                     instances.resize(id + 1, nullptr);
                 }
