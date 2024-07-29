@@ -25,7 +25,7 @@
 
 #ifdef KLST_PANDA_STM32
 #include "Klangstrom_BSP_KLST_PANDA_STM32.h"
-#elif ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+#elif defined(KLST_ARCH_IS_EMU)
 #include "Klangstrom_BSP_KLST_EMU.h"
 #else
 #warning "no implementation for Klangstrom found ( this might be intentional )"
