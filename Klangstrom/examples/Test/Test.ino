@@ -27,10 +27,10 @@ void setup() {
     console.info();
     console.timestamp();
     console.println("starting init");
-    uint8_t mDeviceID = audiocodec.init(48000, 2, 2, 128, 16, AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC);
+    uint8_t mDeviceID = audiocodec.init(48000, 2, 1, 128, 16, AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC);
     console.println("audio device ID: %i", mDeviceID);
     leds.init(); // TODO interferes with audiocodec
-    
+
 #ifdef TEST_SD_CARD
     sdcard.init();
 #endif // TEST_SD_CARD

@@ -22,12 +22,11 @@
 /* --- callback_interface --- */
 
 extern "C" {
-//static AudioCodec* mAudioCodecClass = nullptr;
-static Callback_1_AUDIOBLOCKPTR fAudioCodecCallback;
+static Callback_1_AUDIOBLOCKPTR fAudioCodecCallback = AudioCodec::process_audioblock_data;
 
-void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR pAudioCodecCallback) {
-    fAudioCodecCallback = pAudioCodecCallback;
-}
+//void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR pAudioCodecCallback) {
+//    fAudioCodecCallback = pAudioCodecCallback;
+//}
 
 void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block) {
     /* fill buffer with zeros if callback is not set */
@@ -42,24 +41,6 @@ void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block) {
     fAudioCodecCallback(audio_block);
 }
 
-//void audiocodec_register_audio_device(AudioCodec* pAudioCodecClass) {
-//    mAudioCodecClass = pAudioCodecClass;
-//}
-
-///**
-// * callback for underlying hardware layer … with either uint32 or float type
-//*/
-//void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length) {
-//    if (mAudioCodecClass) {
-//        mAudioCodecClass->callback_class_i(input, output, length);
-//    }
-//}
-//
-//void audiocodec_callback_class_f(float** input, float** output, uint16_t length) {
-//    if (mAudioCodecClass) {
-//        mAudioCodecClass->callback_class_f(input, output, length);
-//    }
-//}
 } // extern "C"
 
 /**
@@ -74,105 +55,6 @@ void WEAK audioblock(AudioBlock* audio_block) {
         }
     }
 }
-
-// TODO clean up the code below. flexible bit depth, buffer length etcetera
-
-/**
- * fills buffer with new block of samples
- */
-//void AudioCodec::callback_class_i(uint32_t* input, uint32_t* output, uint16_t length) {
-//    // TODO `length` does not necessarily equal `KLANG_SAMPLES_PER_AUDIO_BLOCK`
-//    // TODO if length > KLANG_SAMPLES_PER_AUDIO_BLOCK try to chop it down
-//    if (!callback_audioblock) {
-//        for (int i = 0; i < KLANG_SAMPLES_PER_AUDIO_BLOCK; i++) {
-//            output[i] = 0;
-//        }
-//        return;
-//    }
-//
-//    float fInputBuffers[KLANG_INPUT_CHANNELS][KLANG_SAMPLES_PER_AUDIO_BLOCK];
-//    float fOutputBuffers[KLANG_OUTPUT_CHANNELS][KLANG_SAMPLES_PER_AUDIO_BLOCK];
-//
-//    /* unpack receive buffer to sample */
-//    for (int i = 0; i < KLANG_SAMPLES_PER_AUDIO_BLOCK; i++) {
-//        const uint32_t p                      = input[i];
-//        const auto     mLeftInt               = (int16_t) (p & M_MASK_LEFT);
-//        const auto     mRightInt              = (int16_t) (p & M_MASK_RIGHT) >> M_NUM_OF_BITS;
-//        fInputBuffers[KLANG_CHANNEL_LEFT][i]  = static_cast<float>(mLeftInt) / M_INT_SCALE;
-//        fInputBuffers[KLANG_CHANNEL_RIGHT][i] = static_cast<float>(mRightInt) / M_INT_SCALE;
-//    }
-//
-//    /* calculate next audio block */
-//    float* mInputBuffer[KLANG_INPUT_CHANNELS];
-//    float* mOutputBuffer[KLANG_OUTPUT_CHANNELS];
-//    for (size_t j = 0; j < KLANG_INPUT_CHANNELS; j++) {
-//        mInputBuffer[j] = fInputBuffers[j];
-//    }
-//    for (size_t j = 0; j < KLANG_OUTPUT_CHANNELS; j++) {
-//        mOutputBuffer[j] = fOutputBuffers[j];
-//    }
-//
-//    callback_audioblock(mInputBuffer, mOutputBuffer, KLANG_SAMPLES_PER_AUDIO_BLOCK);
-//
-//    /* pack sample for transmit buffer */
-//    for (int i = 0; i < KLANG_SAMPLES_PER_AUDIO_BLOCK; i++) {
-//        auto mLeftInt  = (int16_t) (fOutputBuffers[KLANG_CHANNEL_LEFT][i] * M_INT_SCALE);
-//        auto mRightInt = (int16_t) (fOutputBuffers[KLANG_CHANNEL_RIGHT][i] * M_INT_SCALE);
-//        output[i]      = ((uint32_t) (uint16_t) mLeftInt) << 0 | ((uint32_t) (uint16_t) mRightInt) << M_NUM_OF_BITS;
-//    }
-//}
-
-//void AudioCodec::callback_class_f(float** input, float** output, uint16_t length) {
-//    if (!callback_audioblock) {
-//        for (int j = 0; j < KLANG_OUTPUT_CHANNELS; ++j) {
-//            for (int i = 0; i < length; i++) {
-//                output[j][i] = 0;
-//            }
-//        }
-//        return;
-//    }
-//
-//    /* if (length > KLANG_SAMPLES_PER_AUDIO_BLOCK) try to chop it down */
-//    if (length > KLANG_SAMPLES_PER_AUDIO_BLOCK) {
-//        // TODO this scenario is not ideal and should be avoided … maybe issue a warning somewhere?
-//        const uint16_t blockSize        = KLANG_SAMPLES_PER_AUDIO_BLOCK;
-//        const uint8_t  mIterations      = length / blockSize;
-//        const uint16_t remainingSamples = length % blockSize;
-//
-//        for (uint8_t i = 0; i < mIterations; i++) {
-//            float* mInputSection[KLANG_INPUT_CHANNELS];
-//            float* mOutputSection[KLANG_OUTPUT_CHANNELS];
-//
-//            for (int channel = 0; channel < KLANG_INPUT_CHANNELS; channel++) {
-//                mInputSection[channel] = &input[channel][i * blockSize];
-//            }
-//
-//            for (int channel = 0; channel < KLANG_OUTPUT_CHANNELS; channel++) {
-//                mOutputSection[channel] = &output[channel][i * blockSize];
-//            }
-//
-//            callback_audioblock(mInputSection, mOutputSection, blockSize);
-//        }
-//
-//        /* process any remaining samples */
-//        if (remainingSamples > 0) {
-//            float* mInputSection[KLANG_INPUT_CHANNELS];
-//            float* mOutputSection[KLANG_OUTPUT_CHANNELS];
-//
-//            for (int channel = 0; channel < KLANG_INPUT_CHANNELS; channel++) {
-//                mInputSection[channel] = &input[channel][mIterations * blockSize];
-//            }
-//
-//            for (int channel = 0; channel < KLANG_OUTPUT_CHANNELS; channel++) {
-//                mOutputSection[channel] = &output[channel][mIterations * blockSize];
-//            }
-//
-//            callback_audioblock(mInputSection, mOutputSection, remainingSamples);
-//        }
-//    } else {
-//        callback_audioblock(input, output, length);
-//    }
-//}
 
 /**
  * fills buffer with new block of samples from device with ID specified in `AudioBlock`
@@ -192,14 +74,8 @@ void AudioCodec::process_audioblock_data(AudioBlock* audio_block) {
 
 /* --- callback_interface --- */
 
-//void AudioCodec::callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length) {
-//    if (callback_audioblock) {
-//        callback_audioblock(input_signal, output_signal, length);
-//    }
-//}
-
 std::vector<AudioCodec*> AudioCodec::instances;
-bool                     AudioCodec::fRegisteredCallback = false;
+//bool                     AudioCodec::fRegisteredCallback = false;
 #ifdef USE_MUTEX
 std::mutex AudioCodec::instances_mutex;
 #endif
@@ -208,21 +84,25 @@ AudioCodec::AudioCodec() : isInitialized(false),
                            fAudioInfo(nullptr),
                            mDeleteAudioInfo(false),
                            callback_audioblock(audioblock) {
-    if (!fRegisteredCallback) {
-        audiocodec_register_callback(AudioCodec::process_audioblock_data);
-        fRegisteredCallback = true;
-    }
+    //    if (!fRegisteredCallback) {
+    //        audiocodec_register_callback(AudioCodec::process_audioblock_data);
+    //        fRegisteredCallback = true;
+    //    }
 }
 
 AudioCodec::~AudioCodec() {
+    {
+#ifdef USE_MUTEX
+        // TODO mutex lock causes:
+        // TODO libc++abi: terminating due to uncaught exception of type std::__1::system_error: mutex lock failed: Invalid argument
+//        std::lock_guard<std::mutex> lock(instances_mutex);
+#endif
+        if (id < instances.size()) {
+            instances[id] = nullptr;
+        }
+    }
     if (mDeleteAudioInfo) {
         delete fAudioInfo;
-    }
-    // TODO mutex lock causes:
-    // libc++abi: terminating due to uncaught exception of type std::__1::system_error: mutex lock failed: Invalid argument
-    //    std::lock_guard<std::mutex> lock(instances_mutex);
-    if (id < instances.size()) {
-        instances[id] = nullptr;
     }
 }
 

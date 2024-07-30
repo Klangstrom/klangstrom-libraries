@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_EMU
 #define USE_MUTEX
 #endif
@@ -28,7 +29,6 @@
 #ifdef USE_MUTEX
 #include <mutex>
 #endif
-
 
 #include "KlangstromCallbackDefinitions.h"
 #include "KlangstromAudio.h"
@@ -44,9 +44,9 @@ extern "C" {
  * @return ID of audio codec
  */
 uint8_t KLST_BSP_audiocodec_init(AudioInfo* audioinfo);
-uint8_t KLST_BSP_audiocodec_deinit();
-uint8_t KLST_BSP_audiocodec_start();
-uint8_t KLST_BSP_audiocodec_stop();
+uint8_t KLST_BSP_audiocodec_deinit(); // TODO implement
+uint8_t KLST_BSP_audiocodec_start();  // TODO implement
+uint8_t KLST_BSP_audiocodec_stop();   // TODO implement
 
 /* --- callback_interface --- */
 
@@ -62,17 +62,6 @@ void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR);
  * @param audio_block
  */
 void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block);
-
-///* NOTE this is a bit of a hack but it allows to pass a pointer to a class ( C++ ) as a pointer to a struct ( C ) in a C context */
-///* and might produce a linker error under the "Microsoft C++ ABI" */
-//#pragma GCC diagnostic push
-//#pragma GCC diagnostic ignored "-Wmismatched-tags"
-//typedef struct AudioCodec AudioCodec;
-//#pragma GCC diagnostic pop
-//
-//void audiocodec_callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
-//void audiocodec_callback_class_f(float** input, float** output, uint16_t length);
-//void audiocodec_register_audio_device(AudioCodec* pClass);
 
 /* --- callback_interface --- */
 
@@ -105,8 +94,6 @@ public:
 
     /* --- callback_interface --- */
 
-//    void callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
-//    void callback_class_f(float** input, float** output, uint16_t length);
     /**
      * static callback for all audio codecs ( or devices ). the ID specified in
      * `audio_block` is used to determine the device and will forward the call
@@ -117,16 +104,12 @@ public:
 
     /* --- callback_interface --- */
 
-    //    void register_audioblock(Callback_3_FLOATPTRPTR_FLOATPTRPTR_UI16 callback) {
-    //        callback_audioblock = callback;
-    //    }
     void start() {
         // TODO implement KLST_BSP_audiocodec_start
     }
     void stop() {
         // TODO implement KLST_BSP_audiocodec_stop
     }
-    //    void callback_audioblock_method(float** input_signal, float** output_signal, uint16_t length);
 
     void set_callback(Callback_1_AUDIOBLOCKPTR callback) {
         callback_audioblock = callback;
