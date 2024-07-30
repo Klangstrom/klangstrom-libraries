@@ -18,7 +18,7 @@
  */
 
 #include "KlangstromEnvironment.h"
-#if ((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+#ifdef KLST_ARCH_IS_EMU
 
 #include <cstdint>
 
@@ -104,4 +104,4 @@ void AudioCodec::BSP_init(AudioInfo* audioinfo) {
     KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(this));
 }
 
-#endif // defined((KLST_ENV & KLST_ARCH_MASK) == KLST_ARCH_EMU)
+#endif // KLST_ARCH_IS_EMU

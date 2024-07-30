@@ -173,7 +173,7 @@ void LTDC_loop() {
     //			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
     //		}
     //		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
-    //		printf("             frame fill duration    : %li\r\n", mFillBufferDuration);
+    //		printf("             frame fill duration    : %li\n\r", mFillBufferDuration);
 
     DMA2D_FillRect(0xFF000000, // ARGB
                    0,
@@ -191,7 +191,7 @@ void LTDC_loop() {
     /* schedule redraw */
     LTDC_switch_framebuffer(); // manually trigger frame redraw
 
-    //	println("VSYNC duration: %li\r\n", fVSYNCDuration);
+    //	println("VSYNC duration: %li\n\r", fVSYNCDuration);
 }
 
 #endif // KLST_PANDA_STM32

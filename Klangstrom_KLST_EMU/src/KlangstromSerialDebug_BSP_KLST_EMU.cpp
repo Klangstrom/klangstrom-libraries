@@ -62,9 +62,9 @@ void KLST_BSP_serialdebug_println(const char* format, ...) {
 
 void KLST_BSP_serialdebug_info() {
     std::string mName = KlangstromEmulator::instance()->get_emulator_name();
-    KLST_BSP_serialdebug_printf("\r\n---------------------------------------------------------\r\n\r\n");
-    KLST_BSP_serialdebug_printf("KLST_EMU as %s (%s)\r\n", mName.c_str(), __TIME__);
-    KLST_BSP_serialdebug_printf("\r\n---------------------------------------------------------\r\n\r\n");
+    KLST_BSP_serialdebug_printf("\n\r---------------------------------------------------------\n\r\n\r");
+    KLST_BSP_serialdebug_printf("KLST_EMU as %s (%s)\n\r", mName.c_str(), __TIME__);
+    KLST_BSP_serialdebug_printf("\n\r---------------------------------------------------------\n\r\n\r");
 }
 
 void KLST_BSP_serialdebug_timestamp() {}

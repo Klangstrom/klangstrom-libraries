@@ -51,5 +51,5 @@ void SerialDebug::println(const char* format, ...) {
     va_start(args, format);
     vsnprintf(buffer, SERIAL_DEBUG_BUFFER_SIZE, format, args);
     va_end(args);
-    KLST_BSP_serialdebug_printf("%s\r\n", buffer);
+    KLST_BSP_serialdebug_printf("%s\n\r", buffer);
 }

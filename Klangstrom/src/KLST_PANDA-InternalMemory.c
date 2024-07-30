@@ -33,7 +33,7 @@
 static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR);
 
 static void run_test(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
-    printf("REGION: 0x%08" PRIX32 " - 0x%08" PRIX32 "\r\n", RAM_START_ADDR, RAM_END_ADDR);
+    printf("REGION: 0x%08" PRIX32 " - 0x%08" PRIX32 "\n\r", RAM_START_ADDR, RAM_END_ADDR);
     if (test_interal_ram(RAM_START_ADDR, RAM_END_ADDR) != 0) {
         KLST_BSP_serialdebug_println("        FAILED");
     } else {
@@ -61,7 +61,7 @@ static int test_interal_ram(uint32_t RAM_START_ADDR, uint32_t RAM_END_ADDR) {
             printf(".");
         }
     }
-    printf("\r\n");
+    printf("\n\r");
 
     // Verification phase: check the test pattern
     printf("READ  : ");

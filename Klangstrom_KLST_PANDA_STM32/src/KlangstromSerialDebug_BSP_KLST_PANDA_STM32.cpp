@@ -50,13 +50,13 @@ void KLST_BSP_serialdebug_println(const char* format, ...) {
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
-    printf("\r\n");
+    printf("\n\r");
 }
 
 void KLST_BSP_serialdebug_info() {
-    printf("\r\n---------------------------------------------------------\r\n\r\n");
-    printf("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)\r\n", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
-    printf("\r\n---------------------------------------------------------\r\n\r\n");
+    printf("\n\r---------------------------------------------------------\n\r\n\r");
+    printf("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)\n\r", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
+    printf("\n\r---------------------------------------------------------\n\r\n\r");
 }
 
 void KLST_BSP_serialdebug_timestamp() {

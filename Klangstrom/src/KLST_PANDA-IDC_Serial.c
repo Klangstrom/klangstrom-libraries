@@ -72,7 +72,7 @@ static void evaluate_receive_flags() {
     //        RX_01_counter = 0;
     //    }
     if (mReceivedData) {
-        printf("\r\n");
+        printf("\n\r");
     }
 }
 
@@ -123,7 +123,7 @@ uint8_t IDC_serial_handle_rx(USART_TypeDef* uart_instance, uint16_t length) {
             // TODO write to persistent buffer
             KLST_BSP_serialdebug_printf("data_receive : (");
             print_and_clear_buffer("UART8[DMA]", RX_01_DMA_buffer, length);
-            KLST_BSP_serialdebug_printf("\r\n");
+            KLST_BSP_serialdebug_printf("\n\r");
         }
 
         HAL_UARTEx_ReceiveToIdle_DMA(&huart8, RX_01_DMA_buffer, DMA_BUFFER_SIZE);

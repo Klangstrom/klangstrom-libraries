@@ -78,7 +78,7 @@ void onboardmic_loop() {
     for (int i = 0; i < PDM_BUFFER_SIZE; i++) {
         printf("0x%04X, ", pdmRxBuf[i]);
     }
-    printf("\r\n");
+    printf("\n\r");
 }
 
 void onboardmic_RX_full_complete_callback(SAI_HandleTypeDef* hsai) {

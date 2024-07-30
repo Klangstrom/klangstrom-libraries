@@ -70,7 +70,7 @@ void externalmemory_test() {
         *(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) 0x0;
     }
     stop_time = HAL_GetTick() - start_time;
-    printf("             writing 0s   : %li\r\n", stop_time);
+    printf("             writing 0s   : %li\n\r", stop_time);
 
     HAL_Delay(50);
 
@@ -80,7 +80,7 @@ void externalmemory_test() {
         *(__IO uint8_t*) (SDRAM_ADDRESS_START + counter) = (uint8_t) (testByte + counter);
     }
     stop_time = HAL_GetTick() - start_time;
-    printf("             writing byte : %li\r\n", stop_time);
+    printf("             writing byte : %li\n\r", stop_time);
 
     HAL_Delay(50);
 
@@ -95,8 +95,8 @@ void externalmemory_test() {
         }
     }
     stop_time = HAL_GetTick() - start_time;
-    printf("             reading byte : %li\r\n", stop_time);
-    printf("                   errors : %li\r\n", error_counter);
+    printf("             reading byte : %li\n\r", stop_time);
+    printf("                   errors : %li\n\r", error_counter);
 
     HAL_Delay(50);
 

@@ -69,7 +69,7 @@ void MIDI_analog_handle_rx(uint16_t length) {
         // TODO write to persistent buffer
         KLST_BSP_serialdebug_printf("data_receive : (");
         print_and_clear_buffer("UART4[DMA]", RX_MIDI_DMA_buffer, length);
-        printf("\r\n");
+        printf("\n\r");
     }
 
     MIDI_analog_handle_start_receive();
