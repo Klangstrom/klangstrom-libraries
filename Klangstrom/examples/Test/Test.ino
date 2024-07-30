@@ -94,5 +94,17 @@ void audioblock(AudioBlock* audio_block) {
         }
     }
 }
+
+void audioblock(AudioBlock* audio_block) {
+    if (audio_block->device_id == 0) {
+        for (int i = 0; i < audio_block->block_size; ++i) {
+            audio_block->output[0][i] = oscillator.process();
+            for (int j = 1; j < audio_block->output_channels; ++j) {
+                audio_block->output[j][i] = audio_block->output[0][i];
+            }
+        }
+    }
+}
+
 // arduino-cli compile -b klangstrom:emulator:KLST_EMU:board=KLST_PANDA Test
 // arduino-cli compile -b STMicroelectronics:stm32:KLST_PANDA Test
