@@ -89,7 +89,7 @@ void audioblock(AudioBlock* audio_block) {
         for (int i = 0; i < audio_block->block_size; ++i) {
             float mSample = oscillator.process();
             for (int j = 0; j < audio_block->output_channels; ++j) {
-                audio_block->output[0][i] = mSample;
+                audio_block->output[j][i] = mSample;
             }
         }
     }
