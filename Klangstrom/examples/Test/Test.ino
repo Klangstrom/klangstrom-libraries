@@ -87,20 +87,9 @@ void loop() {
 void audioblock(AudioBlock* audio_block) {
     if (audio_block->device_id == 0) {
         for (int i = 0; i < audio_block->block_size; ++i) {
+            float mSample = oscillator.process();
             for (int j = 0; j < audio_block->output_channels; ++j) {
-                audio_block->output[0][i] = oscillator.process();
-                audio_block->output[1][i] = audio_block->output[0][i];
-            }
-        }
-    }
-}
-
-void audioblock(AudioBlock* audio_block) {
-    if (audio_block->device_id == 0) {
-        for (int i = 0; i < audio_block->block_size; ++i) {
-            audio_block->output[0][i] = oscillator.process();
-            for (int j = 1; j < audio_block->output_channels; ++j) {
-                audio_block->output[j][i] = audio_block->output[0][i];
+                audio_block->output[0][i] = mSample;
             }
         }
     }
