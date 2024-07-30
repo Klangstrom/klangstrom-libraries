@@ -30,6 +30,15 @@ void audiocodec_register_callback(Callback_1_AUDIOBLOCKPTR pAudioCodecCallback) 
 }
 
 void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block) {
+    /* fill buffer with zeros if callback is not set */
+    if (!fAudioCodecCallback) {
+        for (int j = 0; j < audio_block->output_channels; ++j) {
+            for (int i = 0; i < audio_block->block_size; i++) {
+                audio_block->output[j][i] = 0;
+            }
+        }
+        return;
+    }
     fAudioCodecCallback(audio_block);
 }
 
@@ -53,6 +62,10 @@ void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block) {
 //}
 } // extern "C"
 
+/**
+ * default audio block callback. can be overwritten in application
+ * @param audio_block
+ */
 void WEAK audioblock(AudioBlock* audio_block) {
     //void WEAK audioblock(float** input_signal, float** output_signal, uint16_t length) {
     for (int i = 0; i < audio_block->block_size; ++i) {
@@ -63,11 +76,6 @@ void WEAK audioblock(AudioBlock* audio_block) {
 }
 
 // TODO clean up the code below. flexible bit depth, buffer length etcetera
-
-static const uint8_t  M_NUM_OF_BITS = 16;
-static const float    M_INT_SCALE   = (1 << (M_NUM_OF_BITS - 1)); // - 1.0;  // @todo(see if `-1.0` is required)
-static const uint32_t M_MASK_LEFT   = (1 << M_NUM_OF_BITS) - 1;
-static const uint32_t M_MASK_RIGHT  = ~(M_MASK_LEFT);
 
 /**
  * fills buffer with new block of samples

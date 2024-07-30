@@ -35,7 +35,7 @@ extern "C" {
 typedef struct AudioInfo {
     uint32_t sample_rate     = 48000;
     uint8_t  output_channels = 2;
-    uint8_t  input_channels  = 1;
+    uint8_t  input_channels  = 2;
     uint16_t block_size      = 128;
     uint8_t  bit_depth       = 16;
     uint8_t  device_type     = AUDIO_DEVICE_UNDEFINED;

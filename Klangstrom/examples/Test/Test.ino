@@ -18,6 +18,8 @@ uint8_t     fLEDIntensity = 0;
 float     wavetable[512];
 Wavetable oscillator{wavetable, 512, 48000};
 
+// #define TEST_SD_CARD
+
 void setup() {
     /* init section */
     klangstrom.init();
@@ -25,9 +27,13 @@ void setup() {
     console.info();
     console.timestamp();
     console.println("starting init");
-    audiocodec.init();
+    uint8_t mDeviceID = audiocodec.init(48000, 2, 2, 128, 16, AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC);
+    console.println("audio device ID: %i", mDeviceID);
     leds.init(); // TODO interferes with audiocodec
+    
+#ifdef TEST_SD_CARD
     sdcard.init();
+#endif // TEST_SD_CARD
 
     console.timestamp();
     console.println("finished init");
@@ -38,6 +44,7 @@ void setup() {
     klangstrom.setup();
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
+    oscillator.set_amplitude(0.1f);
 
     console.timestamp();
     console.println("finished setup");
@@ -45,6 +52,7 @@ void setup() {
 
     audiocodec.start();
 
+#ifdef TEST_SD_CARD
     /* SD Card */
     sdcard.status();
 
@@ -59,6 +67,7 @@ void setup() {
     console.println("Directories: %i", directories.size());
     // sdcard.open("KLST.TXT");
     console.println("---------------------------------------------------------");
+#endif // TEST_SD_CARD
 }
 
 void loop() {
@@ -75,12 +84,15 @@ void loop() {
     delay(1000);
 }
 
-void audioblock(float** input_signal, float** output_signal, uint16_t length) {
-    for (int i = 0; i < length; ++i) {
-        output_signal[0][i] = oscillator.process();
-        output_signal[1][i] = output_signal[0][i];
+void audioblock(AudioBlock* audio_block) {
+    if (audio_block->device_id == 0) {
+        for (int i = 0; i < audio_block->block_size; ++i) {
+            for (int j = 0; j < audio_block->output_channels; ++j) {
+                audio_block->output[0][i] = oscillator.process();
+                audio_block->output[1][i] = audio_block->output[0][i];
+            }
+        }
     }
 }
-
 // arduino-cli compile -b klangstrom:emulator:KLST_EMU:board=KLST_PANDA Test
-// arduino-cli compile -b STMicroelectronics:stm32:Klangstrom Test
+// arduino-cli compile -b STMicroelectronics:stm32:KLST_PANDA Test

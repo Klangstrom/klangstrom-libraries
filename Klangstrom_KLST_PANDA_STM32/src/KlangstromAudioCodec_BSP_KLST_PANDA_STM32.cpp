@@ -24,7 +24,10 @@
 
 #include "KlangstromAudioCodec.h"
 
-void AudioCodec::KLST_BSP_init() {}
+void AudioCodec::BSP_init(AudioInfo* audioinfo) {
+    (void) audioinfo;
+    // NOTE this is a dummy function and currently only used in the emulator
+}
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,10 +50,18 @@ extern I2C_HandleTypeDef hi2c4;
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
 
-#define I2S_BUFFER_SIZE (KLANG_SAMPLES_PER_AUDIO_BLOCK * 2) // TODO replace this with configurable version
+// TODO replace this with configurable version
+#define M_BIT_DEPTH 16
+#define M_SAMPLE_RATE 48000
+#define M_OUTPUT_CHANNELS 2
+#define M_INPUT_CHANNELS 2
+#define M_DEVICE_ID 0
+#define M_SAMPLES_PER_AUDIO_BLOCK 128
+#define M_I2S_BUFFER_SIZE (M_SAMPLES_PER_AUDIO_BLOCK * 2)
+// TODO replace this with configurable version
 
-uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[I2S_BUFFER_SIZE];
-uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[I2S_BUFFER_SIZE];
+uint32_t __attribute__((section(".dma_buffer"))) dma_TX_buffer[M_I2S_BUFFER_SIZE];
+uint32_t __attribute__((section(".dma_buffer"))) dma_RX_buffer[M_I2S_BUFFER_SIZE];
 uint32_t*                                        mCurrentRXBuffer;
 
 static void delay_ms(uint32_t duration) {
@@ -63,10 +74,18 @@ static void setup_WM8904(bool use_FLL, bool use_start_sequence);
 static void setup_default_start_sequence();
 static void setup_manually();
 
-uint8_t KLST_BSP_audiocodec_init() {
+uint8_t KLST_BSP_audiocodec_init(AudioInfo* audioinfo) {
+    // TODO so this is interesting, because here will need to implement ...
+    // TODO ... a distinction between different types of audio codecs/devices ...
+    // TODO ... for now it only starts the audio codec and returns 0 as device ID ...
+    // TODO ... in the future this will be able to distinguish between different devices.
+    if (audioinfo->device_type != AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC) {
+        KLST_BSP_serialdebug_println("KLST_BSP_audiocodec_init: device type not supported. currently only audio codec works");
+        return AUDIO_DEVICE_INIT_ERROR;
+    }
     if (WM8904_init(&hi2c4) != HAL_OK) {
         KLST_BSP_serialdebug_println("could not initialize audiocodec");
-        return HAL_ERROR;
+        return AUDIO_DEVICE_INIT_ERROR;
     } else {
         MX_SAI1_Init();
         setup_SAI(); /* NOTE this is required to start the master clock */
@@ -74,7 +93,7 @@ uint8_t KLST_BSP_audiocodec_init() {
         setup_WM8904(true, false);
         //           FLL   START_SEQUENCE
         setup_default_start_sequence(); // TODO investigate why this is necessary to generate decent volume ( albeit DC offset?!? )
-        return HAL_OK;
+        return 0;
     }
 }
 
@@ -157,7 +176,7 @@ static void setup_manually() {
                               WM8904_HPR_ENA_OUTP |
                               WM8904_HPR_ENA_DLY |
                               WM8904_HPR_ENA);
-    set_headphone_volume(0xFF, 0xFF);
+    set_headphone_volume(0x32, 0x32);
     delay_ms(100);
 
 #ifdef TEST_WM8904_SET
@@ -348,12 +367,12 @@ static void setup_SAI() {
     memset(dma_RX_buffer, 0, sizeof(dma_RX_buffer));
 
     HAL_StatusTypeDef status;
-    status = HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t*) dma_TX_buffer, I2S_BUFFER_SIZE << 1);
+    status = HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t*) dma_TX_buffer, M_I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
         KLST_BSP_serialdebug_println("### ERROR initializing SAI TX: %i", status);
     }
 
-    status = HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t*) dma_RX_buffer, I2S_BUFFER_SIZE << 1);
+    status = HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t*) dma_RX_buffer, M_I2S_BUFFER_SIZE << 1);
     if (HAL_OK != status) {
         KLST_BSP_serialdebug_println("### ERROR initializing SAI RX: %i", status);
     }
@@ -361,12 +380,58 @@ static void setup_SAI() {
     mCurrentRXBuffer = &(dma_RX_buffer[0]);
 }
 
+static void process_audioblock_data(uint32_t output_buffer_offset) {
+    AudioBlock audio_block;
+    uint32_t*  input  = mCurrentRXBuffer;
+    uint32_t*  output = &(dma_TX_buffer[output_buffer_offset]);
+
+    /* prepare input and output buffer */
+    audio_block.output = new float*[M_OUTPUT_CHANNELS];
+    audio_block.input  = new float*[M_INPUT_CHANNELS];
+    for (uint8_t i = 0; i < M_OUTPUT_CHANNELS; i++) {
+        audio_block.output[i] = new float[M_SAMPLES_PER_AUDIO_BLOCK];
+    }
+    for (uint8_t i = 0; i < M_INPUT_CHANNELS; i++) {
+        audio_block.input[i] = new float[M_SAMPLES_PER_AUDIO_BLOCK];
+    }
+
+    /* unpack receive buffer to (float) samples */
+    static const float    M_INT_SCALE  = (1 << (M_BIT_DEPTH - 1)); // - 1.0;  // @todo(see if `-1.0` is required)
+    static const uint32_t M_MASK_LEFT  = (1 << M_BIT_DEPTH) - 1;
+    static const uint32_t M_MASK_RIGHT = ~(M_MASK_LEFT);
+    for (int i = 0; i < M_SAMPLES_PER_AUDIO_BLOCK; i++) {
+        const uint32_t p         = input[i];
+        const auto     mLeftInt  = (int16_t) (p & M_MASK_LEFT);
+        const auto     mRightInt = (int16_t) (p & M_MASK_RIGHT) >> M_BIT_DEPTH;
+        audio_block.input[0][i]  = static_cast<float>(mLeftInt) / M_INT_SCALE;
+        audio_block.input[1][i]  = static_cast<float>(mRightInt) / M_INT_SCALE;
+    }
+
+    audio_block.sample_rate     = M_SAMPLE_RATE;
+    audio_block.output_channels = M_OUTPUT_CHANNELS;
+    audio_block.input_channels  = M_INPUT_CHANNELS;
+    audio_block.block_size      = M_SAMPLES_PER_AUDIO_BLOCK;
+    audio_block.device_id       = M_DEVICE_ID;
+    KLST_BSP_audiocodec_process_audioblock_data(&audio_block);
+
+    /* pack sample for transmit buffer */
+    for (int i = 0; i < M_SAMPLES_PER_AUDIO_BLOCK; i++) {
+        auto mLeftInt  = (int16_t) (audio_block.output[0][i] * M_INT_SCALE);
+        auto mRightInt = (int16_t) (audio_block.output[1][i] * M_INT_SCALE);
+        output[i]      = ((uint32_t) (uint16_t) mLeftInt) << 0 | ((uint32_t) (uint16_t) mRightInt) << M_BIT_DEPTH;
+    }
+
+    delete[] audio_block.output;
+    delete[] audio_block.input;
+}
+
 void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
-        FillBuffer(&(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        FillBuffer(&(dma_TX_buffer[M_I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, M_I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[I2S_BUFFER_SIZE >> 1]), I2S_BUFFER_SIZE >> 1);
+        process_audioblock_data(M_I2S_BUFFER_SIZE >> 1);
+//        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[M_I2S_BUFFER_SIZE >> 1]), M_I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -374,9 +439,10 @@ void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai) {
 void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockB1) {
 #if SANITY_TEST
-        FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, I2S_BUFFER_SIZE >> 1);
+        FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, M_I2S_BUFFER_SIZE >> 1);
 #else
-        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[0]), I2S_BUFFER_SIZE >> 1);
+        process_audioblock_data(0);
+//        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[0]), M_I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -384,7 +450,7 @@ void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai) {
 void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef* hsai) {
     if (hsai == &hsai_BlockA1) {
         // TODO maybe better copy input buffer?
-        mCurrentRXBuffer = &(dma_RX_buffer[I2S_BUFFER_SIZE >> 1]);
+        mCurrentRXBuffer = &(dma_RX_buffer[M_I2S_BUFFER_SIZE >> 1]);
     }
 }
 

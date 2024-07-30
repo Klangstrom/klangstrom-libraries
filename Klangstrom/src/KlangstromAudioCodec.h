@@ -93,6 +93,7 @@ public:
     AudioCodec();
     ~AudioCodec();
 
+    // TODO maybe drop this first init method
     uint8_t init(uint32_t sample_rate     = 48000,
                  uint8_t  output_channels = 2,
                  uint8_t  input_channels  = 1,
@@ -104,8 +105,8 @@ public:
 
     /* --- callback_interface --- */
 
-    void callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
-    void callback_class_f(float** input, float** output, uint16_t length);
+//    void callback_class_i(uint32_t* input, uint32_t* output, uint16_t length);
+//    void callback_class_f(float** input, float** output, uint16_t length);
     /**
      * static callback for all audio codecs ( or devices ). the ID specified in
      * `audio_block` is used to determine the device and will forward the call
