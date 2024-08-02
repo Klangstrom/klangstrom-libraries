@@ -23,10 +23,14 @@
 
 #include "KlangstromEnvironment.h"
 
-#ifdef KLST_PANDA_STM32
-#include "Klangstrom_BSP_KLST_PANDA_STM32.h" // TODO rename these
+/**
+ * this include is required to tell the silly arduino build system to include the other libraries
+ */
+#ifdef KLST_ARCH_IS_STM32
+#include "System_ASP_STM32.h" // TODO rename these
 #elif defined(KLST_ARCH_IS_EMU)
 #include "Klangstrom_BSP_KLST_EMU.h"
+#include "System_ASP_EMU.h" // TODO rename these
 #else
 #warning "no implementation for Klangstrom found ( this might be intentional )"
 #endif
@@ -35,13 +39,21 @@
 extern "C" {
 #endif
 
-#include "AudioCodec.h"
+#include "AudioDevice.h"
+#include "ArrayList.h"
 
-void     system_init();
-void     system_register_audiodevice(AudioDevice* audiodevice);
-uint16_t system_get_unique_device_ID();
+DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 
-void system_init_ASP();
+void                      system_init();
+void                      system_register_audiodevice(AudioDevice* audiodevice);
+uint16_t                  system_get_unique_device_ID();
+AudioDevice*              system_init_AudioCodec(); // TODO implement
+ArrayList_AudioDevicePtr* system_get_audiodevices();
+
+void system_init_BSP();
+
+void console_printf(const char* format, ...);  // TODO remove this ASAP /* for debugging only */
+void console_println(const char* format, ...); // TODO remove this ASAP /* for debugging only */
 
 #ifdef __cplusplus
 }

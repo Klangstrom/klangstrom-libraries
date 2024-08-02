@@ -30,7 +30,7 @@
 #error STM32 device not supported or defined
 #endif
 
-#include "AudioCodec.h"
+#include "AudioDevice.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,18 +40,19 @@ extern "C" {
  * @brief AudioDevicePeripherals struct for an SAI-or I2S-based AudioDevice with I2C interface
  */
 typedef struct AudioDevicePeripherals {
+    Callback_2_AUDIODEVICE_UI8 callback_rx;
+    Callback_2_AUDIODEVICE_UI8 callback_tx;
+    Callback_2_AUDIODEVICE_UI8 callback_error;
 #ifdef HAL_SAI_MODULE_ENABLED
-    SAI_HandleTypeDef audiocodec_sai_rx;
-    SAI_HandleTypeDef audiocodec_sai_tx;
+    SAI_HandleTypeDef audiodevice_sai_rx;
+    SAI_HandleTypeDef audiodevice_sai_tx;
 #endif // HAL_SAI_MODULE_ENABLED
 #ifdef HAL_I2S_MODULE_ENABLED
     I2S_HandleTypeDef audiocodec_i2s_rx;
     I2S_HandleTypeDef audiocodec_i2s_tx;
 #endif // HAL_I2S_MODULE_ENABLED
-    Callback_2_AUDIODEVICE_UI8 callback_rx;
-    Callback_2_AUDIODEVICE_UI8 callback_tx;
 #ifdef HAL_I2C_MODULE_ENABLED
-    I2C_HandleTypeDef audiocodec_config;
+    I2C_HandleTypeDef audiodevice_config;
 #endif // HAL_I2C_MODULE_ENABLED
 } AudioDevicePeripherals;
 

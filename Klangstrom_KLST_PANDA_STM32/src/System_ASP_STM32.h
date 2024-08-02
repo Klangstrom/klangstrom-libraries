@@ -17,33 +17,4 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "System.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-static ArrayList_AudioDevicePtr fAudioDeviceListeners;
-static uint16_t                 fDeviceID;
-
-void system_init() {
-    fDeviceID = 0;
-    arraylist_AudioDevicePtr_init(&fAudioDeviceListeners, 4);
-    system_init_BSP();
-}
-
-uint16_t system_get_unique_device_ID() {
-    return fDeviceID++;
-}
-
-void system_register_audiodevice(AudioDevice* audiodevice) {
-    arraylist_AudioDevicePtr_add(&fAudioDeviceListeners, audiodevice);
-}
-
-ArrayList_AudioDevicePtr* system_get_audiodevices() {
-    return &fAudioDeviceListeners;
-}
-
-#ifdef __cplusplus
-}
-#endif
+#pragma once

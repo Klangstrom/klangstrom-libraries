@@ -17,8 +17,11 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_ARCH_IS_STM32
+
 #include "System.h"
-#include "AudioCodec.h"
+#include "AudioDevice.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,18 +29,17 @@ extern "C" {
 
 static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type);
 static void tx_output_callback(AudioDevice* audiodevice, uint8_t callback_type);
+static void error_callback(AudioDevice* audiodevice, uint8_t callback_type);
 
 WEAK void audioblock(AudioBlock* audio_block) {
-    if (audio_block->device_id == 0) {
-        for (int i = 0; i < audio_block->block_size; ++i) {
-            for (int j = 0; j < audio_block->output_channels; ++j) {
-                audio_block->output[j][i] = 0.0;
-            }
+    for (int i = 0; i < audio_block->block_size; ++i) {
+        for (int j = 0; j < audio_block->output_channels; ++j) {
+            audio_block->output[j][i] = 0.0;
         }
     }
 }
 
-AudioDevice* audiocodec_init(AudioInfo* audioinfo) {
+AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
     AudioDevice* audiodevice                = new AudioDevice();
     audiodevice->audioinfo                  = new AudioInfo();
     audiodevice->audioinfo->sample_rate     = audioinfo->sample_rate;
@@ -48,36 +50,36 @@ AudioDevice* audiocodec_init(AudioInfo* audioinfo) {
     audiodevice->audioinfo->device_type     = audioinfo->device_type;
     audiodevice->audioinfo->device_id       = AUDIO_DEVICE_ID_UNDEFINED;
 
-    audiocodec_init_peripherals(audiodevice);
+    audiodevice_init_peripherals(audiodevice);
 
     audiodevice->audioblock = new AudioBlock();
 
-    audiocodec_init_device(audiodevice);
+    audiodevice_init_device(audiodevice);
 
     return audiodevice;
 }
 
-void audiocodec_init_device(AudioDevice* audiodevice) {
-    audiocodec_init_device_BSP(audiodevice);
+void audiodevice_init_device(AudioDevice* audiodevice) {
+    audiodevice_init_device_BSP(audiodevice);
     audiodevice->audioinfo->device_id = system_get_unique_device_ID();
     audiodevice->callback_audioblock  = audioblock;
-    audiocodec_set_peripheral_callbacks(audiodevice, rx_input_callback, tx_output_callback);
+    audiodevice_set_peripheral_callbacks(audiodevice, rx_input_callback, tx_output_callback, error_callback);
     system_register_audiodevice(audiodevice);
 }
 
-void audiocodec_deinit(AudioDevice* audiodevice) {
-    audiocodec_deinit_BSP(audiodevice);
-    audiocodec_deinit_peripherals(audiodevice);
+void audiodevice_deinit(AudioDevice* audiodevice) {
+    audiodevice_deinit_BSP(audiodevice);
+    audiodevice_deinit_peripherals(audiodevice);
     delete audiodevice->audioblock;
     delete audiodevice->audioinfo;
     delete audiodevice;
 }
 
-void audiocodec_start(AudioDevice* audiodevice) {
+void audiodevice_start(AudioDevice* audiodevice) {
     (void) audiodevice;
 }
 
-void audiocodec_stop(AudioDevice* audiodevice) {
+void audiodevice_stop(AudioDevice* audiodevice) {
     (void) audiodevice;
 }
 
@@ -90,14 +92,19 @@ static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type) {
 
 static void tx_output_callback(AudioDevice* audiodevice, uint8_t callback_type) {
     if (callback_type == CALLBACK_TX_COMPLETE) {
-        if (audiodevice->audioblock->output_channels == 0) {
-            if (audiodevice->callback_audioblock != nullptr) {
-                audiodevice->callback_audioblock(audiodevice->audioblock);
-            }
+        if (audiodevice->callback_audioblock != nullptr) {
+            audiodevice->callback_audioblock(audiodevice->audioblock);
         }
     }
+}
+
+static void error_callback(AudioDevice* audiodevice, uint8_t callback_type) {
+    (void) audiodevice;
+    (void) callback_type;
 }
 
 #ifdef __cplusplus
 }
 #endif
+
+#endif // KLST_ARCH_IS_STM32

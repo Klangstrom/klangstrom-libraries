@@ -19,9 +19,11 @@
 
 #pragma once
 
-#include <cstdint>
+#include <stdint.h>
 
-#include "KlangstromCallbackDefinitions.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef WEAK
 #define WEAK __attribute__((weak))
@@ -42,18 +44,21 @@ static const uint8_t CALLBACK_RX_ERROR         = 3;
 static const uint8_t CALLBACK_RX_COMPLETE      = 4;
 static const uint8_t CALLBACK_RX_HALF_COMPLETE = 5;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct AudioInfo {
-    uint32_t sample_rate     = 48000;
-    uint8_t  output_channels = 2;
-    uint8_t  input_channels  = 2;
-    uint16_t block_size      = 128;
-    uint8_t  bit_depth       = 16;
-    uint8_t  device_type     = AUDIO_DEVICE_TYPE_UNDEFINED;
-    uint8_t  device_id       = AUDIO_DEVICE_ID_UNDEFINED;
+    uint32_t sample_rate;
+    uint8_t  output_channels;
+    uint8_t  input_channels;
+    uint16_t block_size;
+    uint8_t  bit_depth;
+    uint8_t  device_type;
+    uint8_t  device_id;
+    //    uint32_t sample_rate     = 48000;
+    //    uint8_t  output_channels = 2;
+    //    uint8_t  input_channels  = 2;
+    //    uint16_t block_size      = 128;
+    //    uint8_t  bit_depth       = 16;
+    //    uint8_t  device_type     = AUDIO_DEVICE_TYPE_UNDEFINED;
+    //    uint8_t  device_id       = AUDIO_DEVICE_ID_UNDEFINED;
 } AudioInfo;
 
 typedef struct AudioBlock {
@@ -68,10 +73,12 @@ typedef struct AudioBlock {
 
 struct AudioDevicePeripherals; /* BSP or ASP implementation */
 
+typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
+
 typedef struct AudioDevice {
     AudioInfo*               audioinfo;
     AudioBlock*              audioblock;
-    AudioDevicePeripherals*  peripherals;
+    struct AudioDevicePeripherals*  peripherals;
     Callback_1_AUDIOBLOCKPTR callback_audioblock;
 } AudioDevice;
 
@@ -91,22 +98,25 @@ WEAK void audioblock(AudioBlock* audioblock);
  * @param audioinfo
  * @return
  */
-AudioDevice* audiocodec_init(AudioInfo* audioinfo);
+AudioDevice* audiodevice_init(AudioInfo* audioinfo);
 /**
  *  initializes audio device with a `audiodevice`.
  *  this is only used for custom instialization e.g when specifiying custom callbacks
  * @param audiodevice
  */
-void audiocodec_init_device(AudioDevice* audiodevice);
-void audiocodec_deinit(AudioDevice* audiodevice);
-void audiocodec_start(AudioDevice* audiodevice);
-void audiocodec_stop(AudioDevice* audiodevice);
-void audiocodec_init_peripherals(AudioDevice* audiodevice);
-void audiocodec_deinit_peripherals(AudioDevice* audiodevice);
-void audiocodec_set_peripheral_callbacks(AudioDevice* audiodevice, Callback_2_AUDIODEVICE_UI8 callback_rx, Callback_2_AUDIODEVICE_UI8 callback_tx);
+void audiodevice_init_device(AudioDevice* audiodevice);
+void audiodevice_deinit(AudioDevice* audiodevice);
+void audiodevice_start(AudioDevice* audiodevice);
+void audiodevice_stop(AudioDevice* audiodevice);
+void audiodevice_init_peripherals(AudioDevice* audiodevice);
+void audiodevice_deinit_peripherals(AudioDevice* audiodevice);
+void audiodevice_set_peripheral_callbacks(AudioDevice*               audiodevice,
+                                          Callback_2_AUDIODEVICE_UI8 callback_rx,
+                                          Callback_2_AUDIODEVICE_UI8 callback_tx,
+                                          Callback_2_AUDIODEVICE_UI8 callback_error);
 
-void audiocodec_init_device_BSP(AudioDevice* audiodevice);
-void audiocodec_deinit_BSP(AudioDevice* audiodevice);
+void audiodevice_init_device_BSP(AudioDevice* audiodevice);
+void audiodevice_deinit_BSP(AudioDevice* audiodevice);
 
 #ifdef __cplusplus
 }

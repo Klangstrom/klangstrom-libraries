@@ -22,9 +22,8 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
-#include "AudioCodec.h"
-#include "KlangstromAudioCodec.h" // TODO remove this ASAP
-#include "AudioCodec_ASP_STM32.h"
+#include "AudioDevice.h"
+#include "AudioDevice_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,11 +43,11 @@ extern SAI_HandleTypeDef AUDIOCODEC_RX;
 extern SAI_HandleTypeDef AUDIOCODEC_TX;
 extern I2C_HandleTypeDef AUDIOCODEC_CONFIG;
 
-void audiocodec_init_peripherals(AudioDevice* audiodevice) {
+void audiodevice_init_peripherals(AudioDevice* audiodevice) {
     audiodevice->peripherals                    = new AudioDevicePeripherals();
-    audiodevice->peripherals->audiocodec_sai_rx = AUDIOCODEC_RX;
-    audiodevice->peripherals->audiocodec_sai_tx = AUDIOCODEC_TX;
-    audiodevice->peripherals->audiocodec_config = AUDIOCODEC_CONFIG;
+    audiodevice->peripherals->audiodevice_sai_rx = AUDIOCODEC_RX;
+    audiodevice->peripherals->audiodevice_sai_tx = AUDIOCODEC_TX;
+    audiodevice->peripherals->audiodevice_config = AUDIOCODEC_CONFIG;
 }
 
 #ifdef __cplusplus

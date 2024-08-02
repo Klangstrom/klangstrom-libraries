@@ -1,5 +1,28 @@
+/*
+* Klangstrom
+*
+* This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
+* Copyright (c) 2024 Dennis P Paul.
+*
+* This library is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 3.
+*
+* This library is distributed in the hope that it will be useful, but
+* WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <stdint.h>
 #include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define POOL_SIZE 1024 * 10 // Example size, adjust as needed
 
@@ -12,14 +35,13 @@ uint8_t dma_memory_pool[POOL_SIZE]; // Define a large enough pool size
 typedef struct {
     uint8_t* base;
     uint8_t* next;
-    size_t size;
+    size_t   size;
 } MemoryPool;
 
 static MemoryPool dma_pool = {
     .base = dma_memory_pool,
     .next = dma_memory_pool,
-    .size = POOL_SIZE
-};
+    .size = POOL_SIZE};
 
 void* dma_malloc(size_t size) {
     if ((dma_pool.next + size) > (dma_pool.base + dma_pool.size)) {
@@ -34,6 +56,11 @@ void* dma_malloc(size_t size) {
 void dma_free_all() {
     dma_pool.next = dma_pool.base;
 }
+
+
+#ifdef __cplusplus
+}
+#endif
 
 //// EXAMPLE:
 //
