@@ -22,11 +22,13 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
+#include "stm32h7xx_hal.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h"
 
 #if defined(KLST_PANDA_ENABLE_USB_HOST) && defined(KLST_PANDA_ENABLE_USB_DEVICE)
 #error "KLST_PANDA: USB Host and Device cannot be enabled at the same time"
@@ -37,6 +39,13 @@ extern "C" {
 #endif
 
 #include "Klangstrom.h"
+
+static const uint8_t CALLBACK_TX_ERROR         = 0;
+static const uint8_t CALLBACK_TX_COMPLETE      = 1;
+static const uint8_t CALLBACK_TX_HALF_COMPLETE = 2;
+static const uint8_t CALLBACK_RX_ERROR         = 3;
+static const uint8_t CALLBACK_RX_COMPLETE      = 4;
+static const uint8_t CALLBACK_RX_HALF_COMPLETE = 5;
 
 #ifdef __cplusplus
 }

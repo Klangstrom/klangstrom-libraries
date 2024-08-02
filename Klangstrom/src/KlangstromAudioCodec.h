@@ -75,7 +75,7 @@ void KLST_BSP_audiocodec_process_audioblock_data(AudioBlock* audio_block);
  * weak callback for client application ( i.e sketch ) to implement
  * @param audio_block
  */
-WEAK void audioblock(AudioBlock* audio_block);
+//WEAK void audioblock(AudioBlock* audio_block);
 
 class AudioCodec {
 public:
@@ -88,7 +88,7 @@ public:
                  uint8_t  input_channels  = 1,
                  uint16_t block_size      = 128,
                  uint8_t  bit_depth       = 16,
-                 uint8_t  device_type     = AUDIO_DEVICE_UNDEFINED);
+                 uint8_t  device_type     = AUDIO_DEVICE_TYPE_UNDEFINED);
     uint8_t init(AudioInfo* audioinfo = nullptr);
     void    BSP_init(AudioInfo* audioinfo = nullptr);
 

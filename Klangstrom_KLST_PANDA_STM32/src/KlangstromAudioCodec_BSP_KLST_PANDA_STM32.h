@@ -24,6 +24,7 @@
 
 #include "stm32h7xx_hal.h"
 
+// TODO remove ASAP
 void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai);
 void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai);
 void KLST_PANDA_audiocodec_RX_full_complete_callback(SAI_HandleTypeDef* hsai);

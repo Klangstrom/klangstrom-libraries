@@ -19,7 +19,7 @@
 
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
-#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_LEDS
 
 #include "tim.h"

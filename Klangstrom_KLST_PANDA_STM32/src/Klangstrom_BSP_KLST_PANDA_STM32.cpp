@@ -32,6 +32,8 @@ extern "C" {
 #include "KlangstromAudioCodec_BSP_KLST_PANDA_STM32.h"
 #include "KlangstromSerialDebug.h"
 
+#include "AudioCodec_ASP_STM32.h"
+
 #include "KLST_PANDA-Backlight.h"
 #include "KLST_PANDA-ExternalMemory.h"
 #include "KLST_PANDA-InternalMemory.h"
@@ -42,6 +44,8 @@ extern "C" {
 #include "KLST_PANDA-MIDI_analog.h"
 #include "KLST_PANDA-ADCDAC.h"
 #include "KLST_PANDA-OnBoardMic.h"
+
+#include "ArrayList.h"
 
 #include <sys/time.h>
 [[maybe_unused]] int _gettimeofday(struct timeval* tv, void* tzvp) {
@@ -457,9 +461,40 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 #endif // defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
+/* TODO -------------------------- */
+/* TODO -------------------------- */
+/* TODO -------------------------- */
+/* TODO -------------------------- */
+/* TODO -------------------------- */
+
+// TODO test purpose only
+AudioDevice* foo_audiodevice; // TODO replace with `arraylist`
+
+DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
+static ArrayList_AudioDevicePtr fAudioDeviceListeners;
+
+void system_register_listener(AudioDevice* audiodevice) {
+    arraylist_AudioDevicePtr_add(&fAudioDeviceListeners, audiodevice);
+
+    // TODO test purpose only
+    foo_audiodevice = audiodevice;
+}
+
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai) {
-    KLST_PANDA_audiocodec_TX_full_complete_callback(hsai);
+    for (size_t i = 0; i < fAudioDeviceListeners.size; i++) {
+        AudioDevice* ad = arraylist_AudioDevicePtr_get(&fAudioDeviceListeners, i);
+        if (&ad->peripherals->audiocodec_sai_tx == hsai) {
+            ad->peripherals->callback_tx(ad, CALLBACK_TX_COMPLETE);
+        }
+    }
+
+    // TODO test purpose only
+    if (&foo_audiodevice->peripherals->audiocodec_sai_tx == hsai) {
+        foo_audiodevice->peripherals->callback_tx(foo_audiodevice, CALLBACK_TX_COMPLETE);
+    }
+
+    KLST_PANDA_audiocodec_TX_full_complete_callback(hsai); // TODO remove ASAP
 }
 
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai) {

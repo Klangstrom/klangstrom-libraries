@@ -19,7 +19,7 @@
 
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
-#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 
 #include "KlangstromAudioCodec.h"
@@ -361,7 +361,7 @@ void FillBuffer(uint32_t* mTXBuffer, uint32_t* mRXBuffer, uint16_t len) {
 static void setup_SAI() {
     KLST_BSP_serialdebug_println("setting up SAI");
 
-    srand(time(NULL));
+//    srand(time(NULL));
 
     memset(dma_TX_buffer, 0, sizeof(dma_TX_buffer));
     memset(dma_RX_buffer, 0, sizeof(dma_RX_buffer));
@@ -431,7 +431,6 @@ void KLST_PANDA_audiocodec_TX_full_complete_callback(SAI_HandleTypeDef* hsai) {
         FillBuffer(&(dma_TX_buffer[M_I2S_BUFFER_SIZE >> 1]), mCurrentRXBuffer, M_I2S_BUFFER_SIZE >> 1);
 #else
         process_audioblock_data(M_I2S_BUFFER_SIZE >> 1);
-//        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[M_I2S_BUFFER_SIZE >> 1]), M_I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }
@@ -442,7 +441,6 @@ void KLST_PANDA_audiocodec_TX_half_complete_callback(SAI_HandleTypeDef* hsai) {
         FillBuffer(&(dma_TX_buffer[0]), mCurrentRXBuffer, M_I2S_BUFFER_SIZE >> 1);
 #else
         process_audioblock_data(0);
-//        audiocodec_callback_class_i(mCurrentRXBuffer, &(dma_TX_buffer[0]), M_I2S_BUFFER_SIZE >> 1);
 #endif
     }
 }

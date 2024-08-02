@@ -6,15 +6,11 @@ if(NOT ${KLST_ENV})
     message(FATAL_ERROR "KLST_ENV is not defined")
 endif ()
 
-add_library(Klangstrom_KLST_PANDA_STM32
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Klangstrom_BSP_KLST_PANDA_STM32.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/WM8904.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FT5206.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromAudioCodec_BSP_KLST_PANDA_STM32.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromLEDs_BSP_KLST_PANDA_STM32.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSDCard_BSP_KLST_PANDA_STM32.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSerialDebug_BSP_KLST_PANDA_STM32.cpp
+file(GLOB SOURCE_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
+add_library(Klangstrom_KLST_PANDA_STM32 ${SOURCE_FILES})
 
 target_include_directories(Klangstrom_KLST_PANDA_STM32 PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src

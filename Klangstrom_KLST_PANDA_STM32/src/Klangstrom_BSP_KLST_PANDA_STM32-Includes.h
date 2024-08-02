@@ -22,7 +22,7 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
-#include "Klangstrom_BSP_KLST_PANDA_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h"
 
 #if defined(KLST_PANDA_ENABLE_GPIO) || defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_SD_CARD) || defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "gpio.h"

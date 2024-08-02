@@ -20,7 +20,7 @@
 #pragma once
 
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#ifdef KLST_ARCH_IS_STM32
 
 #if __has_include("KlangstromPeripheralConfiguration.h")
 
@@ -28,6 +28,8 @@
 #include "KlangstromPeripheralConfiguration.h"
 
 #else
+
+// TODO rename `KLST_PANDA_*` to `KLST_STM32_*`
 
 // KLST_PANDA_STM32 + KLST_CATERPILLAR_STM32
 #define KLST_PANDA_ENABLE_GPIO
@@ -111,4 +113,4 @@
  #endif // KLST_DEBUG_CONFIG_MODE
  */
 
-#endif // KLST_PANDA_STM32
+#endif // KLST_ARCH_IS_STM32

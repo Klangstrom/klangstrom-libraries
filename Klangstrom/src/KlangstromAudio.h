@@ -21,12 +21,17 @@
 
 #include <cstdint>
 
-const uint8_t AUDIO_DEVICE_UNDEFINED                  = 0;
+#ifndef WEAK
+    #define WEAK __attribute__((weak))
+#endif
+
+const uint8_t AUDIO_DEVICE_TYPE_UNDEFINED             = 0;
 const uint8_t AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC     = 1;
 const uint8_t AUDIO_DEVICE_KLST_PANDA_STEREO_MIC      = 2;
 const uint8_t AUDIO_DEVICE_CUSTOM                     = 127;
 const uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 128;
 const uint8_t AUDIO_DEVICE_INIT_ERROR                 = 255;
+const uint8_t AUDIO_DEVICE_ID_UNDEFINED               = 255;
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,7 +43,8 @@ typedef struct AudioInfo {
     uint8_t  input_channels  = 2;
     uint16_t block_size      = 128;
     uint8_t  bit_depth       = 16;
-    uint8_t  device_type     = AUDIO_DEVICE_UNDEFINED;
+    uint8_t  device_type     = AUDIO_DEVICE_TYPE_UNDEFINED;
+    uint8_t  device_id       = AUDIO_DEVICE_ID_UNDEFINED;
 } AudioInfo;
 
 typedef struct AudioBlock {
