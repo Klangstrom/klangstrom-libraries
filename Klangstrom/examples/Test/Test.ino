@@ -6,8 +6,6 @@
 #include "KlangstromSDCard.h"
 #include "Wavetable.h"
 
-void audioblock(float** input_signal, float** output_signal, uint16_t length);
-
 SerialDebug console;
 Klangstrom  klangstrom;
 AudioCodec  audiocodec;

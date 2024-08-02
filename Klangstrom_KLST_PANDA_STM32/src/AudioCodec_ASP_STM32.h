@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 /**
- * @brief AudioDevicePeripherals struct for an SAI based AudioDevice with I2C interface
+ * @brief AudioDevicePeripherals struct for an SAI-or I2S-based AudioDevice with I2C interface
  */
 typedef struct AudioDevicePeripherals {
 #ifdef HAL_SAI_MODULE_ENABLED
@@ -50,7 +50,9 @@ typedef struct AudioDevicePeripherals {
 #endif // HAL_I2S_MODULE_ENABLED
     Callback_2_AUDIODEVICE_UI8 callback_rx;
     Callback_2_AUDIODEVICE_UI8 callback_tx;
-    I2C_HandleTypeDef          audiocodec_config;
+#ifdef HAL_I2C_MODULE_ENABLED
+    I2C_HandleTypeDef audiocodec_config;
+#endif // HAL_I2C_MODULE_ENABLED
 } AudioDevicePeripherals;
 
 #ifdef __cplusplus

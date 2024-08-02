@@ -31,7 +31,7 @@
 #endif
 
 #include "KlangstromCallbackDefinitions.h"
-#include "KlangstromAudio.h"
+#include "AudioCodec.h"
 
 #ifdef __cplusplus
 extern "C" {

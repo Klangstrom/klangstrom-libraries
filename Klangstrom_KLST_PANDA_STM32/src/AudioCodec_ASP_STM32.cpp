@@ -23,8 +23,8 @@
 #ifdef KLST_ARCH_IS_STM32
 
 #include "AudioCodec.h"
-#include "KlangstromAudioCodec.h"
-#include "AudioCodec_ASP_STM32.h" // TODO remove this ASAP
+#include "KlangstromAudioCodec.h" // TODO remove this ASAP
+#include "AudioCodec_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,6 +44,13 @@ void audiocodec_set_peripheral_callbacks(AudioDevice* audiodevice, Callback_2_AU
 void audiocodec_deinit_peripherals(AudioDevice* audiodevice) {
     delete audiodevice->peripherals;
 }
+
+void audiocodec_deinit_BSP(AudioDevice* audiodevice) {
+    // TODO move functions from KlangstromAudioCodec.* over here
+    KLST_BSP_audiocodec_deinit(); // remove ASAP
+    // TODO move functions from KlangstromAudioCodec.* over here
+}
+
 
 #ifdef __cplusplus
 }

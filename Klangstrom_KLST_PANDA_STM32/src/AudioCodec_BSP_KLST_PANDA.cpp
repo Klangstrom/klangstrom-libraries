@@ -23,8 +23,8 @@
 #ifdef KLST_PANDA_STM32
 
 #include "AudioCodec.h"
-#include "KlangstromAudioCodec.h"
-#include "AudioCodec_ASP_STM32.h" // TODO remove this ASAP
+#include "KlangstromAudioCodec.h" // TODO remove this ASAP
+#include "AudioCodec_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {

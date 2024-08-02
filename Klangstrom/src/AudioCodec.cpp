@@ -19,7 +19,6 @@
 
 #include "System.h"
 #include "AudioCodec.h"
-#include "KlangstromAudioCodec.h" // TODO remove this ASAP
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,28 +52,34 @@ AudioDevice* audiocodec_init(AudioInfo* audioinfo) {
 
     audiodevice->audioblock = new AudioBlock();
 
-    return audiocodec_init_device(audiodevice);
+    audiocodec_init_device(audiodevice);
+
+    return audiodevice;
 }
 
-AudioDevice* audiocodec_init_device(AudioDevice* audiodevice) {
+void audiocodec_init_device(AudioDevice* audiodevice) {
     audiocodec_init_device_BSP(audiodevice);
     audiodevice->audioinfo->device_id = system_get_unique_device_ID();
     audiodevice->callback_audioblock  = audioblock;
     audiocodec_set_peripheral_callbacks(audiodevice, rx_input_callback, tx_output_callback);
-    system_register_listener(audiodevice);
-    return audiodevice;
+    system_register_audiodevice(audiodevice);
 }
 
 void audiocodec_deinit(AudioDevice* audiodevice) {
-    KLST_BSP_audiocodec_deinit();
+    audiocodec_deinit_BSP(audiodevice);
     audiocodec_deinit_peripherals(audiodevice);
     delete audiodevice->audioblock;
     delete audiodevice->audioinfo;
     delete audiodevice;
 }
 
-void audiocodec_start(AudioDevice* audiodevice) {}
-void audiocodec_stop(AudioDevice* audiodevice) {}
+void audiocodec_start(AudioDevice* audiodevice) {
+    (void) audiodevice;
+}
+
+void audiocodec_stop(AudioDevice* audiodevice) {
+    (void) audiodevice;
+}
 
 static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type) {
     if (callback_type == CALLBACK_RX_COMPLETE) {

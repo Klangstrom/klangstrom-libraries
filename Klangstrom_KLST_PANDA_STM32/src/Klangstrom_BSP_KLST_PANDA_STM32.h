@@ -40,12 +40,7 @@ extern "C" {
 
 #include "Klangstrom.h"
 
-static const uint8_t CALLBACK_TX_ERROR         = 0;
-static const uint8_t CALLBACK_TX_COMPLETE      = 1;
-static const uint8_t CALLBACK_TX_HALF_COMPLETE = 2;
-static const uint8_t CALLBACK_RX_ERROR         = 3;
-static const uint8_t CALLBACK_RX_COMPLETE      = 4;
-static const uint8_t CALLBACK_RX_HALF_COMPLETE = 5;
+
 
 #ifdef __cplusplus
 }

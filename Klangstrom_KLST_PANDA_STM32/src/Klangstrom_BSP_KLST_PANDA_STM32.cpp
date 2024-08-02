@@ -473,7 +473,7 @@ AudioDevice* foo_audiodevice; // TODO replace with `arraylist`
 DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 static ArrayList_AudioDevicePtr fAudioDeviceListeners;
 
-void system_register_listener(AudioDevice* audiodevice) {
+void system_register_audiodevice(AudioDevice* audiodevice) {
     arraylist_AudioDevicePtr_add(&fAudioDeviceListeners, audiodevice);
 
     // TODO test purpose only

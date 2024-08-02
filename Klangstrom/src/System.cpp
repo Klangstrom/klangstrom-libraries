@@ -27,6 +27,7 @@ static uint16_t fDeviceID;
 
 void system_init() {
     fDeviceID = 0;
+    system_init_ASP();
 }
 
 uint16_t system_get_unique_device_ID() {
