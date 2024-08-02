@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "System.h"
 #include "FT5206.h"
+#include "Console.h"
 
 static HAL_StatusTypeDef  ret;
 static I2C_HandleTypeDef* hi2c = nullptr;

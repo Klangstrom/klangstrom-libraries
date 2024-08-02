@@ -22,6 +22,7 @@
 
 #include "System.h"
 #include "ArrayList.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -143,7 +144,7 @@ void system_init_BSP() {
 }
 
 static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
-    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_audiodevices();
+    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_registered_audiodevices();
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
@@ -165,7 +166,7 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
 }
 
 static void SAI_RX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
-    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_audiodevices();
+    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_registered_audiodevices();
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
@@ -187,7 +188,7 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
 }
 
 void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
-    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_audiodevices();
+    ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_registered_audiodevices();
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
@@ -213,48 +214,6 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
     return 0;
 }
 #endif // SYSTEM_HANDLE_TIMEOFDAY_WARNING
-
-// ---------------------------------------------------------------------------------------------------------------
-// TODO remove this ASAP
-// TODO remove this ASAP
-// TODO remove this ASAP
-// TODO remove this ASAP
-// TODO remove this ASAP
-
-#include <stdio.h>
-#include <stdarg.h>
-#include <inttypes.h>
-
-#include "usart.h"
-
-extern UART_HandleTypeDef huart3; // TODO maybe pass this as a parameter
-
-extern "C" int _write(int file, char* data, int len) {
-    // @note needs to be implemented with `extern "C"` for printf to work
-    (void) file;
-    HAL_StatusTypeDef status = HAL_UART_Transmit(&huart3, (uint8_t*) data, len, 10);
-    return (status == HAL_OK ? len : 0);
-}
-static bool fSerialDebugInitialized = false;
-
-void console_printf(const char* format, ...) {
-    va_list args;
-    va_start(args, format);
-    vprintf(format, args);
-    va_end(args);
-}
-
-void console_println(const char* format, ...) {
-    if (!fSerialDebugInitialized) {
-        fSerialDebugInitialized = true;
-        MX_USART3_UART_Init();
-    }
-    va_list args;
-    va_start(args, format);
-    vprintf(format, args);
-    va_end(args);
-    printf("\n\r");
-}
 
 #ifdef __cplusplus
 }

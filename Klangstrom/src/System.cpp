@@ -18,18 +18,31 @@
 */
 
 #include "System.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#define SYSTEM_INITIAL_NUM_AUDIO_DEVICES 3
+
 static ArrayList_AudioDevicePtr fAudioDeviceListeners;
 static uint16_t                 fDeviceID;
+static bool                     fSystemInitialized = false;
 
 void system_init() {
-    fDeviceID = 0;
-    arraylist_AudioDevicePtr_init(&fAudioDeviceListeners, 4);
+    fDeviceID          = 0;
+    fSystemInitialized = false;
+    arraylist_AudioDevicePtr_init(&fAudioDeviceListeners, SYSTEM_INITIAL_NUM_AUDIO_DEVICES);
     system_init_BSP();
+    console_system_info();
+    console_println("Sub-System (ASP/BSP) initialized");
+    console_println("System initialized");
+    fSystemInitialized = true;
+}
+
+bool system_is_initialized() {
+    return fSystemInitialized;
 }
 
 uint16_t system_get_unique_device_ID() {
@@ -40,7 +53,7 @@ void system_register_audiodevice(AudioDevice* audiodevice) {
     arraylist_AudioDevicePtr_add(&fAudioDeviceListeners, audiodevice);
 }
 
-ArrayList_AudioDevicePtr* system_get_audiodevices() {
+ArrayList_AudioDevicePtr* system_get_registered_audiodevices() {
     return &fAudioDeviceListeners;
 }
 

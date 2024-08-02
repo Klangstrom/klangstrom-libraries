@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "System.h"
+#include "Console.h"
 #include "AudioDevice.h"
 #include "Wavetable.h"
 
@@ -11,6 +12,10 @@ AudioDevice* audiodevice;
 void setup() {
     system_init();
 
+    Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
+    oscillator.set_amplitude(0.1f);
+
+    // long init section ...
     AudioInfo audioinfo;
     audioinfo.sample_rate     = 48000;
     audioinfo.output_channels = 2;
@@ -18,10 +23,13 @@ void setup() {
     audioinfo.block_size      = 128;
     audioinfo.bit_depth       = 16;
     audiodevice               = audiodevice_init(&audioinfo);
-    if (audioinfo.device_id == AUDIO_DEVICE_INIT_ERROR) {
-        // handle error
+    if (audiodevice->audioinfo->device_id == AUDIO_DEVICE_INIT_ERROR) {
+        console_timestamp();
+        console_println("error initializing audio device");
     }
     audiodevice_start(audiodevice);
+    // ... or for short with default values and auto start
+    // audiodevice = system_init_audiocodec();
 }
 
 void loop() {

@@ -47,13 +47,15 @@ DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 void                      system_init();
 void                      system_register_audiodevice(AudioDevice* audiodevice);
 uint16_t                  system_get_unique_device_ID();
-AudioDevice*              system_init_AudioCodec(); // TODO implement
-ArrayList_AudioDevicePtr* system_get_audiodevices();
+ArrayList_AudioDevicePtr* system_get_registered_audiodevices();
+bool                      system_is_initialized();
+/**
+ * @brief initialize the default audio codec and starts it
+ * @return instance to audio device (audio codec). needs to be freed by caller
+ */
+AudioDevice*              system_init_audiocodec(); // NOTE implemented this BSP for now
 
 void system_init_BSP();
-
-void console_printf(const char* format, ...);  // TODO remove this ASAP /* for debugging only */
-void console_println(const char* format, ...); // TODO remove this ASAP /* for debugging only */
 
 #ifdef __cplusplus
 }

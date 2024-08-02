@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 #include "WM8904.h"
-#include "System.h"
+#include "Console.h"
 
 #define WM8904_TIMEOUT HAL_MAX_DELAY
 //#define WM8904_TIMEOUT     1000
