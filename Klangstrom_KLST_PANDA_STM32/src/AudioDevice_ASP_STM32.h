@@ -44,15 +44,15 @@ typedef struct AudioDevicePeripherals {
     Callback_2_AUDIODEVICE_UI8 callback_tx;
     Callback_2_AUDIODEVICE_UI8 callback_error;
 #ifdef HAL_SAI_MODULE_ENABLED
-    SAI_HandleTypeDef audiodevice_sai_rx;
-    SAI_HandleTypeDef audiodevice_sai_tx;
+    SAI_HandleTypeDef* audiodevice_sai_rx;
+    SAI_HandleTypeDef* audiodevice_sai_tx;
 #endif // HAL_SAI_MODULE_ENABLED
 #ifdef HAL_I2S_MODULE_ENABLED
-    I2S_HandleTypeDef audiocodec_i2s_rx;
-    I2S_HandleTypeDef audiocodec_i2s_tx;
+    I2S_HandleTypeDef* audiocodec_i2s_rx;
+    I2S_HandleTypeDef* audiocodec_i2s_tx;
 #endif // HAL_I2S_MODULE_ENABLED
 #ifdef HAL_I2C_MODULE_ENABLED
-    I2C_HandleTypeDef audiodevice_config;
+    I2C_HandleTypeDef* audiodevice_config;
 #endif // HAL_I2C_MODULE_ENABLED
 } AudioDevicePeripherals;
 

@@ -35,9 +35,13 @@ void system_init() {
     fSystemInitialized = false;
     arraylist_AudioDevicePtr_init(&fAudioDeviceListeners, SYSTEM_INITIAL_NUM_AUDIO_DEVICES);
     system_init_BSP();
+    console_clear();
     console_system_info();
-    console_println("Sub-System (ASP/BSP) initialized");
-    console_println("System initialized");
+
+    console_status("Sub-System (ASP/BSP) initialized");
+    console_status("System initialized");
+    console_status("");
+
     fSystemInitialized = true;
 }
 

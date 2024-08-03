@@ -17,46 +17,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "AudioDevice.h"
-
 #include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
 #include "AudioDevice.h"
-//#include "KlangstromAudioCodec.h" // TODO remove this ASAP
 #include "AudioDevice_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void audiodevice_init_device_BSP(AudioDevice* audiodevice) {
-    (void) audiodevice;
-    // TODO move functions from KlangstromAudioCodec.* over here
-    //    KLST_BSP_audiocodec_init(audiodevice->audioinfo); // remove ASAP
-    // TODO move functions from KlangstromAudioCodec.* over here
-}
-
-void audiodevice_set_peripheral_callbacks(AudioDevice*               audiodevice,
-                                          Callback_2_AUDIODEVICE_UI8 callback_rx,
-                                          Callback_2_AUDIODEVICE_UI8 callback_tx,
-                                          Callback_2_AUDIODEVICE_UI8 callback_error) {
-    audiodevice->peripherals->callback_rx    = callback_rx;
-    audiodevice->peripherals->callback_tx    = callback_tx;
-    audiodevice->peripherals->callback_error = callback_error;
-}
-
 void audiodevice_deinit_peripherals(AudioDevice* audiodevice) {
     delete audiodevice->peripherals;
-}
-
-void audiodevice_deinit_BSP(AudioDevice* audiodevice) {
-    (void) audiodevice;
-    // TODO move functions from KlangstromAudioCodec.* over here
-    //    KLST_BSP_audiocodec_deinit(); // remove ASAP
-    // TODO move functions from KlangstromAudioCodec.* over here
 }
 
 #ifdef __cplusplus

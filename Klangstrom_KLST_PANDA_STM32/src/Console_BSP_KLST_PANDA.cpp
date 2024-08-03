@@ -50,10 +50,22 @@ void console_init_BSP() {
     CONSOLE_UART_INSTANCE_INIT();
 }
 
+static void rainbow(const char* text) {
+    console_println("\033[31m%s\033[0m", text); // Red
+    console_println("\033[32m%s\033[0m", text); // Green
+    console_println("\033[33m%s\033[0m", text); // Yellow
+    console_println("\033[34m%s\033[0m", text); // Indigo (using Blue)
+    console_println("\033[35m%s\033[0m", text); // Violet
+    console_println("\033[36m%s\033[0m", text); // Violet
+    console_println("\033[37m%s\033[0m", text); // Violet
+}
+
 void console_system_info() {
-    console_printf("\n\r---------------------------------------------------------\n\r\n\r");
-    console_printf("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)\n\r", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
-    console_printf("\n\r---------------------------------------------------------\n\r\n\r");
+    console_println("\n\r---------------------------------------------------------\n\r");
+    console_println("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
+    console_println("\n\r---------------------------------------------------------\n\r");
+    rainbow("■■■ ■■ ■ ■■ ■■■");
+    console_printf("\n\r\n\r");
 }
 
 #ifdef __cplusplus

@@ -17,31 +17,33 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdint.h>
-#include <stddef.h>
+#include "DMAMemoryAllocator.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define POOL_SIZE 1024 * 10 // Example size, adjust as needed
+#ifndef KLST_DMA_POOL_SIZE
+#define KLST_DMA_POOL_SIZE 128 * 4 * 2
+#endif
 
-// Define the memory pool in the desired section
-__attribute__((section(".dma_buffer")))
-uint8_t dma_memory_pool[POOL_SIZE]; // Define a large enough pool size
+#ifndef KLST_DMA_SECTION_NAME
+#define KLST_DMA_SECTION_NAME ".dma_buffer"
+#endif
 
-//extern uint8_t dma_memory_pool[];
+__attribute__((section(KLST_DMA_SECTION_NAME)))
+uint8_t dma_memory_pool[KLST_DMA_POOL_SIZE];
 
 typedef struct {
     uint8_t* base;
     uint8_t* next;
-    size_t   size;
+    size_t    size;
 } MemoryPool;
 
 static MemoryPool dma_pool = {
     .base = dma_memory_pool,
     .next = dma_memory_pool,
-    .size = POOL_SIZE};
+    .size = KLST_DMA_POOL_SIZE};
 
 void* dma_malloc(size_t size) {
     if ((dma_pool.next + size) > (dma_pool.base + dma_pool.size)) {
@@ -56,7 +58,6 @@ void* dma_malloc(size_t size) {
 void dma_free_all() {
     dma_pool.next = dma_pool.base;
 }
-
 
 #ifdef __cplusplus
 }

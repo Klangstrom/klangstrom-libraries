@@ -37,12 +37,10 @@ const uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 128;
 const uint8_t AUDIO_DEVICE_INIT_ERROR                 = 254;
 const uint8_t AUDIO_DEVICE_ID_UNDEFINED               = 255;
 
-static const uint8_t CALLBACK_TX_ERROR         = 0;
-static const uint8_t CALLBACK_TX_COMPLETE      = 1;
-static const uint8_t CALLBACK_TX_HALF_COMPLETE = 2;
-static const uint8_t CALLBACK_RX_ERROR         = 3;
-static const uint8_t CALLBACK_RX_COMPLETE      = 4;
-static const uint8_t CALLBACK_RX_HALF_COMPLETE = 5;
+static const uint8_t CALLBACK_TX_ERROR      = 0;
+static const uint8_t CALLBACK_RX_ERROR      = 1;
+static const uint8_t CALLBACK_FULL_COMPLETE = 2;
+static const uint8_t CALLBACK_HALF_COMPLETE = 3;
 
 typedef struct AudioInfo {
     uint32_t sample_rate;
@@ -76,10 +74,10 @@ struct AudioDevicePeripherals; /* BSP or ASP implementation */
 typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
 
 typedef struct AudioDevice {
-    AudioInfo*               audioinfo;
-    AudioBlock*              audioblock;
-    struct AudioDevicePeripherals*  peripherals;
-    Callback_1_AUDIOBLOCKPTR callback_audioblock;
+    AudioInfo*                     audioinfo           = nullptr;
+    AudioBlock*                    audioblock          = nullptr;
+    struct AudioDevicePeripherals* peripherals         = nullptr;
+    Callback_1_AUDIOBLOCKPTR       callback_audioblock = nullptr;
 } AudioDevice;
 
 typedef void (*Callback_2_AUDIODEVICE_UI8)(AudioDevice*, uint8_t);
@@ -106,14 +104,10 @@ AudioDevice* audiodevice_init(AudioInfo* audioinfo);
  */
 void audiodevice_init_device(AudioDevice* audiodevice);
 void audiodevice_deinit(AudioDevice* audiodevice);
-void audiodevice_start(AudioDevice* audiodevice);
-void audiodevice_stop(AudioDevice* audiodevice);
+void audiodevice_resume(AudioDevice* audiodevice);
+void audiodevice_pause(AudioDevice* audiodevice);
 void audiodevice_init_peripherals(AudioDevice* audiodevice);
 void audiodevice_deinit_peripherals(AudioDevice* audiodevice);
-void audiodevice_set_peripheral_callbacks(AudioDevice*               audiodevice,
-                                          Callback_2_AUDIODEVICE_UI8 callback_rx,
-                                          Callback_2_AUDIODEVICE_UI8 callback_tx,
-                                          Callback_2_AUDIODEVICE_UI8 callback_error);
 
 void audiodevice_init_device_BSP(AudioDevice* audiodevice);
 void audiodevice_deinit_BSP(AudioDevice* audiodevice);

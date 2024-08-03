@@ -17,25 +17,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#pragma once
 
-void console_init();
-void console_printf(const char* format, ...);
-void console_println(const char* format, ...);
-void console_status(const char* format, ...);
-void console_error(const char* format, ...);
-void console_set_color_red();
-void console_set_color_green();
-void console_reset_color();
-void console_clear();
-void console_timestamp(bool newline = false); // NOTE implemented this ASP for now
-void console_system_info();                   // NOTE implemented this BSP for now
-void console_mute(bool mute);
-
-void console_init_BSP();
-
-#ifdef __cplusplus
-}
-#endif
+void WM8904_configure(bool use_FLL, bool use_start_sequence);

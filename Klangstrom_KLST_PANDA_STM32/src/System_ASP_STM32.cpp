@@ -148,7 +148,7 @@ static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
-            if (&ad->peripherals->audiodevice_sai_tx == hsai) {
+            if (ad->peripherals->audiodevice_sai_tx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_tx != nullptr) {
                     ad->peripherals->callback_tx(ad, callback_event);
                 }
@@ -158,11 +158,11 @@ static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai) {
-    SAI_TX_event(hsai, CALLBACK_TX_COMPLETE);
+    SAI_TX_event(hsai, CALLBACK_FULL_COMPLETE);
 }
 
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
-    SAI_TX_event(hsai, CALLBACK_TX_HALF_COMPLETE);
+    SAI_TX_event(hsai, CALLBACK_HALF_COMPLETE);
 }
 
 static void SAI_RX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
@@ -170,9 +170,9 @@ static void SAI_RX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
-            if (&ad->peripherals->audiodevice_sai_tx == hsai) {
-                if (ad->peripherals->callback_tx != nullptr) {
-                    ad->peripherals->callback_tx(ad, callback_event);
+            if (ad->peripherals->audiodevice_sai_rx->Instance == hsai->Instance) {
+                if (ad->peripherals->callback_rx != nullptr) {
+                    ad->peripherals->callback_rx(ad, callback_event);
                 }
             }
         }
@@ -180,11 +180,11 @@ static void SAI_RX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
 }
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai) {
-    SAI_RX_event(hsai, CALLBACK_TX_COMPLETE);
+    SAI_RX_event(hsai, CALLBACK_FULL_COMPLETE);
 }
 
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai) {
-    SAI_RX_event(hsai, CALLBACK_TX_HALF_COMPLETE);
+    SAI_RX_event(hsai, CALLBACK_HALF_COMPLETE);
 }
 
 void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
@@ -192,12 +192,12 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
-            if (&ad->peripherals->audiodevice_sai_tx == hsai) {
+            if (ad->peripherals->audiodevice_sai_tx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_error != nullptr) {
                     ad->peripherals->callback_error(ad, CALLBACK_TX_ERROR);
                 }
             }
-            if (&ad->peripherals->audiodevice_sai_rx == hsai) {
+            if (ad->peripherals->audiodevice_sai_rx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_error != nullptr) {
                     ad->peripherals->callback_error(ad, CALLBACK_RX_ERROR);
                 }

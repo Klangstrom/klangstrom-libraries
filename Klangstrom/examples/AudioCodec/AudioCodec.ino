@@ -9,6 +9,8 @@ Wavetable oscillator{wavetable, 512, 48000};
 
 AudioDevice* audiodevice;
 
+float mFrequency = 440.0f;
+
 void setup() {
     system_init();
 
@@ -25,15 +27,21 @@ void setup() {
     audiodevice               = audiodevice_init(&audioinfo);
     if (audiodevice->audioinfo->device_id == AUDIO_DEVICE_INIT_ERROR) {
         console_timestamp();
-        console_println("error initializing audio device");
+        console_error("error initializing audio device");
     }
-    audiodevice_start(audiodevice);
+//    audiodevice_pause(audiodevice);
     // ... or for short with default values and auto start
     // audiodevice = system_init_audiocodec();
 }
 
 void loop() {
-    console_println("...");
+    mFrequency += 10.0f;
+    if (mFrequency > 880.0f) {
+        mFrequency = 220.0f;
+    }
+    oscillator.set_frequency(mFrequency);
+    console_println("freq: %f", mFrequency);
+
     delay(1000);
 }
 

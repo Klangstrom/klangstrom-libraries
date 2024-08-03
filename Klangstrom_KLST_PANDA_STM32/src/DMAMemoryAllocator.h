@@ -17,24 +17,17 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#pragma once
+
+#include <stdint.h>
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void console_init();
-void console_printf(const char* format, ...);
-void console_println(const char* format, ...);
-void console_status(const char* format, ...);
-void console_error(const char* format, ...);
-void console_set_color_red();
-void console_set_color_green();
-void console_reset_color();
-void console_clear();
-void console_timestamp(bool newline = false); // NOTE implemented this ASP for now
-void console_system_info();                   // NOTE implemented this BSP for now
-void console_mute(bool mute);
-
-void console_init_BSP();
+void* dma_malloc(size_t size);
+void  dma_free_all();
 
 #ifdef __cplusplus
 }
