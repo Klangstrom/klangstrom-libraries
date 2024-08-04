@@ -18,3 +18,7 @@
 */
 
 #pragma once
+
+/**
+ * this include is required to tell the silly arduino build system to include the other libraries
+ */

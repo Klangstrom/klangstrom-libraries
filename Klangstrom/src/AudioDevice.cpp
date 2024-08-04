@@ -35,9 +35,7 @@ WEAK void audioblock(AudioBlock* audio_block) {
     }
 }
 
-static bool fCleanUpMemory = false;
-
-AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
+AudioDevice* audiodevice_create_from_audioinfo(AudioInfo* audioinfo) {
     AudioDevice* audiodevice                = new AudioDevice();
     audiodevice->audioinfo                  = new AudioInfo();
     audiodevice->audioinfo->sample_rate     = audioinfo->sample_rate;
@@ -47,8 +45,6 @@ AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
     audiodevice->audioinfo->bit_depth       = audioinfo->bit_depth;
     audiodevice->audioinfo->device_type     = audioinfo->device_type;
     audiodevice->audioinfo->device_id       = AUDIO_DEVICE_ID_UNDEFINED;
-
-    audiodevice_init_peripherals(audiodevice);
 
     audiodevice->audioblock                  = new AudioBlock();
     audiodevice->audioblock->sample_rate     = audiodevice->audioinfo->sample_rate;
@@ -64,25 +60,48 @@ AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
         audiodevice->audioblock->input[i] = new float[audiodevice->audioblock->block_size];
     }
 
-    audiodevice_init_device(audiodevice);
+    return audiodevice;
+}
+
+static void audiodevice_init_custom_device(AudioDevice* audiodevice) {
+    (void) audiodevice;
+    // TODO this is a placeholder for custom device initialization
+    // 1. assume that the device is already initialized ( see `audiodevice_init_default_audiocodec()` )
+    //     - audioinfo is set
+    //     - audioblock is set ( including input and output buffers )
+    //     - audioperipherals is set ( including callbacks )
+    // 2. set the device ID
+    // 3. set application callback ( e.g `audioblock` )
+}
+
+static bool fCleanUpMemory = false;
+
+AudioDevice* audiodevice_init_audiocodec(AudioInfo* audioinfo) {
     fCleanUpMemory = true;
 
+    AudioDevice* audiodevice = audiodevice_create_from_audioinfo(audioinfo);
+    audiodevice_init_peripherals_BSP(audiodevice);
+
+    /* initialize audio device */
+    audiodevice_init_device_BSP(audiodevice);
+    audiodevice_setup_device(audiodevice);
+
+    /* start automatically */
     audiodevice_resume(audiodevice);
 
     return audiodevice;
 }
 
-void audiodevice_init_device(AudioDevice* audiodevice) {
-    audiodevice_init_device_BSP(audiodevice);
+void audiodevice_setup_device(AudioDevice* audiodevice) {
     audiodevice->audioinfo->device_id = system_get_unique_device_ID();
     audiodevice->callback_audioblock  = audioblock;
     system_register_audiodevice(audiodevice);
 }
 
 void audiodevice_deinit(AudioDevice* audiodevice) {
-    audiodevice_deinit_BSP(audiodevice);
-    audiodevice_deinit_peripherals(audiodevice);
     if (fCleanUpMemory) {
+        audiodevice_deinit_BSP(audiodevice);
+        audiodevice_deinit_peripherals_BSP(audiodevice);
         for (int i = 0; i < audiodevice->audioblock->output_channels; ++i) {
             delete[] audiodevice->audioblock->output[i];
         }

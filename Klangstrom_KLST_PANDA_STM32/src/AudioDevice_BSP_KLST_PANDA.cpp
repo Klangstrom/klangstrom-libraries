@@ -22,7 +22,6 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -81,6 +80,7 @@ static void tx_output_callback(AudioDevice* audiodevice, uint8_t callback_type) 
 static void error_callback(AudioDevice* audiodevice, uint8_t callback_type) {
     (void) audiodevice;
     (void) callback_type;
+    console_error("error in audio device");
 }
 
 static void delay_ms(uint32_t duration) {
@@ -100,8 +100,8 @@ static void setup_SAI(AudioDevice* audiodevice) {
     HAL_StatusTypeDef status;
     status = HAL_SAI_Transmit_DMA(audiodevice->peripherals->audiodevice_sai_tx,
                                   (uint8_t*) dma_TX_buffer,
-                                  // TODO why is this not `sizeof(uint16_t)`?
-                                  // fDoubleBufferLength * audiodevice->audioinfo->output_channels * sizeof(uint16_t));
+                                  // TODO why is length not in bytes?
+                                  // fDoubleBufferLengthInBytes * audiodevice->audioinfo->output_channels);
                                   fDoubleBufferLength * audiodevice->audioinfo->output_channels);
     if (HAL_OK != status) {
         console_error("initializing SAI TX: %i", status);
@@ -109,8 +109,8 @@ static void setup_SAI(AudioDevice* audiodevice) {
 
     status = HAL_SAI_Receive_DMA(audiodevice->peripherals->audiodevice_sai_rx,
                                  (uint8_t*) dma_RX_buffer,
-                                 // TODO why is this not `sizeof(uint16_t)`?
-                                 // fDoubleBufferLength * audiodevice->audioinfo->input_channels * sizeof(uint16_t));
+                                 // TODO why is length not in bytes?
+                                 // fDoubleBufferLengthInBytes * audiodevice->audioinfo->input_channels);
                                  fDoubleBufferLength * audiodevice->audioinfo->input_channels);
     if (HAL_OK != status) {
         console_error("initializing SAI RX: %i", status);
@@ -173,14 +173,14 @@ void audiodevice_init_device_BSP(AudioDevice* audiodevice) {
     audiodevice_pause(audiodevice);
 }
 
-void audiodevice_init_peripherals(AudioDevice* audiodevice) {
+void audiodevice_init_peripherals_BSP(AudioDevice* audiodevice) {
     audiodevice->peripherals                     = new AudioDevicePeripherals();
     audiodevice->peripherals->audiodevice_sai_rx = &AUDIOCODEC_RX;
     audiodevice->peripherals->audiodevice_sai_tx = &AUDIOCODEC_TX;
     audiodevice->peripherals->audiodevice_config = &AUDIOCODEC_CONFIG;
 }
 
-void audiodevice_deinit_peripherals(AudioDevice* audiodevice) {
+void audiodevice_deinit_peripherals_BSP(AudioDevice* audiodevice) {
     delete audiodevice->peripherals;
 }
 
@@ -189,15 +189,6 @@ void audiodevice_deinit_BSP(AudioDevice* audiodevice) {
     dma_free_all();
 }
 
-void audiodevice_resume(AudioDevice* audiodevice) {
-    HAL_SAI_DMAResume(audiodevice->peripherals->audiodevice_sai_tx);
-    HAL_SAI_DMAResume(audiodevice->peripherals->audiodevice_sai_rx);
-}
-
-void audiodevice_pause(AudioDevice* audiodevice) {
-    HAL_SAI_DMAPause(audiodevice->peripherals->audiodevice_sai_tx);
-    HAL_SAI_DMAPause(audiodevice->peripherals->audiodevice_sai_rx);
-}
 
 #ifdef __cplusplus
 }

@@ -96,19 +96,15 @@ WEAK void audioblock(AudioBlock* audioblock);
  * @param audioinfo
  * @return
  */
-AudioDevice* audiodevice_init(AudioInfo* audioinfo);
-/**
- *  initializes audio device with a `audiodevice`.
- *  this is only used for custom instialization e.g when specifiying custom callbacks
- * @param audiodevice
- */
-void audiodevice_init_device(AudioDevice* audiodevice);
-void audiodevice_deinit(AudioDevice* audiodevice);
-void audiodevice_resume(AudioDevice* audiodevice);
-void audiodevice_pause(AudioDevice* audiodevice);
-void audiodevice_init_peripherals(AudioDevice* audiodevice);
-void audiodevice_deinit_peripherals(AudioDevice* audiodevice);
+AudioDevice* audiodevice_init_audiocodec(AudioInfo* audioinfo);
+void         audiodevice_deinit(AudioDevice* audiodevice);
+void         audiodevice_resume(AudioDevice* audiodevice);
+void         audiodevice_pause(AudioDevice* audiodevice);
+void         audiodevice_setup_device(AudioDevice* audiodevice);
+AudioDevice* audiodevice_create_from_audioinfo(AudioInfo* audioinfo);
 
+void audiodevice_init_peripherals_BSP(AudioDevice* audiodevice);
+void audiodevice_deinit_peripherals_BSP(AudioDevice* audiodevice);
 void audiodevice_init_device_BSP(AudioDevice* audiodevice);
 void audiodevice_deinit_BSP(AudioDevice* audiodevice);
 

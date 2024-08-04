@@ -17,44 +17,36 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
-
-#include "Klangstrom_ASP_KLST_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
-#ifdef STM32H723xx
-#include "stm32h7xx_hal.h"
-#else
-#error STM32 device not supported or defined
-#endif
-
 #include "AudioDevice.h"
+#include "AudioDevice_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * @brief AudioDevicePeripherals struct for an SAI-or I2S-based AudioDevice with I2C interface
- */
-typedef struct AudioDevicePeripherals {
-    Callback_2_AUDIODEVICE_UI8 callback_rx;
-    Callback_2_AUDIODEVICE_UI8 callback_tx;
-    Callback_2_AUDIODEVICE_UI8 callback_error;
-#ifdef HAL_SAI_MODULE_ENABLED
-    SAI_HandleTypeDef* audiodevice_sai_rx;
-    SAI_HandleTypeDef* audiodevice_sai_tx;
-#endif // HAL_SAI_MODULE_ENABLED
-#ifdef HAL_I2S_MODULE_ENABLED
-    I2S_HandleTypeDef* audiocodec_i2s_rx;
-    I2S_HandleTypeDef* audiocodec_i2s_tx;
-#endif // HAL_I2S_MODULE_ENABLED
-#ifdef HAL_I2C_MODULE_ENABLED
-    I2C_HandleTypeDef* audiodevice_config;
-#endif // HAL_I2C_MODULE_ENABLED
-} AudioDevicePeripherals;
+void audiodevice_resume(AudioDevice* audiodevice) {
+    if (audiodevice->peripherals->audiodevice_sai_tx != nullptr) {
+        HAL_SAI_DMAResume(audiodevice->peripherals->audiodevice_sai_tx);
+    }
+    if (audiodevice->peripherals->audiodevice_sai_rx != nullptr) {
+        HAL_SAI_DMAResume(audiodevice->peripherals->audiodevice_sai_rx);
+    }
+}
+
+void audiodevice_pause(AudioDevice* audiodevice) {
+    if (audiodevice->peripherals->audiodevice_sai_tx != nullptr) {
+        HAL_SAI_DMAPause(audiodevice->peripherals->audiodevice_sai_tx);
+    }
+    if (audiodevice->peripherals->audiodevice_sai_rx != nullptr) {
+        HAL_SAI_DMAPause(audiodevice->peripherals->audiodevice_sai_rx);
+    }
+}
+
 
 #ifdef __cplusplus
 }

@@ -24,14 +24,14 @@ void setup() {
     audioinfo.input_channels  = 2;
     audioinfo.block_size      = 128;
     audioinfo.bit_depth       = 16;
-    audiodevice               = audiodevice_init(&audioinfo);
+    audiodevice               = audiodevice_init_audiocodec(&audioinfo);
     if (audiodevice->audioinfo->device_id == AUDIO_DEVICE_INIT_ERROR) {
         console_timestamp();
         console_error("error initializing audio device");
     }
+    audiodevice_resume(audiodevice);
     // ... or for short with default values and auto start
     // audiodevice = system_init_audiocodec();
-    // audiodevice_resume(audiodevice);
 }
 
 void loop() {
