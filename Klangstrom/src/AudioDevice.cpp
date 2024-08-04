@@ -51,6 +51,7 @@ AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
     audiodevice_init_peripherals(audiodevice);
 
     audiodevice->audioblock                  = new AudioBlock();
+    audiodevice->audioblock->sample_rate     = audiodevice->audioinfo->sample_rate;
     audiodevice->audioblock->output_channels = audiodevice->audioinfo->output_channels;
     audiodevice->audioblock->input_channels  = audiodevice->audioinfo->input_channels;
     audiodevice->audioblock->block_size      = audiodevice->audioinfo->block_size;
@@ -65,6 +66,8 @@ AudioDevice* audiodevice_init(AudioInfo* audioinfo) {
 
     audiodevice_init_device(audiodevice);
     fCleanUpMemory = true;
+
+    audiodevice_resume(audiodevice);
 
     return audiodevice;
 }
@@ -93,6 +96,76 @@ void audiodevice_deinit(AudioDevice* audiodevice) {
         delete audiodevice;
     }
 }
+
+void process_audioblock_data_16_2_2(AudioDevice* audiodevice,
+                                    uint16_t*    input,
+                                    uint16_t*    output) {
+    if (audiodevice->audioinfo->bit_depth != 16 ||
+        audiodevice->audioinfo->output_channels != 2 ||
+        audiodevice->audioinfo->input_channels != 2) {
+        return;
+    }
+    AudioBlock&    audioblock = *audiodevice->audioblock;
+    const uint16_t block_size = audiodevice->audioinfo->block_size;
+
+    /* unpack receive buffer to (float) samples */
+    constexpr float M_INT_SCALE = 1 << 15;
+    for (uint16_t i = 0; i < block_size; i++) {
+        const int16_t mLeftInt  = static_cast<int16_t>(input[2 * i]);
+        const int16_t mRightInt = static_cast<int16_t>(input[2 * i + 1]);
+        audioblock.input[0][i]  = static_cast<float>(mLeftInt) / M_INT_SCALE;
+        audioblock.input[1][i]  = static_cast<float>(mRightInt) / M_INT_SCALE;
+    }
+
+    if (audiodevice->callback_audioblock != nullptr) {
+        audiodevice->callback_audioblock(audiodevice->audioblock);
+    }
+
+    /* pack samples for transmit buffer */
+    for (uint16_t i = 0; i < block_size; i++) {
+        int16_t mLeftInt  = static_cast<int16_t>(audioblock.output[0][i] * M_INT_SCALE);
+        int16_t mRightInt = static_cast<int16_t>(audioblock.output[1][i] * M_INT_SCALE);
+        output[2 * i]     = static_cast<uint16_t>(mLeftInt);
+        output[2 * i + 1] = static_cast<uint16_t>(mRightInt);
+    }
+}
+
+//static void process_audioblock_data_16_2_2(AudioDevice* audiodevice,
+//                                           uint32_t*    input,
+//                                           uint32_t*    output) {
+//    if (audiodevice->audioinfo->bit_depth != 16 ||
+//        audiodevice->audioinfo->output_channels != 2 ||
+//        audiodevice->audioinfo->input_channels != 2) {
+//        return;
+//    }
+//
+//    AudioBlock&    audioblock  = *audiodevice->audioblock;
+//    const uint32_t sample_rate = audiodevice->audioinfo->sample_rate;
+//    const uint16_t block_size  = audiodevice->audioinfo->block_size;
+//
+//    /* unpack receive buffer to (float) samples */
+//    constexpr float    M_INT_SCALE  = 1 << 15;
+//    constexpr uint32_t M_MASK_LEFT  = 0x0000FFFF;
+//    constexpr uint32_t M_MASK_RIGHT = 0xFFFF0000;
+//    for (uint16_t i = 0; i < block_size; i++) {
+//        const uint32_t p         = input[i];
+//        const int16_t  mLeftInt  = static_cast<int16_t>(p & M_MASK_LEFT);
+//        const int16_t  mRightInt = static_cast<int16_t>((p & M_MASK_RIGHT) >> 16);
+//        audioblock.input[0][i]   = static_cast<float>(mLeftInt) / M_INT_SCALE;
+//        audioblock.input[1][i]   = static_cast<float>(mRightInt) / M_INT_SCALE;
+//    }
+//
+//    if (audiodevice->callback_audioblock != nullptr) {
+//        audiodevice->callback_audioblock(audiodevice->audioblock);
+//    }
+//
+//    /* pack samples for transmit buffer */
+//    for (uint16_t i = 0; i < block_size; i++) {
+//        int16_t mLeftInt  = static_cast<int16_t>(audioblock.output[0][i] * M_INT_SCALE);
+//        int16_t mRightInt = static_cast<int16_t>(audioblock.output[1][i] * M_INT_SCALE);
+//        output[i]         = static_cast<uint32_t>(static_cast<uint16_t>(mLeftInt)) | (static_cast<uint32_t>(static_cast<uint16_t>(mRightInt)) << 16);
+//    }
+//}
 
 #ifdef __cplusplus
 }

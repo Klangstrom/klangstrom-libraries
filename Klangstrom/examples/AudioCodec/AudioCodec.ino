@@ -29,9 +29,9 @@ void setup() {
         console_timestamp();
         console_error("error initializing audio device");
     }
-//    audiodevice_pause(audiodevice);
     // ... or for short with default values and auto start
     // audiodevice = system_init_audiocodec();
+    // audiodevice_resume(audiodevice);
 }
 
 void loop() {

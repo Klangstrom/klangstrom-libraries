@@ -112,6 +112,8 @@ void audiodevice_deinit_peripherals(AudioDevice* audiodevice);
 void audiodevice_init_device_BSP(AudioDevice* audiodevice);
 void audiodevice_deinit_BSP(AudioDevice* audiodevice);
 
+void process_audioblock_data_16_2_2(AudioDevice* audiodevice, uint16_t* input, uint16_t* output);
+
 #ifdef __cplusplus
 }
 #endif

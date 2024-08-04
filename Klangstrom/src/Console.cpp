@@ -33,6 +33,10 @@ static bool fIsMuted = false;
 //#define CONSOLE_PRINT_BUFFER_SIZE 128
 //#endif // CONSOLE_PRINT_BUFFER_SIZE
 
+#ifndef CONSOLE_LINE_ENDING
+#define CONSOLE_LINE_ENDING "\r\n"
+#endif // CONSOLE_LINE_ENDING
+
 void console_mute(bool mute) {
     fIsMuted = mute;
 }
@@ -67,7 +71,7 @@ void console_println(const char* format, ...) {
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
-    printf("\n\r");
+    printf(CONSOLE_LINE_ENDING);
 
     //    char    buffer[CONSOLE_PRINT_BUFFER_SIZE];
     //    va_list args;
@@ -99,7 +103,7 @@ void console_status(const char* format, ...) {
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
-    printf("\n\r");
+    printf(CONSOLE_LINE_ENDING);
 
     console_reset_color();
 }
@@ -114,7 +118,7 @@ void console_error(const char* format, ...) {
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
-    printf("\n\r");
+    printf(CONSOLE_LINE_ENDING);
 
     console_reset_color();
 }

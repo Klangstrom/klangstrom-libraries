@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 #ifndef KLST_DMA_POOL_SIZE
-#define KLST_DMA_POOL_SIZE 128 * 4 * 2
+#define KLST_DMA_POOL_SIZE (128 * 2 * 2 * 2 * 2) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
 #endif
 
 #ifndef KLST_DMA_SECTION_NAME
@@ -37,7 +37,7 @@ uint8_t dma_memory_pool[KLST_DMA_POOL_SIZE];
 typedef struct {
     uint8_t* base;
     uint8_t* next;
-    size_t    size;
+    size_t   size;
 } MemoryPool;
 
 static MemoryPool dma_pool = {
