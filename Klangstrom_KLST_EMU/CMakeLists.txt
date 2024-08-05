@@ -6,12 +6,12 @@ if(NOT DEFINED KLST_ENV)
     message(FATAL_ERROR "KLST_ENV is not defined")
 endif()
 
-add_library(klangstrom_KLST_EMU 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Klangstrom_BSP_KLST_EMU.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromAudioCodec_BSP_KLST_EMU.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromLEDs_BSP_KLST_EMU.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KlangstromSerialDebug_BSP_KLST_EMU.cpp
+file(GLOB SOURCE_FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
+
+add_library(klangstrom_KLST_EMU ${SOURCE_FILES})
 
 target_include_directories(klangstrom_KLST_EMU PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/src
