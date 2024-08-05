@@ -29,6 +29,8 @@
 extern "C" {
 #endif
 
+#ifndef KLST_DISABLE_PRINT_CLIENT
+
 #ifndef CONSOLE_UART_INSTANCE
 #define CONSOLE_UART_INSTANCE huart3
 #endif // CONSOLE_UART_INSTANCE
@@ -42,30 +44,109 @@ extern UART_HandleTypeDef CONSOLE_UART_INSTANCE;
 extern "C" int _write(int file, char* data, int len) {
     // @note needs to be implemented with `extern "C"` for printf to work
     (void) file;
-    HAL_StatusTypeDef status = HAL_UART_Transmit(&CONSOLE_UART_INSTANCE, (uint8_t*) data, len, 10);
+    HAL_StatusTypeDef status = HAL_UART_Transmit(&CONSOLE_UART_INSTANCE, (uint8_t*) data, len, HAL_MAX_DELAY);
     return (status == HAL_OK ? len : 0);
 }
 
 void console_init_BSP() {
     CONSOLE_UART_INSTANCE_INIT();
 }
+#else
+void console_init_BSP() {}
+#endif // KLST_DISABLE_PRINT_CLIENT
 
 static void rainbow(const char* text) {
-    console_println("\033[31m%s\033[0m", text); // Red
-    console_println("\033[32m%s\033[0m", text); // Green
-    console_println("\033[33m%s\033[0m", text); // Yellow
-    console_println("\033[34m%s\033[0m", text); // Indigo (using Blue)
-    console_println("\033[35m%s\033[0m", text); // Violet
-    console_println("\033[36m%s\033[0m", text); // Violet
-    console_println("\033[37m%s\033[0m", text); // Violet
+    static const uint8_t num_colors = 7;
+    const char*          colors[]   = {
+        "\033[31m", // Red
+        "\033[32m", // Green
+        "\033[33m", // Yellow
+        "\033[34m", // Blue (as Indigo)
+        "\033[35m", // Violet
+        "\033[36m", // Cyan (as another shade of Violet)
+        "\033[37m"  // White (as another shade of Violet)
+    };
+
+    const char* reset_color = "\033[0m";
+    static int  color_index = 0;
+
+    console_status("%s%s%s", colors[color_index], text, reset_color);
+    color_index++;
+    color_index %= num_colors;
 }
 
 void console_system_info() {
-    console_println("\n\r---------------------------------------------------------\n\r");
-    console_println("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
-    console_println("\n\r---------------------------------------------------------\n\r");
-    rainbow("■■■ ■■ ■ ■■ ■■■");
-    console_printf("\n\r\n\r");
+    console_reset_color();
+    const static bool mPrintImage = true;
+
+    console_status("----------------------------------------------------------------------------------------------------");
+    console_status("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)", HAL_RCC_GetSysClockFreq() / 1000000, __TIME__);
+    console_status("----------------------------------------------------------------------------------------------------");
+    if (mPrintImage) {
+        console_status("                                                                                                    ");
+        console_status("                        ▓▓████▓▓▒▒                                                                  ");
+        console_status("                      ░░██████████                                                                  ");
+        console_status("                      ██████████▓▓░░                                                                ");
+        console_status("                      ████████████░░                                                                ");
+        console_status("                      ████████████▒▒                                ▓▓▓▓██                          ");
+        console_status("                      ██████████▓▓░░                              ▓▓██▓▓████                        ");
+        console_status("                      ████████▓▓░░                            ░░████████████▒▒                      ");
+        console_status("                      ▓▓████▒▒░░░░                              ▓▓████████████                      ");
+        console_status("                      ▒▒██▒▒                  ░░░░  ░░            ████████████                      ");
+        console_status("                        ░░░░              ░░░░    ░░░░░░░░░░░░░░  ░░██████████                      ");
+        console_status("                        ░░        ░░░░  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓████████                      ");
+        console_status("                                ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██████▓▓                      ");
+        console_status("                                ░░░░████▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░██████                        ");
+        console_status("                              ░░░░██████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░                            ");
+        console_status("                        ░░░░░░░░▒▒████▓▓████▒▒░░░░░░░░▒▒████░░░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░▓▓████▓▓██▓▓░░  ░░░░░░██████▓▓░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░████████░░          ░░████████░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░████▓▓                ██▓▓████░░░░░░░░░░░░                          ");
+        console_status("                      ░░░░░░░░░░████                    ████▓▓░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░░░░░                    ▒▒██▒▒░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░░░        ░░██████▒▒      ██░░░░░░░░░░░░                            ");
+        console_status("                      ░░░░░░░░░░░░░░  ░░░░▒▒▓▓████████░░░░▓▓░░░░░░░░░░                              ");
+        console_status("                    ░░██░░░░░░░░░░░░░░░░░░░░██████████░░░░░░░░░░░░░░░░                              ");
+        console_status("                  ░░████▓▓░░░░░░▒▒░░░░░░░░░░▒▒██████▒▒░░░░░░░░░░░░░░                                ");
+        console_status("                  ▓▓██████▓▓▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░                              ");
+        console_status("              ▒▒▓▓██████████████▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░▒▒████░░                            ");
+        console_status("            ▓▓██████████████████████▓▓▓▓▓▓▓▓▒▒░░░░░░░░░░▒▒▓▓▓▓██████████▓▓▒▒                        ");
+        console_status("          ░░▓▓████████████████████████████████████▓▓▒▒▒▒████████████████████                        ");
+        console_status("          ██▓▓████████████████████████████████████████████████████████████████                      ");
+        console_status("        ████▓▓████████████████████████████████████████████████████████████████▒▒                    ");
+        console_status("        ▓▓▓▓████████████████████████████████████████████████████████████████████                    ");
+        console_status("      ▓▓████████████████▓▓░░░░░░▒▒░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓██████████████████████▓▓                  ");
+        console_status("      ██████████████████▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒██████████████████                  ");
+        console_status("      ▓▓████████████████▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒██████████████████░░                ");
+        console_status("    ▒▒▓▓████████████████▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒██████████████████▓▓                ");
+        console_status("    ████████████████████▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒████████████████████                ");
+        console_status("    ▓▓▓▓██████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒██████████████████▓▓                ");
+        console_status("    ▓▓████████████████████▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▓▓██████████████████▓▓                ");
+        console_status("    ████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒██████████████████████                ");
+        console_status("    ████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒██████████████████████                ");
+        console_status("      ████████████████████▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒██████████████████████                ");
+        console_status("      ████████████████████▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██████████████████████████████▒▒        ");
+        console_status("      ██████████████████▓▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓████████████████████████████████▒▒    ");
+        console_status("    ▒▒████████████████████▓▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▓▓████████████████████████████████▓▓▓▓  ");
+        console_status("    ████████████████████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒████▓▓██████████████████████████████░░");
+        console_status("  ▒▒████████████████████████▓▓▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓██████████████████████████████████████");
+        console_status("  ████████████████████████████▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒████████████████████████████████████████");
+        console_status("  ████████████████████████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░▒▒████████████████████████████████▓▓██████");
+        console_status("  ████████████████████████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒██████████████████████████████████▓▓████");
+        console_status("  ████████████████████████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒████████████████████████████▓▓▓▓▓▓▓▓██▓▓");
+        console_status("░░▓▓██████████████████████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒██████████████████████████▓▓▓▓▓▓▓▓▓▓██  ");
+        console_status("  ████████████████▓▓▓▓████████▒▒▒▒▒▒▒▒░░░░░░░░░░░░▒▒▒▒░░      ▒▒██████████████████████▓▓████████▓▓  ");
+        console_status("  ████████████████▓▓██████████  ░░▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░            ████████████████████▓▓████████▒▒    ");
+        console_status("  ██████████████████████████▓▓                                    ██████████████████▓▓▓▓▓▓██▓▓      ");
+        console_status("    ████████████████▓▓██████                                        ██████████████████████          ");
+        console_status("    ██████████████████████▒▒                                                                        %s", CONSOLE_LINE_ENDING);
+    } else {
+        console_status("%s", CONSOLE_LINE_ENDING);
+    }
+
+    //    for (int i = 0; i < 7; ++i) {
+    //        rainbow("■□■ □■□□ □□□ ■ □□■■□■ □■■□ □■ ■□ ■□□ □■");
+    //    }
 }
 
 #ifdef __cplusplus

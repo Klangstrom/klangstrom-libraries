@@ -27,15 +27,11 @@ extern "C" {
 #endif
 
 static bool fSerialDebugInitialized = false;
-static bool fIsMuted = false;
+static bool fIsMuted                = false;
 
 //#ifndef CONSOLE_PRINT_BUFFER_SIZE
 //#define CONSOLE_PRINT_BUFFER_SIZE 128
 //#endif // CONSOLE_PRINT_BUFFER_SIZE
-
-#ifndef CONSOLE_LINE_ENDING
-#define CONSOLE_LINE_ENDING "\r\n"
-#endif // CONSOLE_LINE_ENDING
 
 void console_mute(bool mute) {
     fIsMuted = mute;
@@ -48,8 +44,27 @@ void console_init() {
     }
 }
 
-void console_printf(const char* format, ...) {
-    if (fIsMuted) return;
+void console_set_color_red() {
+    console_printf("\033[31m");
+}
+
+void console_set_color_green() {
+    console_printf("\033[32m");
+}
+
+void console_reset_color() {
+    console_printf("\033[0m");
+}
+
+void console_clear() {
+    console_printf("\033[2J\033[H");
+}
+
+#ifndef KLST_DISABLE_PRINT_CLIENT
+void _console_printf_(const char* format, ...) {
+    if (fIsMuted) {
+        return;
+    }
     console_init();
     va_list args;
     va_start(args, format);
@@ -64,8 +79,10 @@ void console_printf(const char* format, ...) {
     //    KLST_BSP_serialdebug_printf("%s", buffer);
 }
 
-void console_println(const char* format, ...) {
-    if (fIsMuted) return;
+void _console_println_(const char* format, ...) {
+    if (fIsMuted) {
+        return;
+    }
     console_init();
     va_list args;
     va_start(args, format);
@@ -81,23 +98,33 @@ void console_println(const char* format, ...) {
     //    KLST_BSP_serialdebug_printf("%s\n\r", buffer);
 }
 
-void console_set_color_red() {
-    console_printf("\033[31m");
-}
+void _console_print_(const char* format, ...) {
+    if (fIsMuted) {
+        return;
+    }
+    console_init();
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
 
-void console_set_color_green() {
-    console_printf("\033[32m");
+    //    char    buffer[CONSOLE_PRINT_BUFFER_SIZE];
+    //    va_list args;
+    //    va_start(args, format);
+    //    vsnprintf(buffer, CONSOLE_PRINT_BUFFER_SIZE, format, args);
+    //    va_end(args);
+    //    KLST_BSP_serialdebug_printf("%s\n\r", buffer);
 }
+#endif // KLST_DISABLE_PRINT_CLIENT
 
-void console_reset_color() {
-    console_printf("\033[0m");
-}
-
-void console_status(const char* format, ...) {
+#ifndef KLST_DISABLE_PRINT_DEBUG
+void _console_status_(const char* format, ...) {
     console_set_color_green();
     console_timestamp();
 
-    if (fIsMuted) return;
+    if (fIsMuted) {
+        return;
+    }
     console_init();
     va_list args;
     va_start(args, format);
@@ -108,11 +135,13 @@ void console_status(const char* format, ...) {
     console_reset_color();
 }
 
-void console_error(const char* format, ...) {
+void _console_error_(const char* format, ...) {
     console_set_color_red();
     console_timestamp();
 
-    if (fIsMuted) return;
+    if (fIsMuted) {
+        return;
+    }
     console_init();
     va_list args;
     va_start(args, format);
@@ -122,10 +151,7 @@ void console_error(const char* format, ...) {
 
     console_reset_color();
 }
-
-void console_clear() {
-    console_printf("\033[2J\033[H");
-}
+#endif // KLST_DISABLE_PRINT_DEBUG
 
 #ifdef __cplusplus
 }

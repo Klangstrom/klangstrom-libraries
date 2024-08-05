@@ -21,18 +21,49 @@
 extern "C" {
 #endif
 
+#ifndef KLST_CONSOLE_LINE_ENDING
+#define CONSOLE_LINE_ENDING "\r\n"
+#endif // KLST_CONSOLE_LINE_ENDING
+
+void console_mute(bool mute);
 void console_init();
-void console_printf(const char* format, ...);
-void console_println(const char* format, ...);
-void console_status(const char* format, ...);
-void console_error(const char* format, ...);
 void console_set_color_red();
 void console_set_color_green();
 void console_reset_color();
 void console_clear();
 void console_timestamp(bool newline = false); // NOTE implemented this ASP for now
 void console_system_info();                   // NOTE implemented this BSP for now
-void console_mute(bool mute);
+
+/*
+ * use `#define KLST_DISABLE_PRINT_CLIENT` to disable all printing.
+ * this may safes a lot of *program storage space*.
+ */
+#ifndef KLST_DISABLE_PRINT_CLIENT
+#define console_printf(format, ...) _console_printf_(format, ##__VA_ARGS__)
+#define console_print(format, ...) _console_print_(format, ##__VA_ARGS__)
+#define console_println(format, ...) _console_println_(format, ##__VA_ARGS__)
+#else
+#define console_printf(format, ...)
+#define console_print(format, ...)
+#define console_println(format, ...)
+#endif
+void _console_printf_(const char* format, ...);
+void _console_print_(const char* format, ...);
+void _console_println_(const char* format, ...);
+
+/*
+ * use `#define KLST_DISABLE_PRINT_DEBUG` to disable only error and status messages.
+ * this reduces *clutter* in the serial monitor and saves *program storage space*.
+ */
+#ifndef KLST_DISABLE_PRINT_DEBUG
+#define console_status(format, ...) _console_status_(format, ##__VA_ARGS__)
+#define console_error(format, ...) _console_error_(format, ##__VA_ARGS__)
+#else
+#define console_status(format, ...)
+#define console_error(format, ...)
+#endif
+void _console_status_(const char* format, ...);
+void _console_error_(const char* format, ...);
 
 void console_init_BSP();
 

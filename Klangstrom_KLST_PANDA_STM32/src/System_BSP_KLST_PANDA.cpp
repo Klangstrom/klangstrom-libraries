@@ -29,7 +29,7 @@ extern "C" {
 #include "Klangstrom_ASP_KLST_STM32-Config.h"         // TODO rename this
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Includes.h" // TODO rename this
 
-AudioDevice* system_init_audiocodec() {
+AudioDevice* system_init_audiocodec() { // TOOD this is BSP
     AudioInfo audioinfo;
     audioinfo.sample_rate     = 48000;
     audioinfo.output_channels = 2;
@@ -54,9 +54,9 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     MX_GPIO_Init();
 #endif // KLST_PANDA_ENABLE_GPIO
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
-    MX_I2C4_Init();
-#endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
+    //#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
+    //    MX_I2C4_Init();
+    //#endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
 
     /* initialize DMA */
 #if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \

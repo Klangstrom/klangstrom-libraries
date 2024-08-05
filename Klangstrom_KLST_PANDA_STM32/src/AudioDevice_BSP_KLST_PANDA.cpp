@@ -58,6 +58,36 @@ uint16_t* dma_RX_buffer;
 uint16_t* mCurrentInputRXBuffer;
 uint16_t* mCurrentOutputTXBuffer;
 
+#define M_BIT_DEPTH 16
+#define M_SAMPLE_RATE 48000
+#define M_TX_OUTPUT_CHANNELS 2
+#define M_RX_INPUT_CHANNELS 2
+#define M_SAMPLES_PER_AUDIO_BLOCK 128
+#define M_DOUBLE_BUFFER_SIZE (M_SAMPLES_PER_AUDIO_BLOCK * 2)
+
+static void check_audiodevice_config(AudioDevice* audiodevice) {
+    if (audiodevice->audioinfo->sample_rate != M_SAMPLE_RATE) {
+        console_error("@check_audiodevice_config / sample rate not supported\n");
+        return;
+    }
+    if (audiodevice->audioinfo->output_channels != M_TX_OUTPUT_CHANNELS) {
+        console_error("@check_audiodevice_config / output channels not supported\n");
+        return;
+    }
+    if (audiodevice->audioinfo->input_channels != M_RX_INPUT_CHANNELS) {
+        console_error("@check_audiodevice_config / input channels not supported\n");
+        return;
+    }
+    if (audiodevice->audioinfo->block_size != M_SAMPLES_PER_AUDIO_BLOCK) {
+        console_error("@check_audiodevice_config / block size not supported\n");
+        return;
+    }
+    if (audiodevice->audioinfo->bit_depth != M_BIT_DEPTH) {
+        console_error("@check_audiodevice_config / bit depth not supported\n");
+        return;
+    }
+}
+
 static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type) {
     if (callback_type == CALLBACK_FULL_COMPLETE) {
         mCurrentInputRXBuffer = &(dma_RX_buffer[audiodevice->audioinfo->block_size * audiodevice->audioinfo->input_channels]);
@@ -114,36 +144,6 @@ static void setup_SAI(AudioDevice* audiodevice) {
                                  fDoubleBufferLength * audiodevice->audioinfo->input_channels);
     if (HAL_OK != status) {
         console_error("initializing SAI RX: %i", status);
-    }
-}
-
-#define M_BIT_DEPTH 16
-#define M_SAMPLE_RATE 48000
-#define M_TX_OUTPUT_CHANNELS 2
-#define M_RX_INPUT_CHANNELS 2
-#define M_SAMPLES_PER_AUDIO_BLOCK 128
-#define M_DOUBLE_BUFFER_SIZE (M_SAMPLES_PER_AUDIO_BLOCK * 2)
-
-static void check_audiodevice_config(AudioDevice* audiodevice) {
-    if (audiodevice->audioinfo->sample_rate != M_SAMPLE_RATE) {
-        console_error("@check_audiodevice_config / sample rate not supported\n");
-        return;
-    }
-    if (audiodevice->audioinfo->output_channels != M_TX_OUTPUT_CHANNELS) {
-        console_error("@check_audiodevice_config / output channels not supported\n");
-        return;
-    }
-    if (audiodevice->audioinfo->input_channels != M_RX_INPUT_CHANNELS) {
-        console_error("@check_audiodevice_config / input channels not supported\n");
-        return;
-    }
-    if (audiodevice->audioinfo->block_size != M_SAMPLES_PER_AUDIO_BLOCK) {
-        console_error("@check_audiodevice_config / block size not supported\n");
-        return;
-    }
-    if (audiodevice->audioinfo->bit_depth != M_BIT_DEPTH) {
-        console_error("@check_audiodevice_config / bit depth not supported\n");
-        return;
     }
 }
 

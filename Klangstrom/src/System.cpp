@@ -28,7 +28,7 @@ extern "C" {
 
 static ArrayList_AudioDevicePtr fAudioDeviceListeners;
 static uint16_t                 fDeviceID;
-static bool                     fSystemInitialized = false;
+static bool                     fSystemInitialized;
 
 void system_init() {
     fDeviceID          = 0;
@@ -39,8 +39,7 @@ void system_init() {
     console_system_info();
 
     console_status("Sub-System (ASP/BSP) initialized");
-    console_status("System initialized");
-    console_status("");
+    console_status("System initialized%s", CONSOLE_LINE_ENDING);
 
     fSystemInitialized = true;
 }

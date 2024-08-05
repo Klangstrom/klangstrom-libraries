@@ -1,3 +1,7 @@
+/**
+ * this example demonstrates how to setup the audio code and generate a sine wave sound.
+ */
+
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
@@ -26,7 +30,6 @@ void setup() {
     audioinfo.bit_depth       = 16;
     audiodevice               = audiodevice_init_audiocodec(&audioinfo);
     if (audiodevice->audioinfo->device_id == AUDIO_DEVICE_INIT_ERROR) {
-        console_timestamp();
         console_error("error initializing audio device");
     }
     audiodevice_resume(audiodevice);
