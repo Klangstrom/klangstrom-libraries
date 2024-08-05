@@ -13,7 +13,7 @@ Wavetable oscillator{wavetable, 512, 48000};
 
 AudioDevice* audiodevice;
 
-float mFrequency = 440.0f;
+float osc_frequency = 440.0f;
 
 void setup() {
     system_init();
@@ -38,12 +38,12 @@ void setup() {
 }
 
 void loop() {
-    mFrequency += 10.0f;
-    if (mFrequency > 880.0f) {
-        mFrequency = 220.0f;
+    osc_frequency += 10.0f;
+    if (osc_frequency > 880.0f) {
+        osc_frequency = 220.0f;
     }
-    oscillator.set_frequency(mFrequency);
-    console_println("freq: %f", mFrequency);
+    oscillator.set_frequency(osc_frequency);
+    console_println("frequency: %f", osc_frequency);
 
     delay(1000);
 }
@@ -52,7 +52,7 @@ void audioblock(AudioBlock* audio_block) {
     for (int i = 0; i < audio_block->block_size; ++i) {
         float mSample = oscillator.process();
         for (int j = 0; j < audio_block->output_channels; ++j) {
-            audio_block->output[j][i] = mSample;
+            audio_block->output[j][i] = audio_block->input[j][i] + mSample;
         }
     }
 }
