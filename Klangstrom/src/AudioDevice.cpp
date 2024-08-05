@@ -17,9 +17,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "KlangstromEnvironment.h"
-#ifdef KLST_ARCH_IS_STM32
-
 #include "System.h"
 #include "AudioDevice.h"
 
@@ -189,5 +186,3 @@ void process_audioblock_data_16_2_2(AudioDevice* audiodevice,
 #ifdef __cplusplus
 }
 #endif
-
-#endif // KLST_ARCH_IS_STM32

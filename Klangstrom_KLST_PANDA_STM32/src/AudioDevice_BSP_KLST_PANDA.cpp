@@ -102,9 +102,11 @@ static void tx_output_callback(AudioDevice* audiodevice, uint8_t callback_type) 
     } else if (callback_type == CALLBACK_HALF_COMPLETE) {
         mCurrentOutputTXBuffer = &(dma_TX_buffer[0]);
     }
-    process_audioblock_data_16_2_2(audiodevice,
-                                   mCurrentInputRXBuffer,
-                                   mCurrentOutputTXBuffer);
+    if (audiodevice != nullptr) {
+        process_audioblock_data_16_2_2(audiodevice,
+                                       mCurrentInputRXBuffer,
+                                       mCurrentOutputTXBuffer);
+    }
 }
 
 static void error_callback(AudioDevice* audiodevice, uint8_t callback_type) {

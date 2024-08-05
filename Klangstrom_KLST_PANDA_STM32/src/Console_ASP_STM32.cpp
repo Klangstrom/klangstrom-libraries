@@ -34,7 +34,7 @@ void console_timestamp(bool newline) {
         console_println("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
     } else {
         console_printf("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    };
+    }
 }
 
 #ifdef __cplusplus
