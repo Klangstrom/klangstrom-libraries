@@ -83,9 +83,6 @@ AudioDevice* audiodevice_init_audiocodec(AudioInfo* audioinfo) {
     audiodevice_init_device_BSP(audiodevice);
     audiodevice_setup_device(audiodevice);
 
-    /* start automatically */
-    audiodevice_resume(audiodevice);
-
     return audiodevice;
 }
 

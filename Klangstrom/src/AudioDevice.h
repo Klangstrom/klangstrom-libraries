@@ -50,13 +50,6 @@ typedef struct AudioInfo {
     uint8_t  bit_depth;
     uint8_t  device_type;
     uint8_t  device_id;
-    //    uint32_t sample_rate     = 48000;
-    //    uint8_t  output_channels = 2;
-    //    uint8_t  input_channels  = 2;
-    //    uint16_t block_size      = 128;
-    //    uint8_t  bit_depth       = 16;
-    //    uint8_t  device_type     = AUDIO_DEVICE_TYPE_UNDEFINED;
-    //    uint8_t  device_id       = AUDIO_DEVICE_ID_UNDEFINED;
 } AudioInfo;
 
 typedef struct AudioBlock {

@@ -9,17 +9,20 @@
 #include "Wavetable.h"
 
 float     wavetable[512];
-Wavetable oscillator{wavetable, 512, 48000};
+Wavetable oscillator_left{wavetable, 512, 48000};
+Wavetable oscillator_right{wavetable, 512, 48000};
 
 AudioDevice* audiodevice;
 
-float osc_frequency = 440.0f;
+float osc_frequency     = 440.0f;
+bool  audiocodec_paused = false;
 
 void setup() {
     system_init();
 
     Wavetable::fill(wavetable, 512, Wavetable::WAVEFORM_SINE);
-    oscillator.set_amplitude(0.1f);
+    oscillator_left.set_amplitude(0.1f);
+    oscillator_right.set_amplitude(0.15f);
 
     // long init section ...
     AudioInfo audioinfo;
@@ -42,18 +45,23 @@ void loop() {
     if (osc_frequency > 880.0f) {
         osc_frequency = 220.0f;
     }
-    oscillator.set_frequency(osc_frequency);
+    oscillator_left.set_frequency(osc_frequency);
+    oscillator_right.set_frequency(osc_frequency * 0.495f);
     console_println("frequency: %f", osc_frequency);
+
+    if ((audiocodec_paused = !audiocodec_paused)) {
+        audiodevice_pause(audiodevice);
+    } else {
+        audiodevice_resume(audiodevice);
+    }
 
     delay(1000);
 }
 
 void audioblock(AudioBlock* audio_block) {
     for (int i = 0; i < audio_block->block_size; ++i) {
-        float mSample = oscillator.process();
-        for (int j = 0; j < audio_block->output_channels; ++j) {
-            audio_block->output[j][i] = audio_block->input[j][i] + mSample;
-        }
+        audio_block->output[0][i] = audio_block->input[0][i] + oscillator_left.process();
+        audio_block->output[1][i] = audio_block->input[1][i] + oscillator_right.process();
     }
 }
 

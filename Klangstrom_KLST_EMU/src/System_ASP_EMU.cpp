@@ -21,7 +21,6 @@
 #ifdef KLST_ARCH_IS_EMU
 
 #include "System.h"
-#include "ArrayList.h"
 #include "Console.h"
 
 #ifdef __cplusplus

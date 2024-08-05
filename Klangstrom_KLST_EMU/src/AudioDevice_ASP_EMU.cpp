@@ -27,23 +27,32 @@
 class DrawableAudioCodec : public Drawable {
 public:
     explicit DrawableAudioCodec(AudioDevice* audiodevice) : fAudioDevice(audiodevice) {}
-    //    explicit DrawableAudioCodec(AudioCodec* audiocodec) : mAudioCodec(audiocodec) {}
 
-    void draw(PGraphics* g) override {
-        g->stroke(1);
-        g->noFill();
-        g->pushMatrix();
-        g->translate(20, 200);
-        const int   mStrafe  = 16;
-        const float mHeight  = 150;
-        const float mWidth   = 512 - 20;
-        float**     mBuffers = KlangstromEmulator::instance()->get_audio_output_buffers(); // TODO get buffer from each device
+    void draw(PGraphics* g_ptr) override {
+        PGraphics& g = *g_ptr;
+
+        g.stroke(1);
+        g.noFill();
+        g.pushMatrix();
+        g.translate(20, 200);
+        const int   mStrafe = 16;
+        const float mHeight = 150;
+        const float mWidth  = 512 - 20;
+
+        if (fAudioDevice->peripherals->is_paused) {
+            g.fill(1);
+            g.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
+            g.text("PAUSED", 3, -mHeight / 2 + KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f + 2);
+            g.noFill();
+        }
+
+        float** mBuffers = KlangstromEmulator::instance()->get_audio_output_buffers(); // TODO get buffer from each device
         for (int i = 0; i < audio_output_channels; i++) {
             const auto ii = static_cast<float>(i);
-            g->stroke(1, 0.5f);
-            g->rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
-            g->line(0, ii * mHeight, mWidth, ii * mHeight);
-            g->stroke(1);
+            g.stroke(1, 0.5f);
+            g.rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
+            g.line(0, ii * mHeight, mWidth, ii * mHeight);
+            g.stroke(1);
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
                 float       mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
                 float       mSample1 = mBuffers[i][j] * 0.5f;
@@ -51,17 +60,17 @@ public:
                 const float y0       = ii * mHeight + mSample0 * mHeight;
                 const float x1       = mWidth * (float) j / DEFAULT_FRAMES_PER_BUFFER;
                 const float y1       = ii * mHeight + mSample1 * mHeight;
-                g->line(x0, y0, x1, y1);
-                g->line(x0, y0, x0, ii * mHeight);
+                g.line(x0, y0, x1, y1);
+                g.line(x0, y0, x0, ii * mHeight);
             }
         }
-        g->translate(0, mHeight * 2 + 10);
+        g.translate(0, mHeight * 2 + 10);
         for (int i = 0; i < audio_input_channels; i++) {
             const auto ii = static_cast<float>(i);
-            g->stroke(1, 0.5f);
-            g->rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
-            g->line(0, ii * mHeight, mWidth, ii * mHeight);
-            g->stroke(1);
+            g.stroke(1, 0.5f);
+            g.rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
+            g.line(0, ii * mHeight, mWidth, ii * mHeight);
+            g.stroke(1);
             mBuffers = KlangstromEmulator::instance()->get_audio_input_buffers();
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
                 float       mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
@@ -70,15 +79,14 @@ public:
                 const float y0       = ii * mHeight + mSample0 * mHeight;
                 const float x1       = mWidth * (float) j / DEFAULT_FRAMES_PER_BUFFER;
                 const float y1       = ii * mHeight + mSample1 * mHeight;
-                g->line(x0, y0, x1, y1);
-                g->line(x0, y0, x0, ii * mHeight);
+                g.line(x0, y0, x1, y1);
+                g.line(x0, y0, x0, ii * mHeight);
             }
         }
-        g->popMatrix();
+        g.popMatrix();
     }
 
 private:
-    //    AudioCodec* mAudioCodec;
     AudioDevice* fAudioDevice;
 };
 
@@ -87,11 +95,11 @@ extern "C" {
 #endif
 
 void audiodevice_resume(AudioDevice* audiodevice) {
-    (void) audiodevice;
+    audiodevice->peripherals->is_paused = false;
 }
 
 void audiodevice_pause(AudioDevice* audiodevice) {
-    (void) audiodevice;
+    audiodevice->peripherals->is_paused = true;
 }
 
 void audiodevice_deinit_BSP(AudioDevice* audiodevice) {

@@ -1,7 +1,7 @@
 /*
 * Klangstrom
 *
-* This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
+* This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
 * Copyright (c) 2024 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
@@ -19,24 +19,30 @@
 
 #pragma once
 
-#include "KlangstromEnvironment.h"
-#ifdef KLST_ARCH_IS_EMU
-
-#include "AudioDevice.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct AudioDevicePeripherals {
-    Callback_2_AUDIODEVICE_UI8 callback_rx;
-    Callback_2_AUDIODEVICE_UI8 callback_tx;
-    Callback_2_AUDIODEVICE_UI8 callback_error;
-    bool                       is_paused = false;
-} AudioDevicePeripherals;
+static const int8_t KLST_LED_ALL = -1;
+
+typedef struct LED {
+    float intensity;
+} LED;
+
+void  led_init();
+void  led_on(const int id);
+void  led_off(const int id);
+void  led_toggle(const int id);
+void  led_set(const int id, float intensity);
+float led_get(const int id);
+LED*  led_data();
+
+void    led_init_BSP();
+uint8_t led_total_BSP();
+void    led_set_BSP(const int id, float intensity);
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif // KLST_ARCH_IS_EMU
