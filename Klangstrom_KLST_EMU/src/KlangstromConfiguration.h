@@ -19,5 +19,5 @@
 
 #pragma once
 
-#define CONSOLE_LINE_ENDING "\n\r" // TODO why is this reversed in CLI terminal
+#define KLST_CONSOLE_LINE_ENDING "\n\r" // TODO why is this reversed in CLI terminal
 

@@ -146,9 +146,9 @@ void console_system_info() {
         console_status("  ████████████████▓▓██████████  ░░▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░            ████████████████████▓▓████████▒▒    ");
         console_status("  ██████████████████████████▓▓                                    ██████████████████▓▓▓▓▓▓██▓▓      ");
         console_status("    ████████████████▓▓██████                                        ██████████████████████          ");
-        console_status("    ██████████████████████▒▒                                                                        %s", CONSOLE_LINE_ENDING);
+        console_status("    ██████████████████████▒▒                                                                        %s", KLST_CONSOLE_LINE_ENDING);
     } else {
-        console_status("%s", CONSOLE_LINE_ENDING);
+        console_status("%s", KLST_CONSOLE_LINE_ENDING);
     }
 }
 

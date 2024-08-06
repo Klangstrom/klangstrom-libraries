@@ -29,6 +29,10 @@
 extern "C" {
 #endif
 
+static const uint8_t FILE_READ_ONLY  = 0x00;
+static const uint8_t FILE_WRITE_ONLY = 0x01;
+static const uint8_t FILE_READ_WRITE = 0x02;
+
 /* all functions are BSP */
 
 bool     sdcard_init();
@@ -39,11 +43,12 @@ bool     sdcard_status();
 bool     sdcard_mount(bool immediately = true);
 bool     sdcard_unmount();
 bool     sdcard_format();
-bool     sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories);
+bool     sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files = false);
 bool     sdcard_open_file(std::string filepath, uint8_t flags);
 uint32_t sdcard_write(uint8_t* bytes, uint32_t bytes_to_write);
 uint32_t sdcard_read(uint8_t* bytes, uint32_t bytes_to_read);
 bool     sdcard_close_file();
+bool sdcard_create_file(const std::string pFileName);
 
 #ifdef __cplusplus
 }

@@ -137,12 +137,16 @@ static void error_callback(AudioDevice* audiodevice, uint8_t callback_type) {
 }
 
 void audiodevice_init_device_BSP(AudioDevice* audiodevice) {
-    audiodevice->peripherals->callback_rx    = rx_input_callback;
-    audiodevice->peripherals->callback_tx    = tx_output_callback;
-    audiodevice->peripherals->callback_error = error_callback;
-    KlangstromEmulator::instance()->register_audio_device(audiodevice);
-    KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(audiodevice));
-    audiodevice_pause(audiodevice);
+    static bool initialized = false;
+    if (!initialized) {
+        initialized                              = true;
+        audiodevice->peripherals->callback_rx    = rx_input_callback;
+        audiodevice->peripherals->callback_tx    = tx_output_callback;
+        audiodevice->peripherals->callback_error = error_callback;
+        KlangstromEmulator::instance()->register_audio_device(audiodevice);
+        KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(audiodevice));
+        audiodevice_pause(audiodevice);
+    }
 }
 
 #ifdef __cplusplus

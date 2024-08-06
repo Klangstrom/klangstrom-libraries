@@ -55,7 +55,11 @@ extern "C" {
 #endif
 
 void led_init_BSP() {
-    KlangstromEmulator::instance()->register_drawable(new DrawableLEDs(led_data()));
+    static bool initialized = false;
+    if (!initialized) {
+        initialized = true;
+        KlangstromEmulator::instance()->register_drawable(new DrawableLEDs(led_data()));
+    }
 }
 
 uint8_t led_total_BSP() {
