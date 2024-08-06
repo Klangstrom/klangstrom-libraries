@@ -52,7 +52,7 @@ bool                      system_is_initialized();
  * @brief initialize the default audio codec and starts it
  * @return instance to audio device (audio codec). needs to be freed by caller
  */
-AudioDevice*              system_init_audiocodec(); // NOTE implemented this BSP for now
+AudioDevice*              system_init_audiocodec(); // NOTE implemented as BSP for now
 
 void system_init_BSP();
 

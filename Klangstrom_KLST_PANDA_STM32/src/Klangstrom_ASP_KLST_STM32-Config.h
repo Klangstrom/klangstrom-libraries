@@ -19,6 +19,8 @@
 
 #pragma once
 
+// TODO this needs to be handled first platform independent and THEN platfrom specific
+
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
@@ -28,6 +30,10 @@
 #include "KlangstromPeripheralConfiguration.h"
 
 #else
+
+// #define KLST_DISABLE_SDCARD_PRINT_CLIENT // used in `SCCard_BSP_STM32.cpp`
+// #define KLST_CONSOLE_LINE_ENDING "\r\n" // used in `Console.h`
+// #define KLST_DISABLE_PRINT_CLIENT // used in `Console.h`
 
 // TODO rename `KLST_PANDA_*` to `KLST_STM32_*`
 

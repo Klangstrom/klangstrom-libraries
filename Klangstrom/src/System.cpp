@@ -39,7 +39,7 @@ void system_init() {
     console_system_info();
 
     console_status("Sub-System (ASP/BSP) initialized");
-    console_status("System initialized%s", CONSOLE_LINE_ENDING);
+    console_status("System initialized%s", KLST_CONSOLE_LINE_ENDING);
 
     fSystemInitialized = true;
 }

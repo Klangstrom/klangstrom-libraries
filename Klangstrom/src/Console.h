@@ -23,10 +23,10 @@ extern "C" {
 
 #include "KlangstromConfiguration.h"
 
-#ifndef CONSOLE_LINE_ENDING
-#warning "CONSOLE_LINE_ENDING not defined, using default"
-#define CONSOLE_LINE_ENDING "\r\n"
-#endif // CONSOLE_LINE_ENDING
+#ifndef KLST_CONSOLE_LINE_ENDING
+#warning "KLST_CONSOLE_LINE_ENDING not defined, using default"
+#define KLST_CONSOLE_LINE_ENDING "\r\n"
+#endif // KLST_CONSOLE_LINE_ENDING
 
 void console_mute(bool mute);
 void console_init();

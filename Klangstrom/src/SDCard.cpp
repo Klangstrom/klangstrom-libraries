@@ -1,7 +1,7 @@
 /*
 * Klangstrom
 *
-* This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
+* This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
 * Copyright (c) 2024 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
@@ -17,6 +17,14 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "SDCard.h"
 
-#define KLST_CONSOLE_LINE_ENDING "\r\n" // TODO why is this reversed in CLI terminal
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+#ifdef __cplusplus
+}
+#endif
