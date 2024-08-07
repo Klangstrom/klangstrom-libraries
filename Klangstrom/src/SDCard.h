@@ -44,13 +44,14 @@ bool     sdcard_mount(bool immediately = true);
 bool     sdcard_unmount();
 bool     sdcard_format();
 bool     sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files = false);
+bool     sdcard_file_open(std::string filepath, uint8_t flags);
 uint32_t sdcard_file_write(uint8_t* bytes, uint32_t bytes_to_write);
 uint32_t sdcard_file_read(uint8_t* bytes, uint32_t bytes_to_read);
-bool     sdcard_file_open(std::string filepath, uint8_t flags);
 bool     sdcard_file_close();
-bool     sdcard_file_create(const std::string pFileName);
+bool     sdcard_file_create(const std::string filename);
 bool     sdcard_file_seek(uint32_t position);
 bool     sdcard_file_eof();
+bool     sdcard_file_attributes(const std::string filename);
 
 #ifdef __cplusplus
 }

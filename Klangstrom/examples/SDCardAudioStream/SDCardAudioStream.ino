@@ -11,6 +11,8 @@
 
 AudioDevice*        audiodevice;
 AudioStreamFloat32* audio_stream;
+bool                update_buffer = true;
+AudioBlock*         audio_block   = nullptr;
 
 void setup() {
     system_init();
@@ -19,7 +21,7 @@ void setup() {
 
     if (sdcard_detected()) {
         sdcard_mount();
-        sdcard_file_open("teilchen-48KHz-f32bit-mono.raw", FILE_READ_ONLY);
+        sdcard_file_open("TEILCHEN.RAW", FILE_READ_ONLY);
     }
 
     audiodevice = system_init_audiocodec();
@@ -31,14 +33,19 @@ void setup() {
 }
 
 void loop() {
-    console_status("...");
-    delay(1000);
+    //    console_status("...");
+    //    delay(1000);
+    if (update_buffer) {
+        audio_stream->update();
+        for (int i = 0; i < audio_block->block_size; ++i) {
+            audio_block->output[0][i] = audio_stream->buffer()[i];
+            audio_block->output[1][i] = audio_stream->buffer()[i];
+        }
+        update_buffer = false;
+    }
 }
 
-void audioblock(AudioBlock* audio_block) {
-    audio_stream->update();
-    for (int i = 0; i < audio_block->block_size; ++i) {
-        audio_block->output[0][i] = audio_stream->buffer()[i];
-        audio_block->output[1][i] = audio_stream->buffer()[i];
-    }
+void audioblock(AudioBlock* _audio_block) {
+    update_buffer = true;
+    audio_block   = _audio_block;
 }

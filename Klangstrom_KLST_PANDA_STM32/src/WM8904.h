@@ -24,13 +24,13 @@
 #include "Klangstrom_ASP_KLST_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdint.h>
 
 #include "stm32h7xx_hal.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define WM8904_I2C_ADDRESS 0x34 // (p120)
 

@@ -47,7 +47,6 @@ void audiodevice_pause(AudioDevice* audiodevice) {
     }
 }
 
-
 #ifdef __cplusplus
 }
 #endif

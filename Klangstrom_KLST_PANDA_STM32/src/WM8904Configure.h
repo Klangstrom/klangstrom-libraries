@@ -19,4 +19,12 @@
 
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void WM8904_configure(bool use_FLL, bool use_start_sequence);
+
+#ifdef __cplusplus
+}
+#endif

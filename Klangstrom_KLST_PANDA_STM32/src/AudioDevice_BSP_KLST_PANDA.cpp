@@ -22,22 +22,21 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <cstring>
 
 #include "stm32h7xx_hal.h"
-
+#include "sai.h"
+#include "i2c.h"
 #include "AudioDevice.h"
 #include "AudioDevice_ASP_STM32.h"
 #include "Console.h"
-#include "sai.h"
-#include "i2c.h"
 #include "WM8904.h"
 #include "WM8904Configure.h"
 #include "DMAMemoryAllocator.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef AUDIOCODEC_RX
 #define AUDIOCODEC_RX hsai_BlockA1

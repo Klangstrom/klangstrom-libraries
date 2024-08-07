@@ -22,12 +22,12 @@
 #include "Klangstrom_ASP_KLST_STM32-Config.h"
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 
+#include "WM8904.h"
+#include "Console.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "WM8904.h"
-#include "Console.h"
 
 #define WM8904_TIMEOUT HAL_MAX_DELAY
 //#define WM8904_TIMEOUT     1000

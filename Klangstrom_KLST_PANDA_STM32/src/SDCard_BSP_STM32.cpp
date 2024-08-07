@@ -42,6 +42,7 @@ extern "C" {
 
 extern SD_HandleTypeDef hsd2;
 
+// TODO maybe replace with 'console_printf'
 static void _println_(const char* format, ...) {
     va_list args;
     va_start(args, format);
@@ -177,7 +178,8 @@ bool sdcard_format() {
     return true;
 }
 
-bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories) {
+bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files) {
+    // TODO implement show_hidden_files
     println("SDCard: list all directories + files");
     DIR     dir;
     FILINFO fno;
@@ -206,8 +208,20 @@ bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<
     return true;
 }
 
-bool sdcard_open_file(std::string filepath, uint8_t flags) {
-    FRESULT res = f_open(&SDFile, filepath.c_str(), flags);
+bool sdcard_file_open(std::string filepath, uint8_t flags) {
+    BYTE mFlags = FA_READ; // TODO not so sure about this … what about the other options?
+    switch (flags) {
+        case FILE_READ_ONLY:
+            mFlags = FA_READ;
+            break;
+        case FILE_WRITE_ONLY:
+            mFlags = FA_WRITE;
+            break;
+        case FILE_READ_WRITE:
+            mFlags = FA_READ | FA_WRITE;
+            break;
+    }
+    FRESULT res = f_open(&SDFile, filepath.c_str(), mFlags);
     if (res != FR_OK) {
         println("SDCard: f_open failed : %i", res);
         return false;
@@ -216,7 +230,7 @@ bool sdcard_open_file(std::string filepath, uint8_t flags) {
     return true;
 }
 
-uint32_t sdcard_write(uint8_t* bytes, uint32_t bytes_to_write) {
+uint32_t sdcard_file_write(uint8_t* bytes, uint32_t bytes_to_write) {
     println("SDCard: writing to file");
     uint32_t byteswritten;
     FRESULT  res = f_write(&SDFile, bytes, bytes_to_write, (UINT*) &byteswritten);
@@ -228,7 +242,7 @@ uint32_t sdcard_write(uint8_t* bytes, uint32_t bytes_to_write) {
     return byteswritten;
 }
 
-uint32_t sdcard_read(uint8_t* bytes, uint32_t bytes_to_read) {
+uint32_t sdcard_file_read(uint8_t* bytes, uint32_t bytes_to_read) {
     uint32_t bytesread;
     FRESULT  res = f_read(&SDFile, bytes, bytes_to_read, (UINT*) &bytesread);
     if (res != FR_OK) {
@@ -239,23 +253,84 @@ uint32_t sdcard_read(uint8_t* bytes, uint32_t bytes_to_read) {
     return bytesread;
 }
 
-bool sdcard_close_file() {
+bool sdcard_file_close() {
     FRESULT res = f_close(&SDFile);
-    //    FRESULT res;
-    //    do {
-    //        res = f_close(&SDFile);
-    //        if (res != FR_OK) {
-    //            println("SDCard: closing file failed : %i", res);
-    //            HAL_Delay(500);
-    //        }
-    //    } while (res != FR_OK);
-
     if (res != FR_OK) {
         println("SDCard: closing file failed : %i", res);
         return false;
     }
     println("SDCard: closed file");
     return true;
+}
+
+bool sdcard_file_create(const std::string filename) {
+    FRESULT res = f_open(&SDFile, filename.c_str(), FA_CREATE_ALWAYS | FA_WRITE);
+    if (res != FR_OK) {
+        println("SDCard: error creating file: %d", res);
+        return false;
+    }
+    return true;
+}
+
+bool sdcard_file_seek(uint32_t position) {
+    FRESULT res = f_lseek(&SDFile, position);
+    if (res != FR_OK) {
+        println("SDCard: error seeking in file: %d", res);
+        f_close(&SDFile);
+        return false;
+    }
+    return true;
+}
+
+bool sdcard_file_eof() {
+    if (f_eof(&SDFile)) {
+        println("SDCard: end of file reached");
+        return true;
+    }
+    return false;
+}
+
+static void print_attributes(unsigned char attr) {
+    if (attr & AM_RDO) {
+        println("Read only");
+    }
+    if (attr & AM_HID) {
+        println("Hidden");
+    }
+    if (attr & AM_SYS) {
+        println("System");
+    }
+    if (attr & AM_DIR) {
+        println("Directory");
+    }
+    if (attr & AM_ARC) {
+        println("Archive");
+    }
+}
+
+bool sdcard_file_attributes(const std::string filename) {
+    FILINFO fno;
+    FRESULT res = f_stat(filename.c_str(), &fno);
+    if (res != FR_OK) {
+        println("SDCard: error getting file attributes: %d", res);
+        return false;
+    }
+    println("SDCard: file attributes");
+    println("SDCard: File name: %s", fno.fname);
+    println("SDCard: File size: %li", fno.fsize);
+    println("SDCard: File date: %i", fno.fdate);
+    println("SDCard: File time: %i", fno.ftime);
+    println("SDCard: File attr: %i", fno.fattrib);
+    print_attributes(fno.fattrib);
+    return true;
+
+    //#if _USE_CHMOD && !_FS_READONLY
+    //    FRESULT res1;
+    //    res1 = f_chmod("TEILCHEN.RAW", 0, AM_RDO); // Clear the read-only attribute
+    //    if (res1 != FR_OK) {
+    //        printf("Error changing file attributes: %d\n", res1);
+    //    }
+    //#endif
 }
 
 #ifdef __cplusplus

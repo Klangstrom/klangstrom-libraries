@@ -24,6 +24,10 @@
 
 #include "Klangstrom_ASP_KLST_STM32-Config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(KLST_PANDA_ENABLE_GPIO) || defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_SD_CARD) || defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "gpio.h"
 #endif
@@ -78,6 +82,10 @@
 
 #ifdef KLST_PANDA_ENABLE_USB_DEVICE
 #include "usb_device.h"
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif // KLST_PANDA_STM32

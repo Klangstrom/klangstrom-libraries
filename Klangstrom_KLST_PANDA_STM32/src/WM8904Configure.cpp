@@ -21,13 +21,13 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "Console.h"
 #include "WM8904Configure.h"
 #include "WM8904.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 static void delay_ms(uint32_t duration) {
     HAL_Delay(duration);

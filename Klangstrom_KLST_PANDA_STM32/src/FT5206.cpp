@@ -20,6 +20,10 @@
 #include "FT5206.h"
 #include "Console.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 static HAL_StatusTypeDef  ret;
 static I2C_HandleTypeDef* hi2c = nullptr;
 
@@ -90,3 +94,7 @@ void FT5206_print_info() {
 
     console_println("Library version: %i.%i", buf[FS5206_TOUCH_LIB_VERSION_H], buf[FS5206_TOUCH_LIB_VERSION_L]);
 }
+
+#ifdef __cplusplus
+}
+#endif

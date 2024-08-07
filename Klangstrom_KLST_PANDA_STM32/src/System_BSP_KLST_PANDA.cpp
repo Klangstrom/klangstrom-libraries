@@ -20,14 +20,14 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "AudioDevice.h"
 #include "Console.h"
 #include "Klangstrom_ASP_KLST_STM32-Config.h"         // TODO rename this
 #include "Klangstrom_BSP_KLST_PANDA_STM32-Includes.h" // TODO rename this
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 AudioDevice* system_init_audiocodec() { // TOOD this is BSP
     AudioInfo audioinfo;

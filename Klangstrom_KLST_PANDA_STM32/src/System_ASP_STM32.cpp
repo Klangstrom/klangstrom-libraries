@@ -23,14 +23,12 @@
 #include "System.h"
 #include "ArrayList.h"
 #include "Console.h"
+#include "stm32h7xx_hal.h"
+#include "AudioDevice_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "stm32h7xx_hal.h"
-#include "main.h"
-#include "AudioDevice_ASP_STM32.h"
 
 static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_registered_audiodevices();
