@@ -21,6 +21,8 @@
 #ifdef KLST_ARCH_IS_EMU
 
 #include <inttypes.h>
+#include <iostream>
+#include <chrono>
 
 #include "Console.h"
 
@@ -29,8 +31,10 @@ extern "C" {
 #endif
 
 static uint32_t HAL_GetTick() {
-    static uint32_t tick = 0;
-    return tick++;
+    using namespace std::chrono;
+    const uint32_t  mCurrentTime     = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+    static uint32_t mStartTimeOffset = mCurrentTime;
+    return mCurrentTime - mStartTimeOffset;
 }
 
 static uint32_t HAL_RCC_GetSysClockFreq() {
@@ -43,7 +47,7 @@ static uint32_t HAL_RCC_GetSysClockFreq() {
 #elif defined(KLST_SHEEP_EMU)
     return 0;
 #elif defined(KLST_PANDA_EMU)
-    return 275000000; // should be 550000000
+    return 550000000;
 #elif defined(KLST_CATERPILLAR_EMU)
     return 550000000;
 #else

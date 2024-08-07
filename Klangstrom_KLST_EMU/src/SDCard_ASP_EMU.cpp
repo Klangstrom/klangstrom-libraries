@@ -62,6 +62,14 @@ extern "C" {
         }                                         \
     } while (0)
 
+#define CHECK_FILE(mFile)                    \
+    do {                                     \
+        if (mFile == nullptr) {              \
+            console_error("no file opened"); \
+            return false;                    \
+        }                                    \
+    } while (0)
+
 static const char* mFolderPath = nullptr;
 static FILE*       mFile       = nullptr;
 
@@ -172,7 +180,7 @@ bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<
     return true;
 }
 
-bool sdcard_open_file(std::string filepath, uint8_t flags) {
+bool sdcard_file_open(std::string filepath, uint8_t flags) {
     CHECK_MOUNTED(mMounted);
     const std::string mFilePath = get_full_path(filepath);
     switch (flags) {
@@ -194,31 +202,21 @@ bool sdcard_open_file(std::string filepath, uint8_t flags) {
     return true;
 }
 
-uint32_t sdcard_write(uint8_t* bytes, uint32_t bytes_to_write) {
+uint32_t sdcard_file_write(uint8_t* bytes, uint32_t bytes_to_write) {
     CHECK_MOUNTED(mMounted);
-    if (mFile == nullptr) {
-        console_error("no file opened");
-        return 0;
-    }
-
-    return fwrite(bytes, 1, bytes_to_write, mFile); // TODO is it ok to only have one file opened
+    CHECK_FILE(mFile);
+    return fwrite(bytes, 1, bytes_to_write, mFile);
 }
 
-uint32_t sdcard_read(uint8_t* bytes, uint32_t bytes_to_read) {
+uint32_t sdcard_file_read(uint8_t* bytes, uint32_t bytes_to_read) {
     CHECK_MOUNTED(mMounted);
-    if (mFile == nullptr) {
-        console_error("no file opened");
-        return 0;
-    }
+    CHECK_FILE(mFile);
     return fread(bytes, 1, bytes_to_read, mFile);
 }
 
-bool sdcard_close_file() {
+bool sdcard_file_close() {
     CHECK_MOUNTED(mMounted);
-    if (mFile == nullptr) {
-        console_error("no file opened");
-        return false;
-    }
+    CHECK_FILE(mFile);
     fclose(mFile);
     mFile = nullptr;
     return true;
@@ -235,6 +233,24 @@ bool sdcard_create_file(const std::string pFileName) {
     }
     return true;
 }
+
+bool sdcard_file_seek(uint32_t position) {
+    CHECK_MOUNTED(mMounted);
+    CHECK_FILE(mFile);
+    if (fseek(mFile, position, SEEK_SET)) {
+        console_error("could not seek to position: %d", position);
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool sdcard_file_eof() {
+    CHECK_MOUNTED(mMounted);
+    CHECK_FILE(mFile);
+    return feof(mFile);
+}
+
 
 #ifdef __cplusplus
 }

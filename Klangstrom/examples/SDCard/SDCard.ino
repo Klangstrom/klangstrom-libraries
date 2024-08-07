@@ -7,15 +7,12 @@
 #include "Console.h"
 #include "SDCard.h"
 
-int counter = 0;
-
 void setup() {
     system_init();
     console_init();
     sdcard_init();
 
     sdcard_status();
-    sdcard_format();
 }
 
 void loop() {
