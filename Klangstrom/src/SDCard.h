@@ -40,7 +40,7 @@ bool     sdcard_reinit(); // TODO i do not like this … maybe this can be done 
 bool     sdcard_deinit();
 bool     sdcard_detected();
 bool     sdcard_status();
-bool     sdcard_mount(bool immediately = true);
+bool     sdcard_mount();
 bool     sdcard_unmount();
 bool     sdcard_format();
 bool     sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files = false);

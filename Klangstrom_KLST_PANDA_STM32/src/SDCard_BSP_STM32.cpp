@@ -24,6 +24,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <cstring>
 
 #include "main.h"
 #include "fatfs.h"
@@ -52,7 +53,6 @@ static void _println_(const char* format, ...) {
 }
 
 bool sdcard_init() {
-    hsd2.Init.ClockDiv = SDMMC_INIT_CLK_DIV;
     MX_SDMMC2_SD_Init();
     MX_FATFS_Init();
 
@@ -111,7 +111,7 @@ bool sdcard_status() {
         println("SDCard: get card status failed");
         return false;
     }
-    println("SDCard: Card Status");
+    println("SDCard: # Card Status");
     println("SDCard: DataBusWidth ............ : %i", card_status.DataBusWidth);
     println("SDCard: SecuredMode ............. : %i", card_status.SecuredMode);
     println("SDCard: CardType ................ : %i", card_status.CardType);
@@ -132,7 +132,7 @@ bool sdcard_status() {
         println("SDCard: get card info failed");
         return false;
     }
-    println("SDCard: Card Info");
+    println("SDCard: # Card Info");
     println("SDCard: CardType ................ : %li", card_info.CardType);
     println("SDCard: CardVersion ............. : %li", card_info.CardVersion);
     println("SDCard: Class ................... : %li", card_info.Class);
@@ -149,13 +149,13 @@ bool sdcard_status() {
     return true;
 }
 
-bool sdcard_mount(bool immediately) {
+bool sdcard_mount() {
     println("SDCard: mounting FS ...");
     if (!HAL_SD_GetCardState(&hsd2)) {
         println("SDCard: card not ready … reinitializing");
         sdcard_reinit();
     }
-    if (f_mount(&SDFatFS, (TCHAR const*) SDPath, immediately ? 0 : 1) != FR_OK) {
+    if (f_mount(&SDFatFS, (TCHAR const*) SDPath, 1) != FR_OK) {
         println("SDCard: f_mount failed");
         return false;
     }
@@ -267,8 +267,12 @@ bool sdcard_file_create(const std::string filename) {
     FRESULT res = f_open(&SDFile, filename.c_str(), FA_CREATE_ALWAYS | FA_WRITE);
     if (res != FR_OK) {
         println("SDCard: error creating file: %d", res);
+        if (res == FR_INVALID_NAME && filename.size() > 12) {
+            println("SDCard: make sure filesystem supports long ( > 12 ) filenames");
+        }
         return false;
     }
+    println("SDCard: creating file: %s", filename.c_str());
     return true;
 }
 
