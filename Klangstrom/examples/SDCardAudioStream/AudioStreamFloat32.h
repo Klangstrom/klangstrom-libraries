@@ -21,28 +21,40 @@
 
 #include <cstring>
 #include <cstdint>
+#include <memory>
 #include "SDCard.h"
+#include "Console.h"
 
 class AudioStreamFloat32 {
 public:
-    AudioStreamFloat32(uint32_t buffer_size) : fBufferSize(buffer_size) {
-        fReadBuffer = new float[buffer_size];
-        clear_buffer(fReadBuffer, buffer_size);
+    AudioStreamFloat32(uint32_t buffer_size)
+        : fBufferSize(buffer_size), fReadBuffer(new float[buffer_size]()) {
+        clear_buffer(fReadBuffer.get(), buffer_size);
     }
 
-    void update() {
+    ~AudioStreamFloat32() = default; // The unique_ptr will automatically clean up
+
+    bool update() {
         if (sdcard_file_eof() && fLoop) {
-            sdcard_file_seek(0);
+            if (!sdcard_file_seek(0)) {
+                return false;
+            }
         }
-        uint32_t mBytesRead = sdcard_file_read((uint8_t*) fReadBuffer, fBufferSize * sizeof(float));
+
+        console_timestamp();
+        uint32_t mBytesRead   = sdcard_file_read(reinterpret_cast<uint8_t*>(fReadBuffer.get()), fBufferSize * sizeof(float));
+        uint32_t elementsRead = mBytesRead / sizeof(float);
+
         if (mBytesRead < fBufferSize * sizeof(float)) {
-            clear_buffer(fReadBuffer + mBytesRead / sizeof(float), fBufferSize - mBytesRead / sizeof(float));
+            clear_buffer(fReadBuffer.get() + elementsRead, fBufferSize - elementsRead);
         }
+
         // if (mBytesRead == 0) {}
+        return true;
     }
 
     float* buffer() const {
-        return fReadBuffer;
+        return fReadBuffer.get();
     }
 
     void set_loop(bool loop) {
@@ -50,11 +62,11 @@ public:
     }
 
 private:
-    float*         fReadBuffer;
-    const uint32_t fBufferSize;
-    bool           fLoop = true;
+    std::unique_ptr<float[]> fReadBuffer;
+    const uint32_t           fBufferSize;
+    bool                     fLoop = true;
 
-    static void clear_buffer(float* buffer, int size) {
-        memset(buffer, 0, sizeof(float) * size);
+    static void clear_buffer(float* buffer, uint32_t size) {
+        std::memset(buffer, 0, sizeof(float) * size);
     }
 };

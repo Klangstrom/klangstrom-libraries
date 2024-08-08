@@ -42,7 +42,7 @@ bool     sdcard_detected();
 bool     sdcard_status();
 bool     sdcard_mount();
 bool     sdcard_unmount();
-bool     sdcard_format();
+bool     sdcard_format(uint8_t format = 0);
 bool     sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files = false);
 bool     sdcard_file_open(std::string filepath, uint8_t flags);
 uint32_t sdcard_file_write(uint8_t* bytes, uint32_t bytes_to_write);

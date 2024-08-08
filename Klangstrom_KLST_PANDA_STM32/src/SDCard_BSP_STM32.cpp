@@ -168,10 +168,11 @@ bool sdcard_unmount() {
     return true;
 }
 
-bool sdcard_format() {
-    BYTE work[_MAX_SS];
+bool sdcard_format(uint8_t format) {
+    const uint8_t mFormat = (format == 0) ? FM_ANY : format;
+    BYTE          work[_MAX_SS];
     println("SDCard: creating volume ( this may take a while approx 6sec/1GB ) ...");
-    if (f_mkfs((TCHAR const*) SDPath, FM_ANY, 0, work, sizeof(work)) != FR_OK) {
+    if (f_mkfs((TCHAR const*) SDPath, mFormat, 0, work, sizeof(work)) != FR_OK) {
         println("SDCard: f_mkfs failed");
         return false;
     }
