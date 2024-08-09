@@ -34,6 +34,11 @@ void serial_event(SerialDevice* serial_device) {
         if (serial_device->data != nullptr && serial_device->length > 0) {
             std::string data = std::string((char*) serial_device->data, serial_device->length);
             console_println("IDC 00 data ( as ASCII ): %s", data.c_str());
+            console_print("IDC 00 data ( as HEX )  : ");
+            for (int i = 0; i < serial_device->length; ++i) {
+                console_print("%02X, ", serial_device->data[i]);
+            }
+            console_println("");
         }
     }
     if (serial_device == serial_IDC_01) {
