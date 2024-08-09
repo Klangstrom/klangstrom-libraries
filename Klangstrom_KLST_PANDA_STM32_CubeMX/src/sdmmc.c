@@ -45,7 +45,7 @@ void MX_SDMMC2_SD_Init(void) {
     hsd2.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
     hsd2.Init.ClockDiv            = 0;
     /* USER CODE BEGIN SDMMC2_Init 2 */
-    hsd2.Init.ClockDiv = SDMMC_INIT_CLK_DIV;
+
     /* USER CODE END SDMMC2_Init 2 */
 }
 
