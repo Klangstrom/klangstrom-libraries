@@ -33,7 +33,7 @@ static const uint8_t FILE_READ_ONLY  = 0x00;
 static const uint8_t FILE_WRITE_ONLY = 0x01;
 static const uint8_t FILE_READ_WRITE = 0x02;
 
-/* all functions are BSP */
+/* all functions are implemented as A/BSP */
 
 bool     sdcard_init();
 bool     sdcard_reinit(); // TODO i do not like this … maybe this can be done in a smarter way

@@ -24,6 +24,15 @@ void setup() {
         sdcard_mount();
         sdcard_file_open("TEILCHEN.RAW", FILE_READ_ONLY);
     }
+    uint32_t time = system_get_tick();
+    console_println("start reading from SD card");
+    while (!sdcard_file_eof()) {
+        uint8_t buffer[512];
+        sdcard_file_read(buffer, 512);
+        console_print(".");
+    }
+    console_println("!");
+    console_println("done in %i ms", (system_get_tick() - time));
 
     audiodevice = system_init_audiocodec();
     audiodevice_pause(audiodevice);

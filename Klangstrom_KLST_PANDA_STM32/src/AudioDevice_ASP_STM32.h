@@ -27,7 +27,7 @@
 #ifdef STM32H723xx
 #include "stm32h7xx_hal.h"
 #else
-#error STM32 device not supported or defined
+#error "STM32 device not supported or defined"
 #endif
 
 #include "AudioDevice.h"

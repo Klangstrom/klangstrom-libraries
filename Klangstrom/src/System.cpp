@@ -31,6 +31,7 @@ static ArrayList_AudioDevicePtr  fAudioDeviceListeners;
 static ArrayList_SerialDevicePtr fSerialDeviceListeners;
 static uint16_t                  fDeviceID;
 static bool                      fSystemInitialized;
+static uint32_t                  fSystemStartTime;
 
 void system_init() {
     fDeviceID          = 0;
@@ -45,6 +46,7 @@ void system_init() {
     console_status("System initialized%s", KLST_CONSOLE_LINE_ENDING);
 
     fSystemInitialized = true;
+    fSystemStartTime   = system_get_tick_BSP();
 }
 
 bool system_is_initialized() {
@@ -69,6 +71,10 @@ void system_register_serialdevice(SerialDevice* serialdevice) {
 
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices() {
     return &fSerialDeviceListeners;
+}
+
+uint32_t system_get_tick() {
+    return system_get_tick_BSP() - fSystemStartTime;
 }
 
 #ifdef __cplusplus

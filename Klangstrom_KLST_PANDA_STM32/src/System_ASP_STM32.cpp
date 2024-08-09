@@ -22,13 +22,20 @@
 
 #include "System.h"
 #include "ArrayList.h"
-#include "Console.h"
 #include "stm32h7xx_hal.h"
 #include "AudioDevice_ASP_STM32.h"
+#include "SerialDevice_ASP_STM32.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+uint32_t system_get_tick_BSP() {
+    return HAL_GetTick();
+}
+
+/* ----------------- SAI ---------------- */
 
 static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     ArrayList_AudioDevicePtr* fAudioDeviceListeners = system_get_registered_audiodevices();
@@ -88,6 +95,55 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
                 if (ad->peripherals->callback_error != nullptr) {
                     ad->peripherals->callback_error(ad, CALLBACK_RX_ERROR);
                 }
+            }
+        }
+    }
+}
+
+/* --------------- U(S)ART -------------- */
+
+static void start_receive(SerialDevice* serialdevice) {
+    HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
+                                 serialdevice->peripherals->buffer_rx,
+                                 serialdevice->data_buffer_size);
+    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
+}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
+    console_status("HAL_UARTEx_RxEventCallback");
+    ArrayList_SerialDevicePtr* mSerialDevices = system_get_registered_serialdevices();
+    for (size_t i = 0; i < mSerialDevices->size; i++) {
+        SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
+        if (sd != nullptr) {
+            if (sd->peripherals->uart_handle->Instance == huart->Instance) {
+                if (sd->callback_serial != nullptr) {
+                    sd->callback_serial(sd);
+                    if (Size > sd->data_buffer_size) {
+                        Size = sd->data_buffer_size;
+                        console_error("serial RX buffer overflow");
+                    }
+                    /* copy data to buffer */
+                    for (int j = 0; j < Size; ++j) {
+                        sd->data[j] = sd->peripherals->buffer_rx[j];
+                    }
+                    sd->length = Size;
+                    start_receive(sd);
+                }
+            }
+        }
+    }
+    // void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {}
+}
+
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
+    console_error("HAL_UART_ErrorCallback");
+    ArrayList_SerialDevicePtr* mSerialDevices = system_get_registered_serialdevices();
+    for (size_t i = 0; i < mSerialDevices->size; i++) {
+        SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
+        if (sd != nullptr) {
+            if (sd->peripherals->uart_handle->Instance == huart->Instance) {
+                start_receive(sd);
             }
         }
     }

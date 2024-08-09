@@ -24,7 +24,6 @@
 
 #include <stdarg.h>
 #include <stdio.h>
-#include <cstring>
 
 #include "main.h"
 #include "fatfs.h"
@@ -250,7 +249,7 @@ uint32_t sdcard_file_read(uint8_t* bytes, uint32_t bytes_to_read) {
         println("SDCard: f_read failed: %i", res);
         return 0;
     }
-    println("SDCard: read %i bytes", bytesread);
+//    println("SDCard: read %i bytes", bytesread);
     return bytesread;
 }
 

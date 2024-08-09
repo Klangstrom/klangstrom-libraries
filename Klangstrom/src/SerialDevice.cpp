@@ -35,6 +35,7 @@ SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size, uin
     serialdevice->device_id        = system_get_unique_device_ID();
     serialdevice->baud_rate        = baud_rate;
     serialdevice->callback_serial  = serial_event;
+    serialdevice->data             = new uint8_t[serialdevice->data_buffer_size];
     serialdevice_init_peripherals_BSP(serialdevice);
     serialdevice_init_BSP(serialdevice);
     system_register_serialdevice(serialdevice);

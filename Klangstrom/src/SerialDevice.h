@@ -47,14 +47,15 @@ struct SerialDevice;
 typedef void (*Callback_1_SERIALDEVICEPTR)(SerialDevice*);
 
 typedef struct SerialDevice {
-    struct SerialPeripherals*  peripherals      = nullptr;
-    Callback_1_SERIALDEVICEPTR callback_serial  = nullptr;
-    uint8_t                    device_type      = SERIAL_DEVICE_TYPE_UNDEFINED;
-    uint8_t                    device_id        = SERIAL_DEVICE_ID_UNDEFINED;
-    uint32_t                   baud_rate        = SERIAL_DEVICE_DEFAULT_BAUD; // NOTE will be set at init time
-    uint16_t                   data_buffer_size = 0;
-    uint8_t*                   data             = nullptr;
-    uint16_t                   length           = 0;
+    struct SerialPeripherals*  peripherals         = nullptr;
+    Callback_1_SERIALDEVICEPTR callback_serial     = nullptr;
+    uint8_t                    device_type         = SERIAL_DEVICE_TYPE_UNDEFINED;
+    uint8_t                    device_id           = SERIAL_DEVICE_ID_UNDEFINED;
+    uint32_t                   baud_rate           = SERIAL_DEVICE_DEFAULT_BAUD; // NOTE will be set at init time
+    uint16_t                   data_buffer_size    = 0;
+    uint8_t*                   data                = nullptr;
+    uint16_t                   length              = 0;
+    Callback_1_SERIALDEVICEPTR callback_serialdevice = nullptr;
 } SerialDevice;
 
 /**

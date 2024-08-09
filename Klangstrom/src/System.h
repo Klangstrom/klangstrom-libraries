@@ -52,13 +52,16 @@ void                       system_register_serialdevice(SerialDevice* serialdevi
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
 uint16_t                   system_get_unique_device_ID();
 bool                       system_is_initialized();
+uint32_t                   system_get_tick();
+
 /**
  * @brief initialize the default audio codec and starts it
  * @return instance to audio device (audio codec). needs to be freed by caller
  */
 AudioDevice* system_init_audiocodec(); // NOTE implemented as BSP for now
 
-void system_init_BSP();
+void     system_init_BSP();
+uint32_t system_get_tick_BSP();
 
 #ifdef __cplusplus
 }
