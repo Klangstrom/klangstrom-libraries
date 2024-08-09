@@ -41,7 +41,6 @@ public:
             }
         }
 
-        console_timestamp();
         uint32_t mBytesRead   = sdcard_file_read(reinterpret_cast<uint8_t*>(fReadBuffer.get()), fBufferSize * sizeof(float));
         uint32_t elementsRead = mBytesRead / sizeof(float);
 

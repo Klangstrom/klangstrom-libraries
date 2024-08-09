@@ -24,9 +24,9 @@
 #include "Console.h"
 #include "KlangstromEmulator.h"
 
-class DrawableAudioCodec : public Drawable {
+class DrawableAudioDevice : public Drawable {
 public:
-    explicit DrawableAudioCodec(AudioDevice* audiodevice) : fAudioDevice(audiodevice) {}
+    explicit DrawableAudioDevice(AudioDevice* audiodevice) : fAudioDevice(audiodevice) {}
 
     void draw(PGraphics* g_ptr) override {
         PGraphics& g = *g_ptr;
@@ -112,6 +112,7 @@ void audiodevice_init_peripherals_BSP(AudioDevice* audiodevice) {
 
 void audiodevice_deinit_peripherals_BSP(AudioDevice* audiodevice) {
     delete audiodevice->peripherals;
+    audiodevice->peripherals = nullptr;
 }
 
 static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type) {
@@ -144,7 +145,7 @@ void audiodevice_init_device_BSP(AudioDevice* audiodevice) {
         audiodevice->peripherals->callback_tx    = tx_output_callback;
         audiodevice->peripherals->callback_error = error_callback;
         KlangstromEmulator::instance()->register_audio_device(audiodevice);
-        KlangstromEmulator::instance()->register_drawable(new DrawableAudioCodec(audiodevice));
+        KlangstromEmulator::instance()->register_drawable(new DrawableAudioDevice(audiodevice));
         audiodevice_pause(audiodevice);
     }
 }

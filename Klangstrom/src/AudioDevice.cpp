@@ -63,7 +63,7 @@ AudioDevice* audiodevice_create_from_audioinfo(AudioInfo* audioinfo) {
 static void audiodevice_init_custom_device(AudioDevice* audiodevice) {
     (void) audiodevice;
     // TODO this is a placeholder for custom device initialization
-    // 1. assume that the device is already initialized ( see `audiodevice_init_default_audiocodec()` )
+    // 1. assume that the device is already initialized ( see `audiodevice_init_audiocodec()` )
     //     - audioinfo is set
     //     - audioblock is set ( including input and output buffers )
     //     - audioperipherals is set ( including callbacks )

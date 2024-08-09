@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma
+#pragma once
 
 #include "stm32h7xx_hal.h"
 

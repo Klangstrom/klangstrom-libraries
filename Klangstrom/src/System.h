@@ -39,20 +39,24 @@ extern "C" {
 #endif
 
 #include "AudioDevice.h"
+#include "SerialDevice.h"
 #include "ArrayList.h"
 
 DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
+DEFINE_ARRAYLIST(SerialDevice*, SerialDevicePtr)
 
-void                      system_init();
-void                      system_register_audiodevice(AudioDevice* audiodevice);
-uint16_t                  system_get_unique_device_ID();
-ArrayList_AudioDevicePtr* system_get_registered_audiodevices();
-bool                      system_is_initialized();
+void                       system_init();
+void                       system_register_audiodevice(AudioDevice* audiodevice);
+ArrayList_AudioDevicePtr*  system_get_registered_audiodevices();
+void                       system_register_serialdevice(SerialDevice* serialdevice);
+ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
+uint16_t                   system_get_unique_device_ID();
+bool                       system_is_initialized();
 /**
  * @brief initialize the default audio codec and starts it
  * @return instance to audio device (audio codec). needs to be freed by caller
  */
-AudioDevice*              system_init_audiocodec(); // NOTE implemented as BSP for now
+AudioDevice* system_init_audiocodec(); // NOTE implemented as BSP for now
 
 void system_init_BSP();
 

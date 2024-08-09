@@ -119,8 +119,7 @@ bool sdcard_status() {
     return true;
 }
 
-bool sdcard_mount(bool immediately) {
-    (void) immediately;
+bool sdcard_mount() {
     mMounted = true;
     return true;
 }
@@ -134,7 +133,7 @@ bool sdcard_unmount() {
     return true;
 }
 
-bool sdcard_format() {
+bool sdcard_format(uint8_t format) {
     sdcard_mount();
     std::vector<std::string> files;
     std::vector<std::string> directories;

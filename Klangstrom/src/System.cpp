@@ -25,15 +25,18 @@ extern "C" {
 #endif
 
 #define SYSTEM_INITIAL_NUM_AUDIO_DEVICES 3
+#define SYSTEM_INITIAL_NUM_SERIAL_DEVICES 4
 
-static ArrayList_AudioDevicePtr fAudioDeviceListeners;
-static uint16_t                 fDeviceID;
-static bool                     fSystemInitialized;
+static ArrayList_AudioDevicePtr  fAudioDeviceListeners;
+static ArrayList_SerialDevicePtr fSerialDeviceListeners;
+static uint16_t                  fDeviceID;
+static bool                      fSystemInitialized;
 
 void system_init() {
     fDeviceID          = 0;
     fSystemInitialized = false;
     arraylist_AudioDevicePtr_init(&fAudioDeviceListeners, SYSTEM_INITIAL_NUM_AUDIO_DEVICES);
+    arraylist_SerialDevicePtr_init(&fSerialDeviceListeners, SYSTEM_INITIAL_NUM_SERIAL_DEVICES);
     system_init_BSP();
     console_clear();
     console_system_info();
@@ -58,6 +61,14 @@ void system_register_audiodevice(AudioDevice* audiodevice) {
 
 ArrayList_AudioDevicePtr* system_get_registered_audiodevices() {
     return &fAudioDeviceListeners;
+}
+
+void system_register_serialdevice(SerialDevice* serialdevice) {
+    arraylist_SerialDevicePtr_add(&fSerialDeviceListeners, serialdevice);
+}
+
+ArrayList_SerialDevicePtr* system_get_registered_serialdevices() {
+    return &fSerialDeviceListeners;
 }
 
 #ifdef __cplusplus

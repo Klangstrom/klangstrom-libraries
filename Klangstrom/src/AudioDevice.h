@@ -32,10 +32,11 @@ extern "C" {
 const uint8_t AUDIO_DEVICE_TYPE_UNDEFINED             = 0;
 const uint8_t AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC     = 1;
 const uint8_t AUDIO_DEVICE_KLST_PANDA_STEREO_MIC      = 2;
+const uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 3;
 const uint8_t AUDIO_DEVICE_CUSTOM                     = 127;
-const uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 128;
-const uint8_t AUDIO_DEVICE_INIT_ERROR                 = 254;
-const uint8_t AUDIO_DEVICE_ID_UNDEFINED               = 255;
+
+const uint8_t AUDIO_DEVICE_INIT_ERROR   = 254;
+const uint8_t AUDIO_DEVICE_ID_UNDEFINED = 255;
 
 static const uint8_t CALLBACK_TX_ERROR      = 0;
 static const uint8_t CALLBACK_RX_ERROR      = 1;

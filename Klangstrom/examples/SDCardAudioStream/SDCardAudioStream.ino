@@ -12,7 +12,7 @@
 AudioDevice*        audiodevice;
 AudioStreamFloat32* audio_stream;
 
-const uint16_t buffer_multiple     = 256;
+const uint16_t buffer_multiple     = 4;
 uint16_t       buffer_read_counter = 0;
 
 void setup() {

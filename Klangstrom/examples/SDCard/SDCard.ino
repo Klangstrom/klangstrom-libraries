@@ -17,7 +17,7 @@ void setup() {
     if (sdcard_detected()) {
         sdcard_mount();
         sdcard_file_create("KLST.TXT");
-        uint8_t buffer[26] = "KLST writing to SD Card!\n";
+        uint8_t buffer[26] = "KLST writing to SD card!\n";
         sdcard_file_write(buffer, 26);
         sdcard_file_close();
         sdcard_unmount();
@@ -30,7 +30,7 @@ void loop() {
         std::vector<std::string> files;
         std::vector<std::string> directories;
         sdcard_list("", files, directories);
-        console_println("SD Card detected");
+        console_println("SD card detected");
         console_println("Files      : %i", files.size());
         for (std::string file: files) {
             console_println("             %s", file.c_str());
@@ -42,7 +42,7 @@ void loop() {
         console_println("...");
         sdcard_unmount();
     } else {
-        console_println("SD Card not detected");
+        console_println("SD card not detected");
     }
     delay(1000);
 }

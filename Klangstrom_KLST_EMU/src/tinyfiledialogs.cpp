@@ -3694,7 +3694,7 @@ static int notifysendPresent(void)
     static int lNotifysendPresent = -1 ;
     if ( lNotifysendPresent < 0 )
     {
-        lNotifysendPresent = detectPresence("notify-send") ;
+        lNotifysendPresent = detectPresence("notify-osc_send") ;
     }
     return lNotifysendPresent && graphicMode( ) ;
 }
@@ -5021,7 +5021,7 @@ my \\$notificationsObject = \\$notificationsService->get_object('/org/freedeskto
         {
 
                 if (aTitle&&!strcmp(aTitle,"tinyfd_query")){strcpy(tinyfd_response,"notifysend");return 1;}
-                strcpy( lDialogString , "notify-send" ) ;
+                strcpy( lDialogString , "notify-osc_send" ) ;
                 if ( aIconType && strlen(aIconType) )
                 {
                         strcat( lDialogString , " -i '" ) ;
@@ -5310,7 +5310,7 @@ aIconType?aIconType:"", aTitle?aTitle:"", aMessage?aMessage:"" ) ;
         else if ( notifysendPresent() )
         {
                 if (aTitle&&!strcmp(aTitle,"tinyfd_query")){strcpy(tinyfd_response,"notifysend");return 1;}
-                strcpy( lDialogString , "notify-send" ) ;
+                strcpy( lDialogString , "notify-osc_send" ) ;
                 if ( aIconType && strlen(aIconType) )
                 {
                         strcat( lDialogString , " -i '" ) ;
