@@ -54,12 +54,25 @@ static void _println_(const char* format, ...) {
 bool sdcard_init() {
     MX_SDMMC2_SD_Init();
     MX_FATFS_Init();
+#ifdef KLST_SDCARD_SLOW_INITIALIZATION
+    // TODO is not necessary with all tested SD cards so far ...
+    /* a slower initialization may help with slower or older SD cards */
+    hsd2.Init.ClockDiv = 0x20; // `SDMMC_INIT_CLK_DIV` or another divider ...
+                               // clock speed is 25 MHz, reasonable init speed seems to be 400KHz
+                               // so a divider of 25MHz / 400KHz = 62.5 would be ideal, but a divider
+                               // value of ( 0x20 = 2 * 32 = ) 64 is the closest possible value.
+    if (HAL_SD_Init(&hsd2) != HAL_OK) {
+        println("SDCard: init failed");
+        return false;
+    }
+    hsd2.Init.ClockDiv = 0; // reset to default i.e 25 MHz
+#endif
 
     if (HAL_SD_Init(&hsd2) != HAL_OK) {
         println("SDCard: init failed");
         return false;
     }
-    println("SDCard: init completed");
+    //    println("SDCard: init completed");
     return true;
 }
 
@@ -69,7 +82,7 @@ bool sdcard_deinit() {
         println("SDCard: deinit failed");
         return false;
     }
-    println("SDCard: deinit completed");
+    //    println("SDCard: deinit completed");
     return true;
 }
 
@@ -162,7 +175,7 @@ bool sdcard_mount() {
 }
 
 bool sdcard_unmount() {
-    println("SDCard: ... unmounting FS");
+    //    println("SDCard: ... unmounting FS");
     f_mount(&SDFatFS, (TCHAR const*) NULL, 0);
     return true;
 }
@@ -180,7 +193,7 @@ bool sdcard_format(uint8_t format) {
 
 bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<std::string>& directories, bool show_hidden_files) {
     // TODO implement show_hidden_files
-    println("SDCard: list all directories + files");
+    //    println("SDCard: list all directories + files");
     DIR     dir;
     FILINFO fno;
     FRESULT res = f_opendir(&dir, path.c_str());
@@ -197,10 +210,10 @@ bool sdcard_list(std::string path, std::vector<std::string>& files, std::vector<
 
         // Print the name of the file or directory
         if (fno.fattrib & AM_DIR) {
-            println("        Directory: %s", fno.fname);
+            //            println("        Directory: %s", fno.fname);
             directories.push_back(fno.fname);
         } else {
-            println("        File     : %s", fno.fname);
+            //            println("        File     : %s", fno.fname);
             files.push_back(fno.fname);
         }
     }
@@ -226,7 +239,7 @@ bool sdcard_file_open(std::string filepath, uint8_t flags) {
         println("SDCard: f_open failed : %i", res);
         return false;
     }
-    println("SDCard: opened file");
+    //    println("SDCard: opened file");
     return true;
 }
 
@@ -238,7 +251,7 @@ uint32_t sdcard_file_write(uint8_t* bytes, uint32_t bytes_to_write) {
         println("SDCard: f_write failed : %i", res);
         return 0;
     }
-    println("SDCard: written %i bytes", byteswritten);
+    //    println("SDCard: written %i bytes", byteswritten);
     return byteswritten;
 }
 
@@ -249,7 +262,7 @@ uint32_t sdcard_file_read(uint8_t* bytes, uint32_t bytes_to_read) {
         println("SDCard: f_read failed: %i", res);
         return 0;
     }
-//    println("SDCard: read %i bytes", bytesread);
+    //    println("SDCard: read %i bytes", bytesread);
     return bytesread;
 }
 
@@ -259,7 +272,7 @@ bool sdcard_file_close() {
         println("SDCard: closing file failed : %i", res);
         return false;
     }
-    println("SDCard: closed file");
+    //    println("SDCard: closed file");
     return true;
 }
 
@@ -272,7 +285,7 @@ bool sdcard_file_create(const std::string filename) {
         }
         return false;
     }
-    println("SDCard: creating file: %s", filename.c_str());
+    //    println("SDCard: creating file: %s", filename.c_str());
     return true;
 }
 
