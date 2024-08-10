@@ -17,39 +17,19 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#pragma once
+
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_EMU
 
-#include "System.h"
-#include "Console.h"
-#include "HAL_ASP_EMU.h"
+#include <inttypes.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-AudioDevice* system_init_audiocodec() { // TOOD this is BSP
-    AudioInfo audioinfo;
-    audioinfo.sample_rate     = 48000;
-    audioinfo.output_channels = 2;
-    audioinfo.input_channels  = 2;
-    audioinfo.block_size      = 128;
-    audioinfo.bit_depth       = 16;
-    AudioDevice* audiodevice  = audiodevice_init_audiocodec(&audioinfo);
-    if (audioinfo.device_id == AUDIO_DEVICE_INIT_ERROR) {
-        console_timestamp();
-        console_error("error initializing audio device");
-    }
-    audiodevice_resume(audiodevice);
-    return audiodevice;
-}
-
-void system_init_BSP() {
-}
-
-uint32_t system_get_tick_BSP() {
-    return HAL_GetTick();
-}
+uint32_t HAL_GetTick();
+uint32_t HAL_RCC_GetSysClockFreq();
 
 #ifdef __cplusplus
 }

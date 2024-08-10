@@ -25,35 +25,11 @@
 #include <chrono>
 
 #include "Console.h"
+#include "HAL_ASP_EMU.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-static uint32_t HAL_GetTick() {
-    using namespace std::chrono;
-    const uint32_t  mCurrentTime     = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
-    static uint32_t mStartTimeOffset = mCurrentTime;
-    return mCurrentTime - mStartTimeOffset;
-}
-
-static uint32_t HAL_RCC_GetSysClockFreq() {
-#if defined(GENERIC_EMU)
-    return 0;
-#elif defined(KLST_CORE_EMU)
-    return 0;
-#elif defined(KLST_TINY_EMU)
-    return 0;
-#elif defined(KLST_SHEEP_EMU)
-    return 0;
-#elif defined(KLST_PANDA_EMU)
-    return 550000000;
-#elif defined(KLST_CATERPILLAR_EMU)
-    return 550000000;
-#else
-    return 0;
-#endif
-}
 
 void console_timestamp(bool newline) {
     if (newline) {

@@ -20,7 +20,9 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_EMU
 
-#include "System.h"
+#include <iostream>
+#include <chrono>
+
 #include "Console.h"
 #include "HAL_ASP_EMU.h"
 
@@ -28,27 +30,29 @@
 extern "C" {
 #endif
 
-AudioDevice* system_init_audiocodec() { // TOOD this is BSP
-    AudioInfo audioinfo;
-    audioinfo.sample_rate     = 48000;
-    audioinfo.output_channels = 2;
-    audioinfo.input_channels  = 2;
-    audioinfo.block_size      = 128;
-    audioinfo.bit_depth       = 16;
-    AudioDevice* audiodevice  = audiodevice_init_audiocodec(&audioinfo);
-    if (audioinfo.device_id == AUDIO_DEVICE_INIT_ERROR) {
-        console_timestamp();
-        console_error("error initializing audio device");
-    }
-    audiodevice_resume(audiodevice);
-    return audiodevice;
+uint32_t HAL_GetTick() {
+    using namespace std::chrono;
+    const uint32_t  mCurrentTime     = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+    static uint32_t mStartTimeOffset = mCurrentTime;
+    return mCurrentTime - mStartTimeOffset;
 }
 
-void system_init_BSP() {
-}
-
-uint32_t system_get_tick_BSP() {
-    return HAL_GetTick();
+uint32_t HAL_RCC_GetSysClockFreq() {
+#if defined(GENERIC_EMU)
+    return 0;
+#elif defined(KLST_CORE_EMU)
+    return 0;
+#elif defined(KLST_TINY_EMU)
+    return 0;
+#elif defined(KLST_SHEEP_EMU)
+    return 0;
+#elif defined(KLST_PANDA_EMU)
+    return 550000000;
+#elif defined(KLST_CATERPILLAR_EMU)
+    return 550000000;
+#else
+    return 0;
+#endif
 }
 
 #ifdef __cplusplus
