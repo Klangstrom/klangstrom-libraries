@@ -26,8 +26,11 @@
 extern "C" {
 #endif
 
-void* dma_malloc(size_t size);
-void  dma_free_all();
+void*  dma_malloc(size_t size);
+void   dma_free_all();
+size_t dma_pool_size();
+size_t dma_pool_used();
+size_t dma_pool_available();
 
 #ifdef __cplusplus
 }

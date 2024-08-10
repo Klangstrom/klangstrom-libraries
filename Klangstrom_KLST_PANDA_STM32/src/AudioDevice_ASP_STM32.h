@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #ifdef KLST_PANDA_ENABLE_AUDIOCODEC
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32

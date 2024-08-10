@@ -77,6 +77,11 @@ uint32_t system_get_tick() {
     return system_get_tick_BSP() - fSystemStartTime;
 }
 
+float system_cycles_to_micros(uint32_t cycles) {
+    test cycle counting
+    return cycles / (float) (system_clock_frequency() / 1000000);
+}
+
 #ifdef __cplusplus
 }
 #endif

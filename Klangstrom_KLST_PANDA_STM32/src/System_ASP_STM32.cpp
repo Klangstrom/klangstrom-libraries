@@ -35,6 +35,36 @@ uint32_t system_get_tick_BSP() {
     return HAL_GetTick();
 }
 
+#define ARM_CM_DEMCR (*(uint32_t*) 0xE000EDFC)
+#define ARM_CM_DWT_CTRL (*(uint32_t*) 0xE0001000)
+#define ARM_CM_DWT_CYCCNT (*(uint32_t*) 0xE0001004)
+
+static bool cycle_counter_enabled = false;
+static void enable_cycle_counter() {
+    if (ARM_CM_DWT_CTRL != 0) {  // See if DWT is available
+        ARM_CM_DEMCR |= 1 << 24; // Set bit 24
+        ARM_CM_DWT_CYCCNT = 0;
+        ARM_CM_DWT_CTRL |= 1 << 0; // Set bit 0
+    }
+}
+
+void system_reset_cycles() {
+    ARM_CM_DWT_CYCCNT = 0;
+}
+
+uint32_t system_get_cycles_BSP() {
+    if (!cycle_counter_enabled) {
+        enable_cycle_counter();
+        cycle_counter_enabled = true;
+    }
+    return ARM_CM_DWT_CYCCNT;
+    //    return DWT->CYCCNT; // TODO test both
+}
+
+uint32_t system_clock_frequency() {
+    return HAL_RCC_GetSysClockFreq();
+}
+
 /* ----------------- SAI ---------------- */
 
 static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {

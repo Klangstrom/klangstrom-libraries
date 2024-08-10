@@ -17,10 +17,10 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
-#include "Klangstrom_ASP_KLST_STM32-Config.h"
+#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #ifdef KLST_PANDA_ENABLE_SD_CARD
+#include "KlangstromEnvironment.h"
+#ifdef KLST_ARCH_IS_STM32
 
 #include <stdarg.h>
 #include <stdio.h>

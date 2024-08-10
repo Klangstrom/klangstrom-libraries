@@ -34,13 +34,14 @@
 #warning "no implementation for Klangstrom found ( this might be intentional )"
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "AudioDevice.h"
 #include "SerialDevice.h"
 #include "ArrayList.h"
+#include "Tools.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 DEFINE_ARRAYLIST(SerialDevice*, SerialDevicePtr)
@@ -53,6 +54,9 @@ ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
 uint16_t                   system_get_unique_device_ID();
 bool                       system_is_initialized();
 uint32_t                   system_get_tick();
+uint32_t                   system_get_cycles();
+uint32_t                   system_clock_frequency(); // implemented as BSP
+float                      system_cycles_to_micros(uint32_t cycles);
 
 /**
  * @brief initialize the default audio codec and starts it
@@ -62,6 +66,7 @@ AudioDevice* system_init_audiocodec(); // NOTE implemented as BSP for now
 
 void     system_init_BSP();
 uint32_t system_get_tick_BSP();
+uint32_t system_get_cycles_BSP();
 
 #ifdef __cplusplus
 }

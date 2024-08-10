@@ -59,6 +59,18 @@ void dma_free_all() {
     dma_pool.next = dma_pool.base;
 }
 
+size_t dma_pool_size() {
+    return dma_pool.size;
+}
+
+size_t dma_pool_used() {
+    return dma_pool.next - dma_pool.base;
+}
+
+size_t dma_pool_available() {
+    return dma_pool.size - dma_pool_used();
+}
+
 #ifdef __cplusplus
 }
 #endif

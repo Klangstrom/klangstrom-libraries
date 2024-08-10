@@ -17,10 +17,16 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+//defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
+//    defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
+//    defined(KLST_PANDA_ENABLE_MIDI)
+
 #include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+#if defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
+    defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
+    defined(KLST_PANDA_ENABLE_MIDI)
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#ifdef KLST_ARCH_IS_STM32
 
 #include "main.h"
 #include "usart.h"
@@ -128,5 +134,5 @@ void serialdevice_deinit_peripherals_BSP(SerialDevice* serialdevice) {
 }
 #endif
 
-#endif // KLST_PANDA_STM32
-#endif // KLST_PANDA_ENABLE_IDC_SERIAL
+#endif // KLST_ARCH_IS_STM32
+#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG || KLST_PANDA_ENABLE_IDC_SERIAL || KLST_PANDA_ENABLE_MIDI

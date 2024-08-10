@@ -17,8 +17,12 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
+
+// TODO maybe implement this with `SerialDevice`
 
 #include <inttypes.h>
 
@@ -39,7 +43,31 @@ extern "C" {
 #define CONSOLE_UART_INSTANCE_INIT MX_USART3_UART_Init
 #endif // CONSOLE_UART_INSTANCE_INIT
 
-extern UART_HandleTypeDef CONSOLE_UART_INSTANCE;
+extern UART_HandleTypeDef CONSOLE_UART_INSTANCE; // TODO remove all references to `extern` variables
+
+//typedef struct ConsolePeripherals {
+//    UART_HandleTypeDef* uart_handle;
+//    void (*init)(void);
+//} ConsolePeripherals;
+//
+//// for KLST_PANDA_STM32
+//ConsolePeripherals console_peripherals = {
+//    .uart_handle = &huart3,
+//    .init        = MX_USART3_UART_Init
+//};
+//
+//extern "C" int _write(int file, char* data, int len) {
+//    // @note needs to be implemented with `extern "C"` for printf to work
+//    (void) file;
+//    HAL_StatusTypeDef status = HAL_UART_Transmit(console_peripherals.uart_handle, (uint8_t*) data, len, HAL_MAX_DELAY);
+//    return (status == HAL_OK ? len : 0);
+//}
+//
+//void _console_init_BSP(ConsolePeripherals peripherals) {
+//    console_peripherals = peripherals;
+//    console_peripherals.init();
+//    // HAL_StatusTypeDef status = HAL_UART_Transmit(console_peripherals.uart_handle, (uint8_t*) data, len, HAL_MAX_DELAY);
+//}
 
 extern "C" int _write(int file, char* data, int len) {
     // @note needs to be implemented with `extern "C"` for printf to work
@@ -49,6 +77,7 @@ extern "C" int _write(int file, char* data, int len) {
 }
 
 void console_init_BSP() {
+    // TODO init with parameters i.e callback to e.g `MX_USART3_UART_Init` and pointer to `huart3`
     CONSOLE_UART_INSTANCE_INIT();
 }
 #else
@@ -154,3 +183,4 @@ void console_system_info() {
 #endif
 
 #endif // KLST_PANDA_STM32
+#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG

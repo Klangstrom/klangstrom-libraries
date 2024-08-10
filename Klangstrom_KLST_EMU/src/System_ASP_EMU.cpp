@@ -51,6 +51,24 @@ uint32_t system_get_tick_BSP() {
     return HAL_GetTick();
 }
 
+void system_reset_cycles() {
+    // TODO
+}
+
+uint32_t system_get_cycles_BSP() {
+    // Get the current time in nanoseconds
+    auto now     = std::chrono::high_resolution_clock::now();
+    auto time_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+
+    // Convert the time to MCU cycles
+    uint64_t mcu_cycles = static_cast<uint64_t>((time_ns * system_clock_frequency()) / 1e9);
+    return mcu_cycles;
+}
+
+uint32_t system_clock_frequency() {
+    return ???;
+}
+
 #ifdef __cplusplus
 }
 #endif

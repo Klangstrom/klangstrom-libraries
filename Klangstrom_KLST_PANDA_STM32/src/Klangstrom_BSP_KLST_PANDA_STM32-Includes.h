@@ -28,15 +28,22 @@
 extern "C" {
 #endif
 
-#if defined(KLST_PANDA_ENABLE_GPIO) || defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_SD_CARD) || defined(KLST_PANDA_ENABLE_DISPLAY)
+#if defined(KLST_PANDA_ENABLE_GPIO) ||            \
+    defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || \
+    defined(KLST_PANDA_ENABLE_SD_CARD) ||         \
+    defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "gpio.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || defined(KLST_PANDA_ENABLE_ENCODER) || defined(KLST_PANDA_ENABLE_DISPLAY)
+#if defined(KLST_PANDA_ENABLE_MECHANICAL_KEYS) || \
+    defined(KLST_PANDA_ENABLE_ENCODER) ||         \
+    defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "tim.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)
+#if defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
+    defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
+    defined(KLST_PANDA_ENABLE_MIDI)
 #include "usart.h"
 #endif
 
@@ -44,15 +51,19 @@ extern "C" {
 #include "octospi.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
+    defined(KLST_PANDA_ENABLE_IDC_SERIAL) || \
+    defined(KLST_PANDA_ENABLE_MIDI)
 #include "dma.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_DISPLAY)
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
+    defined(KLST_PANDA_ENABLE_DISPLAY)
 #include "i2c.h"
 #endif
 
-#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_ON_BOARD_MIC)
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
+    defined(KLST_PANDA_ENABLE_ON_BOARD_MIC)
 #include "sai.h"
 #endif
 
