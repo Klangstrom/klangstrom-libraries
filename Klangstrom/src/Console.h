@@ -47,6 +47,7 @@ void console_system_info();                   // NOTE implemented this BSP for n
 #define console_printf(format, ...) _console_printf_(format, ##__VA_ARGS__)
 #define console_print(format, ...) _console_print_(format, ##__VA_ARGS__)
 #define console_println(format, ...) _console_println_(format, ##__VA_ARGS__)
+
 #else
 #define console_printf(format, ...)
 #define console_print(format, ...)

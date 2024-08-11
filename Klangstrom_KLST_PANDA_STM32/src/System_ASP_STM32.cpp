@@ -31,20 +31,31 @@
 extern "C" {
 #endif
 
-uint32_t system_get_tick_BSP() {
+uint32_t system_get_ticks_BSP() {
     return HAL_GetTick();
 }
 
+static bool cycle_counter_enabled = false;
+
+//#define KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
+#ifdef KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
 #define ARM_CM_DEMCR (*(uint32_t*) 0xE000EDFC)
 #define ARM_CM_DWT_CTRL (*(uint32_t*) 0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t*) 0xE0001004)
 
-static bool cycle_counter_enabled = false;
-static void enable_cycle_counter() {
-    if (ARM_CM_DWT_CTRL != 0) {  // See if DWT is available
-        ARM_CM_DEMCR |= 1 << 24; // Set bit 24
-        ARM_CM_DWT_CYCCNT = 0;
-        ARM_CM_DWT_CTRL |= 1 << 0; // Set bit 0
+void system_enable_cycle_counter(bool enable) {
+    if (enable) {
+        if (ARM_CM_DWT_CTRL != 0) {  // See if DWT is available
+            ARM_CM_DEMCR |= 1 << 24; // Set bit 24
+            ARM_CM_DWT_CYCCNT = 0;
+            ARM_CM_DWT_CTRL |= 1 << 0; // Set bit 0
+            cycle_counter_enabled = true;
+        }
+    } else {
+        if (ARM_CM_DWT_CTRL != 0) {       // See if DWT is available
+            ARM_CM_DWT_CTRL &= ~(1 << 0); // Clear bit 0 to disable the cycle counter
+            cycle_counter_enabled = false;
+        }
     }
 }
 
@@ -54,12 +65,39 @@ void system_reset_cycles() {
 
 uint32_t system_get_cycles_BSP() {
     if (!cycle_counter_enabled) {
-        enable_cycle_counter();
-        cycle_counter_enabled = true;
+        system_enable_cycle_counter(true);
     }
     return ARM_CM_DWT_CYCCNT;
-    //    return DWT->CYCCNT; // TODO test both
 }
+
+#else  // KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
+void system_enable_cycle_counter(bool enable) {
+    if (enable) {
+        if (DWT->CTRL != 0) {                               // See if DWT is available
+            CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // Set bit 24
+            DWT->CYCCNT = 0;
+            DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; // Set bit 0
+            cycle_counter_enabled = true;
+        }
+    } else {
+        if (DWT->CTRL != 0) {                     // See if DWT is available
+            DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk; // Clear bit 0 to disable the cycle counter
+            cycle_counter_enabled = false;
+        }
+    }
+}
+
+void system_reset_cycles() {
+    DWT->CYCCNT = 0;
+}
+
+uint32_t system_get_cycles() {
+    if (!cycle_counter_enabled) {
+        system_enable_cycle_counter(true);
+    }
+    return DWT->CYCCNT;
+}
+#endif // KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
 
 uint32_t system_clock_frequency() {
     return HAL_RCC_GetSysClockFreq();

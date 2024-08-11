@@ -53,9 +53,11 @@ void                       system_register_serialdevice(SerialDevice* serialdevi
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
 uint16_t                   system_get_unique_device_ID();
 bool                       system_is_initialized();
-uint32_t                   system_get_tick();
-uint32_t                   system_get_cycles();
-uint32_t                   system_clock_frequency(); // implemented as BSP
+uint32_t                   system_get_ticks();
+void                       system_enable_cycle_counter(bool enable); // implemented as BSP
+void                       system_reset_cycles();                    // implemented as BSP
+uint32_t                   system_get_cycles();                      // implemented as BSP
+uint32_t                   system_clock_frequency();                 // implemented as BSP
 float                      system_cycles_to_micros(uint32_t cycles);
 
 /**
@@ -65,8 +67,7 @@ float                      system_cycles_to_micros(uint32_t cycles);
 AudioDevice* system_init_audiocodec(); // NOTE implemented as BSP for now
 
 void     system_init_BSP();
-uint32_t system_get_tick_BSP();
-uint32_t system_get_cycles_BSP();
+uint32_t system_get_ticks_BSP();
 
 #ifdef __cplusplus
 }

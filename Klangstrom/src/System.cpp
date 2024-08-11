@@ -46,7 +46,7 @@ void system_init() {
     console_status("System initialized%s", KLST_CONSOLE_LINE_ENDING);
 
     fSystemInitialized = true;
-    fSystemStartTime   = system_get_tick_BSP();
+    fSystemStartTime   = system_get_ticks_BSP();
 }
 
 bool system_is_initialized() {
@@ -73,13 +73,12 @@ ArrayList_SerialDevicePtr* system_get_registered_serialdevices() {
     return &fSerialDeviceListeners;
 }
 
-uint32_t system_get_tick() {
-    return system_get_tick_BSP() - fSystemStartTime;
+uint32_t system_get_ticks() {
+    return system_get_ticks_BSP() - fSystemStartTime;
 }
 
 float system_cycles_to_micros(uint32_t cycles) {
-    test cycle counting
-    return cycles / (float) (system_clock_frequency() / 1000000);
+    return (float) cycles / ((float) system_clock_frequency() / 1000000.0f);
 }
 
 #ifdef __cplusplus

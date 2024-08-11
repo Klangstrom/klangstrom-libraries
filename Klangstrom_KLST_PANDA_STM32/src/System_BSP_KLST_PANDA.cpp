@@ -22,8 +22,18 @@
 
 #include "AudioDevice.h"
 #include "Console.h"
-#include "Klangstrom_ASP_KLST_STM32-Config.h"         // TODO rename this
-#include "Klangstrom_BSP_KLST_PANDA_STM32-Includes.h" // TODO rename this
+#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO rename this
+
+#ifdef KLST_PANDA_ENABLE_GPIO
+#include "gpio.h"
+#endif // KLST_PANDA_ENABLE_GPIO
+
+#if defined(KLST_PANDA_ENABLE_AUDIOCODEC) || \
+    defined(KLST_PANDA_ENABLE_IDC_SERIAL) || \
+    defined(KLST_PANDA_ENABLE_SD_CARD) ||    \
+    defined(KLST_PANDA_ENABLE_MIDI)
+#include "dma.h"
+#endif // defined(KLST_PANDA_ENABLE_AUDIOCODEC) || defined(KLST_PANDA_ENABLE_IDC_SERIAL) || defined(KLST_PANDA_ENABLE_MIDI)
 
 #ifdef __cplusplus
 extern "C" {
@@ -87,19 +97,19 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     MX_TIM2_Init();
 #endif // KLST_PANDA_ENABLE_ENCODER
 
-#ifdef KLST_PANDA_ENABLE_SD_CARD
+    //#ifdef KLST_PANDA_ENABLE_SD_CARD
     // MX_FATFS_Init();
     // MX_SDMMC2_SD_Init();
-#endif // KLST_PANDA_ENABLE_SD_CARD
+    //#endif // KLST_PANDA_ENABLE_SD_CARD
 
-#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
-    MX_UART9_Init();
-    MX_UART8_Init();
-#endif // KLST_PANDA_ENABLE_IDC_SERIAL
+    //#ifdef KLST_PANDA_ENABLE_IDC_SERIAL
+    //    MX_UART9_Init();
+    //    MX_UART8_Init();
+    //#endif // KLST_PANDA_ENABLE_IDC_SERIAL
 
-#ifdef KLST_PANDA_ENABLE_MIDI
-    MX_UART4_Init();
-#endif // KLST_PANDA_ENABLE_MIDI
+    //#ifdef KLST_PANDA_ENABLE_MIDI
+    //    MX_UART4_Init();
+    //#endif // KLST_PANDA_ENABLE_MIDI
 
 #ifdef KLST_PANDA_ENABLE_USB_HOST
     MX_USB_HOST_Init();
