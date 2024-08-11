@@ -17,10 +17,6 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-//defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
-//    defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
-//    defined(KLST_PANDA_ENABLE_MIDI)
-
 #include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #if defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
     defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
@@ -29,22 +25,12 @@
 #ifdef KLST_ARCH_IS_STM32
 
 #include "main.h"
-#include "usart.h"
-#include "Console.h"
 #include "SerialDevice.h"
-#include "DMAMemoryAllocator.h"
 #include "SerialDevice_ASP_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-extern UART_HandleTypeDef huart8;
-extern UART_HandleTypeDef huart9;
-extern DMA_HandleTypeDef  hdma_uart8_rx;
-extern DMA_HandleTypeDef  hdma_uart8_tx;
-extern DMA_HandleTypeDef  hdma_uart9_rx;
-extern DMA_HandleTypeDef  hdma_uart9_tx;
 
 void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length) {
     for (int i = 0; i < length; ++i) {
@@ -55,73 +41,11 @@ void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t
                           length);
 }
 
-static void start_receive(SerialDevice* serialdevice) {
-    HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
-                                 serialdevice->peripherals->buffer_rx,
-                                 serialdevice->data_buffer_size);
-    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
-}
-
-void serialdevice_init_BSP(SerialDevice* serialdevice) {
-    if (serialdevice->peripherals == nullptr) {
-        console_error("ERROR: peripherals not initialized");
-        return;
-    }
-    if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
-            console_status("device type: IDC_00");
-            MX_UART8_Init();
-            start_receive(serialdevice);
-        }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
-            console_status("device type: IDC_01");
-            MX_UART9_Init();
-            start_receive(serialdevice);
-        }
-    } else {
-        console_status("device type: custom");
-    }
-}
-
 void serialdevice_deinit_BSP(SerialDevice* serialdevice) {
     delete[] serialdevice->data;
     if (serialdevice->peripherals != nullptr) {
         delete serialdevice->peripherals;
         serialdevice->peripherals = nullptr;
-    }
-}
-
-void serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
-    serialdevice->peripherals = new SerialPeripherals();
-
-    if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
-        console_status("device type: type: %i", serialdevice->device_type);
-
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
-            console_status("device type: is MIDI");
-        }
-
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
-            console_status("device type: is IDC_00");
-            serialdevice->peripherals                = new SerialPeripherals;
-            serialdevice->peripherals->uart_handle   = &huart8;
-            serialdevice->peripherals->dma_handle_rx = &hdma_uart8_rx;
-            serialdevice->peripherals->dma_handle_tx = &hdma_uart8_tx;
-            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-        }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
-            console_status("device type: is IDC_01");
-            serialdevice->peripherals                = new SerialPeripherals;
-            serialdevice->peripherals->uart_handle   = &huart9;
-            serialdevice->peripherals->dma_handle_rx = &hdma_uart9_rx;
-            serialdevice->peripherals->dma_handle_tx = &hdma_uart9_tx;
-            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-        }
-    } else {
-        console_status("device type: custom");
     }
 }
 

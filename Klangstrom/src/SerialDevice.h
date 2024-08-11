@@ -67,15 +67,20 @@ WEAK void serial_event(SerialDevice* serial_device);
 SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size = 64, uint32_t baud_rate = 115200);
 void          serialdevice_delete(SerialDevice* serialdevice);
 void          serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length); // implemented as A/BSP
-
 /**
  * initializes device on board-specific level. needs to decide if device type is supported.
  * furthermore, this function initializes the data buffer.
  * @param serialdevice
+ * @return returns true if initialization was successful, if false client needs to initialize manually
  */
-void serialdevice_init_BSP(SerialDevice* serialdevice);
+bool serialdevice_init_BSP(SerialDevice* serialdevice);
 void serialdevice_deinit_BSP(SerialDevice* serialdevice);
-void serialdevice_init_peripherals_BSP(SerialDevice* serialdevice);
+/**
+ * initializes peripherals on board-specific level. needs to decide if device type is supported.
+ * @param serialdevice
+ * @return returns true if initialization was successful, if false client needs to initialize manually
+ */
+bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice);
 void serialdevice_deinit_peripherals_BSP(SerialDevice* serialdevice);
 
 #ifdef __cplusplus
