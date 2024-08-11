@@ -58,18 +58,28 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
             serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
             console_status("device type: is MIDI");
+            if (serialdevice->baud_rate != 31250) {
+                console_error("SerialDevice: baud rate is set to 31250 to comply with MIDI standard");
+            }
+            console_error("SerialDevice: TODO implement MIDI");
             // TODO implement MIDI
             return false; // TODO change to `true` after implementing MIDI
         }
 
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
             console_status("device type: IDC_00");
+            if (serialdevice->baud_rate != 115200) {
+                console_error("SerialDevice: currently baud rate is fixed at 115200");
+            }
             MX_UART8_Init();
             start_receive(serialdevice);
             return true;
         }
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
             console_status("device type: IDC_01");
+            if (serialdevice->baud_rate != 115200) {
+                console_error("SerialDevice: currently baud rate is fixed at 115200");
+            }
             MX_UART9_Init();
             start_receive(serialdevice);
             return true;

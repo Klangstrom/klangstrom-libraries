@@ -52,7 +52,7 @@ uint32_t system_get_tick_BSP() {
 }
 
 void system_reset_cycles() {
-    // TODO
+    // TODO implemenmt this
 }
 
 uint32_t system_get_cycles_BSP() {

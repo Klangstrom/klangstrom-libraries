@@ -19,6 +19,7 @@
 
 #include "System.h"
 #include "SerialDevice.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,9 +34,21 @@ SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size, uin
     serialdevice->data_buffer_size = buffer_size;
     serialdevice->device_type      = device_type;
     serialdevice->device_id        = system_get_unique_device_ID();
-    serialdevice->baud_rate        = baud_rate;
-    serialdevice->callback_serial  = serial_event;
-    serialdevice->data             = new uint8_t[serialdevice->data_buffer_size];
+    if (baud_rate == SERIAL_DEVICE_DEFAULT_BAUD) {
+        // TODO this is a bit tricky because the baud rate is hardwired into in the MX_UARTX_Init() function
+        console_error("SerialDevice: default baud rates are currently not supported");
+        // TODO implement something like this ``change_baud_rate(serialdevice, 9600);``:
+        //        HAL_UART_Abort_IT(serialdevice->peripherals->uart_handle);
+        //        HAL_UART_DeInit(serialdevice->peripherals->uart_handle);
+        //        huart1.Init.BaudRate = 9600;
+        //        if (HAL_UART_Init(serialdevice->peripherals->uart_handle) != HAL_OK) {
+        //            Error_Handler();
+        //        }
+        //        start_receive(serialdevice);
+    }
+    serialdevice->baud_rate       = baud_rate;
+    serialdevice->callback_serial = serial_event;
+    serialdevice->data            = new uint8_t[serialdevice->data_buffer_size];
     serialdevice_init_peripherals_BSP(serialdevice);
     serialdevice_init_BSP(serialdevice);
     system_register_serialdevice(serialdevice);
