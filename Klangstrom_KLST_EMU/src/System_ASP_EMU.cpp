@@ -23,10 +23,41 @@
 #include "System.h"
 #include "Console.h"
 #include "HAL_ASP_EMU.h"
+#include <chrono>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+using namespace std::chrono;
+
+static uint64_t mStartTime = 0;
+
+void system_enable_cycle_counter(bool enable) {
+    if (enable) {
+        system_reset_cycles();
+    } else {
+        mStartTime = 0;
+    }
+}
+
+void system_reset_cycles() {
+    auto now   = std::chrono::high_resolution_clock::now();
+    mStartTime = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+}
+
+uint32_t system_get_cycles() {
+    auto now          = std::chrono::high_resolution_clock::now();
+    auto mCurrentTime = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    auto mDelta       = mCurrentTime - mStartTime;
+    mDelta *= system_clock_frequency();
+    mDelta /= 1e9;
+    return static_cast<uint32_t>(mDelta);
+}
+
+uint32_t system_clock_frequency() {
+    return HAL_RCC_GetSysClockFreq();
+}
 
 AudioDevice* system_init_audiocodec() { // TOOD this is BSP
     AudioInfo audioinfo;
@@ -47,26 +78,8 @@ AudioDevice* system_init_audiocodec() { // TOOD this is BSP
 void system_init_BSP() {
 }
 
-uint32_t system_get_tick_BSP() {
+uint32_t system_get_ticks_BSP() {
     return HAL_GetTick();
-}
-
-void system_reset_cycles() {
-    // TODO implemenmt this
-}
-
-uint32_t system_get_cycles_BSP() {
-    // Get the current time in nanoseconds
-    auto now     = std::chrono::high_resolution_clock::now();
-    auto time_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
-
-    // Convert the time to MCU cycles
-    uint64_t mcu_cycles = static_cast<uint64_t>((time_ns * system_clock_frequency()) / 1e9);
-    return mcu_cycles;
-}
-
-uint32_t system_clock_frequency() {
-    return ???;
 }
 
 #ifdef __cplusplus

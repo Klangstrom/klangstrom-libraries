@@ -21,13 +21,18 @@
 
 #include "Klangstrom.h"
 #ifdef KLST_ARCH_IS_EMU
+#ifndef KLST_CLIENT_PERIPHERAL_CONFIGURATION
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+// TODO how do we handle this? is there a `PeripheralConfiguration_KLST_PANDA_EMU.h` file?
+//#if defined(KLST_PANDA_STM32)
+//#include "PeripheralConfiguration_KLST_PANDA_STM32.h"
+//#elif defined(KLST_CATERPILLAR_STM32)
+//#include "PeripheralConfiguration_KLST_CATERPILLAR_STM32.h"
+//#endif // KLST_PANDA_STM32
 
-#ifdef __cplusplus
-}
-#endif
+#else // KLST_CLIENT_PERIPHERAL_CONFIGURATION
 
+#warning "Klangstrom peripherals are configured by client via external file."
+
+#endif // KLST_CLIENT_PERIPHERAL_CONFIGURATION
 #endif // KLST_ARCH_IS_EMU

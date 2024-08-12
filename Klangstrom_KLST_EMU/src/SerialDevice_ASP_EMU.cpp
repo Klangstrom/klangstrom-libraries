@@ -21,6 +21,8 @@
 #ifdef KLST_ARCH_IS_EMU
 
 #include <string>
+
+#include "Console.h"
 #include "SerialDevice.h"
 #include "KlangstromEmulator.h"
 
@@ -62,7 +64,7 @@ void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t
     KlangstromEmulator::instance()->osc_send(msg);
 }
 
-void serialdevice_init_BSP(SerialDevice* serialdevice) {
+bool serialdevice_init_BSP(SerialDevice* serialdevice) {
     if (serialdevice->peripherals == nullptr) {
         println("ERROR: peripherals not initialized");
     }
@@ -77,11 +79,13 @@ void serialdevice_init_BSP(SerialDevice* serialdevice) {
 
     serialdevice->data = new uint8_t[serialdevice->data_buffer_size];
 
+    bool mDeviceInitialized = false;
+
     if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
         println("device type: ", serialdevice->device_type);
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00 ||
             serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
-            println("device is IDC");
+            console_status("device type: is IDC_00");
             // TODO maybe check configuratiom ( e.g baud rate )
             // TODO and see if the board ( e.g KLST_PANDA or KLST_CATERPILLAR ) is compatible
             // TODO in hardware implementation this would also set handlers and initialize hardware ( e.g `UART_HandleTypeDef huart8` + `DMA_HandleTypeDef  hdma_uart8_rx` + `DMA_HandleTypeDef  hdma_uart8_tx` )
@@ -91,18 +95,21 @@ void serialdevice_init_BSP(SerialDevice* serialdevice) {
             //                uint8_t*            rx_buffer; // from pool with `__attribute__((section(".dma_buffer")))`
             //                uint8_t*            tx_buffer; // from pool with `__attribute__((section(".dma_buffer")))`
             //            } SerialPeripherals;
+            mDeviceInitialized = true;
+        } else if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
+                   serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
+            console_status("device type: is MIDI");
+            mDeviceInitialized = true;
         }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
-            println("device is MIDI");
-        }
-    } else {
-        println("device type: custom");
-        // TODO in hardware implementation this would require the client to intialize hardware manually
     }
+
+    console_status("device type: custom(%i)", serialdevice->device_type);
+    // TODO in hardware implementation this would require the client to intialize hardware manually
+    // NOTE client needs to set peripherals manually
 
     KlangstromEmulator::instance()->register_serial_device(serialdevice);
     KlangstromEmulator::instance()->register_drawable(new DrawableSerialDevice(serialdevice));
+    return mDeviceInitialized;
 }
 
 void serialdevice_deinit_BSP(SerialDevice* serialdevice) {
@@ -111,10 +118,11 @@ void serialdevice_deinit_BSP(SerialDevice* serialdevice) {
     // TODO unregister drawable
 }
 
-void serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
+bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
     SerialPeripherals* peripherals = new SerialPeripherals();
     peripherals->port              = 7000;
     serialdevice->peripherals      = peripherals;
+    return true;
 }
 
 void serialdevice_deinit_peripherals_BSP(SerialDevice* serialdevice) {

@@ -20,7 +20,6 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_EMU
 
-#include <iostream>
 #include <chrono>
 
 #include "Console.h"
@@ -30,11 +29,14 @@
 extern "C" {
 #endif
 
+using namespace std::chrono;
+
+const static uint64_t mStartTimeOffset = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+
 uint32_t HAL_GetTick() {
-    using namespace std::chrono;
-    const uint32_t  mCurrentTime     = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
-    static uint32_t mStartTimeOffset = mCurrentTime;
-    return mCurrentTime - mStartTimeOffset;
+    const uint64_t mCurrentTime = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+    const uint32_t mDelta = mCurrentTime - mStartTimeOffset;
+    return static_cast<uint32_t>(mDelta);
 }
 
 uint32_t HAL_RCC_GetSysClockFreq() {
