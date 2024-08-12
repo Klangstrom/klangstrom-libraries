@@ -17,13 +17,13 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#include "PeripheralConfiguration_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
 #ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
 #include "AudioDevice.h"
-#include "AudioDevice_ASP_STM32.h"
+#include "AudioDevice_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {

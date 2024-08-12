@@ -27,7 +27,7 @@
 #include "sai.h"
 #include "i2c.h"
 #include "AudioDevice.h"
-#include "AudioDevice_ASP_STM32.h"
+#include "AudioDevice_STM32.h"
 #include "Console.h"
 #include "WM8904.h"
 #include "WM8904Configure.h"

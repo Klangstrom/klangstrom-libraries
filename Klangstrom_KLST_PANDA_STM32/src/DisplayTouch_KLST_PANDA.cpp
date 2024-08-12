@@ -21,7 +21,6 @@
 #ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
 #ifdef KLST_PANDA_STM32
 
-#include "main.h"
 #include "Display.h"
 #include "Console.h"
 #include "FT5206.h"
@@ -35,6 +34,7 @@ extern I2C_HandleTypeDef hi2c4;
 
 void touch_setup() {
     MX_I2C4_Init();
+    HAL_Delay(100);
     FT5206_init(&hi2c4);
     FT5206_print_info();
 

@@ -81,7 +81,7 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
 #ifdef KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
     MX_OCTOSPI1_Init();
     HAL_Delay(100);
-    externalmemory_init();
+    externalmemory_init(); // TODO move somewhere better
     externalmemory_test();
 #endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
 

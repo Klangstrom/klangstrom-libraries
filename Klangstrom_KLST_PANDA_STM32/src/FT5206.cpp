@@ -42,10 +42,20 @@ void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
         return;
     }
 
-    /*
-	 DEVICE READY: 0x70 // FT5206
-	 DEVICE READY: 0x71
-	 */
+    //    for (int i = 0; i < 0xFF; ++i) {
+    //        if (HAL_I2C_IsDeviceReady(hi2c, i, 3, 1000) != HAL_OK) {
+    //            console_println("FT5206: DEVICE NOT READY: 0x%02X", i);
+    //        } else {
+    //            console_println("FT5206: DEVICE READY    : 0x%02X", i);
+    //        }
+    //    }
+    //
+    //    /*
+    //	 DEVICE READY: 0x34 // WM8904
+    //	 DEVICE READY: 0x35
+    //	 DEVICE READY: 0x70 // FT5206
+    //	 DEVICE READY: 0x71
+    //	 */
 
     uint8_t buf[2];
     buf[0] = FT5206_DEVICE_MODE;

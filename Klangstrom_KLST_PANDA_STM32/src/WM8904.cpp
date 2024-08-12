@@ -19,7 +19,7 @@
 
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
-#include "PeripheralConfiguration_ASP_STM32.h"
+#include "PeripheralConfiguration_STM32.h"
 #ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 
 #include "WM8904.h"

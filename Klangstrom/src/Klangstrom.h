@@ -35,7 +35,7 @@
 /* include architecture / plattform specific implementation + configuration */
 
 #ifdef KLST_ARCH_IS_STM32
-#include "PeripheralConfiguration_ASP_STM32.h"
+#include "PeripheralConfiguration_STM32.h"
 #elif defined(KLST_ARCH_IS_EMU)
 #include "PeripheralConfiguration_ASP_EMU.h"
 #else
