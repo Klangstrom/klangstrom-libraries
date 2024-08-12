@@ -18,7 +18,7 @@
 */
 
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 
 #include <stdint.h>
 #include "SystemUID.h"
@@ -94,4 +94,4 @@ bool system_check_UID(const uint32_t UID[]) {
 }
 #endif
 
-#endif // KLST_PANDA_STM32
+#endif // KLST_PANDA_STM32 || KLST_CATERPILLAR_STM32

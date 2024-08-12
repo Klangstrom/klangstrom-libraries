@@ -20,9 +20,9 @@
 #pragma once
 
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
-#include "Klangstrom_ASP_KLST_STM32-Config.h"
-#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+#ifdef KLST_ARCH_IS_STM32
+#include "PeripheralConfiguration_ASP_STM32.h"
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 
 #include <stdint.h>
 
@@ -1339,5 +1339,5 @@ uint8_t  WM8904_set_flag(uint8_t register_address, uint16_t flag_bit, uint8_t fl
 }
 #endif
 
-#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 #endif // KLST_PANDA_STM32

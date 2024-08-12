@@ -31,6 +31,12 @@
 extern "C" {
 #endif
 
+#if defined(KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG) || \
+    defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||   \
+    defined(KLST_PERIPHERAL_ENABLE_MIDI)
+#define KLST_PERIPHERAL_ENABLE_UART
+#endif
+
 uint32_t system_get_ticks_BSP() {
     return HAL_GetTick();
 }
@@ -110,11 +116,13 @@ static void SAI_TX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
             if (ad->peripherals->audiodevice_sai_tx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_tx != nullptr) {
                     ad->peripherals->callback_tx(ad, callback_event);
                 }
             }
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
         }
     }
 }
@@ -132,11 +140,13 @@ static void SAI_RX_event(SAI_HandleTypeDef* hsai, uint8_t callback_event) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
             if (ad->peripherals->audiodevice_sai_rx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_rx != nullptr) {
                     ad->peripherals->callback_rx(ad, callback_event);
                 }
             }
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
         }
     }
 }
@@ -154,6 +164,7 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
     for (size_t i = 0; i < fAudioDeviceListeners->size; i++) {
         AudioDevice* ad = arraylist_AudioDevicePtr_get(fAudioDeviceListeners, i);
         if (ad != nullptr) {
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
             if (ad->peripherals->audiodevice_sai_tx->Instance == hsai->Instance) {
                 if (ad->peripherals->callback_error != nullptr) {
                     ad->peripherals->callback_error(ad, CALLBACK_TX_ERROR);
@@ -164,18 +175,21 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
                     ad->peripherals->callback_error(ad, CALLBACK_RX_ERROR);
                 }
             }
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
         }
     }
 }
 
 /* --------------- U(S)ART -------------- */
 
+#ifdef KLST_PERIPHERAL_ENABLE_UART
 static void start_receive(SerialDevice* serialdevice) {
     HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
                                  serialdevice->peripherals->buffer_rx,
                                  serialdevice->data_buffer_size);
     __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
 }
+#endif // KLST_PERIPHERAL_ENABLE_UART
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
     console_status("HAL_UARTEx_RxEventCallback");
@@ -183,6 +197,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
     for (size_t i = 0; i < mSerialDevices->size; i++) {
         SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
         if (sd != nullptr) {
+#ifdef KLST_PERIPHERAL_ENABLE_UART
             if (sd->peripherals->uart_handle->Instance == huart->Instance) {
                 if (sd->callback_serial != nullptr) {
                     sd->callback_serial(sd);
@@ -198,6 +213,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
                     start_receive(sd);
                 }
             }
+#endif // KLST_PERIPHERAL_ENABLE_UART
         }
     }
     // void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {}
@@ -210,9 +226,11 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
     for (size_t i = 0; i < mSerialDevices->size; i++) {
         SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
         if (sd != nullptr) {
+#ifdef KLST_PERIPHERAL_ENABLE_UART
             if (sd->peripherals->uart_handle->Instance == huart->Instance) {
                 start_receive(sd);
             }
+#endif
         }
     }
 }

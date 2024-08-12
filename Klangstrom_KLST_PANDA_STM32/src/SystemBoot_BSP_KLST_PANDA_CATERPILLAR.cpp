@@ -18,7 +18,7 @@
 */
 
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 
 #include <stdint.h>
 
@@ -118,4 +118,4 @@ void system_jump_to_bootloader() {
 }
 #endif
 
-#endif // KLST_PANDA_STM32
+#endif // KLST_PANDA_STM32 || KLST_CATERPILLAR_STM32

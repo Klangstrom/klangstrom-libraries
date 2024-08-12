@@ -17,10 +17,10 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#ifdef KLST_PANDA_ENABLE_SERIAL_DEBUG
+#include "Klangstrom.h"
+#ifdef KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
 #include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 
 // TODO maybe implement this with `SerialDevice`
 
@@ -183,4 +183,4 @@ void console_system_info() {
 #endif
 
 #endif // KLST_PANDA_STM32
-#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG
+#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG

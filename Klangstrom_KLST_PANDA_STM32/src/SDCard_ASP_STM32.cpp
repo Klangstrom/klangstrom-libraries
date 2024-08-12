@@ -17,8 +17,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#ifdef KLST_PANDA_ENABLE_SD_CARD
+#include "Klangstrom.h"
+#ifdef KLST_PERIPHERAL_ENABLE_SD_CARD
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
@@ -354,5 +354,5 @@ bool sdcard_file_attributes(const std::string filename) {
 }
 #endif
 
-#endif // KLST_PANDA_ENABLE_SD_CARD
+#endif // KLST_PERIPHERAL_ENABLE_SD_CARD
 #endif // KLST_PANDA_STM32

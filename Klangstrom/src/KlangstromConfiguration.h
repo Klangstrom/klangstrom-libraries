@@ -19,4 +19,14 @@
 
 #pragma once
 
-#define KLST_CONSOLE_LINE_ENDING "\r\n" // TODO why is this reversed in CLI terminal
+#include "KlangstromEnvironment.h"
+
+#if defined(KLST_ARCH_IS_STM32)
+#define KLST_CONSOLE_LINE_ENDING "\r\n" // used in `Console.h`
+#elif defined(KLST_ARCH_IS_EMU)
+#define KLST_CONSOLE_LINE_ENDING "\n\r" // used in `Console.h` // TODO why is this reversed in CLI terminal
+#endif
+//#define KLST_DISABLE_PRINT_CLIENT        // used in `Console.h`
+#define KLST_DISABLE_SDCARD_PRINT_CLIENT // used in `SCCard_BSP_STM32.cpp`
+
+// TODO add the other defines that are used in codebase

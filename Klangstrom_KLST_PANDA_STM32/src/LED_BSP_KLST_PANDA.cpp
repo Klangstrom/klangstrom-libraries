@@ -17,8 +17,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#ifdef KLST_PANDA_ENABLE_LEDS
+#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#ifdef KLST_PERIPHERAL_ENABLE_LEDS
 #include "KlangstromEnvironment.h"
 #ifdef KLST_PANDA_STM32
 
@@ -80,4 +80,4 @@ void led_set_BSP(const int id, float intensity) {
 #endif
 
 #endif // KLST_PANDA_STM32
-#endif // KLST_PANDA_ENABLE_LEDS
+#endif // KLST_PERIPHERAL_ENABLE_LEDS

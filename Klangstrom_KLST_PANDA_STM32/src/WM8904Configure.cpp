@@ -17,9 +17,14 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <cstdio>
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
+#include "PeripheralConfiguration_ASP_STM32.h"
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
+
+#include <cstdio>
+#include <cstdint>
+#include "main.h"
 
 #include "Console.h"
 #include "WM8904Configure.h"
@@ -231,7 +236,7 @@ void WM8904_configure(bool use_FLL, bool use_start_sequence) {
         setup_SCLK_MCLK();
     }
 
-//    setup_default_start_sequence(); // TODO investigate why this is necessary to generate decent volume ( albeit DC offset?!? )
+    //    setup_default_start_sequence(); // TODO investigate why this is necessary to generate decent volume ( albeit DC offset?!? )
 
     console_status("OK.");
 }
@@ -240,4 +245,5 @@ void WM8904_configure(bool use_FLL, bool use_start_sequence) {
 }
 #endif
 
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 #endif // KLST_ARCH_IS_STM32

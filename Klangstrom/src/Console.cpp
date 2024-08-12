@@ -21,6 +21,7 @@
 #include <stdarg.h>
 
 #include "Console.h"
+#include "KlangstromEnvironment.h"
 
 #ifdef __cplusplus
 extern "C" {

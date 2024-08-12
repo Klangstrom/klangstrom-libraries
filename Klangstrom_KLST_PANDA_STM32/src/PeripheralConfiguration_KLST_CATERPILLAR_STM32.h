@@ -17,38 +17,15 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom.h"
-#ifdef KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#ifdef KLST_ARCH_IS_STM32
+#pragma once
 
-#include <inttypes.h>
+#define KLST_PERIPHERAL_ENABLE_GPIO
+#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+//#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
+//#define KLST_PERIPHERAL_ENABLE_LEDS
+//#define KLST_PERIPHERAL_ENABLE_SD_CARD
+//#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
 
-#include "usart.h"
-#include "Console.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void console_timestamp(bool newline) {
-    if (newline) {
-        console_println("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    } else {
-        console_printf("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    }
-}
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif // KLST_ARCH_IS_STM32
-#else
-
-#include "Console.h"
-
-void console_timestamp(bool newline) { (void) newline; }
-void console_system_info() {}
-void console_init_BSP() {}
-
-#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+//#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+//#define KLST_PERIPHERAL_ENABLE_USB_HOST
+//#define KLST_PERIPHERAL_ENABLE_USB_DEVICE

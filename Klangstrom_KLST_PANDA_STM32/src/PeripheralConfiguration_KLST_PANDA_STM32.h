@@ -17,38 +17,25 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom.h"
-#ifdef KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#ifdef KLST_ARCH_IS_STM32
+#pragma once
 
-#include <inttypes.h>
+#define KLST_PERIPHERAL_ENABLE_GPIO
+#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
+#define KLST_PERIPHERAL_ENABLE_LEDS
+#define KLST_PERIPHERAL_ENABLE_SD_CARD
+#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
 
-#include "usart.h"
-#include "Console.h"
+//#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+//#define KLST_PERIPHERAL_ENABLE_USB_HOST
+//#define KLST_PERIPHERAL_ENABLE_USB_DEVICE
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
 
-void console_timestamp(bool newline) {
-    if (newline) {
-        console_println("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    } else {
-        console_printf("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    }
-}
+//#define KLST_PERIPHERAL_ENABLE_ENCODER
+//#define KLST_PERIPHERAL_ENABLE_MIDI
+//#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
+//#define KLST_PERIPHERAL_ENABLE_ADC_DAC
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif // KLST_ARCH_IS_STM32
-#else
-
-#include "Console.h"
-
-void console_timestamp(bool newline) { (void) newline; }
-void console_system_info() {}
-void console_init_BSP() {}
-
-#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+//#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
+//#define KLST_PERIPHERAL_ENABLE_DISPLAY

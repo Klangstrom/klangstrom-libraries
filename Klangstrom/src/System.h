@@ -21,19 +21,7 @@
 
 #include <cstdint>
 
-#include "KlangstromEnvironment.h"
-
-/**
- * this include is required to tell the silly arduino build system to include the other libraries
- */
-#ifdef KLST_ARCH_IS_STM32
-#include "System_ASP_STM32.h" // TODO rename these
-#elif defined(KLST_ARCH_IS_EMU)
-#include "System_ASP_EMU.h" // TODO rename these
-#else
-#warning "no implementation for Klangstrom found ( this might be intentional )"
-#endif
-
+#include "Klangstrom.h"
 #include "AudioDevice.h"
 #include "SerialDevice.h"
 #include "ArrayList.h"

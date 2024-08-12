@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#ifdef KLST_PANDA_ENABLE_AUDIOCODEC
+#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#ifdef KLST_PERIPHERAL_ENABLE_AUDIODEVICE
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
@@ -61,4 +61,4 @@ typedef struct AudioDevicePeripherals {
 #endif
 
 #endif // KLST_ARCH_IS_STM32
-#endif // KLST_PANDA_ENABLE_AUDIOCODEC
+#endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE

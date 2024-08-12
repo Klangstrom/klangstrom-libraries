@@ -17,38 +17,27 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom.h"
-#ifdef KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+#pragma once
+
+#include "KlangstromEnvironment.h"
+#include "KlangstromConfiguration.h"
+
+/* include client configuration, if present */
+
+#if __has_include("PeripheralConfiguration.h")
+
+#warning "Klangstrom peripherals are configured by client via external file."
+#include "KlangstromPeripheralConfiguration.h"
+#define KLST_CLIENT_PERIPHERAL_CONFIGURATION
+
+#endif // KlangstromPeripheralConfiguration.h
+
+/* include architecture / plattform specific implementation + configuration */
+
 #ifdef KLST_ARCH_IS_STM32
-
-#include <inttypes.h>
-
-#include "usart.h"
-#include "Console.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void console_timestamp(bool newline) {
-    if (newline) {
-        console_println("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    } else {
-        console_printf("[%010" PRIu32 "] ", (uint32_t) HAL_GetTick());
-    }
-}
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif // KLST_ARCH_IS_STM32
+#include "PeripheralConfiguration_ASP_STM32.h"
+#elif defined(KLST_ARCH_IS_EMU)
+#include "PeripheralConfiguration_ASP_EMU.h"
 #else
-
-#include "Console.h"
-
-void console_timestamp(bool newline) { (void) newline; }
-void console_system_info() {}
-void console_init_BSP() {}
-
-#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
+#warning "no implementation for Klangstrom found ( this might be intentional )"
+#endif

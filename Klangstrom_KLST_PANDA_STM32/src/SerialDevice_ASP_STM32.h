@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "Klangstrom_ASP_KLST_STM32-Config.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
-#if defined(KLST_PANDA_ENABLE_SERIAL_DEBUG) || \
-    defined(KLST_PANDA_ENABLE_IDC_SERIAL) ||   \
-    defined(KLST_PANDA_ENABLE_MIDI)
+#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#if defined(KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG) || \
+    defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||   \
+    defined(KLST_PERIPHERAL_ENABLE_MIDI)
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
@@ -46,4 +46,4 @@ typedef struct SerialPeripherals {
 #endif
 
 #endif // KLST_ARCH_IS_STM32
-#endif // KLST_PANDA_ENABLE_SERIAL_DEBUG || KLST_PANDA_ENABLE_IDC_SERIAL || KLST_PANDA_ENABLE_MIDI
+#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG || KLST_PERIPHERAL_ENABLE_IDC_SERIAL || KLST_PERIPHERAL_ENABLE_MIDI
