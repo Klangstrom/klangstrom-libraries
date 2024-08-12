@@ -48,7 +48,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #endif
-#if defined(KLST_PANDA_STM32)
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 #include "main.h"
 #include "adc.h"
 #include "i2c.h"

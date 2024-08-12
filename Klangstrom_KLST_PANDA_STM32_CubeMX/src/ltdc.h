@@ -42,7 +42,7 @@ extern LTDC_HandleTypeDef hltdc;
 void MX_LTDC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-#endif // defined(ARDUINO_KLST_PANDA)
+#endif // defined(KLST_PANDA_STM32)
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

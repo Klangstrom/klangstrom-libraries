@@ -42,7 +42,7 @@ extern DMA2D_HandleTypeDef hdma2d;
 void MX_DMA2D_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-#endif // defined(ARDUINO_KLST_PANDA)
+#endif // defined(KLST_PANDA_STM32)
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

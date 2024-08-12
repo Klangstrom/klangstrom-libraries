@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "KlangstromEnvironment.h"
-#if defined(KLST_PANDA_STM32)
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim1;

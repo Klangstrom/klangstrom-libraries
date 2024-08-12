@@ -23,7 +23,7 @@
 #include "main.h"
 /* USER CODE BEGIN Includes */
 #include "KlangstromEnvironment.h"
-#if defined(KLST_PANDA_STM32)
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

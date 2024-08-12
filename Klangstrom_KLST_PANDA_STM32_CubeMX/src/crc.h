@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include "stm32h7xx_hal_crc.h"
+
 /* USER CODE END Includes */
 
 extern CRC_HandleTypeDef hcrc;

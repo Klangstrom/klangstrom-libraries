@@ -294,8 +294,6 @@ void MPU_Config(void);
 #define _IDC_SERIAL_00_TX_GPIO_Port        GPIOE
 
 /* USER CODE BEGIN Private defines */
-#define LED_00 0
-#define LED_01 1
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
