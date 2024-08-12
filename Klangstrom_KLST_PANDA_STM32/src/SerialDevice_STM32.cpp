@@ -25,7 +25,7 @@
 
 #include "main.h"
 #include "SerialDevice.h"
-#include "SerialDevice_ASP_STM32.h"
+#include "SerialDevice_STM32.h"
 
 #ifdef __cplusplus
 extern "C" {

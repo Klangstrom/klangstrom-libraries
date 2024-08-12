@@ -23,6 +23,7 @@
 #include "main.h"
 #include "AudioDevice.h"
 #include "Console.h"
+#include "System.h"
 
 #ifdef KLST_PERIPHERAL_ENABLE_GPIO
 #include "gpio.h"
@@ -34,6 +35,11 @@
     defined(KLST_PERIPHERAL_ENABLE_MIDI)
 #include "dma.h"
 #endif // defined(KLST_PERIPHERAL_ENABLE_AUDIODEVICE) || defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) || defined(KLST_PERIPHERAL_ENABLE_MIDI)
+
+#ifdef KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
+#include "octospi.h"
+#include "SystemExternalMemory_KLST_PANDA.h"
+#endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,14 +78,16 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     MX_DMA_Init();
 #endif // defined(KLST_PERIPHERAL_ENABLE_AUDIODEVICE) || defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) || defined(KLST_PERIPHERAL_ENABLE_MIDI)
 
-#ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-    MX_TIM4_Init();
-#endif // KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-
 #ifdef KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
     MX_OCTOSPI1_Init();
     HAL_Delay(100);
+    externalmemory_init();
+    externalmemory_test();
 #endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
+
+#ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
+    MX_TIM4_Init();
+#endif // KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
 
 #ifdef KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
     // MX_BDMA_Init();
@@ -105,13 +113,6 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     MX_ADC3_Init();
     MX_DAC1_Init();
 #endif // KLST_PERIPHERAL_ENABLE_ADC_DAC
-
-#ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
-    /* display+backlight+touch panel */
-    MX_LTDC_Init();
-    MX_DMA2D_Init();
-    MX_TIM3_Init();
-#endif // KLST_PERIPHERAL_ENABLE_DISPLAY
 }
 
 static void system_init_BSP_KLST_PANDA() {
@@ -141,9 +142,38 @@ static void system_init_BSP_KLST_PANDA() {
     PeriphCommonClock_Config();
 }
 
+void system_deactivate_display() {
+#ifdef KLST_PANDA_STM32
+#ifndef KLST_PERIPHERAL_ENABLE_DISPLAY
+    /* turn display and backlight off when display is not used */
+    static const uint8_t _DISPLAY_ON_OFF_Pin_ID = 4; // PC4
+    GPIOC->MODER &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID * 2));
+    GPIOC->MODER |= ((1 & 0x3) << (_DISPLAY_ON_OFF_Pin_ID * 2));
+    GPIOC->OTYPER &= ~(1 << _DISPLAY_ON_OFF_Pin_ID);
+    //  GPIOC->ODR    |=  (  1 << _DISPLAY_ON_OFF_Pin_ID); // HIGH
+    //  GPIOC->ODR    &= ~(  1 << _DISPLAY_ON_OFF_Pin_ID); // LOW
+    HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_RESET);
+
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    static const uint8_t _DISPLAY_BACKLIGHT_PWM_Pin_ID = 8; // PC8
+    GPIOC->MODER &= ~(0x3 << (_DISPLAY_BACKLIGHT_PWM_Pin_ID * 2));
+    GPIOC->MODER |= ((1 & 0x3) << (_DISPLAY_BACKLIGHT_PWM_Pin_ID * 2));
+    GPIOC->OTYPER &= ~(1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID);
+    //  GPIOC->ODR    |=  (  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // HIGH
+    //  GPIOC->ODR    &= ~(  1 << _DISPLAY_BACKLIGHT_PWM_Pin_ID); // LOW
+    HAL_GPIO_WritePin(_DISPLAY_BACKLIGHT_PWM_GPIO_Port, _DISPLAY_BACKLIGHT_PWM_Pin, GPIO_PIN_RESET);
+
+    //    // TODO a bit of a hack to turn off the display backlight right away at startup
+    //    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+    //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
+#endif // KLST_PERIPHERAL_ENABLE_DISPLAY
+#endif // KLST_PANDA_STM32
+}
+
 void system_init_BSP() {
     system_init_BSP_KLST_PANDA();
     system_init_BSP_KLST_PANDA_MX_Init_Modules();
+    system_deactivate_display();
 }
 
 #ifdef __cplusplus

@@ -18,3 +18,43 @@
 */
 
 #pragma once
+
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef WEAK
+#define WEAK __attribute__((weak))
+#endif
+
+typedef void (*Callback_0_VOID)();
+
+/**
+ * callback to be implemented by client application
+ */
+WEAK void display_update_event();
+
+bool display_init();                          // implemented as BSP
+void display_deinit();                        // implemented as BSP
+void display_set_backlight(float brightness); // implemented as BSP
+
+void display_switch_on();
+void display_switch_off();
+
+void LTDC_setup();                                    // TODO rename to `display_setup()`
+void LTDC_loop();                                     // TODO ...
+void LTDC_switch_framebuffer();                       // TODO ...
+void LTDC_sync_to_vertical_blank(bool pSyncToVBlank); // TODO add callback
+
+void touch_setup();
+void touch_read();
+
+void backlight_setup();
+void backlight_loop();
+void backlight_set_brightness(float brightness);
+
+#ifdef __cplusplus
+}
+#endif

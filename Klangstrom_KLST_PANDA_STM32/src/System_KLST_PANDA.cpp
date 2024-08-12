@@ -17,27 +17,15 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "Klangstrom.h"
+#ifdef KLST_PANDA_STM32
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
+#ifdef __cplusplus
+}
+#endif
 
-//#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-//#define KLST_PERIPHERAL_ENABLE_USB_HOST
-//#define KLST_PERIPHERAL_ENABLE_USB_DEVICE
-
-/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
-
-//#define KLST_PERIPHERAL_ENABLE_ENCODER
-//#define KLST_PERIPHERAL_ENABLE_MIDI
-//#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-//#define KLST_PERIPHERAL_ENABLE_ADC_DAC
-
-#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-#define KLST_PERIPHERAL_ENABLE_DISPLAY
-
+#endif // KLST_PANDA_STM32

@@ -17,4 +17,17 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+#include "System.h"
+#include "Console.h"
 #include "Display.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+WEAK void display_update_event() {}
+
+#ifdef __cplusplus
+}
+#endif

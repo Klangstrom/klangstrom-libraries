@@ -30,7 +30,8 @@
 #define KLST_SDCARD_SLOW_INITIALIZATION // used in `SCCard_BSP_STM32.cpp`
 //#define KLST_DISABLE_SDCARD_PRINT_CLIENT // used in `SCCard_BSP_STM32.cpp`
 //#define KLST_DISABLE_PRINT_CLIENT        // used in `Console.h`
-#define KLST_PRINT_ASCII_IMAGE_AT_STARTUP // used in `Console.cpp`
+//#define KLST_PRINT_ASCII_IMAGE_AT_STARTUP // used in `Console.cpp`
 #define KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER // used in `System_ASP_STM32.cpp`
+//#define KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO // used in `Touch_BSP_STM32.cpp`
 
 // TODO add the other defines that are used in codebase

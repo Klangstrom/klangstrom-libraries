@@ -19,25 +19,23 @@
 
 #pragma once
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
+#include "Klangstrom.h"
+#if defined(KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY)
+#ifdef KLST_ARCH_IS_STM32
 
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
+#include "main.h"
 
-//#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-//#define KLST_PERIPHERAL_ENABLE_USB_HOST
-//#define KLST_PERIPHERAL_ENABLE_USB_DEVICE
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
+void externalmemory_init();   // implemented as BSP
+void externalmemory_test();   // implemented as BSP
+void externalmemory_deinit(); // implemented as BSP
 
-//#define KLST_PERIPHERAL_ENABLE_ENCODER
-//#define KLST_PERIPHERAL_ENABLE_MIDI
-//#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-//#define KLST_PERIPHERAL_ENABLE_ADC_DAC
+#ifdef __cplusplus
+}
+#endif
 
-#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-#define KLST_PERIPHERAL_ENABLE_DISPLAY
-
+#endif // KLST_ARCH_IS_STM32
+#endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
