@@ -17,12 +17,11 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#include "Klangstrom.h"
 #if defined(KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG) || \
     defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||   \
     defined(KLST_PERIPHERAL_ENABLE_MIDI)
-#include "KlangstromEnvironment.h"
-#ifdef KLST_PANDA_STM32
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 
 #include "main.h"
 #include "usart.h"
@@ -55,6 +54,25 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
         return false;
     }
     if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
+        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
+            console_status("device type: IDC_00");
+            if (serialdevice->baud_rate != 115200) {
+                console_error("SerialDevice: currently baud rate is fixed at 115200");
+            }
+            MX_UART8_Init();
+            start_receive(serialdevice);
+            return true;
+        }
+#if defined(KLST_PANDA_STM32)
+        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
+            console_status("device type: IDC_01");
+            if (serialdevice->baud_rate != 115200) {
+                console_error("SerialDevice: currently baud rate is fixed at 115200");
+            }
+            MX_UART9_Init();
+            start_receive(serialdevice);
+            return true;
+        }
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
             serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
             console_status("device type: is MIDI");
@@ -65,25 +83,7 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
             // TODO implement MIDI
             return false; // TODO change to `true` after implementing MIDI
         }
-
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
-            console_status("device type: IDC_00");
-            if (serialdevice->baud_rate != 115200) {
-                console_error("SerialDevice: currently baud rate is fixed at 115200");
-            }
-            MX_UART8_Init();
-            start_receive(serialdevice);
-            return true;
-        }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
-            console_status("device type: IDC_01");
-            if (serialdevice->baud_rate != 115200) {
-                console_error("SerialDevice: currently baud rate is fixed at 115200");
-            }
-            MX_UART9_Init();
-            start_receive(serialdevice);
-            return true;
-        }
+#endif // KLST_PANDA_STM32
     }
     console_status("device type: custom");
     // NOTE client needs to initialize UART ( e.g 'MX_UARTx_Init()' )
@@ -94,12 +94,6 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
 bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
     serialdevice->peripherals = new SerialPeripherals();
     if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
-            console_status("device type: is MIDI");
-            // TODO implement MIDI
-            return false; // TODO change to `true` after implementing MIDI
-        }
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
             console_status("device type: is IDC_00");
             serialdevice->peripherals                = new SerialPeripherals;
@@ -110,6 +104,7 @@ bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
             serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
             return true;
         }
+#if defined(KLST_PANDA_STM32)
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
             console_status("device type: is IDC_01");
             serialdevice->peripherals                = new SerialPeripherals;
@@ -120,6 +115,13 @@ bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
             serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
             return true;
         }
+        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
+            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
+            console_status("device type: is MIDI");
+            // TODO implement MIDI
+            return false; // TODO change to `true` after implementing MIDI
+        }
+#endif // KLST_PANDA_STM32
     }
     console_status("device type: custom(%i)", serialdevice->device_type);
     // NOTE client needs to set peripherals manually
@@ -130,5 +132,5 @@ bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
 }
 #endif
 
-#endif // KLST_PANDA_STM32
+#endif // KLST_PANDA_STM32 || KLST_CATERPILLAR_STM32
 #endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG || KLST_PERIPHERAL_ENABLE_IDC_SERIAL || KLST_PERIPHERAL_ENABLE_MIDI

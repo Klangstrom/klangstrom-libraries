@@ -26,7 +26,11 @@
 #elif defined(KLST_ARCH_IS_EMU)
 #define KLST_CONSOLE_LINE_ENDING "\n\r" // used in `Console.h` // TODO why is this reversed in CLI terminal
 #endif
+
+#define KLST_SDCARD_SLOW_INITIALIZATION // used in `SCCard_BSP_STM32.cpp`
+//#define KLST_DISABLE_SDCARD_PRINT_CLIENT // used in `SCCard_BSP_STM32.cpp`
 //#define KLST_DISABLE_PRINT_CLIENT        // used in `Console.h`
-#define KLST_DISABLE_SDCARD_PRINT_CLIENT // used in `SCCard_BSP_STM32.cpp`
+//#define KLST_PRINT_ASCII_IMAGE_AT_STARTUP // used in `Console_BSP_KLST_PANDA_CATERPILLAR.cpp`
+#define KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER // used in `System_ASP_STM32.cpp`
 
 // TODO add the other defines that are used in codebase

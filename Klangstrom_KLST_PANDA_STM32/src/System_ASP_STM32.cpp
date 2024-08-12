@@ -43,7 +43,6 @@ uint32_t system_get_ticks_BSP() {
 
 static bool cycle_counter_enabled = false;
 
-//#define KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
 #ifdef KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
 #define ARM_CM_DEMCR (*(uint32_t*) 0xE000EDFC)
 #define ARM_CM_DWT_CTRL (*(uint32_t*) 0xE0001000)

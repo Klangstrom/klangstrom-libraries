@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "PeripheralConfiguration_ASP_STM32.h" // TODO change this to KLST_STM32 aka 'Architecture Specific' (ASP)
+#include "Klangstrom.h"
 #if defined(KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG) || \
     defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||   \
     defined(KLST_PERIPHERAL_ENABLE_MIDI)
-#include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
 #include "main.h"
