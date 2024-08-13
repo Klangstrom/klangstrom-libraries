@@ -21,7 +21,7 @@ void setup() {
 
 void loop() {
     console_println("...");
-    serialdevice_send(serial_IDC_00, (uint8_t*) "Hello from serial_IDC_00", 24);
+    serialdevice_send(serial_IDC_00, (uint8_t*) "Hello from serial_IDC_00", 24 + 1);
     //    const char* message = "Hello from serial_IDC_01";
     const uint8_t message[4] = {54, 55, 56, 57};
     serialdevice_send(serial_IDC_01, (uint8_t*) message, 4);
@@ -36,7 +36,7 @@ void serial_event(SerialDevice* serial_device) {
             console_println("IDC 00 data ( as ASCII ): %s", data.c_str());
             console_print("IDC 00 data ( as HEX )  : ");
             for (int i = 0; i < serial_device->length; ++i) {
-                console_print("%02X, ", serial_device->data[i]);
+                console_print("0x%02X, ", serial_device->data[i]);
             }
             console_println("");
         }

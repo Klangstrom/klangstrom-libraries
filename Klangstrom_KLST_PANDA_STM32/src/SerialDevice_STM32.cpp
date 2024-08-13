@@ -31,10 +31,53 @@
 extern "C" {
 #endif
 
-void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length) {
-    for (int i = 0; i < length; ++i) {
+static void delay_us(uint32_t us) {
+    // Enable the DWT counter if not already enabled
+    if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
+        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+        DWT->CYCCNT = 0;                     // Reset the cycle counter
+        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; // Enable the cycle counter
+    }
+
+    uint32_t startTick  = DWT->CYCCNT;
+    uint32_t delayTicks = us * (HAL_RCC_GetHCLKFreq() / 1000000);
+
+    while ((DWT->CYCCNT - startTick) < delayTicks) {
+        // Wait until the required delay is achieved
+    }
+}
+
+void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, const uint16_t length) {
+    serialdevice->peripherals->is_transmitting = true;
+
+    for (uint16_t i = 0; i < length; ++i) {
         serialdevice->peripherals->buffer_tx[i] = data[i];
     }
+
+    // TODO this is a dirty hack, but otherwise data tx and rx is corrupted. check why it is necessary to wait here
+    #ifdef KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
+        uint8_t attempts = 2;
+        while (serialdevice->peripherals->uart_handle->gState != HAL_UART_STATE_READY && attempts != 0) {
+            delay_us(KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC);
+            --attempts;
+        }
+    #endif // KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
+
+    //    while (serialdevice->peripherals->uart_handle->hdmatx->State != HAL_DMA_STATE_READY && attempts != 0) {
+    //    while (serialdevice->peripherals->uart_handle->gState != HAL_UART_STATE_READY && attempts != 0) {
+    //        delay_us(500);
+    //    }
+
+    //    while (serialdevice->peripherals->dma_handle_tx->State != HAL_DMA_STATE_READY) {
+    //        // some other code and work here...
+    //        //if timeout is reached (exhausted), poll for transfer would still return dma ready!
+    //        HAL_DMA_PollForTransfer(serialdevice->peripherals->dma_handle_tx, HAL_DMA_FULL_TRANSFER, 100);
+    //        //cnDMAPollForTransferTimeoutMs);// 10);//timeout in ms
+    //    }
+    //    if (serialdevice->peripherals->dma_handle_tx->State == HAL_DMA_STATE_READY) {
+    //        serialdevice->peripherals->uart_handle->gState = HAL_UART_STATE_READY;
+    //    }
+
     HAL_UART_Transmit_DMA(serialdevice->peripherals->uart_handle,
                           serialdevice->peripherals->buffer_tx,
                           length);

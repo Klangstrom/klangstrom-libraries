@@ -82,7 +82,7 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     MX_OCTOSPI1_Init();
     HAL_Delay(100);
     externalmemory_init(); // TODO move somewhere better
-    externalmemory_test();
+//    externalmemory_test();
 #endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
 
 #ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
@@ -142,9 +142,8 @@ static void system_init_BSP_KLST_PANDA() {
     PeriphCommonClock_Config();
 }
 
-void system_deactivate_display() {
 #ifdef KLST_PANDA_STM32
-#ifndef KLST_PERIPHERAL_ENABLE_DISPLAY
+static void system_deactivate_display() {
     /* turn display and backlight off when display is not used */
     static const uint8_t _DISPLAY_ON_OFF_Pin_ID = 4; // PC4
     GPIOC->MODER &= ~(0x3 << (_DISPLAY_ON_OFF_Pin_ID * 2));
@@ -166,14 +165,15 @@ void system_deactivate_display() {
     //    // TODO a bit of a hack to turn off the display backlight right away at startup
     //    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     //    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, 0);
-#endif // KLST_PERIPHERAL_ENABLE_DISPLAY
-#endif // KLST_PANDA_STM32
 }
+#endif // KLST_PANDA_STM32
 
 void system_init_BSP() {
     system_init_BSP_KLST_PANDA();
     system_init_BSP_KLST_PANDA_MX_Init_Modules();
+#ifdef KLST_PANDA_STM32
     system_deactivate_display();
+#endif // KLST_PANDA_STM32
 }
 
 #ifdef __cplusplus

@@ -32,9 +32,8 @@ extern "C" {
 static constexpr uint8_t SERIAL_DEVICE_TYPE_UNDEFINED             = 0;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_IDC_00                = 1;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_IDC_01                = 2;
-static constexpr uint8_t SERIAL_DEVICE_TYPE_MIDI_IN               = 3;
-static constexpr uint8_t SERIAL_DEVICE_TYPE_MIDI_OUT              = 4;
-static constexpr uint8_t SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 5;
+static constexpr uint8_t SERIAL_DEVICE_TYPE_MIDI                  = 3;
+static constexpr uint8_t SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 4;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_CUSTOM                = 127;
 
 static constexpr uint8_t SERIAL_DEVICE_INIT_ERROR   = 254;
@@ -47,14 +46,14 @@ struct SerialDevice;
 typedef void (*Callback_1_SERIALDEVICEPTR)(SerialDevice*);
 
 typedef struct SerialDevice {
-    struct SerialPeripherals*  peripherals         = nullptr;
-    Callback_1_SERIALDEVICEPTR callback_serial     = nullptr;
-    uint8_t                    device_type         = SERIAL_DEVICE_TYPE_UNDEFINED;
-    uint8_t                    device_id           = SERIAL_DEVICE_ID_UNDEFINED;
-    uint32_t                   baud_rate           = SERIAL_DEVICE_DEFAULT_BAUD; // NOTE will be set at init time
-    uint16_t                   data_buffer_size    = 0;
-    uint8_t*                   data                = nullptr;
-    uint16_t                   length              = 0;
+    struct SerialPeripherals*  peripherals           = nullptr;
+    Callback_1_SERIALDEVICEPTR callback_serial       = nullptr;
+    uint8_t                    device_type           = SERIAL_DEVICE_TYPE_UNDEFINED;
+    uint8_t                    device_id             = SERIAL_DEVICE_ID_UNDEFINED;
+    uint32_t                   baud_rate             = SERIAL_DEVICE_DEFAULT_BAUD; // NOTE will be set at init time
+    uint16_t                   data_buffer_size      = 0;
+    uint8_t*                   data                  = nullptr;
+    uint16_t                   length                = 0;
     Callback_1_SERIALDEVICEPTR callback_serialdevice = nullptr;
 } SerialDevice;
 
@@ -64,7 +63,7 @@ typedef struct SerialDevice {
  */
 WEAK void serial_event(SerialDevice* serial_device);
 
-SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size = 64, uint32_t baud_rate = 115200);
+SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size = 32, uint32_t baud_rate = 115200);
 void          serialdevice_delete(SerialDevice* serialdevice);
 void          serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length); // implemented as A/BSP
 /**

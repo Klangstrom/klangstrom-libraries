@@ -36,16 +36,19 @@ extern "C" {
 
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart9;
+extern UART_HandleTypeDef huart4;
 extern DMA_HandleTypeDef  hdma_uart8_rx;
 extern DMA_HandleTypeDef  hdma_uart8_tx;
 extern DMA_HandleTypeDef  hdma_uart9_rx;
 extern DMA_HandleTypeDef  hdma_uart9_tx;
+extern DMA_HandleTypeDef  hdma_uart4_rx;
+extern DMA_HandleTypeDef  hdma_uart4_tx;
 
 static void start_receive(SerialDevice* serialdevice) {
     HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
                                  serialdevice->peripherals->buffer_rx,
                                  serialdevice->data_buffer_size);
-    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
+//    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
 }
 
 bool serialdevice_init_BSP(SerialDevice* serialdevice) {
@@ -73,15 +76,14 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
             start_receive(serialdevice);
             return true;
         }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
+        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI) {
             console_status("device type: is MIDI");
             if (serialdevice->baud_rate != 31250) {
                 console_error("SerialDevice: baud rate is set to 31250 to comply with MIDI standard");
             }
-            console_error("SerialDevice: TODO implement MIDI");
-            // TODO implement MIDI
-            return false; // TODO change to `true` after implementing MIDI
+            MX_UART4_Init();
+            start_receive(serialdevice);
+            return true;
         }
 #endif // KLST_PANDA_STM32
     }
@@ -115,11 +117,15 @@ bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
             serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
             return true;
         }
-        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-            serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
+        if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI) {
             console_status("device type: is MIDI");
-            // TODO implement MIDI
-            return false; // TODO change to `true` after implementing MIDI
+            serialdevice->peripherals                = new SerialPeripherals;
+            serialdevice->peripherals->uart_handle   = &huart4;
+            serialdevice->peripherals->dma_handle_rx = &hdma_uart4_rx;
+            serialdevice->peripherals->dma_handle_tx = &hdma_uart4_tx;
+            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
+            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
+            return true;
         }
 #endif // KLST_PANDA_STM32
     }

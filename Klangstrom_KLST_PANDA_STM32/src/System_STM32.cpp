@@ -43,7 +43,7 @@ uint32_t system_get_ticks_BSP() {
 
 static bool cycle_counter_enabled = false;
 
-#ifdef KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
+#ifdef KLST_USE_ARM_REGISTERS_FOR_CYCLE_COUNTER
 #define ARM_CM_DEMCR (*(uint32_t*) 0xE000EDFC)
 #define ARM_CM_DWT_CTRL (*(uint32_t*) 0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t*) 0xE0001004)
@@ -75,7 +75,7 @@ uint32_t system_get_cycles_BSP() {
     return ARM_CM_DWT_CYCCNT;
 }
 
-#else  // KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
+#else  // KLST_USE_ARM_REGISTERS_FOR_CYCLE_COUNTER
 void system_enable_cycle_counter(bool enable) {
     if (enable) {
         if (DWT->CTRL != 0) {                               // See if DWT is available
@@ -102,7 +102,7 @@ uint32_t system_get_cycles() {
     }
     return DWT->CYCCNT;
 }
-#endif // KLST_USE_ARM_REGISTERS_FORCYCLE_COUNTER
+#endif // KLST_USE_ARM_REGISTERS_FOR_CYCLE_COUNTER
 
 uint32_t system_clock_frequency() {
     return HAL_RCC_GetSysClockFreq();
@@ -186,17 +186,15 @@ static void start_receive(SerialDevice* serialdevice) {
     HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
                                  serialdevice->peripherals->buffer_rx,
                                  serialdevice->data_buffer_size);
-    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
+//    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
 }
-#endif // KLST_PERIPHERAL_ENABLE_UART
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
-    console_status("HAL_UARTEx_RxEventCallback");
+    //    console_status("HAL_UARTEx_RxEventCallback");
     ArrayList_SerialDevicePtr* mSerialDevices = system_get_registered_serialdevices();
     for (size_t i = 0; i < mSerialDevices->size; i++) {
         SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
         if (sd != nullptr) {
-#ifdef KLST_PERIPHERAL_ENABLE_UART
             if (sd->peripherals->uart_handle->Instance == huart->Instance) {
                 if (sd->callback_serial != nullptr) {
                     sd->callback_serial(sd);
@@ -212,12 +210,10 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size) {
                     start_receive(sd);
                 }
             }
-#endif // KLST_PERIPHERAL_ENABLE_UART
         }
     }
     // void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {}
 }
-
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
     console_error("HAL_UART_ErrorCallback");
@@ -225,14 +221,28 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart) {
     for (size_t i = 0; i < mSerialDevices->size; i++) {
         SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
         if (sd != nullptr) {
-#ifdef KLST_PERIPHERAL_ENABLE_UART
             if (sd->peripherals->uart_handle->Instance == huart->Instance) {
+                console_error("@ SerialDevices ID: %i", sd->device_id);
                 start_receive(sd);
             }
-#endif
         }
     }
 }
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
+    ArrayList_SerialDevicePtr* mSerialDevices = system_get_registered_serialdevices();
+    for (size_t i = 0; i < mSerialDevices->size; i++) {
+        SerialDevice* sd = arraylist_SerialDevicePtr_get(mSerialDevices, i);
+        if (sd != nullptr) {
+            if (sd->peripherals->uart_handle->Instance == huart->Instance) {
+                sd->peripherals->is_transmitting = false;
+                start_receive(sd);
+            }
+        }
+    }
+}
+#endif // KLST_PERIPHERAL_ENABLE_UART
+
 
 #ifdef SYSTEM_HANDLE_TIMEOFDAY_WARNING
 #include <sys/time.h>

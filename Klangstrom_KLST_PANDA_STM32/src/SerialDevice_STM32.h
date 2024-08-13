@@ -35,9 +35,10 @@ typedef struct SerialPeripherals {
     UART_HandleTypeDef* uart_handle;
     DMA_HandleTypeDef*  dma_handle_rx;
     DMA_HandleTypeDef*  dma_handle_tx;
-    uint8_t*            buffer_rx   = nullptr;
-    uint8_t*            buffer_tx   = nullptr;
-    uint16_t            buffer_size = 32;
+    uint8_t*            buffer_rx       = nullptr;
+    uint8_t*            buffer_tx       = nullptr;
+    uint16_t            buffer_size     = 32;
+    volatile bool       is_transmitting = false;
 } SerialPeripherals;
 
 #ifdef __cplusplus
