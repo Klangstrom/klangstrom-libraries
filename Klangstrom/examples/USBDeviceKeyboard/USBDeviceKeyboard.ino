@@ -3,36 +3,24 @@
 */
 
 #include "Arduino.h"
+#include "usb_host.h"
 #include "System.h"
 #include "Console.h"
 
-int counter = 0;
-
 void setup() {
     system_init();
+    MX_USB_HOST_Init();
 
     console_timestamp();
-    console_print("Hello,");
     console_println("World!");
-
-    console_error("error message   : %i", 23);
-    console_status("status message  : %i", 42);
 }
 
+uint32_t counter = 0;
+
 void loop() {
-    console_println("...");
-
-    /* clear screen evert 16 iterations */
     counter++;
-    if (counter % 16 == 0) {
-        console_clear();
-        console_set_color_red();
-        console_println("counter");
-        console_reset_color();
-        console_set_color_green();
-        console_println("%d", counter);
-        console_reset_color();
+    if ((counter % (65536 * 128) ) == 0) {
+        console_println(".");
     }
-
-    delay(1000);
+    MX_USB_HOST_Process();
 }
