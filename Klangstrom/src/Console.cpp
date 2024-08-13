@@ -159,7 +159,12 @@ void console_system_info() {
     console_reset_color();
 
     console_status("----------------------------------------------------------------------------------------------------");
-    console_status("KLST_PANDA(STM32H723ZGT) @ %liMHz (%s)", system_clock_frequency() / 1000000, __TIME__);
+#if defined(KLST_PANDA_STM32) || defined(KLST_PANDA_EMU)
+    const char* mBoardName = "KLST_PANDA";
+#elif defined(KLST_CATERPILLAR_STM32) || defined(KLST_CATERPILLAR_EMU)
+    const char* mBoardName = "KLST_CATERPILLAR";
+#endif // KLST_PANDA_STM32 || KLST_CATERPILLAR_STM32
+    console_status("%s(STM32H723ZGT) @ %liMHz (%s)", mBoardName, system_clock_frequency() / 1000000, __TIME__);
     console_status("----------------------------------------------------------------------------------------------------");
 #ifdef KLST_PRINT_ASCII_IMAGE_AT_STARTUP
 #if defined(KLST_PANDA_STM32) || defined(KLST_PANDA_EMU)
