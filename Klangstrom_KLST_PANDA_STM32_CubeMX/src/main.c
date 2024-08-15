@@ -41,9 +41,11 @@
 #include "dfsdm.h"
 #include "fatfs.h"
 #include "i2c.h"
+#include "memorymap.h"
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
+#include "usb_host.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
