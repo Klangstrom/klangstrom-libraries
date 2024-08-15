@@ -8,6 +8,7 @@ Core/Inc/gpio.h
 Core/Inc/i2c.h
 Core/Inc/ltdc.h
 Core/Inc/main.h
+Core/Inc/memorymap.h
 Core/Inc/octospi.h
 Core/Inc/sai.h
 Core/Inc/sdmmc.h
@@ -26,6 +27,7 @@ Core/Src/gpio.c
 Core/Src/i2c.c
 Core/Src/ltdc.c
 Core/Src/main.c
+Core/Src/memorymap.c
 Core/Src/octospi.c
 Core/Src/sai.c
 Core/Src/sdmmc.c
@@ -53,3 +55,8 @@ Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
 Middlewares/Third_Party/FatFs/src/integer.h
 Middlewares/Third_Party/FatFs/src/option/syscall.c
+PDM2PCM/App/pdm2pcm.c
+PDM2PCM/App/pdm2pcm.h
+Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h
+Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a
+Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_IAR_wc32.a

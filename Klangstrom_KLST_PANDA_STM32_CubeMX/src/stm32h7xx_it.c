@@ -423,12 +423,12 @@ void UART4_IRQHandler(void) {
   */
 void DMA2_Stream0_IRQHandler(void) {
     /* USER CODE BEGIN DMA2_Stream0_IRQn 0 */
-//#if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
+    // #if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
     /* USER CODE END DMA2_Stream0_IRQn 0 */
     HAL_DMA_IRQHandler(&hdma_dfsdm1_flt0);
     /* USER CODE BEGIN DMA2_Stream0_IRQn 1 */
-//#endif // !defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END DMA2_Stream0_IRQn 1 */
+    // #endif // !defined(ARDUINO_KLST_PANDA)
+    /* USER CODE END DMA2_Stream0_IRQn 1 */
 }
 
 /**
@@ -436,12 +436,12 @@ void DMA2_Stream0_IRQHandler(void) {
   */
 void DMA2_Stream1_IRQHandler(void) {
     /* USER CODE BEGIN DMA2_Stream1_IRQn 0 */
-//#if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
+    // #if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
     /* USER CODE END DMA2_Stream1_IRQn 0 */
     HAL_DMA_IRQHandler(&hdma_dfsdm1_flt1);
     /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
-//#endif // !defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END DMA2_Stream1_IRQn 1 */
+    // #endif // !defined(ARDUINO_KLST_PANDA)
+    /* USER CODE END DMA2_Stream1_IRQn 1 */
 }
 
 /**
@@ -449,12 +449,12 @@ void DMA2_Stream1_IRQHandler(void) {
   */
 void OTG_HS_EP1_OUT_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_EP1_OUT_IRQn 0 */
-//#if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
+    #if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
     /* USER CODE END OTG_HS_EP1_OUT_IRQn 0 */
     HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_EP1_OUT_IRQn 1 */
-//#endif // !defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END OTG_HS_EP1_OUT_IRQn 1 */
+    #endif // !defined(ARDUINO_KLST_PANDA)
+    /* USER CODE END OTG_HS_EP1_OUT_IRQn 1 */
 }
 
 /**
@@ -462,12 +462,12 @@ void OTG_HS_EP1_OUT_IRQHandler(void) {
   */
 void OTG_HS_EP1_IN_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_EP1_IN_IRQn 0 */
-//#if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
+    #if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
     /* USER CODE END OTG_HS_EP1_IN_IRQn 0 */
     HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_EP1_IN_IRQn 1 */
-//#endif // !defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END OTG_HS_EP1_IN_IRQn 1 */
+    #endif // !defined(ARDUINO_KLST_PANDA)
+    /* USER CODE END OTG_HS_EP1_IN_IRQn 1 */
 }
 
 /**
@@ -475,12 +475,12 @@ void OTG_HS_EP1_IN_IRQHandler(void) {
   */
 void OTG_HS_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_IRQn 0 */
-#if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
+    #if !defined(ARDUINO_KLST_PANDA) && !defined(ARDUINO_KLST_CATERPILLAR)
     /* USER CODE END OTG_HS_IRQn 0 */
     HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_IRQn 1 */
-#endif // !defined(ARDUINO_KLST_PANDA)
-       /* USER CODE END OTG_HS_IRQn 1 */
+    #endif // !defined(ARDUINO_KLST_PANDA)
+    /* USER CODE END OTG_HS_IRQn 1 */
 }
 
 /**
@@ -520,7 +520,7 @@ void LTDC_IRQHandler(void) {
     HAL_LTDC_IRQHandler(&hltdc);
     /* USER CODE BEGIN LTDC_IRQn 1 */
 #endif // ARDUINO_KLST_CATERPILLAR
-    /* USER CODE END LTDC_IRQn 1 */
+       /* USER CODE END LTDC_IRQn 1 */
 }
 
 /**
@@ -533,7 +533,7 @@ void LTDC_ER_IRQHandler(void) {
     HAL_LTDC_IRQHandler(&hltdc);
     /* USER CODE BEGIN LTDC_ER_IRQn 1 */
 #endif // ARDUINO_KLST_CATERPILLAR
-    /* USER CODE END LTDC_ER_IRQn 1 */
+       /* USER CODE END LTDC_ER_IRQn 1 */
 }
 
 /**
@@ -546,7 +546,7 @@ void DMA2D_IRQHandler(void) {
     HAL_DMA2D_IRQHandler(&hdma2d);
     /* USER CODE BEGIN DMA2D_IRQn 1 */
 #endif // ARDUINO_KLST_CATERPILLAR
-    /* USER CODE END DMA2D_IRQn 1 */
+       /* USER CODE END DMA2D_IRQn 1 */
 }
 
 /**
@@ -559,7 +559,7 @@ void OCTOSPI1_IRQHandler(void) {
     HAL_OSPI_IRQHandler(&hospi1);
     /* USER CODE BEGIN OCTOSPI1_IRQn 1 */
 #endif // ARDUINO_KLST_CATERPILLAR
-    /* USER CODE END OCTOSPI1_IRQn 1 */
+       /* USER CODE END OCTOSPI1_IRQn 1 */
 }
 
 /**
