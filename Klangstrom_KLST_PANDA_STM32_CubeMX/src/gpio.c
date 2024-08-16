@@ -39,8 +39,6 @@
         * Output
         * EVENT_OUT
         * EXTI
-     PA11   ------> USB_OTG_HS_DM
-     PA12   ------> USB_OTG_HS_DP
 */
 void MX_GPIO_Init(void) {
 
@@ -120,13 +118,6 @@ void MX_GPIO_Init(void) {
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
-    /*Configure GPIO pins : PAPin PAPin */
-    GPIO_InitStruct.Pin   = _USB_DEVICE_HOST_MINUS_Pin | _USB_DEVICE_HOST_PLUS_Pin;
-    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull  = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /*Configure GPIO pin : PtPin */
     GPIO_InitStruct.Pin  = _CARD_SDMMC_CHIP_DETECT_Pin;
