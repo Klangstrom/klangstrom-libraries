@@ -3,16 +3,16 @@
 */
 
 #include "Arduino.h"
-#include "usb_host.h"
 #include "System.h"
 #include "Console.h"
+#include "USBDevices.h"
 
 void setup() {
     system_init();
-    MX_USB_HOST_Init();
+    usb_devices_init();
 
     console_timestamp();
-    console_println("World!");
+    console_println("USBDevicesKeyboard");
 }
 
 uint32_t counter = 0;
@@ -22,5 +22,4 @@ void loop() {
     if ((counter % (65536 * 128) ) == 0) {
         console_println(".");
     }
-    MX_USB_HOST_Process();
 }

@@ -16,20 +16,6 @@ void OTG_HS_EP1_IN_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
 ```
 
-### `Core/Src/gpio.c`
-
-these lines are *removed*:
-
-```
-    /*Configure GPIO pins : PAPin PAPin */
-    GPIO_InitStruct.Pin   = _USB_DEVICE_HOST_MINUS_Pin | _USB_DEVICE_HOST_PLUS_Pin;
-    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull  = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-```
-
 ### `Core/Src/main.c`
 
 ```
@@ -106,6 +92,10 @@ void OTG_HS_IRQHandler(void) {
     /* USER CODE END OTG_HS_IRQn 1 */
 }
 ```
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
 
 ## configuration without USB ( Device or Host )
 

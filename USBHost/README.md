@@ -117,6 +117,10 @@ void OTG_HS_IRQHandler(void) {
 
 ( *almost* same as device )
 
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
 ## configuration without USB ( Device or Host )
 
 ### `Core/Src/main.c`
