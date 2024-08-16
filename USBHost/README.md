@@ -1,11 +1,11 @@
-# USBDevice
+# USBHost
 
 added by STMCubeMX
 
 ### `Core/Inc/stm32h7xx_hal_conf.h`
 
 ```
-#define HAL_PCD_MODULE_ENABLED
+#define HAL_HCD_MODULE_ENABLED
 ```
 
 ### `Core/Inc/stm32h7xx_it.h`
@@ -15,6 +15,8 @@ void OTG_HS_EP1_OUT_IRQHandler(void);
 void OTG_HS_EP1_IN_IRQHandler(void);
 void OTG_HS_IRQHandler(void);
 ```
+
+( same as device )
 
 ### `Core/Src/gpio.c`
 
@@ -30,13 +32,17 @@ these lines are *removed*:
 
 ```
 
+( same as device )
+
 ### `Core/Src/main.c`
 
 ```
-#include "usb_device.h"
+#include "usb_host.h"
+
+void MX_USB_HOST_Process(void);
 ```
 
-in `void SystemClock_Config(void) {}`:
+in `void SystemClock_Config(void) {}`;
 
 ```
     /** Initializes the RCC Oscillators according to the specified parameters
@@ -62,10 +68,12 @@ in `void SystemClock_Config(void) {}`:
     }
 ```
 
+( same as device )
+
 ### `Core/Src/stm32h7xx_it.c`
 
 ```
-extern PCD_HandleTypeDef   hpcd_USB_OTG_HS;
+extern HCD_HandleTypeDef   hhcd_USB_OTG_HS;
 
 /**
   * @brief This function handles USB On The Go HS End Point 1 Out global interrupt.
@@ -74,7 +82,7 @@ void OTG_HS_EP1_OUT_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_EP1_OUT_IRQn 0 */
 
     /* USER CODE END OTG_HS_EP1_OUT_IRQn 0 */
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+    HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_EP1_OUT_IRQn 1 */
 
     /* USER CODE END OTG_HS_EP1_OUT_IRQn 1 */
@@ -87,7 +95,7 @@ void OTG_HS_EP1_IN_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_EP1_IN_IRQn 0 */
 
     /* USER CODE END OTG_HS_EP1_IN_IRQn 0 */
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+    HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_EP1_IN_IRQn 1 */
 
     /* USER CODE END OTG_HS_EP1_IN_IRQn 1 */
@@ -100,12 +108,14 @@ void OTG_HS_IRQHandler(void) {
     /* USER CODE BEGIN OTG_HS_IRQn 0 */
 
     /* USER CODE END OTG_HS_IRQn 0 */
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+    HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
     /* USER CODE BEGIN OTG_HS_IRQn 1 */
 
     /* USER CODE END OTG_HS_IRQn 1 */
 }
 ```
+
+( *almost* same as device )
 
 ## configuration without USB ( Device or Host )
 
