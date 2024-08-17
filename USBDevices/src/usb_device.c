@@ -72,6 +72,16 @@ void MX_USB_DEVICE_Init(void) {
     if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_HID) != USBD_OK) {
         Error_Handler();
     }
+    // TODO implement MIDI support
+    //#include "usbd_midi.h"
+    //#include "usbd_midi_if.h"
+    // TOOD consider selecting device class at initialization
+    //     `void MX_USB_DEVICE_Init(device_type) {}`
+    //    if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_MIDI) != USBD_OK) {
+    //        Error_Handler();
+    //    }
+    //    USBD_MIDI_RegisterInterface(&hUsbDeviceHS, &USBD_MIDI_fops);
+
     if (USBD_Start(&hUsbDeviceHS) != USBD_OK) {
         Error_Handler();
     }

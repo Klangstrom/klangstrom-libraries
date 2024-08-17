@@ -110,6 +110,6 @@ namespace klangstrom {
         vector<TaskCallbackType> fRepeatedTasks;
         bool                     fInterrupt;
     };
-}  // namespace klangstrom
+} // namespace klangstrom
 
 #endif

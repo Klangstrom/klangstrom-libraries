@@ -35,7 +35,7 @@ const static uint64_t mStartTimeOffset = duration_cast<milliseconds>(steady_cloc
 
 uint32_t HAL_GetTick() {
     const uint64_t mCurrentTime = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
-    const uint32_t mDelta = mCurrentTime - mStartTimeOffset;
+    const uint32_t mDelta       = mCurrentTime - mStartTimeOffset;
     return static_cast<uint32_t>(mDelta);
 }
 

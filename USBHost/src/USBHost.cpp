@@ -18,6 +18,9 @@
 */
 
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #include "usb_host.h"
 #include "usbh_conf.h"
 #include "USBHost.h"
@@ -45,9 +48,9 @@ void usb_host_process() {
 
 /* --- members in USE_USBHOST--- */
 
-static bool usb_host_keyboard_connected = false;
-static bool usb_host_mouse_connected    = false; // used in `usbh_hid.c`
-bool        usb_host_midi_connected     = false; // used in `usbh_MIDI.c`
+bool usb_host_keyboard_connected = false; // used in `usbh_hid.c`
+bool usb_host_mouse_connected    = false; // used in `usbh_hid.c`
+bool usb_host_midi_connected     = false; // used in `usbh_MIDI.c`
 
 /* --- functions in USE_USBHOST--- */
 

@@ -54,14 +54,14 @@ void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, const ui
         serialdevice->peripherals->buffer_tx[i] = data[i];
     }
 
-    // TODO this is a dirty hack, but otherwise data tx and rx is corrupted. check why it is necessary to wait here
-    #ifdef KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
-        uint8_t attempts = 2;
-        while (serialdevice->peripherals->uart_handle->gState != HAL_UART_STATE_READY && attempts != 0) {
-            delay_us(KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC);
-            --attempts;
-        }
-    #endif // KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
+// TODO this is a dirty hack, but otherwise data tx and rx is corrupted. check why it is necessary to wait here
+#ifdef KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
+    uint8_t attempts = 2;
+    while (serialdevice->peripherals->uart_handle->gState != HAL_UART_STATE_READY && attempts != 0) {
+        delay_us(KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC);
+        --attempts;
+    }
+#endif // KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC
 
     //    while (serialdevice->peripherals->uart_handle->hdmatx->State != HAL_DMA_STATE_READY && attempts != 0) {
     //    while (serialdevice->peripherals->uart_handle->gState != HAL_UART_STATE_READY && attempts != 0) {

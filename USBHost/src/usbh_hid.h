@@ -25,6 +25,9 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "usbh_core.h"
 #include "usbh_hid_mouse.h"
 #include "usbh_hid_keybd.h"

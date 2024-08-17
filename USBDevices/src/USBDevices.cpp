@@ -17,6 +17,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <stdint.h>
 
 #include "usbd_conf.h"
 #include "usb_device.h"

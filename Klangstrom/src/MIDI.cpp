@@ -47,11 +47,11 @@ WEAK void midi_event(SerialDevice* serial_device) {
         //            console_println("MIDI event: %i", msg);
         //        }
     }
-//        console_print("MIDI event: ");
-//        for (int i = 0; i < serial_device->length; ++i) {
-//            console_print("0x%02X, ", serial_device->data[i]);
-//        }
-//        console_println("");
+    //        console_print("MIDI event: ");
+    //        for (int i = 0; i < serial_device->length; ++i) {
+    //            console_print("0x%02X, ", serial_device->data[i]);
+    //        }
+    //        console_println("");
 }
 
 /* -------------------------------------------------------------------------------------------------------------- */

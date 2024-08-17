@@ -27,62 +27,62 @@
 extern "C" {
 #endif
 
-#define DEFINE_ARRAYLIST(type, ext) \
-    typedef struct ArrayList_##ext { \
-        type *data; \
-        size_t size; \
-        size_t capacity; \
-    } ArrayList_##ext; \
-\
-    static inline void arraylist_##ext##_init(ArrayList_##ext *arraylist, size_t initialCapacity) { \
-        arraylist->data = (type *)malloc(initialCapacity * sizeof(type)); \
-        if (arraylist->data == NULL) { \
-            fprintf(stderr, "Memory allocation failed\n"); \
-            exit(EXIT_FAILURE); \
-        } \
-        arraylist->size = 0; \
-        arraylist->capacity = initialCapacity; \
-    } \
-\
-    static inline void arraylist_##ext##_resize(ArrayList_##ext *arraylist, size_t newCapacity) { \
-        type *temp = (type *)realloc(arraylist->data, newCapacity * sizeof(type)); \
-        if (temp == NULL) { \
-            fprintf(stderr, "Memory reallocation failed\n"); \
-            free(arraylist->data); \
-            exit(EXIT_FAILURE); \
-        } \
-        arraylist->data = temp; \
-        arraylist->capacity = newCapacity; \
-    } \
-\
-    static inline void arraylist_##ext##_add(ArrayList_##ext *arraylist, type element) { \
-        if (arraylist->size == arraylist->capacity) { \
-            arraylist_##ext##_resize(arraylist, arraylist->capacity * 2); \
-        } \
-        arraylist->data[arraylist->size++] = element; \
-    } \
-\
-    static inline type arraylist_##ext##_get(ArrayList_##ext *arraylist, size_t index) { \
-        if (index >= arraylist->size) { \
-            fprintf(stderr, "Index out of bounds\n"); \
-            exit(EXIT_FAILURE); \
-        } \
-        return arraylist->data[index]; \
-    } \
-\
-    static inline void arraylist_##ext##_set(ArrayList_##ext *arraylist, size_t index, type value) { \
-        if (index >= arraylist->size) { \
-            fprintf(stderr, "Index out of bounds\n"); \
-            exit(EXIT_FAILURE); \
-        } \
-        arraylist->data[index] = value; \
-    } \
-\
-    static inline void arraylist_##ext##_free(ArrayList_##ext *arraylist) { \
-        free(arraylist->data); \
-        arraylist->data = NULL; \
-        arraylist->size = 0; \
-        arraylist->capacity = 0; \
+#define DEFINE_ARRAYLIST(type, ext)                                                                  \
+    typedef struct ArrayList_##ext {                                                                 \
+        type*  data;                                                                                 \
+        size_t size;                                                                                 \
+        size_t capacity;                                                                             \
+    } ArrayList_##ext;                                                                               \
+                                                                                                     \
+    static inline void arraylist_##ext##_init(ArrayList_##ext* arraylist, size_t initialCapacity) {  \
+        arraylist->data = (type*) malloc(initialCapacity * sizeof(type));                            \
+        if (arraylist->data == NULL) {                                                               \
+            fprintf(stderr, "Memory allocation failed\n");                                           \
+            exit(EXIT_FAILURE);                                                                      \
+        }                                                                                            \
+        arraylist->size     = 0;                                                                     \
+        arraylist->capacity = initialCapacity;                                                       \
+    }                                                                                                \
+                                                                                                     \
+    static inline void arraylist_##ext##_resize(ArrayList_##ext* arraylist, size_t newCapacity) {    \
+        type* temp = (type*) realloc(arraylist->data, newCapacity * sizeof(type));                   \
+        if (temp == NULL) {                                                                          \
+            fprintf(stderr, "Memory reallocation failed\n");                                         \
+            free(arraylist->data);                                                                   \
+            exit(EXIT_FAILURE);                                                                      \
+        }                                                                                            \
+        arraylist->data     = temp;                                                                  \
+        arraylist->capacity = newCapacity;                                                           \
+    }                                                                                                \
+                                                                                                     \
+    static inline void arraylist_##ext##_add(ArrayList_##ext* arraylist, type element) {             \
+        if (arraylist->size == arraylist->capacity) {                                                \
+            arraylist_##ext##_resize(arraylist, arraylist->capacity * 2);                            \
+        }                                                                                            \
+        arraylist->data[arraylist->size++] = element;                                                \
+    }                                                                                                \
+                                                                                                     \
+    static inline type arraylist_##ext##_get(ArrayList_##ext* arraylist, size_t index) {             \
+        if (index >= arraylist->size) {                                                              \
+            fprintf(stderr, "Index out of bounds\n");                                                \
+            exit(EXIT_FAILURE);                                                                      \
+        }                                                                                            \
+        return arraylist->data[index];                                                               \
+    }                                                                                                \
+                                                                                                     \
+    static inline void arraylist_##ext##_set(ArrayList_##ext* arraylist, size_t index, type value) { \
+        if (index >= arraylist->size) {                                                              \
+            fprintf(stderr, "Index out of bounds\n");                                                \
+            exit(EXIT_FAILURE);                                                                      \
+        }                                                                                            \
+        arraylist->data[index] = value;                                                              \
+    }                                                                                                \
+                                                                                                     \
+    static inline void arraylist_##ext##_free(ArrayList_##ext* arraylist) {                          \
+        free(arraylist->data);                                                                       \
+        arraylist->data     = NULL;                                                                  \
+        arraylist->size     = 0;                                                                     \
+        arraylist->capacity = 0;                                                                     \
     }
 
 #ifdef __cplusplus

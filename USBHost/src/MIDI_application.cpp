@@ -41,7 +41,7 @@ typedef struct {
 #define RX_BUFF_SIZE 64                                 /* USB MIDI buffer : max received data 64 bytes */
 uint8_t                   MIDI_RX_Buffer[RX_BUFF_SIZE]; // MIDI reception buffer
 extern ApplicationTypeDef Appli_state;
-extern USBH_HandleTypeDef hUsbHost;
+extern USBH_HandleTypeDef hUsbHostHS;
 extern bool               usb_host_midi_connected;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,12 +55,12 @@ void ProcessReceivedMidiDatas(void);
  */
 void MIDI_Application(void) {
     if (Appli_state == APPLICATION_READY) {
-        USBH_MIDI_Receive(&hUsbHost, MIDI_RX_Buffer, RX_BUFF_SIZE); // just once at the beginning, start the first reception
+        USBH_MIDI_Receive(&hUsbHostHS, MIDI_RX_Buffer, RX_BUFF_SIZE); // just once at the beginning, start the first reception
         Appli_state = APPLICATION_RUNNING;
     } else if (Appli_state == APPLICATION_RUNNING) {
     } else if (Appli_state == APPLICATION_DISCONNECT) {
         Appli_state = APPLICATION_IDLE;
-        USBH_MIDI_Stop(&hUsbHost);
+        USBH_MIDI_Stop(&hUsbHostHS);
     }
 }
 
@@ -72,7 +72,7 @@ void MIDI_Application(void) {
  */
 void USBH_MIDI_ReceiveCallback(USBH_HandleTypeDef* phost) {
     ProcessReceivedMidiDatas();
-    USBH_MIDI_Receive(&hUsbHost, MIDI_RX_Buffer, RX_BUFF_SIZE); // start a new reception
+    USBH_MIDI_Receive(&hUsbHostHS, MIDI_RX_Buffer, RX_BUFF_SIZE); // start a new reception
 }
 
 void USBH_MIDI_TransmitCallback(USBH_HandleTypeDef* phost) {
@@ -213,7 +213,7 @@ void ProcessReceivedMidiDatas(void) {
     uint8_t*       ptr = MIDI_RX_Buffer;
     midi_package_t pack;
 
-    numberOfPackets = USBH_MIDI_GetLastReceivedDataSize(&hUsbHost) / 4; // each USB midi package is 4 bytes long
+    numberOfPackets = USBH_MIDI_GetLastReceivedDataSize(&hUsbHostHS) / 4; // each USB midi package is 4 bytes long
 
     while (numberOfPackets--) {
         pack.cin_cable = *ptr;
@@ -328,7 +328,7 @@ static void usb_host_transmit_usb_midi_message(const uint8_t data1, const uint8_
         data[1] = 0xFB;
         data[2] = 0xFB;
         data[3] = 0xFB;
-        USBH_MIDI_Transmit(&hUsbHost, data, length);
+        USBH_MIDI_Transmit(&hUsbHostHS, data, length);
     }
 }
 

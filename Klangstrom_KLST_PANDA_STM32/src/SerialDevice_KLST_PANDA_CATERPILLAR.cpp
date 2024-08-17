@@ -48,7 +48,7 @@ static void start_receive(SerialDevice* serialdevice) {
     HAL_UARTEx_ReceiveToIdle_DMA(serialdevice->peripherals->uart_handle,
                                  serialdevice->peripherals->buffer_rx,
                                  serialdevice->data_buffer_size);
-//    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
+    //    __HAL_DMA_DISABLE_IT(serialdevice->peripherals->dma_handle_rx, DMA_IT_HT);
 }
 
 bool serialdevice_init_BSP(SerialDevice* serialdevice) {
