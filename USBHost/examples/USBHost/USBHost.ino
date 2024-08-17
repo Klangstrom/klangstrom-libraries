@@ -14,7 +14,6 @@ void setup() {
 
     console_timestamp();
     console_println("USBHost");
-    console_println("TODO now test with HAL HCD + PCD activated in `variant_KLST_PANDA.h`");
 }
 
 uint32_t counter = 0;
