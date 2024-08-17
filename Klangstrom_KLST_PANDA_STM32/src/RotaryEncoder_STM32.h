@@ -20,9 +20,7 @@
 #pragma once
 
 #include "Klangstrom.h"
-#if defined(KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG) || \
-    defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||   \
-    defined(KLST_PERIPHERAL_ENABLE_MIDI)
+#ifdef KLST_PERIPHERAL_ENABLE_ENCODER
 #ifdef KLST_ARCH_IS_STM32
 
 #include "main.h"
@@ -31,19 +29,24 @@
 extern "C" {
 #endif
 
-typedef struct SerialPeripherals {
-    UART_HandleTypeDef* uart_handle     = nullptr;
-    DMA_HandleTypeDef*  dma_handle_rx   = nullptr;
-    DMA_HandleTypeDef*  dma_handle_tx   = nullptr;
-    uint8_t*            buffer_rx       = nullptr;
-    uint8_t*            buffer_tx       = nullptr;
-    uint16_t            buffer_size     = 32; // TODO maybe make this configurable
-    volatile bool       is_transmitting = false;
-} SerialPeripherals;
+typedef void (*Callback_0_VOID)();
+
+typedef struct RotaryEncoderPeripherals {
+    TIM_HandleTypeDef*    timer_handle;
+    HAL_TIM_ActiveChannel button_channel;
+    uint32_t              button_channel_i;
+    GPIO_TypeDef*         gpio_port;
+    uint16_t              gpio_pin;
+    HAL_TIM_ActiveChannel encoder_channel_a;
+    uint32_t              encoder_channel_a_i;
+    HAL_TIM_ActiveChannel encoder_channel_b;
+    uint32_t              encoder_channel_b_i;
+    Callback_0_VOID       bsp_init;
+} RotaryEncoderPeripherals;
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif // KLST_ARCH_IS_STM32
-#endif // KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG || KLST_PERIPHERAL_ENABLE_IDC_SERIAL || KLST_PERIPHERAL_ENABLE_MIDI
+#endif // KLST_PERIPHERAL_ENABLE_ENCODER

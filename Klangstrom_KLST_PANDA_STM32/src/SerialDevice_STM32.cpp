@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-static void delay_us(uint32_t us) {
+static void delay_us(const uint32_t us) {
     // Enable the DWT counter if not already enabled
     if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
         CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
@@ -39,15 +39,15 @@ static void delay_us(uint32_t us) {
         DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; // Enable the cycle counter
     }
 
-    uint32_t startTick  = DWT->CYCCNT;
-    uint32_t delayTicks = us * (HAL_RCC_GetHCLKFreq() / 1000000);
+    const uint32_t startTick  = DWT->CYCCNT;
+    const uint32_t delayTicks = us * (HAL_RCC_GetHCLKFreq() / 1000000);
 
     while ((DWT->CYCCNT - startTick) < delayTicks) {
         // Wait until the required delay is achieved
     }
 }
 
-void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, const uint16_t length) {
+void serialdevice_send(const SerialDevice* serialdevice, const uint8_t* data, const uint16_t length) {
     serialdevice->peripherals->is_transmitting = true;
 
     for (uint16_t i = 0; i < length; ++i) {

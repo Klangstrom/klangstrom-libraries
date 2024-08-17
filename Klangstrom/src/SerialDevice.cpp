@@ -30,7 +30,7 @@ WEAK void serial_event(SerialDevice* serial_device) {
 }
 
 SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size, uint32_t baud_rate) {
-    SerialDevice* serialdevice     = new SerialDevice();
+    auto* serialdevice             = new SerialDevice();
     serialdevice->data_buffer_size = buffer_size;
     serialdevice->device_type      = device_type;
     serialdevice->device_id        = system_get_unique_device_ID();

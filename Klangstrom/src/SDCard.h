@@ -29,9 +29,9 @@
 extern "C" {
 #endif
 
-static const uint8_t FILE_READ_ONLY  = 0x00;
-static const uint8_t FILE_WRITE_ONLY = 0x01;
-static const uint8_t FILE_READ_WRITE = 0x02;
+static constexpr uint8_t FILE_READ_ONLY  = 0x00;
+static constexpr uint8_t FILE_WRITE_ONLY = 0x01;
+static constexpr uint8_t FILE_READ_WRITE = 0x02;
 
 /* all functions are implemented as A/BSP */
 

@@ -87,50 +87,44 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
         }
 #endif // KLST_PANDA_STM32
     }
-    console_status("device type: custom");
+    console_status("device type: custom(%i)", serialdevice->device_type);
     // NOTE client needs to initialize UART ( e.g 'MX_UARTx_Init()' )
     // and call 'start_receive(serialdevice)' manually
     return false;
 }
 
 bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
-    serialdevice->peripherals = new SerialPeripherals();
+    serialdevice->peripherals      = new SerialPeripherals;
+    SerialPeripherals& peripherals = *serialdevice->peripherals;
     if (serialdevice->device_type < SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES) {
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_00) {
-            console_status("device type: is IDC_00");
-            serialdevice->peripherals                = new SerialPeripherals;
-            serialdevice->peripherals->uart_handle   = &huart8;
-            serialdevice->peripherals->dma_handle_rx = &hdma_uart8_rx;
-            serialdevice->peripherals->dma_handle_tx = &hdma_uart8_tx;
-            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
+            peripherals.uart_handle   = &huart8;
+            peripherals.dma_handle_rx = &hdma_uart8_rx;
+            peripherals.dma_handle_tx = &hdma_uart8_tx;
+            peripherals.buffer_rx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
+            peripherals.buffer_tx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
             return true;
         }
 #if defined(KLST_PANDA_STM32)
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_IDC_01) {
-            console_status("device type: is IDC_01");
-            serialdevice->peripherals                = new SerialPeripherals;
-            serialdevice->peripherals->uart_handle   = &huart9;
-            serialdevice->peripherals->dma_handle_rx = &hdma_uart9_rx;
-            serialdevice->peripherals->dma_handle_tx = &hdma_uart9_tx;
-            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
+            peripherals.uart_handle   = &huart9;
+            peripherals.dma_handle_rx = &hdma_uart9_rx;
+            peripherals.dma_handle_tx = &hdma_uart9_tx;
+            peripherals.buffer_rx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
+            peripherals.buffer_tx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
             return true;
         }
         if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI) {
-            console_status("device type: is MIDI");
-            serialdevice->peripherals                = new SerialPeripherals;
-            serialdevice->peripherals->uart_handle   = &huart4;
-            serialdevice->peripherals->dma_handle_rx = &hdma_uart4_rx;
-            serialdevice->peripherals->dma_handle_tx = &hdma_uart4_tx;
-            serialdevice->peripherals->buffer_rx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
-            serialdevice->peripherals->buffer_tx     = (uint8_t*) dma_malloc(serialdevice->peripherals->buffer_size);
+            peripherals.uart_handle   = &huart4;
+            peripherals.dma_handle_rx = &hdma_uart4_rx;
+            peripherals.dma_handle_tx = &hdma_uart4_tx;
+            peripherals.buffer_rx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
+            peripherals.buffer_tx     = static_cast<uint8_t*>(dma_malloc(peripherals.buffer_size));
             return true;
         }
 #endif // KLST_PANDA_STM32
     }
-    console_status("device type: custom(%i)", serialdevice->device_type);
-    // NOTE client needs to set peripherals manually
+    serialdevice->peripherals = new SerialPeripherals();
     return false;
 }
 

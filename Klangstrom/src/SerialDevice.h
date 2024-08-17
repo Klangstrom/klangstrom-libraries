@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,7 +46,7 @@ struct SerialDevice;
 typedef void (*Callback_1_SERIALDEVICEPTR)(SerialDevice*);
 
 typedef struct SerialDevice {
-    struct SerialPeripherals*  peripherals           = nullptr;
+    SerialPeripherals*         peripherals           = nullptr;
     Callback_1_SERIALDEVICEPTR callback_serial       = nullptr;
     uint8_t                    device_type           = SERIAL_DEVICE_TYPE_UNDEFINED;
     uint8_t                    device_id             = SERIAL_DEVICE_ID_UNDEFINED;
@@ -65,7 +65,7 @@ WEAK void serial_event(SerialDevice* serial_device);
 
 SerialDevice* serialdevice_create(uint8_t device_type, uint32_t buffer_size = 32, uint32_t baud_rate = 115200);
 void          serialdevice_delete(SerialDevice* serialdevice);
-void          serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length); // implemented as A/BSP
+void          serialdevice_send(const SerialDevice* serialdevice, const uint8_t* data, uint16_t length); // implemented as A/BSP
 /**
  * initializes device on board-specific level. needs to decide if device type is supported.
  * furthermore, this function initializes the data buffer.
