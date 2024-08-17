@@ -21,6 +21,7 @@
 #include "usb_host.h"
 #include "usbh_conf.h"
 #include "USBHost.h"
+#include "USBHostCallbacks.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,6 +42,27 @@ void usb_host_init() {
 void usb_host_process() {
     MX_USB_HOST_Process();
 }
+
+/* --- members in USE_USBHOST--- */
+
+static bool usb_host_keyboard_connected = false;
+static bool usb_host_mouse_connected    = false; // used in `usbh_hid.c`
+bool        usb_host_midi_connected     = false; // used in `usbh_MIDI.c`
+
+/* --- functions in USE_USBHOST--- */
+
+bool usb_host_is_mouse_connected() {
+    return usb_host_mouse_connected;
+}
+
+bool usb_host_is_keyboard_connected() {
+    return usb_host_keyboard_connected;
+}
+
+bool usb_host_is_midi_connected() {
+    return usb_host_midi_connected;
+}
+
 
 /**
   * @brief This function handles USB On The Go HS global interrupt.

@@ -25,7 +25,8 @@
 #include "usbh_hid.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "usbh_MIDI.h"
+#include "MIDI_Application.h"
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN PV */
@@ -77,6 +78,9 @@ void MX_USB_HOST_Init(void) {
     if (USBH_RegisterClass(&hUsbHostHS, USBH_HID_CLASS) != USBH_OK) {
         Error_Handler();
     }
+    if (USBH_RegisterClass(&hUsbHostHS, USBH_MIDI_CLASS) != USBH_OK) {
+        Error_Handler();
+    }
     if (USBH_Start(&hUsbHostHS) != USBH_OK) {
         Error_Handler();
     }
@@ -91,6 +95,10 @@ void MX_USB_HOST_Init(void) {
 void MX_USB_HOST_Process(void) {
     /* USB Host Background task */
     USBH_Process(&hUsbHostHS);
+    const uint8_t mActiveClass = hUsbHostHS.pActiveClass->ClassCode;
+    if (mActiveClass == 1) {
+        MIDI_Application();
+    }
 }
 /*
  * user callback definition

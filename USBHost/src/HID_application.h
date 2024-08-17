@@ -19,29 +19,19 @@
 
 #pragma once
 
+#include <math.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "usb_host.h"
-#include "USBHostCallbacks.h"
+#include <stdio.h>
+
+#include "usbh_core.h"
+#include "usbh_MIDI.h"
+
+#include "USBHostConstants.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void usb_host_init();
-void usb_host_process();
-bool usb_host_is_mouse_connected();
-bool usb_host_is_keyboard_connected();
-bool usb_host_is_midi_connected();
-
-// TODO add `usb_host_transmit/send_midi_*`
-
-#ifdef KSLT_USB_HOST_DECLARE_FUNCTIONS
-void OTG_HS_EP1_OUT_IRQHandler(void);
-void OTG_HS_EP1_IN_IRQHandler(void);
-void OTG_HS_IRQHandler(void);
-void MX_USB_HOST_Process(void);
-#endif // KSLT_USB_HOST_DECLARE_FUNCTIONS
 
 #ifdef __cplusplus
 }

@@ -10,9 +10,11 @@
 void setup() {
     system_init();
     usb_host_init();
+    usb_host_callback_mouse_moved(mouse_moved);
 
     console_timestamp();
-    console_println("USBHost!");
+    console_println("USBHost");
+    console_println("TODO now test with HAL HCD + PCD activated in `variant_KLST_PANDA.h`");
 }
 
 uint32_t counter = 0;
@@ -23,4 +25,8 @@ void loop() {
         console_println(".");
     }
     usb_host_process();
+}
+
+void mouse_moved(const bool *buttons, const int8_t x, const int8_t y) {
+    console_println("mouse_moved: x:%i y:%i", x, y);    
 }

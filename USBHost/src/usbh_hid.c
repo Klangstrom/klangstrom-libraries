@@ -42,6 +42,8 @@ EndBSPDependencies */
 #include "usbh_hid.h"
 #include "usbh_hid_parser.h"
 
+extern bool usb_host_keyboard_connected;
+extern bool usb_host_mouse_connected;
 
 /** @addtogroup USBH_LIB
   * @{
@@ -172,10 +174,12 @@ static USBH_StatusTypeDef USBH_HID_InterfaceInit(USBH_HandleTypeDef* phost) {
     /*Decode Bootclass Protocol: Mouse or Keyboard*/
     if (phost->device.CfgDesc.Itf_Desc[interface].bInterfaceProtocol == HID_KEYBRD_BOOT_CODE) {
         USBH_UsrLog("KeyBoard device found!");
-        HID_Handle->Init = USBH_HID_KeybdInit;
+        usb_host_keyboard_connected = true;
+        HID_Handle->Init            = USBH_HID_KeybdInit;
     } else if (phost->device.CfgDesc.Itf_Desc[interface].bInterfaceProtocol == HID_MOUSE_BOOT_CODE) {
         USBH_UsrLog("Mouse device found!");
-        HID_Handle->Init = USBH_HID_MouseInit;
+        usb_host_mouse_connected = true;
+        HID_Handle->Init         = USBH_HID_MouseInit;
     } else {
         USBH_UsrLog("Protocol not supported.");
         return USBH_FAIL;
@@ -250,6 +254,10 @@ static USBH_StatusTypeDef USBH_HID_InterfaceDeInit(USBH_HandleTypeDef* phost) {
         USBH_free(phost->pActiveClass->pData);
         phost->pActiveClass->pData = 0U;
     }
+
+    // TODO check if it is OK to reset all HID devices here
+    usb_host_keyboard_connected = false;
+    usb_host_mouse_connected    = false;
 
     return USBH_OK;
 }

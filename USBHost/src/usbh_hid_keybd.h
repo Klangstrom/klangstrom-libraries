@@ -289,7 +289,7 @@ typedef struct
 
 USBH_StatusTypeDef      USBH_HID_KeybdInit(USBH_HandleTypeDef* phost);
 HID_KEYBD_Info_TypeDef* USBH_HID_GetKeybdInfo(USBH_HandleTypeDef* phost);
-uint8_t                 USBH_HID_GetASCIICode(HID_KEYBD_Info_TypeDef* info);
+uint8_t                 USBH_HID_GetASCIICode(HID_KEYBD_Info_TypeDef* info, uint8_t index);
 
 /**
   * @}
