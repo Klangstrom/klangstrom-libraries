@@ -31,7 +31,7 @@ extern "C" {
 
 typedef void (*Callback_0_VOID)();
 
-typedef struct RotaryEncoderPeripherals {
+typedef struct EncoderPeripherals {
     TIM_HandleTypeDef*    timer_handle;
     HAL_TIM_ActiveChannel button_channel;
     uint32_t              button_channel_i;
@@ -42,7 +42,7 @@ typedef struct RotaryEncoderPeripherals {
     HAL_TIM_ActiveChannel encoder_channel_b;
     uint32_t              encoder_channel_b_i;
     Callback_0_VOID       bsp_init;
-} RotaryEncoderPeripherals;
+} EncoderPeripherals;
 
 #ifdef __cplusplus
 }

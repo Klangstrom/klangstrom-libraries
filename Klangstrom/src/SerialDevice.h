@@ -29,16 +29,15 @@ extern "C" {
 #define WEAK __attribute__((weak))
 #endif
 
-static constexpr uint8_t SERIAL_DEVICE_TYPE_UNDEFINED             = 0;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_IDC_00                = 1;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_IDC_01                = 2;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_MIDI                  = 3;
 static constexpr uint8_t SERIAL_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES = 4;
 static constexpr uint8_t SERIAL_DEVICE_TYPE_CUSTOM                = 127;
-
-static constexpr uint8_t SERIAL_DEVICE_INIT_ERROR   = 254;
-static constexpr uint8_t SERIAL_DEVICE_ID_UNDEFINED = 255;
-static constexpr int32_t SERIAL_DEVICE_DEFAULT_BAUD = -1;
+static constexpr uint8_t SERIAL_DEVICE_TYPE_UNDEFINED             = 255;
+static constexpr uint8_t SERIAL_DEVICE_INIT_INCOMPLETE            = 254;
+static constexpr uint8_t SERIAL_DEVICE_ID_UNDEFINED               = 255;
+static constexpr int32_t SERIAL_DEVICE_DEFAULT_BAUD               = -1;
 
 struct SerialPeripherals; /* BSP or ASP implementation */
 struct SerialDevice;
