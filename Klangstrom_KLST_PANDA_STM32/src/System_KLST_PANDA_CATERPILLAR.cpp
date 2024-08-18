@@ -85,10 +85,6 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
 //    externalmemory_test();
 #endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
 
-#ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-    MX_TIM4_Init();
-#endif // KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-
 #ifdef KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
     // MX_BDMA_Init();
     MX_CRC_Init();

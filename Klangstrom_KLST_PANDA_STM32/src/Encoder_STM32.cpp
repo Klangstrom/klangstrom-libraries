@@ -121,12 +121,12 @@ static int32_t get_encoder_value(const TIM_HandleTypeDef* htim) {
     return static_cast<int16_t>(__HAL_TIM_GET_COUNTER(htim)) * -1;
 }
 
-int32_t encoder_get_rotation(const Encoder* encoder) {
-    if (encoder->peripherals->timer_handle == nullptr) {
-        return 0;
-    }
-    return get_encoder_value(encoder->peripherals->timer_handle);
-}
+// int32_t encoder_get_rotation(const Encoder* encoder) {
+//     if (encoder->peripherals->timer_handle == nullptr) {
+//         return 0;
+//     }
+//     return get_encoder_value(encoder->peripherals->timer_handle);
+// }
 
 static uint8_t get_event_type(const TIM_HandleTypeDef& htim, const EncoderPeripherals& r) {
     if (htim.Channel == r.button_channel) {

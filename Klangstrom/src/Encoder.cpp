@@ -29,7 +29,7 @@ WEAK void encoder_event(Encoder* encoder, uint8_t event) {
     (void) event;
 }
 
-static ArrayList_EncoderPtr fSerialDeviceListeners;
+static ArrayList_EncoderPtr fEncoderListeners;
 
 Encoder* encoder_create(uint8_t device_type) {
     auto* encoder                  = new Encoder();
@@ -44,6 +44,7 @@ Encoder* encoder_create(uint8_t device_type) {
     } else {
         encoder->device_type = ENCODER_INIT_INCOMPLETE;
     }
+
     return encoder;
 }
 
@@ -54,11 +55,11 @@ void encoder_delete(Encoder* encoder) {
 }
 
 void encoder_register_listener(Encoder* encoder) {
-    arraylist_EncoderPtr_add(&fSerialDeviceListeners, encoder);
+    arraylist_EncoderPtr_add(&fEncoderListeners, encoder);
 }
 
 ArrayList_EncoderPtr* encoder_get_listeners() {
-    return &fSerialDeviceListeners;
+    return &fEncoderListeners;
 }
 
 #ifdef __cplusplus

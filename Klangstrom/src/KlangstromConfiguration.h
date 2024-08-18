@@ -35,5 +35,6 @@
 //#define KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO // used in `Touch_BSP_STM32.cpp`
 //#define KLST_DISABLE_REGISTER_DEFAULT_CALLBACKS // used in `MIDI.cpp`
 #define KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC 400 // used in `SerialDevice_STM32.cpp`
+#define KLST_DEFAULT_NUMBER_OF_KEYS 2 // used in `Key.h`
 
 // TODO add the other defines that are used in codebase

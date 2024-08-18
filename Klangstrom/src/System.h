@@ -26,11 +26,13 @@
 #include "SerialDevice.h"
 #include "ArrayList.h"
 #include "Tools.h"
+#include "GPIOListener.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+DEFINE_ARRAYLIST(GPIOListener*, GPIOListenerPtr)
 DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 DEFINE_ARRAYLIST(SerialDevice*, SerialDevicePtr)
 
@@ -39,6 +41,8 @@ void                       system_register_audiodevice(AudioDevice* audiodevice)
 ArrayList_AudioDevicePtr*  system_get_registered_audiodevices();
 void                       system_register_serialdevice(SerialDevice* serialdevice);
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
+void                       system_register_gpio_listener(GPIOListener* gpio_listener);
+ArrayList_GPIOListenerPtr* system_get_registered_gpio_listener();
 uint16_t                   system_get_unique_device_ID();
 bool                       system_is_initialized();
 uint32_t                   system_get_ticks();

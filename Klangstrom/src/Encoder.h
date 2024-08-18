@@ -65,7 +65,7 @@ WEAK void encoder_event(Encoder* encoder, uint8_t event);
 
 Encoder*              encoder_create(uint8_t device_type);
 void                  encoder_delete(Encoder* encoder);
-int32_t               encoder_get_rotation(const Encoder* encoder); // implemented as BSP
+// int32_t               encoder_get_rotation(const Encoder* encoder); // implemented as BSP
 void                  encoder_start(Encoder* encoder);              // implemented as BSP
 void                  encoder_stop(Encoder* encoder);               // implemented as BSP
 void                  encoder_register_listener(Encoder* encoder);

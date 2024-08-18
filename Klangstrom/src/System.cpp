@@ -29,6 +29,7 @@ extern "C" {
 
 static ArrayList_AudioDevicePtr  fAudioDeviceListeners;
 static ArrayList_SerialDevicePtr fSerialDeviceListeners;
+static ArrayList_GPIOListenerPtr fGPIOListeners;
 static uint16_t                  fDeviceID;
 static bool                      fSystemInitialized;
 static uint32_t                  fSystemStartTime;
@@ -71,6 +72,14 @@ void system_register_serialdevice(SerialDevice* serialdevice) {
 
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices() {
     return &fSerialDeviceListeners;
+}
+
+void system_register_gpio_listener(GPIOListener* gpio_listener) {
+    arraylist_GPIOListenerPtr_add(&fGPIOListeners, gpio_listener);
+}
+
+ArrayList_GPIOListenerPtr* system_get_registered_gpio_listener() {
+    return &fGPIOListeners;
 }
 
 uint32_t system_get_ticks() {

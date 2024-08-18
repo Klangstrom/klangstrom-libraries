@@ -19,22 +19,26 @@
 
 #pragma once
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
+#include "Klangstrom.h"
+#ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
+#ifdef KLST_ARCH_IS_STM32
 
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
+#include "main.h"
 
-//#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
+typedef void (*Callback_0_VOID)();
 
-#define KLST_PERIPHERAL_ENABLE_ENCODER
-#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-//#define KLST_PERIPHERAL_ENABLE_MIDI
-//#define KLST_PERIPHERAL_ENABLE_ADC_DAC
+typedef struct KeyPeripherals {
+    uint16_t      gpio_pin;
+    GPIO_TypeDef* gpio_port;
+} KeyPeripherals;
 
-#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-#define KLST_PERIPHERAL_ENABLE_DISPLAY
+#ifdef __cplusplus
+}
+#endif
+
+#endif // KLST_ARCH_IS_STM32
+#endif // KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS

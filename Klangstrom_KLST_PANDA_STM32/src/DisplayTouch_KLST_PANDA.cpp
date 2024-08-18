@@ -22,6 +22,8 @@
 #ifdef KLST_PANDA_STM32
 
 #include "Display.h"
+#include "System.h"
+#include "GPIOListener.h"
 #include "Console.h"
 #include "FT5206.h"
 #include "i2c.h"
@@ -32,11 +34,32 @@ extern "C" {
 
 extern I2C_HandleTypeDef hi2c4;
 
+static GPIOListener fGPIOListener; // TODO could be moved to `Display.cpp`
+static uint16_t     fGPIOPin = _DISPLAY_TOUCH_INTERRUPT_Pin;
+
+static void touch_callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == fGPIOPin) {
+        console_println("TOUCH");
+    }
+}
+
 void touch_setup() {
     MX_I2C4_Init();
     HAL_Delay(100);
     FT5206_init(&hi2c4);
     FT5206_print_info();
+
+    fGPIOListener.callback = touch_callback;
+    system_register_gpio_listener(&fGPIOListener);
+
+    // // store just the function callback
+    // ArrayList_GPIOCallback touch_callbacks;
+    // arraylist_GPIOCallback_add(&touch_callbacks, fTouchCallback);
+    //
+    // // store the structure containing the function callback and the GPIO pin
+    // ArrayList_GPIOListener touch_callbacks_struct;
+    // GPIOListener           mGPIOCallbackListener = {_DISPLAY_TOUCH_INTERRUPT_Pin, KLST_HAL_GPIO_EXTI_Callback};
+    // arraylist_GPIOListener_add(&touch_callbacks_struct, &mGPIOCallbackListener);
 
 #ifdef KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
     /* GPIO */
@@ -60,23 +83,6 @@ void touch_read() {
     //		FT5206_read();
     //	}
     FT5206_read();
-}
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-#ifdef KLST_PANDA_ENABLE_MECHANICAL_KEYS
-    if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
-        MECH_00_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_00_GPIO_Port, _MECH_BUTTON_00_Pin);
-        KLST_BSP_serialdebug_println("MECH_00: %s", (MECH_00_state ? "DOWN" : "UP"));
-    } else if (GPIO_Pin == _MECH_BUTTON_01_Pin) {
-        MECH_01_state = !HAL_GPIO_ReadPin(_MECH_BUTTON_01_GPIO_Port, _MECH_BUTTON_01_Pin);
-        KLST_BSP_serialdebug_println("MECH_01: %s", (MECH_01_state ? "DOWN" : "UP"));
-    }
-#endif // KLST_PANDA_ENABLE_MECHANICAL_KEYS
-#ifdef KLST_PANDA_ENABLE_DISPLAY
-    if (GPIO_Pin == _DISPLAY_TOUCH_INTERRUPT_Pin) {
-        KLST_BSP_serialdebug_println("TOUCH");
-    }
-#endif // KLST_PANDA_ENABLE_DISPLAY
 }
 
 #ifdef __cplusplus

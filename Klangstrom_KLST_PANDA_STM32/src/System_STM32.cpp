@@ -20,8 +20,8 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_STM32
 
-#include "System.h"
 #include "ArrayList.h"
+#include "System.h"
 #include "stm32h7xx_hal.h"
 #include "AudioDevice_STM32.h"
 #include "SerialDevice_STM32.h"
@@ -175,6 +175,18 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
                 }
             }
 #endif // KLST_PERIPHERAL_ENABLE_AUDIODEVICE
+        }
+    }
+}
+
+/* ----------------- GPIO --------------- */
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    ArrayList_GPIOListenerPtr* fGPIOListeners = system_get_registered_gpio_listener();
+    for (size_t i = 0; i < fGPIOListeners->size; i++) {
+        const GPIOListener* gpio = arraylist_GPIOListenerPtr_get(fGPIOListeners, i);
+        if (gpio != nullptr) {
+            gpio->callback(GPIO_Pin);
         }
     }
 }

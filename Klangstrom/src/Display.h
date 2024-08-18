@@ -48,8 +48,8 @@ void LTDC_loop();                                     // TODO ...
 void LTDC_switch_framebuffer();                       // TODO ...
 void LTDC_sync_to_vertical_blank(bool pSyncToVBlank); // TODO add callback
 
-void touch_setup();
-void touch_read();
+void touch_setup(); // implemented as BSP
+void touch_read();  // implemented as BSP
 
 void backlight_setup();
 void backlight_loop();
