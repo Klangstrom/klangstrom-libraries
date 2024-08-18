@@ -7,26 +7,24 @@
 #include "Console.h"
 #include "Key.h"
 
-Key* key_LEFT;
-Key* key_RIGHT;
+Key* key_left;
+Key* key_right;
 
 void setup() {
     system_init();
 
-    console_println("Mechanical Key Example");
-
     key_init();
-    key_LEFT  = key_create(KEY_LEFT);
-    key_RIGHT = key_create(KEY_RIGHT);
+    key_left  = key_create(KEY_LEFT);
+    key_right = key_create(KEY_RIGHT);
 }
 
 void loop() {}
 
 void key_event(const Key* key) {
-    if (key->device_type == KEY_LEFT) {
-        console_println("Key LEFT: %i", key->pressed);
+    if (key->device_id == key_left->device_id) {
+        console_println("left key  : %i", key->pressed);
     }
-    if (key->device_type == KEY_RIGHT) {
-        console_println("Key RIGHT: %i", key->pressed);
+    if (key->device_id == key_right->device_id) {
+        console_println("right key : %i", key->pressed);
     }
 }

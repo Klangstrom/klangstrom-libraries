@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "KlangstromEnvironment.h"
 #if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
+#include "KlangstromConfiguration.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -368,13 +369,17 @@ void TIM2_IRQHandler(void) {
   */
 void EXTI15_10_IRQHandler(void) {
     /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-
+#ifndef KLST_ENABLE_FIRE_EVENT_FOR_ALL_KEYS
     /* USER CODE END EXTI15_10_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(_DISPLAY_TOUCH_INTERRUPT_Pin);
     HAL_GPIO_EXTI_IRQHandler(_MECH_BUTTON_00_Pin);
     HAL_GPIO_EXTI_IRQHandler(_MECH_BUTTON_01_Pin);
     /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-
+#else
+    for (uint16_t i = 0; i < 16; i++) {
+        HAL_GPIO_EXTI_IRQHandler((uint16_t)(1 << i));
+    }
+#endif // KLST_ENABLE_FIRE_EVENT_FOR_ALL_KEYS
     /* USER CODE END EXTI15_10_IRQn 1 */
 }
 

@@ -21,7 +21,6 @@
 #ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
 #ifdef KLST_ARCH_IS_STM32
 
-#include <string>
 #include "main.h"
 #include "Key.h"
 #include "Key_STM32.h"
@@ -37,28 +36,12 @@ void key_callback_BSP(uint16_t GPIO_Pin) {
         Key* key = arraylist_KeyPtr_get(fKeyListeners, i);
         if (key != nullptr) {
             if (key->peripherals->gpio_pin == GPIO_Pin) {
-                const bool button_state = !HAL_GPIO_ReadPin(key->peripherals->gpio_port, key->peripherals->gpio_pin);
-                console_println("KEY: %i(%i)", key->device_type, button_state);
+                key->pressed = !HAL_GPIO_ReadPin(key->peripherals->gpio_port, key->peripherals->gpio_pin);
                 key_event(key);
             }
         }
     }
-    // TODO remove this ASAP
-    if (GPIO_Pin == _MECH_BUTTON_00_Pin) {
-        console_println("MECH_BUTTON_00");
-    }
-    if (GPIO_Pin == _MECH_BUTTON_01_Pin) {
-        console_println("MECH_BUTTON_01");
-    }
 }
-
-// bool key_init_BSP(Key* key) {
-//     return true; // TODO maybe remove this.
-// }
-//
-// void key_deinit_BSP(Key* key) {
-//     // TODO maybe remove this
-// }
 
 bool key_init_peripherals_BSP(Key* key) {
     key->peripherals = new KeyPeripherals();
@@ -75,6 +58,7 @@ bool key_init_peripherals_BSP(Key* key) {
         return true;
     }
     if (key->device_type == KEY_TYPE_CUSTOM) {
+        console_status("device type: custom(%i) ( device must be intialized manually )", key->device_type);
         return true;
     }
     return false;

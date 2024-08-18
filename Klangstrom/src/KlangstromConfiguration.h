@@ -36,5 +36,10 @@
 //#define KLST_DISABLE_REGISTER_DEFAULT_CALLBACKS // used in `MIDI.cpp`
 #define KLST_DELAY_SERIAL_SEND_IF_BUSY_USEC 400 // used in `SerialDevice_STM32.cpp`
 #define KLST_DEFAULT_NUMBER_OF_KEYS 2 // used in `Key.h`
+// #define KLST_ENABLE_FIRE_EVENT_FOR_ALL_KEYS
+
+#if __has_include("KlangstromConfigurationCustom.h")
+#include "KlangstromConfigurationCustom.h"
+#endif
 
 // TODO add the other defines that are used in codebase

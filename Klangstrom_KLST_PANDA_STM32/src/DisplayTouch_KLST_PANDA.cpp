@@ -39,7 +39,7 @@ static uint16_t     fGPIOPin = _DISPLAY_TOUCH_INTERRUPT_Pin;
 
 static void touch_callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == fGPIOPin) {
-        console_println("TOUCH");
+        console_println("TOUCH (TODO)");
     }
 }
 
