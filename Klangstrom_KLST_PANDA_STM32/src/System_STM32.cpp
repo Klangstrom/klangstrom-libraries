@@ -189,6 +189,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
             gpio->callback(GPIO_Pin);
         }
     }
+    // NOTE: currenlty the following EXTI ( external interrupts ) IDs are used:
+    // - EXTI13 for touch display
+    // - EXTI14 for mechanical key 00
+    // - EXTI15 for mechanical key 01
 }
 
 /* --------------- U(S)ART -------------- */

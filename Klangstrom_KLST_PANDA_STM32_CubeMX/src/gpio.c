@@ -114,6 +114,12 @@ void MX_GPIO_Init(void) {
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(_MECH_BUTTON_00_GPIO_Port, &GPIO_InitStruct);
 
+    /*Configure GPIO pin : PtPin */
+    GPIO_InitStruct.Pin  = _MECH_BUTTON_01_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(_MECH_BUTTON_01_GPIO_Port, &GPIO_InitStruct);
+
     /*Configure GPIO pins : PGPin PGPin PGPin PGPin */
     GPIO_InitStruct.Pin   = GPIO_16_Pin | GPIO_15_Pin | GPIO_14_Pin | GPIO_13_Pin;
     GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;

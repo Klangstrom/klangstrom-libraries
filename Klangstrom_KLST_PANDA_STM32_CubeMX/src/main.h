@@ -200,6 +200,7 @@ void MPU_Config(void);
 #define _MECH_BUTTON_00_EXTI_IRQn          EXTI15_10_IRQn
 #define _MECH_BUTTON_01_Pin                GPIO_PIN_15
 #define _MECH_BUTTON_01_GPIO_Port          GPIOD
+#define _MECH_BUTTON_01_EXTI_IRQn          EXTI15_10_IRQn
 #define GPIO_16_Pin                        GPIO_PIN_2
 #define GPIO_16_GPIO_Port                  GPIOG
 #define GPIO_15_Pin                        GPIO_PIN_3

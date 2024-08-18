@@ -69,7 +69,6 @@ extern SAI_HandleTypeDef   hsai_BlockB1;
 extern SD_HandleTypeDef    hsd2;
 extern TIM_HandleTypeDef   htim1;
 extern TIM_HandleTypeDef   htim2;
-extern TIM_HandleTypeDef   htim4;
 extern DMA_HandleTypeDef   hdma_uart4_rx;
 extern DMA_HandleTypeDef   hdma_uart4_tx;
 extern DMA_HandleTypeDef   hdma_uart8_rx;
@@ -365,19 +364,6 @@ void TIM2_IRQHandler(void) {
 }
 
 /**
-  * @brief This function handles TIM4 global interrupt.
-  */
-void TIM4_IRQHandler(void) {
-    /* USER CODE BEGIN TIM4_IRQn 0 */
-
-    /* USER CODE END TIM4_IRQn 0 */
-    HAL_TIM_IRQHandler(&htim4);
-    /* USER CODE BEGIN TIM4_IRQn 1 */
-
-    /* USER CODE END TIM4_IRQn 1 */
-}
-
-/**
   * @brief This function handles EXTI line[15:10] interrupts.
   */
 void EXTI15_10_IRQHandler(void) {
@@ -386,6 +372,7 @@ void EXTI15_10_IRQHandler(void) {
     /* USER CODE END EXTI15_10_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(_DISPLAY_TOUCH_INTERRUPT_Pin);
     HAL_GPIO_EXTI_IRQHandler(_MECH_BUTTON_00_Pin);
+    HAL_GPIO_EXTI_IRQHandler(_MECH_BUTTON_01_Pin);
     /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
     /* USER CODE END EXTI15_10_IRQn 1 */

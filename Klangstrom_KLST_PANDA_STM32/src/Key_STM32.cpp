@@ -18,16 +18,14 @@
 */
 
 #include "Klangstrom.h"
-
-#include <string>
 #ifdef KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
 #ifdef KLST_ARCH_IS_STM32
 
+#include <string>
 #include "main.h"
 #include "Key.h"
 #include "Key_STM32.h"
 #include "Console.h"
-#include "System.h" // TOOD this is only needed for GPIOListener, maybe move to own header file
 
 #ifdef __cplusplus
 extern "C" {

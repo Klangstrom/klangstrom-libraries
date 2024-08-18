@@ -52,15 +52,6 @@ void touch_setup() {
     fGPIOListener.callback = touch_callback;
     system_register_gpio_listener(&fGPIOListener);
 
-    // // store just the function callback
-    // ArrayList_GPIOCallback touch_callbacks;
-    // arraylist_GPIOCallback_add(&touch_callbacks, fTouchCallback);
-    //
-    // // store the structure containing the function callback and the GPIO pin
-    // ArrayList_GPIOListener touch_callbacks_struct;
-    // GPIOListener           mGPIOCallbackListener = {_DISPLAY_TOUCH_INTERRUPT_Pin, KLST_HAL_GPIO_EXTI_Callback};
-    // arraylist_GPIOListener_add(&touch_callbacks_struct, &mGPIOCallbackListener);
-
 #ifdef KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
     /* GPIO */
     GPIO_InitTypeDef GPIO_InitStruct = {0};
