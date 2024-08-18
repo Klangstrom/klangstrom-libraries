@@ -69,7 +69,7 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel0.Init.Input.Multiplexer        = DFSDM_CHANNEL_EXTERNAL_INPUTS;
     hdfsdm1_channel0.Init.Input.DataPacking        = DFSDM_CHANNEL_STANDARD_MODE;
     hdfsdm1_channel0.Init.Input.Pins               = DFSDM_CHANNEL_FOLLOWING_CHANNEL_PINS;
-    hdfsdm1_channel0.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
+    hdfsdm1_channel0.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
     hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel0.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
     hdfsdm1_channel0.Init.Awd.Oversampling         = 10;
@@ -85,7 +85,7 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel1.Init.Input.Multiplexer        = DFSDM_CHANNEL_EXTERNAL_INPUTS;
     hdfsdm1_channel1.Init.Input.DataPacking        = DFSDM_CHANNEL_STANDARD_MODE;
     hdfsdm1_channel1.Init.Input.Pins               = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-    hdfsdm1_channel1.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
+    hdfsdm1_channel1.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
     hdfsdm1_channel1.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel1.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
     hdfsdm1_channel1.Init.Awd.Oversampling         = 10;

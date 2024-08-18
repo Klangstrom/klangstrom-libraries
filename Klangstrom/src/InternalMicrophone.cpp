@@ -17,12 +17,20 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "InternalMicrophone.h"
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
-#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+WEAK void internalmicrophone(AudioBlock* audio_block) {
+    (void) audio_block;
+}
+
+void internalmicrophone_init() {
+    internalmicrophone_init_BSP();
+}
+
+#ifdef __cplusplus
+}
+#endif

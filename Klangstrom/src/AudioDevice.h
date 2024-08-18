@@ -20,6 +20,8 @@
 #pragma once
 
 #include <stdint.h>
+#include "AudioBlock.h"
+#include "AudioInfo.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,51 +31,31 @@ extern "C" {
 #define WEAK __attribute__((weak))
 #endif
 
-const uint8_t AUDIO_DEVICE_TYPE_UNDEFINED               = 0;
-const uint8_t AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC       = 1;
-const uint8_t AUDIO_DEVICE_KLST_PANDA_STEREO_MIC        = 2;
-const uint8_t AUDIO_DEVICE_KLST_CATERPILLAR_AUDIO_CODEC = 3;
-const uint8_t AUDIO_DEVICE_KLST_CATERPILLAR_STEREO_MIC  = 4;
-const uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES   = 5;
-const uint8_t AUDIO_DEVICE_CUSTOM                       = 127;
+constexpr uint8_t AUDIO_DEVICE_TYPE_UNDEFINED               = 0;
+constexpr uint8_t AUDIO_DEVICE_KLST_PANDA_AUDIO_CODEC       = 1;
+constexpr uint8_t AUDIO_DEVICE_KLST_PANDA_STEREO_MIC        = 2;
+constexpr uint8_t AUDIO_DEVICE_KLST_CATERPILLAR_AUDIO_CODEC = 3;
+constexpr uint8_t AUDIO_DEVICE_KLST_CATERPILLAR_STEREO_MIC  = 4;
+constexpr uint8_t AUDIO_DEVICE_MAX_NUMBER_OF_DEVICE_TYPES   = 5;
+constexpr uint8_t AUDIO_DEVICE_CUSTOM                       = 127;
 
-const uint8_t AUDIO_DEVICE_INIT_ERROR   = 254;
-const uint8_t AUDIO_DEVICE_ID_UNDEFINED = 255;
+constexpr uint8_t AUDIO_DEVICE_INIT_ERROR   = 254;
+constexpr uint8_t AUDIO_DEVICE_ID_UNDEFINED = 255;
 
-static const uint8_t CALLBACK_TX_ERROR      = 0;
-static const uint8_t CALLBACK_RX_ERROR      = 1;
-static const uint8_t CALLBACK_FULL_COMPLETE = 2;
-static const uint8_t CALLBACK_HALF_COMPLETE = 3;
-
-typedef struct AudioInfo {
-    uint32_t sample_rate;
-    uint8_t  output_channels;
-    uint8_t  input_channels;
-    uint16_t block_size;
-    uint8_t  bit_depth;
-    uint8_t  device_type;
-    uint8_t  device_id;
-} AudioInfo;
-
-typedef struct AudioBlock {
-    uint32_t sample_rate;
-    uint8_t  output_channels;
-    uint8_t  input_channels;
-    uint16_t block_size;
-    float**  output;
-    float**  input;
-    uint8_t  device_id;
-} AudioBlock;
+static constexpr uint8_t CALLBACK_TX_ERROR      = 0;
+static constexpr uint8_t CALLBACK_RX_ERROR      = 1;
+static constexpr uint8_t CALLBACK_FULL_COMPLETE = 2;
+static constexpr uint8_t CALLBACK_HALF_COMPLETE = 3;
 
 struct AudioDevicePeripherals; /* BSP or ASP implementation */
 
 typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
 
 typedef struct AudioDevice {
-    AudioInfo*                     audioinfo           = nullptr;
-    AudioBlock*                    audioblock          = nullptr;
-    struct AudioDevicePeripherals* peripherals         = nullptr;
-    Callback_1_AUDIOBLOCKPTR       callback_audioblock = nullptr;
+    AudioInfo*               audioinfo           = nullptr;
+    AudioBlock*              audioblock          = nullptr;
+    AudioDevicePeripherals*  peripherals         = nullptr;
+    Callback_1_AUDIOBLOCKPTR callback_audioblock = nullptr;
 } AudioDevice;
 
 typedef void (*Callback_2_AUDIODEVICE_UI8)(AudioDevice*, uint8_t);

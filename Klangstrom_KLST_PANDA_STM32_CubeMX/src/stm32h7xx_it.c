@@ -377,10 +377,10 @@ void EXTI15_10_IRQHandler(void) {
     /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 #else
     for (uint16_t i = 0; i < 16; i++) {
-        HAL_GPIO_EXTI_IRQHandler((uint16_t)(1 << i));
+        HAL_GPIO_EXTI_IRQHandler((uint16_t) (1 << i));
     }
 #endif // KLST_ENABLE_FIRE_EVENT_FOR_ALL_KEYS
-    /* USER CODE END EXTI15_10_IRQn 1 */
+       /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
 /**

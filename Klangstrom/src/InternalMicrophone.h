@@ -19,10 +19,35 @@
 
 #pragma once
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
-#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+#include "AudioBlock.h"
+#include "AudioInfo.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef WEAK
+#define WEAK __attribute__((weak))
+#endif
+
+typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
+
+typedef struct InternalMicrophone {
+    AudioInfo*               audioinfo           = nullptr;
+    AudioBlock*              audioblock          = nullptr;
+    Callback_1_AUDIOBLOCKPTR callback_audioblock = nullptr;
+} InternalMicrophone;
+
+/**
+ * callback to be implemented by client application
+ * @param audioblock
+ */
+WEAK void internalmicrophone(AudioBlock* audioblock);
+
+void internalmicrophone_init();
+
+void internalmicrophone_init_BSP();
+
+#ifdef __cplusplus
+}
+#endif

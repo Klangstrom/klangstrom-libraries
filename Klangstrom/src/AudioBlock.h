@@ -19,10 +19,14 @@
 
 #pragma once
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
-#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
+#include <cstdint>
+
+typedef struct AudioBlock {
+    uint32_t sample_rate;
+    uint8_t  output_channels;
+    uint8_t  input_channels;
+    uint16_t block_size;
+    float**  output;
+    float**  input;
+    uint8_t  device_id;
+} AudioBlock;

@@ -33,7 +33,7 @@ WEAK void audioblock(AudioBlock* audio_block) {
 }
 
 AudioDevice* audiodevice_create_from_audioinfo(AudioInfo* audioinfo) {
-    AudioDevice* audiodevice                = new AudioDevice();
+    const auto audiodevice                  = new AudioDevice();
     audiodevice->audioinfo                  = new AudioInfo();
     audiodevice->audioinfo->sample_rate     = audioinfo->sample_rate;
     audiodevice->audioinfo->output_channels = audioinfo->output_channels;
