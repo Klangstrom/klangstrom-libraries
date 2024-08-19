@@ -33,14 +33,12 @@ extern "C" {
 extern DFSDM_Filter_HandleTypeDef hdfsdm1_filter0;
 extern DFSDM_Filter_HandleTypeDef hdfsdm1_filter1;
 
-static int32_t* dma_RX_buffer_filter0 = nullptr;
-static int32_t* dma_RX_buffer_filter1 = nullptr;
-// static __attribute__((aligned(32))) int32_t* dma_RX_buffer_filter0 = nullptr;
-// static __attribute__((aligned(32))) int32_t* dma_RX_buffer_filter1 = nullptr;
-static uint32_t    fBufferLength      = 0;
-static Microphone* fMicrophone        = nullptr; // TODO this assumes that there is only one microphone
-static bool        fChannel0Completed = false;
-static bool        fChannel1Completed = false;
+static int32_t*    dma_RX_buffer_filter0 = nullptr;
+static int32_t*    dma_RX_buffer_filter1 = nullptr;
+static uint32_t    fBufferLength         = 0;
+static Microphone* fMicrophone           = nullptr; // TODO this assumes that there is only one microphone
+static bool        fChannel0Completed    = false;
+static bool        fChannel1Completed    = false;
 
 void microphone_init_BSP(Microphone* microphone) {
     fMicrophone           = microphone;
@@ -54,10 +52,13 @@ void microphone_init_BSP(Microphone* microphone) {
     }
 
     MX_DFSDM1_Init();
+#ifdef MICROPHONE_DEBUG
     const float mSampleRateFilter0 = static_cast<float>(SystemCoreClock) / hdfsdm1_channel0.Init.OutputClock.Divider / hdfsdm1_filter0.Init.FilterParam.Oversampling / hdfsdm1_filter0.Init.FilterParam.IntOversampling;
     const float mSampleRateFilter1 = static_cast<float>(SystemCoreClock) / hdfsdm1_channel1.Init.OutputClock.Divider / hdfsdm1_filter1.Init.FilterParam.Oversampling / hdfsdm1_filter1.Init.FilterParam.IntOversampling;
     console_status("Microphone: SystemCoreClock %i", SystemCoreClock);
     console_status("Microphone: computed sample rate: LEFT: %f + RIGHT: %f", mSampleRateFilter0, mSampleRateFilter1);
+#endif
+
     microphone_start(microphone);
 }
 
