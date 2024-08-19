@@ -62,9 +62,9 @@ typedef void (*Callback_2_AUDIODEVICE_UI8)(AudioDevice*, uint8_t);
 
 /**
  * callback to be implemented by client application
- * @param audioblock
+ * @param audio_block
  */
-WEAK void audioblock(AudioBlock* audioblock);
+WEAK void audioblock(AudioBlock* audio_block);
 
 /**
  * initializes audio device with info as specified in `audioinfo`.

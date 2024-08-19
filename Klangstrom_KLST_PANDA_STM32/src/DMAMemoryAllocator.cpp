@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 #ifndef KLST_DMA_POOL_SIZE
-#define KLST_DMA_POOL_SIZE (128 * 2 * 2 * 2 * 2) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
+#define KLST_DMA_POOL_SIZE (128 * 2 * 2 * 2 * 2 * 2) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
 #endif
 
 #ifndef KLST_DMA_SECTION_NAME

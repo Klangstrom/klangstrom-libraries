@@ -32,21 +32,24 @@ extern "C" {
 
 typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
 
-typedef struct InternalMicrophone {
+typedef struct Microphone {
     AudioInfo*               audioinfo           = nullptr;
     AudioBlock*              audioblock          = nullptr;
     Callback_1_AUDIOBLOCKPTR callback_audioblock = nullptr;
-} InternalMicrophone;
+} Microphone;
 
 /**
  * callback to be implemented by client application
- * @param audioblock
+ * @param audio_block
  */
-WEAK void internalmicrophone(AudioBlock* audioblock);
+WEAK void audioblock(AudioBlock* audio_block);
 
-void internalmicrophone_init();
+Microphone* microphone_init(AudioInfo* audio_info = nullptr);
+void        microphone_deinit(Microphone* microphone);
+void        microphone_start(Microphone* microphone); // implementation in BSP
+void        microphone_stop(Microphone* microphone);  // implementation in BSP
 
-void internalmicrophone_init_BSP();
+void microphone_init_BSP(Microphone* microphone);
 
 #ifdef __cplusplus
 }

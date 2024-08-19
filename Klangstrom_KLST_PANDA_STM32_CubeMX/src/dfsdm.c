@@ -72,9 +72,9 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel0.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
     hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel0.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hdfsdm1_channel0.Init.Awd.Oversampling         = 10;
+    hdfsdm1_channel0.Init.Awd.Oversampling         = 1;
     hdfsdm1_channel0.Init.Offset                   = 0;
-    hdfsdm1_channel0.Init.RightBitShift            = 0x02;
+    hdfsdm1_channel0.Init.RightBitShift            = 0x00;
     if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK) {
         Error_Handler();
     }
@@ -88,9 +88,9 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel1.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
     hdfsdm1_channel1.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel1.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hdfsdm1_channel1.Init.Awd.Oversampling         = 10;
+    hdfsdm1_channel1.Init.Awd.Oversampling         = 1;
     hdfsdm1_channel1.Init.Offset                   = 0;
-    hdfsdm1_channel1.Init.RightBitShift            = 0x02;
+    hdfsdm1_channel1.Init.RightBitShift            = 0x00;
     if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel1) != HAL_OK) {
         Error_Handler();
     }
