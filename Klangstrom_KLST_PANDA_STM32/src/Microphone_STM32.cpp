@@ -121,14 +121,16 @@ static void handle_bufferdata(const uint16_t buffer_offset) {
         const int32_t* mBuffer0 = dma_RX_buffer_filter0 + buffer_offset;
         const int32_t* mBuffer1 = dma_RX_buffer_filter1 + buffer_offset;
         float constexpr mScale  = 1.0f / pow(2, 23); // normalize to float range -1.0 to 1.0
+                                                     // ( see "Table 289. Filter maximum output resolution (peak data values from filter output) for some FOSR values"
+                                                     // in "RM0468 Reference manual STM32H723/733 ..." p1313 )
+        float** mInputBuffer = fMicrophone->audioblock->input;
         for (uint32_t i = 0; i < fMicrophone->audioinfo->block_size; i++) {
-            const int32_t mSample0I    = mBuffer0[i] >> 8;
-            const int32_t mSample1I    = mBuffer1[i] >> 8;
-            const float   mSample0f    = static_cast<float>(mSample0I) * mScale;
-            const float   mSample1f    = static_cast<float>(mSample1I) * mScale;
-            float**       mInputBuffer = fMicrophone->audioblock->input;
-            mInputBuffer[0][i]         = mSample0f;
-            mInputBuffer[1][i]         = mSample1f;
+            const int32_t mSample0I = mBuffer0[i] >> 8;
+            const int32_t mSample1I = mBuffer1[i] >> 8;
+            const float   mSample0f = static_cast<float>(mSample0I) * mScale;
+            const float   mSample1f = static_cast<float>(mSample1I) * mScale;
+            mInputBuffer[0][i]      = mSample0f;
+            mInputBuffer[1][i]      = mSample1f;
         }
         fMicrophone->callback_audioblock(fMicrophone->audioblock);
     }
