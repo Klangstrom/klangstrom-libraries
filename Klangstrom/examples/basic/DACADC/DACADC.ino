@@ -7,7 +7,7 @@
 #include "Console.h"
 #include "DACADC.h"
 
-const float fixed_value = 0.5f;
+constexpr float fixed_value = 0.5f;
 
 void setup() {
     system_init();
