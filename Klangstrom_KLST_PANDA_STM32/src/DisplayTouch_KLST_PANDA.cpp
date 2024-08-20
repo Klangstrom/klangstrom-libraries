@@ -36,14 +36,16 @@ extern I2C_HandleTypeDef hi2c4;
 
 static GPIOListener fGPIOListener; // TODO could be moved to `Display.cpp`
 static uint16_t     fGPIOPin = _DISPLAY_TOUCH_INTERRUPT_Pin;
+static TouchEvent   fTouchEvent;
 
 static void touch_callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == fGPIOPin) {
-        console_println("TOUCH (TODO)");
+        FT5206_read(&fTouchEvent);
+        display_fire_touch_callback(&fTouchEvent);
     }
 }
 
-void touch_setup() {
+void touch_init() {
     MX_I2C4_Init();
     HAL_Delay(100);
     FT5206_init(&hi2c4);
@@ -68,12 +70,14 @@ void touch_setup() {
 #endif
 }
 
-void touch_read() {
-    // TODO return values
+void touch_read(TouchEvent* touchevent) {
+#ifdef KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
     //	if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
     //		FT5206_read();
     //	}
-    FT5206_read();
+#else
+    FT5206_read(touchevent);
+#endif // KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
 }
 
 #ifdef __cplusplus

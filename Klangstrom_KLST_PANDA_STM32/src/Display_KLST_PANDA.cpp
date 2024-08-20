@@ -30,30 +30,28 @@
 #include "ltdc.h"
 #include "dma2d.h"
 #include "Display.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-bool display_init() {
-    /* display+backlight+touch panel */
+bool display_init_BSP() {
+    /* display = LTDC + backlight + touch panel */
     MX_LTDC_Init();
     MX_DMA2D_Init();
     MX_TIM3_Init();
 
     display_switch_off();
-    LTDC_setup();
-    display_switch_on(); // TODO maybe turn off?
-    touch_setup();
-    backlight_setup();
-    backlight_set_brightness(0.5f);
+    display_LTDC_init();
+    display_switch_on();
+    touch_init();
+    backlight_init();
+    display_set_backlight(0.5f);
 
+    // HAL_Delay(500);
     return true;
 }
-
-void display_deinit() {}
-
-void display_set_backlight(float brightness) {}
 
 void display_switch_on() {
     HAL_GPIO_WritePin(_DISPLAY_ON_OFF_GPIO_Port, _DISPLAY_ON_OFF_Pin, GPIO_PIN_SET);

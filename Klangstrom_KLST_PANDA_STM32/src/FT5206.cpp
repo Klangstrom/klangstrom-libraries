@@ -27,12 +27,14 @@ extern "C" {
 static HAL_StatusTypeDef  ret;
 static I2C_HandleTypeDef* hi2c = nullptr;
 
+// TODO what about calibration?!?
+
 #define FT5206_TIMEOUT 1000
 //                          in ms?
 //                          (default)HAL_MAX_DELAY
 
-static uint16_t word(uint8_t highByte, uint8_t lowByte) {
-    return (uint16_t) (highByte << 8) | lowByte;
+static uint16_t word(const uint8_t highByte, const uint8_t lowByte) {
+    return static_cast<uint16_t>(highByte << 8) | lowByte;
 }
 
 void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
@@ -67,28 +69,39 @@ void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
     }
 }
 
-void FT5206_read() {
+void FT5206_read(TouchEvent* touchEvent) {
     // TODO check if this IC always transmits info when events occur or if some kind of polling is required or possible
     if (!hi2c) {
+        return;
+    }
+    if (touchEvent == nullptr) {
         return;
     }
     uint8_t buf[FT5206_NUMBER_OF_REGISTERS];
     ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
-        console_println("FT5206: receive I2C ERROR");
+        console_error("FT5206: receive I2C ERROR");
         return;
     }
 
-    console_println("gesture id   : %i", buf[FT5206_GEST_ID]);
-
-    uint8_t nr_of_touches = buf[FT5206_TD_STATUS] & 0xF;
-    console_println("nr_of_touches: %i", nr_of_touches);
-
-    for (uint8_t i = 0; i < nr_of_touches; i++) {
+    const uint8_t number_of_touches = std::min(5, buf[FT5206_TD_STATUS] & 0xF);
+    const uint8_t gesture_id        = buf[FT5206_GEST_ID];
+    touchEvent->number_of_touches   = number_of_touches;
+    touchEvent->gesture_id          = gesture_id;
+    for (uint8_t i = 0; i < touchEvent->number_of_touches; i++) {
         const uint16_t x = word(buf[FT5206_TOUCH_XH + i * 6] & 0x0f, buf[FT5206_TOUCH_XL + i * 6]);
         const uint16_t y = word(buf[FT5206_TOUCH_YH + i * 6] & 0x0f, buf[FT5206_TOUCH_YL + i * 6]);
-        console_println("touch %X      : %i, %i", i, x, y);
+        touchEvent->x[i] = x;
+        touchEvent->y[i] = y;
     }
+
+    // console_println("gesture id   : %i", gesture_id);
+    // console_println("nr_of_touches: %i", nr_of_touches);
+    // for (uint8_t i = 0; i < nr_of_touches; i++) {
+    //     const uint16_t x = word(buf[FT5206_TOUCH_XH + i * 6] & 0x0f, buf[FT5206_TOUCH_XL + i * 6]);
+    //     const uint16_t y = word(buf[FT5206_TOUCH_YH + i * 6] & 0x0f, buf[FT5206_TOUCH_YL + i * 6]);
+    //     console_println("touch %X      : %i, %i", i, x, y);
+    // }
 }
 
 void FT5206_print_info() {
@@ -98,7 +111,7 @@ void FT5206_print_info() {
     uint8_t buf[FT5206_NUMBER_OF_TOTAL_REGISTERS];
     ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
-        console_println("FT5206: receive I2C ERROR");
+        console_error("FT5206: receive I2C ERROR");
         return;
     }
 

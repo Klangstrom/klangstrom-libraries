@@ -1,24 +1,41 @@
 /**
- * this example demonstrates how to use LEDs.
+ * this example demonstrates how to use the display with touch panel
  */
+
+#include <vector>
 
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
 #include "Display.h"
 
-uint8_t fLEDIntensity = 0;
-
 void setup() {
     system_init();
 
-    display_init();
-    display_set_backlight(0.5f);
+    display_init(false);
 }
 
 void loop() {
     console_println("...");
-    LTDC_loop();
-    backlight_loop();
-    delay(500);
+    delay(1000);
+}
+
+void display_touch_event(TouchEvent* touchevent) {
+    for (int i = 0; i < touchevent->number_of_touches; ++i) {
+        display_rect(touchevent->x[i], touchevent->y[i], 8, 8, BRIGHTNESS(0xFF));
+    }
+
+    if (touchevent->number_of_touches == 4) {
+        display_clear(BRIGHTNESS(0x00));
+    }
+
+    if (touchevent->number_of_touches == 5) {
+        display_clear(RGB(0xFF, 0x80, 0x00));
+    }
+
+    console_clear();
+    console_println("TOUCH EVENT: %d", touchevent->number_of_touches);
+    for (int i = 0; i < touchevent->number_of_touches; ++i) {
+        console_println("      %d    : %d,%d", i, touchevent->x[i], touchevent->y[i]);
+    }
 }
