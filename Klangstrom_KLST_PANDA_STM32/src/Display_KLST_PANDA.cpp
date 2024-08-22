@@ -39,7 +39,7 @@ extern "C" {
 bool display_init_BSP() {
     /* display = LTDC + backlight + touch panel */
     MX_LTDC_Init();
-    MX_DMA2D_Init();
+    // MX_DMA2D_Init();
     MX_TIM3_Init();
 
     display_switch_off();
@@ -49,7 +49,6 @@ bool display_init_BSP() {
     backlight_init();
     display_set_backlight(0.5f);
 
-    // HAL_Delay(500);
     return true;
 }
 

@@ -65,6 +65,8 @@ void backlight_init(); // implemented as BSP
 }
 #endif
 
+/* draw library */
+
 #define ARGB_TO_RGBA(argb)             \
     (((argb) & 0xFF000000) >> 24) |    \
         (((argb) & 0x00FF0000) >> 8) | \
@@ -89,11 +91,23 @@ void backlight_init(); // implemented as BSP
 #define BRIGHTNESS(b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
 
-int16_t display_get_width();                                                                        // implemented as BSP
-int16_t display_get_height();                                                                       // implemented as BSP
-void    display_set_pixel(uint16_t x, uint16_t y, uint32_t argb_color);                             // implemented as BSP                                                                 // implemented as BSP
-void    display_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t argb_color); // implemented as BSP
-void    display_image(uint32_t* data, uint32_t x, uint32_t y, uint32_t width, uint32_t height);     // implemented as BSP
-void    display_clear(uint32_t argb_color);                                                         // implemented as BSP
-void    display_clear(uint8_t r, uint8_t g, uint8_t b);                                             // implemented as BSP
-void    display_line(uint32_t x, uint32_t y, uint32_t length, uint32_t color);                      // implemented as BSP
+#define GET_ALPHA(argb) ((uint8_t) ((argb) >> 24))
+#define GET_RED(argb) ((uint8_t) ((argb) >> 16))
+#define GET_GREEN(argb) ((uint8_t) ((argb) >> 8))
+#define GET_BLUE(argb) ((uint8_t) (argb))
+
+/* NOTE all functions below are implemented BSP */
+
+int16_t  display_get_width();
+int16_t  display_get_height();
+void     display_clear(uint32_t color);
+void     display_clear_dma2d(uint32_t color);
+void     display_pixel(uint16_t x, uint16_t y, uint32_t color);
+uint32_t display_get_pixel(uint16_t x, uint16_t y);
+void     display_line(uint16_t x, uint16_t y, uint32_t length, uint16_t color);
+void     display_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color, bool filled);
+void     display_rect_fill(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
+void     display_rect_fill_dma2d(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
+void     display_rect_stroke(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
+void     display_image(uint32_t* data, uint16_t x, uint16_t y, uint16_t width, uint16_t height);
+void     display_image_dma2d(uint32_t* data, uint16_t x, uint16_t y, uint16_t width, uint16_t height);
