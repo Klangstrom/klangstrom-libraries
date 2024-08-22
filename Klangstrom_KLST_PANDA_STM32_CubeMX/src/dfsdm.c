@@ -40,7 +40,7 @@ void MX_DFSDM1_Init(void) {
     /* USER CODE END DFSDM1_Init 0 */
 
     /* USER CODE BEGIN DFSDM1_Init 1 */
-
+    // `OutputClock.Divider` = `DFSDM_CLOCK` / ( `AUDIO_FREQ` * `DECIMATION` ) = 12288000Hz / ( 48000Hz * 64 ) = 4
     /* USER CODE END DFSDM1_Init 1 */
     hdfsdm1_filter0.Instance                         = DFSDM1_Filter0;
     hdfsdm1_filter0.Init.RegularParam.Trigger        = DFSDM_FILTER_SW_TRIGGER;
