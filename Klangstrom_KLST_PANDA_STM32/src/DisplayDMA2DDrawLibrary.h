@@ -122,16 +122,17 @@ struct BlitOp {
     const uint8_t*  pClut;     ///< Pointer to the source CLUT entires
     uint32_t*       pDst;      ///< Pointer to the destination
     // uint16_t*       pDst;           ///< Pointer to the destination
-    uint16_t  nSteps;         ///< The number of pixels in a line
-    uint16_t  nLoops;         ///< The number of lines
-    uint16_t  srcLoopStride;  ///< The number of bytes to stride the source after every loop
-    uint16_t  dstLoopStride;  ///< The number of bytes to stride the destination after every loop
-    colortype color;          ///< Color to fill
-    uint8_t   alpha;          ///< The alpha to use
-    uint8_t   srcFormat;      ///< The source format @see BitmapFormat
-    uint8_t   dstFormat;      ///< The destination format @see BitmapFormat
-    bool      replaceBgAlpha; ///< Replace the background per pixel alpha value with 255 = solid
-    bool      replaceFgAlpha; ///< Replace the fourground per pixel alpha value with 255 = solid
+    uint16_t nSteps;        ///< The number of pixels in a line
+    uint16_t nLoops;        ///< The number of lines
+    uint16_t srcLoopStride; ///< The number of bytes to stride the source after every loop
+    uint16_t dstLoopStride; ///< The number of bytes to stride the destination after every loop
+    uint32_t color;         ///< Color to fill (ARGB8888)
+    // colortype color;          ///< Color to fill
+    uint8_t alpha;          ///< The alpha to use  TODO maybe remove this in favour of `color`
+    uint8_t srcFormat;      ///< The source format @see BitmapFormat
+    uint8_t dstFormat;      ///< The destination format @see BitmapFormat
+    bool    replaceBgAlpha; ///< Replace the background per pixel alpha value with 255 = solid
+    bool    replaceFgAlpha; ///< Replace the fourground per pixel alpha value with 255 = solid
 };
 
 void tearDown();

@@ -68,10 +68,12 @@ void display_update_event() {
     }
 
     constexpr uint8_t  BYTES_PER_PIXEL = 4;
-    const uint32_t     offset          = (x + 10 + (y + 10) * KLST_DISPLAY_WIDTH) * BYTES_PER_PIXEL;
+    const uint16_t     xx              = x + 20;
+    const uint16_t     yy              = y + 20;
+    const uint32_t     offset          = (xx + yy * KLST_DISPLAY_WIDTH) * BYTES_PER_PIXEL;
     uint32_t*          destination     = reinterpret_cast<uint32_t*>(LTDC_get_backbuffer_address() + offset);
-    constexpr uint32_t width           = 128;
-    constexpr uint32_t height          = 128;
+    constexpr uint32_t width           = 40;
+    constexpr uint32_t height          = 40;
 
     BlitOp op_fill;
     op_fill.operation      = BLIT_OP_FILL;          // (used)
@@ -82,7 +84,7 @@ void display_update_event() {
     op_fill.nLoops         = height;                // (used) height
     op_fill.srcLoopStride  = 0;                     // -
     op_fill.dstLoopStride  = KLST_DISPLAY_WIDTH;    // (used) buffer width
-    op_fill.color          = colortype(0xFFFFFFFF); // color
+    op_fill.color          = 0xFFFF8000;            // color
     op_fill.alpha          = 0xFF;                  // (used)
     op_fill.srcFormat      = 0;                     // -
     op_fill.dstFormat      = DMA2D_OUTPUT_ARGB8888; // i.e `output` ( currently fixed to DMA2D_OUTPUT_ARGB8888 )
@@ -105,7 +107,7 @@ void display_update_event() {
     op_data.nLoops         = 0;                     // (used)
     op_data.srcLoopStride  = 0;                     // (used)
     op_data.dstLoopStride  = 0;                     // (used)
-    op_data.color          = colortype(0xFFFFFFFF); // color
+    op_data.color          = 0xFFFFFFFF;            // color
     op_data.alpha          = 0xFF;                  // (used)*
     op_data.srcFormat      = DMA2D_INPUT_ARGB8888;  // (used) i.e `input`
     op_data.dstFormat      = DMA2D_OUTPUT_ARGB8888; // (used) i.e `output`

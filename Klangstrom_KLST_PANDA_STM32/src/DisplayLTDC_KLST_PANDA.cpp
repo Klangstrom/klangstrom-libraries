@@ -260,7 +260,7 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
     // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
     // to flush the Dcache prior to letting DMA2D accessing it. That's done
     // using SCB_CleanInvalidateDCache().
-    SCB_CleanInvalidateDCache(); // todo is this necessary
+    // SCB_CleanInvalidateDCache(); // TODO is this necessary see also `flushLine`
     /* USER CODE END DMA2D_XferCpltCallback */
     // console_println("Xfer complete");
     // TODO is this the right location
