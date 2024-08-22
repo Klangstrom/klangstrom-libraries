@@ -24,7 +24,8 @@ extern "C" {
 #endif
 
 #ifndef KLST_DMA_POOL_SIZE
-#define KLST_DMA_POOL_SIZE (2048) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
+#define KLST_MAX_DMA_POOL_SIZE (16384) // 16KB as defined in linker script for RAM_D3 : ORIGIN = 0x38000000
+#define KLST_DMA_POOL_SIZE KLST_MAX_DMA_POOL_SIZE // (2048) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
 #endif
 
 #ifndef KLST_DMA_SECTION_NAME
