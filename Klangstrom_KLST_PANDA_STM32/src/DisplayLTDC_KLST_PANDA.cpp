@@ -83,58 +83,54 @@ static uint8_t  active_framebuffer     = FRAMEBUFFER1;
 static bool     fSyncToVBlank          = false;
 volatile bool   fDMA2DTransferComplete = false;
 
-// #define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+#define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 
-static void cleanup_memory() {
+static void cleanup_dma2d() {
     /* Wait for DMA2D to finish last run */
     while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
         ;
 
     /* Clear transfer flags */
     WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
+}
 
+static void cleanup_memory() {
     if (SCB->CCR & SCB_CCR_DC_Msk) {
         SCB_CleanInvalidateDCache();
     }
 }
 
+static void enable_reload() {
+#ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+    HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+#else
+    HAL_LTDC_ProgramLineEvent(&hltdc, 0);
+#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+}
+
+
 void display_enable_automatic_update(const bool sync_to_v_blank) {
     if (!fSyncToVBlank && sync_to_v_blank) {
-        // console_println("start loop");
-#ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
-        HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
-#else
-        HAL_LTDC_ProgramLineEvent(&hltdc, 0);
-#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+        enable_reload();
     }
     fSyncToVBlank = sync_to_v_blank;
 }
 
 #ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
-    // fVSYNCDuration = HAL_GetTick() - fVSYNCStart;
-    cleanup_memory();
-    display_fire_update_callback();
-    cleanup_memory();
-    display_swap_buffer();
-    cleanup_memory();
-    if (fSyncToVBlank) {
-        HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
-    }
-    // fVSYNCStart = HAL_GetTick();
-}
 #else
 void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
-    cleanup_memory();
-    display_fire_update_callback();
-    cleanup_memory();
-    display_swap_buffer();
-    cleanup_memory();
-    if (fSyncToVBlank) {
-        HAL_LTDC_ProgramLineEvent(hltdc_handle, 0);
+#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+    if (hltdc_handle->Instance == LTDC) {
+        display_fire_update_callback();
+        cleanup_dma2d();
+        cleanup_memory();
+        display_swap_buffer();
+        if (fSyncToVBlank) {
+            enable_reload();
+        }
     }
 }
-#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 
 void display_deinit() {
     HAL_LTDC_DeInit(&hltdc);
@@ -164,11 +160,6 @@ void display_swap_buffer(void) {
         //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
         active_framebuffer = FRAMEBUFFER1;
     }
-    // `HAL_LTDC_Reload` keeps loop on vertical blanking alive.
-    //	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
-    LTDC->SRCR = LTDC_SRCR_VBR; // not sure if it is better to first switch buffer and the reload or viceversa
-    //	while ((LTDC->CDSR & LTDC_CDSR_VSYNCS) == 0)
-    //		;
 }
 
 void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
@@ -200,10 +191,6 @@ void display_LTDC_init() {
 
     hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
     hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
-
-    // HAL_LTDC_SetWindowSize(&hltdc, KLST_DISPLAY_WIDTH, KLST_DISPLAY_HEIGHT, 0);
-    // `HAL_LTDC_Reload` starts loop synced vertical blanking
-    //	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING); // start reload look at 60Hz
 }
 
 #ifdef __cplusplus

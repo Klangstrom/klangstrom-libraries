@@ -104,7 +104,7 @@ void     display_clear(uint32_t color);
 void     display_clear_dma2d(uint32_t color);
 void     display_pixel(uint16_t x, uint16_t y, uint32_t color);
 uint32_t display_get_pixel(uint16_t x, uint16_t y);
-void     display_line(uint16_t x, uint16_t y, uint32_t length, uint16_t color);
+void     display_line_horizontal(uint16_t x, uint16_t y, uint16_t length, uint32_t color);
 void     display_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color, bool filled);
 void     display_rect_fill(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
 void     display_rect_fill_dma2d(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);

@@ -60,7 +60,7 @@ uint32_t display_get_pixel(const uint16_t x, const uint16_t y) {
     return 0;
 }
 
-void display_line(const uint16_t x, const uint16_t y, const uint16_t length, const uint32_t color) {
+void display_line_horizontal(const uint16_t x, const uint16_t y, const uint16_t length, const uint32_t color) {
     const uint32_t offset      = (x + y * KLST_DISPLAY_WIDTH) * BYTES_PER_PIXEL;
     const auto     destination = reinterpret_cast<uint32_t*>(LTDC_get_backbuffer_address() + offset);
     lineFromColor(destination,

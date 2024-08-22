@@ -49,24 +49,24 @@ void loop() {
 }
 
 extern DMA2D_HandleTypeDef hdma2d;
-
+uint8_t move = 0;
 void display_update_event() {
     display_clear(BRIGHTNESS(0x00));
 
-    // display_rect_fill(30, 30, 20, 20, RGB(0xFF, 0x00, 0x00));
-    // display_rect_fill(50, 30, 20, 20, RGB(0x00, 0xFF, 0x00));
-    // display_rect_fill(70, 30, 20, 20, RGB(0x00, 0x00, 0xFF));
-    // display_rect_fill(display_get_width() - 40, display_get_height() - 40, 20, 20, BRIGHTNESS(0xFF));
-    // display_rect_fill(x, y, 20, 20, RGBA(0xFF, 0xFF, 0xFF, 0x80));
-    // display_rect_fill(x + 5, y + 5, 40, 40, 0x80FF8000);
+    display_rect_fill(30, 30, 20, 20, RGB(0xFF, 0x00, 0x00));
+    display_rect_fill(50, 30, 20, 20, RGB(0x00, 0xFF, 0x00));
+    display_rect_fill(70, 30, 20, 20, RGB(0x00, 0x00, 0xFF));
+    display_rect_fill(display_get_width() - 40, display_get_height() - 40, 20, 20, BRIGHTNESS(0xFF));
+    display_rect_fill(x, y, 20, 20, RGBA(0xFF, 0xFF, 0xFF, 0x80));
+    display_rect_fill(x + 5, y + 5, 40, 40, 0x80FF8000);
 
-    // display_line(x, y, 1024, RGBA(0xFF, 0xFF, 0x00, 0x80));
+    // display_line_horizontal(x, y, 1024, RGBA(0xFF, 0xFF, 0x00, 0x80));
 
     for (int i = 0; i < MAX_POINTS; ++i) {
         display_pixel(points[i].x, points[i].y, BRIGHTNESS(0xFF));
     }
 
-    display_image(IMAGE_DATA, x - IMAGE_WIDTH / 2, y - IMAGE_HEIGHT / 2, IMAGE_WIDTH, IMAGE_HEIGHT);
+    display_image(IMAGE_DATA, move++, y - IMAGE_HEIGHT / 2, IMAGE_WIDTH, IMAGE_HEIGHT);
 }
 
 void display_touch_event(TouchEvent* touchevent) {
