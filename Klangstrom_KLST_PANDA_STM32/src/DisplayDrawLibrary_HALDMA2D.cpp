@@ -24,72 +24,17 @@
 #include "main.h"
 #include "Display.h"
 
-// #define USE_SOFTWARE_RENDERER
+#if KLST_DISPLAY_RENDERER == KLST_DISPLAY_RENDERER_HAL_DMA2D
 
 /* NOTE these functions are deliberately not placed in `extern "C" {}` block to allow overloading */
 
 extern DMA2D_HandleTypeDef hdma2d;
 
-static constexpr uint8_t BYTES_PER_PIXEL = 4;
-
-#ifdef USE_SOFTWARE_RENDERER
-
-uint32_t blend_colors(const uint32_t original_color, const uint32_t color, const uint8_t alpha) {
-    const uint8_t  inv   = 0xFF - alpha;
-    const uint8_t  r     = (GET_RED(original_color) * inv + GET_RED(color) * alpha) >> 8;
-    const uint8_t  g     = (GET_GREEN(original_color) * inv + GET_GREEN(color) * alpha) >> 8;
-    const uint8_t  b     = (GET_BLUE(original_color) * inv + GET_BLUE(color) * alpha) >> 8;
-    const uint32_t blend = RGBA(r, g, b, 0xFF);
-    return blend;
-}
-
-// TODO ok so this is brutal … but works ;)
 static void DrawImage(uint32_t*      data,
                       const uint16_t x,
                       const uint16_t y,
                       const uint16_t width,
                       const uint16_t height) {
-    for (uint32_t i = 0; i < height; i++) {
-        for (uint32_t j = 0; j < width; j++) {
-            const uint32_t color = data[j + i * width];
-            const uint8_t  alpha = GET_ALPHA(color);
-            if (alpha == 0xFF) {
-                display_pixel(x + j, y + i, color);
-            } else {
-                const uint32_t original_color = display_get_pixel(x + j, y + i);
-                const uint32_t blend_color    = blend_colors(original_color, color, alpha);
-                display_pixel(x + j, y + i, blend_color);
-            }
-        }
-    }
-}
-
-static void FillRect(const uint32_t color,
-                     const uint16_t x,
-                     const uint16_t y,
-                     const uint16_t width,
-                     const uint16_t height) {
-    const uint8_t alpha = GET_ALPHA(color);
-    for (uint32_t i = 0; i < height; i++) {
-        for (uint32_t j = 0; j < width; j++) {
-            if (alpha == 0xFF) {
-                display_pixel(x + j, y + i, color);
-            } else {
-                const uint32_t original_color = display_get_pixel(x + j, y + i);
-                const uint32_t blend_color    = blend_colors(original_color, color, alpha);
-                display_pixel(x + j, y + i, blend_color);
-            }
-        }
-    }
-}
-
-#else
-
-static void DrawImage(uint32_t*      data,
-                       const uint16_t x,
-                       const uint16_t y,
-                       const uint16_t width,
-                       const uint16_t height) {
     DMA2D_HandleTypeDef hdma2d;
     hdma2d.Instance = DMA2D;
 
@@ -117,10 +62,10 @@ static void DrawImage(uint32_t*      data,
 }
 
 static void _DrawImage(uint32_t*      data,
-                      const uint16_t x,
-                      const uint16_t y,
-                      const uint16_t width,
-                      const uint16_t height) {
+                       const uint16_t x,
+                       const uint16_t y,
+                       const uint16_t width,
+                       const uint16_t height) {
     const uint32_t offset      = (x + y * KLST_DISPLAY_WIDTH) * BYTES_PER_PIXEL;
     const uint32_t destination = LTDC_get_backbuffer_address() + offset;
 
@@ -187,7 +132,6 @@ static void FillRect(const uint32_t color,
     // while (!fDMA2DTransferComplete) { ; }
 #endif
 }
-#endif
 
 void display_rect_fill(const uint16_t x,
                        const uint16_t y,
@@ -208,6 +152,6 @@ void display_image(uint32_t*      data,
                    const uint16_t height) {
     DrawImage(data, x, y, width, height);
 }
-
+#endif // KLST_DISPLAY_RENDERER == KLST_DISPLAY_RENDERER_HAL_DMA2D
 #endif // KLST_PANDA_STM32
 #endif // KLST_PERIPHERAL_ENABLE_DISPLAY

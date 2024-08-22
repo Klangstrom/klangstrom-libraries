@@ -38,7 +38,7 @@ uint16_t y = 100;
 void setup() {
     system_init();
 
-    display_init(true);
+    display_init(true, true);
     display_set_backlight(0.5f);
     display_enable_automatic_update(true);
 }
@@ -48,8 +48,8 @@ void loop() {
     delay(1000);
 }
 
-extern DMA2D_HandleTypeDef hdma2d;
 uint8_t move = 0;
+
 void display_update_event() {
     display_clear(BRIGHTNESS(0x00));
 

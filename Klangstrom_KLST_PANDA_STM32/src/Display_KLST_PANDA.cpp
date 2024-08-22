@@ -36,16 +36,18 @@
 extern "C" {
 #endif
 
-bool display_init_BSP() {
+bool display_init_BSP(const bool has_touchpanel) {
     /* display = LTDC + backlight + touch panel */
     MX_LTDC_Init();
-    // MX_DMA2D_Init();
-    MX_TIM3_Init();
+    MX_DMA2D_Init();
+    MX_TIM3_Init(); // backlight
 
     display_switch_off();
     display_LTDC_init();
     display_switch_on();
-    touch_init();
+    if (has_touchpanel) {
+        touch_init();
+    }
     backlight_init();
     display_set_backlight(0.5f);
 

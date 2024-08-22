@@ -22,6 +22,14 @@
 #include <stdint.h>
 #include "TouchEvent.h"
 
+#define KLST_DISPLAY_RENDERER_SOFTWARE 1
+#define KLST_DISPLAY_RENDERER_HAL_DMA2D 2
+#define KLST_DISPLAY_RENDERER_RAW_DMA2D 3
+
+#define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_HAL_DMA2D
+
+static constexpr uint8_t BYTES_PER_PIXEL = 4;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,19 +47,19 @@ typedef void (*Callback_1_TOUCHEVENTPTR)(TouchEvent*);
 WEAK void display_update_event();
 WEAK void display_touch_event(TouchEvent* touchevent);
 
-bool display_init(bool double_buffered = false);            // implemented as BSP
-void display_deinit();                                      // implemented as BSP
-void display_set_backlight(float brightness);               // implemented as BSP
-void display_enable_automatic_update(bool sync_to_v_blank); // implemented as BSP
-void display_swap_buffer();                                 // implemented as BSP
-void display_switch_on();                                   // implemented as BSP
-void display_switch_off();                                  // implemented as BSP
+bool display_init(bool double_buffered = false, bool has_touchpanel = true); // implemented as BSP
+void display_deinit();                                                       // implemented as BSP
+void display_set_backlight(float brightness);                                // implemented as BSP
+void display_enable_automatic_update(bool sync_to_v_blank);                  // implemented as BSP
+void display_swap_buffer();                                                  // implemented as BSP
+void display_switch_on();                                                    // implemented as BSP
+void display_switch_off();                                                   // implemented as BSP
 bool display_is_double_buffered();
 void display_set_update_callback(Callback_0_VOID callback);
 void display_fire_update_callback();
 void display_set_touch_callback(Callback_1_TOUCHEVENTPTR callback);
 void display_fire_touch_callback(TouchEvent* touchevent);
-bool display_init_BSP();
+bool display_init_BSP(bool has_touchpanel);
 void display_LTDC_init(); // implemented as BSP
 
 volatile uint32_t LTDC_get_backbuffer_address(void);
@@ -101,13 +109,10 @@ void backlight_init(); // implemented as BSP
 int16_t  display_get_width();
 int16_t  display_get_height();
 void     display_clear(uint32_t color);
-void     display_clear_dma2d(uint32_t color);
 void     display_pixel(uint16_t x, uint16_t y, uint32_t color);
 uint32_t display_get_pixel(uint16_t x, uint16_t y);
 void     display_line_horizontal(uint16_t x, uint16_t y, uint16_t length, uint32_t color);
 void     display_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color, bool filled);
 void     display_rect_fill(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
-void     display_rect_fill_dma2d(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
 void     display_rect_stroke(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
 void     display_image(uint32_t* data, uint16_t x, uint16_t y, uint16_t width, uint16_t height);
-void     display_image_dma2d(uint32_t* data, uint16_t x, uint16_t y, uint16_t width, uint16_t height);

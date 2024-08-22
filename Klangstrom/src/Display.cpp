@@ -33,12 +33,12 @@ Callback_1_TOUCHEVENTPTR fTouchCallback  = display_touch_event;
 
 bool fIsDoubleBuffer = false;
 
-bool display_init(const bool double_buffered) {
+bool display_init(const bool double_buffered, const bool has_touchpanel) {
     fIsDoubleBuffer = double_buffered;
     if (!fIsDoubleBuffer) {
         console_status("display is using single buffer mode");
     }
-    return display_init_BSP();
+    return display_init_BSP(has_touchpanel);
 }
 
 void display_set_update_callback(Callback_0_VOID callback) {

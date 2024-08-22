@@ -169,7 +169,7 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
     // using SCB_CleanInvalidateDCache().
     // SCB_CleanInvalidateDCache(); // TODO is this necessary see also `flushLine`
     /* USER CODE END DMA2D_XferCpltCallback */
-    // console_println("Xfer complete");
+    console_println("Xfer complete");
     // // TODO is this the right location
     // WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
     // while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
