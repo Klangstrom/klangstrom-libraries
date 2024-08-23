@@ -191,7 +191,7 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle) {
         HAL_GPIO_Init(_DISPLAY_LTDC_B5_GPIO_Port, &GPIO_InitStruct);
 
         /* LTDC interrupt Init */
-        HAL_NVIC_SetPriority(LTDC_IRQn, 3, 0);
+        HAL_NVIC_SetPriority(LTDC_IRQn, 1, 0);
         HAL_NVIC_EnableIRQ(LTDC_IRQn);
         HAL_NVIC_SetPriority(LTDC_ER_IRQn, 15, 0);
         HAL_NVIC_EnableIRQ(LTDC_ER_IRQn);

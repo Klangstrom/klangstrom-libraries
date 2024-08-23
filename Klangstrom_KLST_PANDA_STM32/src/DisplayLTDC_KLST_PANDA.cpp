@@ -83,7 +83,7 @@ static uint8_t  active_framebuffer     = FRAMEBUFFER1;
 static bool     fSyncToVBlank          = false;
 volatile bool   fDMA2DTransferComplete = false;
 
-#define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+// #define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 
 static void cleanup_dma2d() {
     /* Wait for DMA2D to finish last run */
@@ -122,9 +122,9 @@ void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
 void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
 #endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
     if (hltdc_handle->Instance == LTDC) {
+        cleanup_memory();
         display_fire_update_callback();
         cleanup_dma2d();
-        cleanup_memory();
         display_swap_buffer();
         if (fSyncToVBlank) {
             enable_reload();
