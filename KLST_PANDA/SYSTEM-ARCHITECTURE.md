@@ -155,7 +155,7 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 
 ![](./firmware/KLST_PANDA-STM32H723ZGT-BSP--pin_map.png)
 
-./firmware/KLST_PANDA-STM32H723ZGT-BSP--pin_map.csv
+./firmware/KLST_PANDA-STM32H723ZGT-BSP--pin_map.csv ==@TODO(update)==
 
 ## Timers
 
@@ -166,8 +166,8 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 | TIM1  | CH1+CH2+CH3     | ENCODER_00(+BUTTON)     | @TODO(could be EXTI10)
 | TIM2  | CH1+CH2+CH4     | ENCODER_01(+BUTTON)     | @TODO(could be EXTI11)
 | TIM3  | CH3             | DISPLAY_BACKLIGHT_PWM   |
-| TIM4  | CH2             | DISPLAY_TOUCH_INTERRUPT | @TODO(move to EXTI13)
-| TIM4  | CH3+CH4         | MECH_BUTTON_00*01       | @TODO(move to EXTI14+15)
+| TIM4  | CH2             | DISPLAY_TOUCH_INTERRUPT | @TODO(moved to EXTI13)
+| TIM4  | CH3+CH4         | MECH_BUTTON_00+01       | @TODO(moved to EXTI14+15)
 | TIM12 | CH1+CH2         | LED_00+01               |
 | TIM15 | CH1             | GPIO_19_INT             |
 | TIM23 | CH1+CH2+CH3+CH4 | GPIO_00+01+02+03_PWM    |
@@ -217,4 +217,4 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 | SAI     | DESCRIPTION        |
 |---------|--------------------|
 | SAI1    | AUDIO_CODEC        |
-| SAI4    | AUDIO_MIC ==@TODO==|
+| SAI4    | AUDIO_MIC ==@TODO==| ==@TODO(moved to DFSDM/PDM)==
