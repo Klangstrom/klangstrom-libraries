@@ -215,17 +215,6 @@
 		(uuid "e656ae3e-4309-4754-b90c-94e6a75efc6b")
 	)
 	(fp_circle
-		(center -6.750013 5.250013)
-		(end -6.720015 5.250013)
-		(stroke
-			(width 0.059995)
-			(type solid)
-		)
-		(fill none)
-		(layer "F.SilkS")
-		(uuid "3a055cdc-478c-4df3-a5d7-a141f82d3d97")
-	)
-	(fp_circle
 		(center -5.715011 4.642113)
 		(end -5.590043 4.642113)
 		(stroke
@@ -287,9 +276,9 @@
 		(remove_unused_layers no)
 		(uuid "a0f1d904-929a-41bd-8369-9b64e864d2d5")
 	)
-	(model "/Users/julian/Code/sparkles/JLC2KiCad_lib/footprint/packages3d/SW-TH_SS-12D11L3.wrl"
+	(model "${KIPRJMOD}/library/SS-12D11L3/SS-12D11L3.stp"
 		(offset
-			(xyz 0 2.930016956 3.493261948)
+			(xyz 49.5 -16 -2)
 		)
 		(scale
 			(xyz 1 1 1)
