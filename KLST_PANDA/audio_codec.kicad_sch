@@ -5591,7 +5591,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C101304"
+		(property "JLCPCB" "C966835"
 			(at 90.17 144.78 0)
 			(effects
 				(font
@@ -7638,7 +7638,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C101304"
+		(property "JLCPCB" "C966835"
 			(at 86.36 144.78 0)
 			(effects
 				(font
