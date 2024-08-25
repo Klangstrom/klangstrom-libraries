@@ -4525,7 +4525,7 @@
 				)
 			)
 		)
-		(property "Footprint" "MK-12F03-G015:MK-12F03-G015"
+		(property "Footprint" "SS-12D11L3:SW-TH_SS-12D11L3"
 			(at 41.91 102.87 0)
 			(effects
 				(font
