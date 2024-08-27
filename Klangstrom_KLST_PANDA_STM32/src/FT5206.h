@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <stdint.h>
+#include <stdbool.h>
 #include "stm32h7xx_hal.h"
 #include "TouchEvent.h"
 
@@ -59,7 +61,7 @@ extern "C" {
 #define FT5206_TOUCH_YL 0x06
 
 void FT5206_init(I2C_HandleTypeDef* hi2c_handle);
-void FT5206_read(TouchEvent* touchEvent);
+bool FT5206_read(TouchEvent* touchEvent);
 void FT5206_print_info();
 
 // TODO(add calibration and touch threshold configuration)

@@ -26,9 +26,7 @@
 #include "BitmapFont.h"
 
 #define KLST_DISPLAY_RENDERER_SOFTWARE 1
-#define KLST_DISPLAY_RENDERER_HAL_DMA2D 2
-#define KLST_DISPLAY_RENDERER_RAW_DMA2D 3
-#define KLST_DISPLAY_RENDERER_DMA2D 4
+#define KLST_DISPLAY_RENDERER_DMA2D 2
 
 #define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_DMA2D
 
@@ -52,6 +50,12 @@ typedef enum {
     LEFT     = 0x03
 } TextAlign;
 
+typedef enum {
+    INTERRUPT,
+    POLLING,
+    NO_TOUCHPANEL
+} TouchPanelMode;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -69,25 +73,29 @@ typedef void (*Callback_1_TOUCHEVENTPTR)(TouchEvent*);
 WEAK void display_update_event();
 WEAK void display_touch_event(TouchEvent* touchevent);
 
-bool display_init(bool double_buffered = false, bool has_touchpanel = true); // implemented as BSP
-void display_deinit();                                                       // implemented as BSP
-void display_set_backlight(float brightness);                                // implemented as BSP
-void display_enable_automatic_update(bool sync_to_v_blank);                  // implemented as BSP
-void display_swap_buffer();                                                  // implemented as BSP
-void display_switch_on();                                                    // implemented as BSP
-void display_switch_off();                                                   // implemented as BSP
+bool display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT); // implemented as BSP
+void display_deinit();                                                                        // implemented as BSP
+void display_set_backlight(float brightness);                                                 // implemented as BSP
+void display_enable_automatic_update(bool sync_to_v_blank);                                   // implemented as BSP
+void display_swap_buffer();                                                                   // implemented as BSP
+void display_switch_on();                                                                     // implemented as BSP
+void display_switch_off();                                                                    // implemented as BSP
 bool display_is_double_buffered();
 void display_set_update_callback(Callback_0_VOID callback);
 void display_fire_update_callback();
 void display_set_touch_callback(Callback_1_TOUCHEVENTPTR callback);
 void display_fire_touch_callback(TouchEvent* touchevent);
-bool display_init_BSP(bool has_touchpanel);
+bool display_init_BSP(TouchPanelMode touch_panel_mode);
 void display_LTDC_init(); // implemented as BSP
 
 volatile uint32_t LTDC_get_backbuffer_address(void);
 
-void touch_init();                       // implemented as BSP
-void touch_read(TouchEvent* touchevent); // implemented as BSP
+// TODO add option to use touchscreen in polling mode
+//     `bool touch_has_event();` + `void touch_mode(uint8_t mode);`, `mode=polling` or `mode=interrupt`
+//     maybe merge with `has_touchpanel` flag so that mode could also be `no_touchpanel`
+void touch_init(TouchPanelMode touch_panel_mode); // implemented as BSP
+void touch_read(TouchEvent* touchevent);          // implemented as BSP
+bool touch_has_event();                           // implemented as BSP
 
 void backlight_init(); // implemented as BSP
 

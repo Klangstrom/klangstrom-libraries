@@ -24,8 +24,8 @@
 #define KLST_MAX_NUMBER_OF_TOUCHES 5
 
 typedef struct TouchEvent {
-    uint16_t x[KLST_MAX_NUMBER_OF_TOUCHES];
-    uint16_t y[KLST_MAX_NUMBER_OF_TOUCHES];
+    int16_t x[KLST_MAX_NUMBER_OF_TOUCHES];
+    int16_t y[KLST_MAX_NUMBER_OF_TOUCHES];
     uint8_t  number_of_touches;
     uint8_t  gesture_id;
 } TouchEvent;

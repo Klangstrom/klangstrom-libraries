@@ -38,14 +38,18 @@ uint16_t y = 100;
 void setup() {
     system_init();
 
-    display_init(false, true);
+    display_init(false, POLLING);
     display_set_backlight(0.5f);
     display_enable_automatic_update(true);
 }
 
 void loop() {
-    console_println("...");
-    delay(1000);
+    if (touch_has_event()) {
+        TouchEvent touch_event;
+        touch_read(&touch_event);
+        display_touch_event(&touch_event);
+    }
+    delay(10);
 }
 
 uint8_t move = 0;
@@ -93,18 +97,20 @@ void display_touch_event(TouchEvent* touchevent) {
     console_clear();
     console_println("TOUCH EVENT: %d", touchevent->number_of_touches);
     for (int i = 0; i < touchevent->number_of_touches; ++i) {
-        console_println("TOUCH %d    : %d,%d", i, touchevent->x[i], touchevent->y[i]);
-        points[points_counter].x = touchevent->x[i];
-        points[points_counter].y = touchevent->y[i];
-        points_counter++;
-        points_counter %= MAX_POINTS;
-        if (i == 0) {
-            x = touchevent->x[i];
-            y = touchevent->y[i];
-        }
-        if (i == 1) {
-            const float brightness = static_cast<float>(touchevent->x[i]) / 480.0f;
-            display_set_backlight(brightness);
+        if (touchevent->x[i] >= 0 && touchevent->y[i] >= 0) {
+            console_println("TOUCH %d    : %d,%d", i, touchevent->x[i], touchevent->y[i]);
+            points[points_counter].x = touchevent->x[i];
+            points[points_counter].y = touchevent->y[i];
+            points_counter++;
+            points_counter %= MAX_POINTS;
+            if (i == 0) {
+                x = touchevent->x[i];
+                y = touchevent->y[i];
+            }
+            if (i == 1) {
+                const float brightness = static_cast<float>(touchevent->x[i]) / 480.0f;
+                display_set_backlight(brightness);
+            }
         }
     }
 }

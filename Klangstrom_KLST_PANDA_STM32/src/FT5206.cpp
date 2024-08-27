@@ -20,6 +20,8 @@
 #include "FT5206.h"
 #include "Console.h"
 
+#include <Display.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -32,6 +34,10 @@ static I2C_HandleTypeDef* hi2c = nullptr;
 #define FT5206_TIMEOUT 1000
 //                          in ms?
 //                          (default)HAL_MAX_DELAY
+
+static uint16_t clamp(const uint16_t value, const int16_t max) {
+    return std::min(static_cast<uint16_t>(max), value);
+}
 
 static uint16_t word(const uint8_t highByte, const uint8_t lowByte) {
     return static_cast<uint16_t>(highByte << 8) | lowByte;
@@ -69,19 +75,19 @@ void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
     }
 }
 
-void FT5206_read(TouchEvent* touchEvent) {
+bool FT5206_read(TouchEvent* touchEvent) {
     // TODO check if this IC always transmits info when events occur or if some kind of polling is required or possible
     if (!hi2c) {
-        return;
+        return false;
     }
     if (touchEvent == nullptr) {
-        return;
+        return false;
     }
     uint8_t buf[FT5206_NUMBER_OF_REGISTERS];
     ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
         console_error("FT5206: receive I2C ERROR");
-        return;
+        return false;
     }
 
     const uint8_t number_of_touches = std::min(5, buf[FT5206_TD_STATUS] & 0xF);
@@ -91,17 +97,10 @@ void FT5206_read(TouchEvent* touchEvent) {
     for (uint8_t i = 0; i < touchEvent->number_of_touches; i++) {
         const uint16_t x = word(buf[FT5206_TOUCH_XH + i * 6] & 0x0f, buf[FT5206_TOUCH_XL + i * 6]);
         const uint16_t y = word(buf[FT5206_TOUCH_YH + i * 6] & 0x0f, buf[FT5206_TOUCH_YL + i * 6]);
-        touchEvent->x[i] = x;
-        touchEvent->y[i] = y;
+        touchEvent->x[i] = x > display_get_width() ? -1 : x;
+        touchEvent->y[i] = y > display_get_height() ? -1 : y;
     }
-
-    // console_println("gesture id   : %i", gesture_id);
-    // console_println("nr_of_touches: %i", nr_of_touches);
-    // for (uint8_t i = 0; i < nr_of_touches; i++) {
-    //     const uint16_t x = word(buf[FT5206_TOUCH_XH + i * 6] & 0x0f, buf[FT5206_TOUCH_XL + i * 6]);
-    //     const uint16_t y = word(buf[FT5206_TOUCH_YH + i * 6] & 0x0f, buf[FT5206_TOUCH_YL + i * 6]);
-    //     console_println("touch %X      : %i, %i", i, x, y);
-    // }
+    return true;
 }
 
 void FT5206_print_info() {

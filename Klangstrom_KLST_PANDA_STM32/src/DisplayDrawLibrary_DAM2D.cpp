@@ -39,8 +39,6 @@ static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
 static void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
 
 void display_LTDC_init_DMA2D() {
-    console_println("display_LTDC_init_DMA2D");
-
     // NOTE not calling `MX_DMA2D_Init()`
     hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
     hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
