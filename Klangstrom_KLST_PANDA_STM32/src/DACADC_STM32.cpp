@@ -18,10 +18,14 @@
 */
 
 #include "Klangstrom.h"
+
+#include <DMAMemoryAllocator.h>
+
 #ifdef KLST_PERIPHERAL_ENABLE_ADC_DAC
 #ifdef KLST_PANDA_STM32
 
 #include "main.h"
+#include "bdma.h"
 #include "adc.h"
 #include "dac.h"
 #include "DACADC.h"
@@ -38,8 +42,25 @@ extern ADC_HandleTypeDef hadc3;
 static constexpr uint16_t DAC_RESOLUTION = 1 << 12;
 static constexpr float    ADC_RESOLUTION = 1.0f / static_cast<float>(DAC_RESOLUTION);
 
+// #define KLST_ADC_CONTINOUS_MODE
+
+#ifdef KLST_ADC_CONTINOUS_MODE
+uint32_t* fADCBuffer;
+#endif // KLST_ADC_CONTINOUS_MODE
+
 void adc_init() {
+#ifdef KLST_ADC_CONTINOUS_MODE
+#endif // KLST_ADC_CONTINOUS_MODE
     MX_ADC3_Init();
+    // HAL_ADCEx_Calibration_Start(&hadc3, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+#ifdef KLST_ADC_CONTINOUS_MODE
+    MX_BDMA_Init();
+    fADCBuffer                  = static_cast<uint32_t*>(dma_malloc(4));
+    const HAL_StatusTypeDef ret = HAL_ADC_Start_DMA(&hadc3, fADCBuffer, 1);
+    if (ret) {
+        console_error("ADC: error at start time: %i", ret);
+    }
+#endif // KLST_ADC_CONTINOUS_MODE
 }
 
 void dac_init() {
@@ -50,7 +71,7 @@ void dac_init() {
 void dac_start() {
     const HAL_StatusTypeDef status = HAL_DAC_Start(&hdac1, DAC1_CHANNEL_1);
     if (status) {
-        console_println("DAC: error at start time: %i", status);
+        console_error("DAC: error at start time: %i", status);
     }
 }
 
@@ -73,6 +94,9 @@ void adc_start() {}
 void adc_stop() {}
 
 float adc_read() {
+#ifdef KLST_ADC_CONTINOUS_MODE
+    return static_cast<float>(fADCBuffer[0]) * ADC_RESOLUTION;
+#else
     // TODO consider using DMA and run in background
     HAL_ADC_Start(&hadc3);
 #define KLST_ADC_POLLING
@@ -85,6 +109,7 @@ float adc_read() {
 #endif
     HAL_ADC_Stop(&hadc3);
     return static_cast<float>(mData) * ADC_RESOLUTION;
+#endif // KLST_ADC_CONTINOUS_MODE
 }
 
 #ifdef __cplusplus

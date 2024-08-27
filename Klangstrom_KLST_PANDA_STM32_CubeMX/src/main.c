@@ -38,7 +38,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "bdma.h"
 #include "dfsdm.h"
+#include "dma.h"
 #include "fatfs.h"
 #include "i2c.h"
 #include "memorymap.h"

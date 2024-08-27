@@ -26,7 +26,6 @@
 extern "C" {
 #endif
 
-static HAL_StatusTypeDef  ret;
 static I2C_HandleTypeDef* hi2c = nullptr;
 
 // TODO what about calibration?!?
@@ -57,7 +56,7 @@ void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
     //            console_println("FT5206: DEVICE READY    : 0x%02X", i);
     //        }
     //    }
-    //
+
     //    /*
     //	 DEVICE READY: 0x34 // WM8904
     //	 DEVICE READY: 0x35
@@ -65,11 +64,8 @@ void FT5206_init(I2C_HandleTypeDef* hi2c_handle) {
     //	 DEVICE READY: 0x71
     //	 */
 
-    uint8_t buf[2];
-    buf[0] = FT5206_DEVICE_MODE;
-    buf[1] = 0x00;
-    ret    = HAL_I2C_Master_Transmit(hi2c, FT5206_I2C_ADDRESS, buf, 2, FT5206_TIMEOUT);
-
+    uint8_t                 buf[2] = {FT5206_DEVICE_MODE, 0x00};
+    const HAL_StatusTypeDef ret    = HAL_I2C_Master_Transmit(hi2c, FT5206_I2C_ADDRESS, buf, 2, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
         console_println("FT5206: transmit I2C ERROR");
     }
@@ -83,10 +79,12 @@ bool FT5206_read(TouchEvent* touchEvent) {
     if (touchEvent == nullptr) {
         return false;
     }
+
     uint8_t buf[FT5206_NUMBER_OF_REGISTERS];
-    ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
+
+    const HAL_StatusTypeDef ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_REGISTERS, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
-        console_error("FT5206: receive I2C ERROR");
+        console_error("FT5206: receive I2C ERROR: %i", ret);
         return false;
     }
 
@@ -107,8 +105,10 @@ void FT5206_print_info() {
     if (!hi2c) {
         return;
     }
+
     uint8_t buf[FT5206_NUMBER_OF_TOTAL_REGISTERS];
-    ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, FT5206_TIMEOUT);
+
+    const HAL_StatusTypeDef ret = HAL_I2C_Master_Receive(hi2c, FT5206_I2C_ADDRESS, buf, FT5206_NUMBER_OF_TOTAL_REGISTERS, FT5206_TIMEOUT);
     if (ret != HAL_OK) {
         console_error("FT5206: receive I2C ERROR");
         return;
