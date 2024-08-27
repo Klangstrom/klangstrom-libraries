@@ -122,7 +122,7 @@ void _console_print_(const char* format, ...) {
 #ifndef KLST_DISABLE_PRINT_DEBUG
 void _console_status_(const char* format, ...) {
     console_set_color_green();
-    console_timestamp();
+    console_timestamp(false);
 
     if (fIsMuted) {
         return;
@@ -139,7 +139,7 @@ void _console_status_(const char* format, ...) {
 
 void _console_error_(const char* format, ...) {
     console_set_color_red();
-    console_timestamp();
+    console_timestamp(false);
 
     if (fIsMuted) {
         return;

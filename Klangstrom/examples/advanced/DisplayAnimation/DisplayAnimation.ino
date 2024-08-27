@@ -9,13 +9,13 @@
 #include "System.h"
 #include "Console.h"
 #include "Display.h"
+#include "BitmapFont.h"
 
 #include "KLST--ICON--128x128.h"
-#include "DisplayDrawLibrary_DMA2D_STM32.h"
 
 class PVector {
 public:
-    PVector(uint16_t x, uint16_t y)
+    PVector(const uint16_t x, const uint16_t y)
         : x(x),
           y(y) {}
 
@@ -38,7 +38,7 @@ uint16_t y = 100;
 void setup() {
     system_init();
 
-    display_init(true, true);
+    display_init(false, true);
     display_set_backlight(0.5f);
     display_enable_automatic_update(true);
 }
@@ -60,13 +60,33 @@ void display_update_event() {
     display_rect_fill(x, y, 20, 20, RGBA(0xFF, 0xFF, 0xFF, 0x80));
     display_rect_fill(x + 5, y + 5, 40, 40, 0x80FF8000);
 
-    // display_line_horizontal(x, y, 1024, RGBA(0xFF, 0xFF, 0x00, 0x80));
+    for (int i = 0; i < 25; ++i) {
+        display_rect_fill(x + (i % 5) * 30, y + i / 5 * 30, 20, 20, RGB(0xFF, 0xFF, 0xFF));
+    }
+
+    display_line_horizontal(0, display_get_height() / 2, display_get_width(), RGB(0xFF, 0xFF, 0xFF));
+    display_line_vertical(display_get_width() / 2, 0, display_get_height(), RGB(0xFF, 0xFF, 0xFF));
+    display_line(0, 0, display_get_width(), display_get_height(), RGB(0xFF, 0xFF, 0xFF));
+    display_line(0, display_get_height(), display_get_width(), 0, RGB(0xFF, 0xFF, 0xFF));
+
+    display_circle_stroke(display_get_width() / 2, display_get_height() / 2, 50, RGB(0xFF, 0xFF, 0xFF));
+    display_rect_stroke(display_get_width() / 2 - 50, display_get_height() / 2 - 50, 100, 100, RGB(0xFF, 0xFF, 0xFF));
 
     for (int i = 0; i < MAX_POINTS; ++i) {
         display_pixel(points[i].x, points[i].y, BRIGHTNESS(0xFF));
     }
 
-    display_image(IMAGE_DATA, move++, y - IMAGE_HEIGHT / 2, IMAGE_WIDTH, IMAGE_HEIGHT);
+    display_image(IMAGE_DATA, move++, IMAGE_HEIGHT / 2, IMAGE_WIDTH, IMAGE_HEIGHT);
+
+    const std::vector<Point> points = {{x, y}, {200, 130}, {240, 200}, {80, 200}};
+    display_polygon_stroke(points, RGB(0xFF, 0xFF, 0xFF));
+
+    display_text(&Font12,
+                 x, y,
+                 "hello",
+                 TextAlign::LEFT,
+                 RGB(0xFF, 0x00, 0x00),
+                 BRIGHTNESS_ALPHA(0x00, 0x00));
 }
 
 void display_touch_event(TouchEvent* touchevent) {

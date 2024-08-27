@@ -20,15 +20,37 @@
 #pragma once
 
 #include <stdint.h>
+#include <vector>
+
 #include "TouchEvent.h"
+#include "BitmapFont.h"
 
 #define KLST_DISPLAY_RENDERER_SOFTWARE 1
 #define KLST_DISPLAY_RENDERER_HAL_DMA2D 2
 #define KLST_DISPLAY_RENDERER_RAW_DMA2D 3
+#define KLST_DISPLAY_RENDERER_DMA2D 4
 
-#define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_HAL_DMA2D
+#define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_DMA2D
 
 static constexpr uint8_t BYTES_PER_PIXEL = 4;
+
+typedef struct Point {
+    Point()
+        : x(0),
+          y(0) {}
+    Point(const uint16_t x, const uint16_t y)
+        : x(x),
+          y(y) {}
+
+    int16_t x;
+    int16_t y;
+} Point;
+
+typedef enum {
+    CENTERED = 0x01,
+    RIGHT    = 0x02,
+    LEFT     = 0x03
+} TextAlign;
 
 #ifdef __cplusplus
 extern "C" {
@@ -99,6 +121,9 @@ void backlight_init(); // implemented as BSP
 #define BRIGHTNESS(b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
 
+#define BRIGHTNESS_ALPHA(b, a) \
+    (((uint32_t) (a) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
+
 #define GET_ALPHA(argb) ((uint8_t) ((argb) >> 24))
 #define GET_RED(argb) ((uint8_t) ((argb) >> 16))
 #define GET_GREEN(argb) ((uint8_t) ((argb) >> 8))
@@ -111,8 +136,27 @@ int16_t  display_get_height();
 void     display_clear(uint32_t color);
 void     display_pixel(uint16_t x, uint16_t y, uint32_t color);
 uint32_t display_get_pixel(uint16_t x, uint16_t y);
-void     display_line_horizontal(uint16_t x, uint16_t y, uint16_t length, uint32_t color);
+void     display_line_horizontal(uint16_t x, uint16_t y, uint16_t length, uint32_t color); // BSP
+void     display_line_vertical(uint16_t x, uint16_t y, uint16_t length, uint32_t color);   // BSP
+void     display_line(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint32_t color);
 void     display_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color, bool filled);
-void     display_rect_fill(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
+void     display_rect_fill(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color); // BSP
 void     display_rect_stroke(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color);
+void     display_circle_stroke(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
 void     display_image(uint32_t* data, uint16_t x, uint16_t y, uint16_t width, uint16_t height);
+void     display_triangle_fill(uint16_t x0, uint16_t x1, uint16_t x2, uint16_t y0, uint16_t y1, uint16_t y2, uint32_t color);
+void     display_polygon_stroke(const std::vector<Point>& points, uint32_t color);
+void     display_polygon_fill(const std::vector<Point>& points, uint32_t color); // WIP
+void     display_text(BitmapFont* font,
+                      uint16_t    x,
+                      uint16_t    y,
+                      const char* text,
+                      TextAlign   align,
+                      uint32_t    color,
+                      uint32_t    background_color);
+void     display_char(BitmapFont* font,
+                      uint16_t    x,
+                      uint16_t    y,
+                      uint8_t     ascii_char,
+                      uint32_t    color,
+                      uint32_t    background_color);

@@ -29,23 +29,37 @@
 extern "C" {
 #endif
 
+#ifndef KLST_EXTERNAL_MEMORY_SECTION_NAME
+#define KLST_EXTERNAL_MEMORY_SECTION_NAME ".external_memory"
+#endif
+
 // from main
 //#define KLST_DISPLAY_FRAMEBUFFER_ADDRESS 0x90000000
 //#define KLST_DISPLAY_WIDTH 480
 //#define KLST_DISPLAY_HEIGHT 272
 
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4)
+// TODO so here is the hypothesis: this only allocates framebuffer memory for a single layer but LTDC is configured to use 2 layers. investigate!
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4) // TODO added `*2` for both layers
 #define FRAMEBUFFER1_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)
-#define FRAMEBUFFER2_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE)
+#define FRAMEBUFFER2_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE) // TODO check actual addresses
 #define FRAMEBUFFER1 0
 #define FRAMEBUFFER2 1
+
 #define BYTES_PER_PIXEL ((uint8_t) 4)
+
+// reserve memory for framebuffers ( double buffer )
+static uint32_t fFrameBuffers[2][KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 2]
+    __attribute__((section(KLST_EXTERNAL_MEMORY_SECTION_NAME)))
+    __attribute__((aligned(32)));
+static uint8_t            fCurrentFrameBuffer = 0;
+static constexpr uint32_t fFrameBufferLength  = KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 2;
 
 /*
  * framebuffer addresses:
  *
  * FRAMEBUFFER1_ADDR :: 0x90000000
- * FRAMEBUFFER2_ADDR :: 0x9007F800
+ * FRAMEBUFFER2_ADDR :: 0x9007F800 ( 1 layers, double buffer )
+ * FRAMEBUFFER2_ADDR :: 0x900FF000 ( 2 layers, double buffer )
  */
 
 //  values for ER-TFT043A2-3 display with ST7282 driver
@@ -72,33 +86,33 @@ extern "C" {
 extern LTDC_HandleTypeDef  hltdc;
 extern DMA2D_HandleTypeDef hdma2d;
 
-void        HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle);
-static void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
-static void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
+// void        HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle);
+// static void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+// static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
+// static void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
 
-static uint32_t fVSYNCDuration         = 0;
-static uint32_t fVSYNCStart            = 0;
-static uint8_t  active_framebuffer     = FRAMEBUFFER1;
-static bool     fSyncToVBlank          = false;
-volatile bool   fDMA2DTransferComplete = false;
+static uint32_t fVSYNCDuration     = 0;
+static uint32_t fVSYNCStart        = 0;
+static uint8_t  active_framebuffer = FRAMEBUFFER1;
+static bool     fSyncToVBlank      = false;
+// volatile bool   fDMA2DTransferComplete = false;
 
-// #define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+#define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 
-static void cleanup_dma2d() {
-    /* Wait for DMA2D to finish last run */
-    while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
-        ;
-
-    /* Clear transfer flags */
-    WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
-}
-
-static void cleanup_memory() {
-    if (SCB->CCR & SCB_CCR_DC_Msk) {
-        SCB_CleanInvalidateDCache();
-    }
-}
+// static void cleanup_dma2d() {
+//     /* Wait for DMA2D to finish last run */
+//     while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
+//         ;
+//
+//     /* Clear transfer flags */
+//     WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
+// }
+//
+// static void cleanup_memory() {
+//     if (SCB->CCR & SCB_CCR_DC_Msk) {
+//         SCB_CleanInvalidateDCache();
+//     }
+// }
 
 static void enable_reload() {
 #ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
@@ -116,16 +130,33 @@ void display_enable_automatic_update(const bool sync_to_v_blank) {
     fSyncToVBlank = sync_to_v_blank;
 }
 
+#include "stm32h7xx_hal_def.h"
+
+static bool skip_every_other_frame = true;
 #ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
 #else
 void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
 #endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
     if (hltdc_handle->Instance == LTDC) {
-        cleanup_memory();
-        display_fire_update_callback();
-        cleanup_dma2d();
-        display_swap_buffer();
+        // skip_every_other_frame = !skip_every_other_frame;
+        if (skip_every_other_frame) {
+            display_fire_update_callback();
+
+            // hltdc_handle->Lock = HAL_LOCKED;
+            // hdma2d.Lock        = HAL_LOCKED;
+            // __HAL_LTDC_DISABLE_IT(hltdc_handle, LTDC_IT_LI);
+            // __HAL_DMA2D_DISABLE_IT(&hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
+            //
+            // cleanup_memory();
+            // cleanup_dma2d();
+            display_swap_buffer();
+            //
+            // __HAL_DMA2D_ENABLE_IT(&hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
+            // __HAL_LTDC_ENABLE_IT(hltdc_handle, LTDC_IT_LI);
+            // hdma2d.Lock        = HAL_UNLOCKED;
+            // hltdc_handle->Lock = HAL_UNLOCKED;
+        }
         if (fSyncToVBlank) {
             enable_reload();
         }
@@ -152,45 +183,55 @@ void display_swap_buffer(void) {
     }
     //	LTDC->SRCR = LTDC_SRCR_VBR;
     if (active_framebuffer == FRAMEBUFFER1) {
-        LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
+        // LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
         //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER2, 1);
         active_framebuffer = FRAMEBUFFER2;
     } else {
-        LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
+        // LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
         //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
         active_framebuffer = FRAMEBUFFER1;
     }
 }
 
-void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
-    /* USER CODE BEGIN DMA2D_XferCpltCallback */
-    // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
-    // to flush the Dcache prior to letting DMA2D accessing it. That's done
-    // using SCB_CleanInvalidateDCache().
-    // SCB_CleanInvalidateDCache(); // TODO is this necessary see also `flushLine`
-    /* USER CODE END DMA2D_XferCpltCallback */
-    console_println("Xfer complete");
-    // // TODO is this the right location
-    // WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
-    // while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
-    //     ;
-    // TODO this is still broken :(
-    fDMA2DTransferComplete = true;
-}
+// void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
+//     /* USER CODE BEGIN DMA2D_XferCpltCallback */
+//     // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
+//     // to flush the Dcache prior to letting DMA2D accessing it. That's done
+//     // using SCB_CleanInvalidateDCache().
+//     // SCB_CleanInvalidateDCache(); // TODO is this necessary see also `flushLine`
+//     /* USER CODE END DMA2D_XferCpltCallback */
+//     console_println("Xfer complete");
+//     // // TODO is this the right location
+//     // WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
+//     // while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
+//     //     ;
+//     // TODO this is still broken :(
+//     fDMA2DTransferComplete = true;
+// }
+//
+// void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle) {
+//     console_error("DMA2D_XferErrorCallback");
+// }
 
-void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle) {
-    console_error("DMA2D_XferErrorCallback");
-}
+extern void display_LTDC_init_DMA2D(); // TODO this should be handled differently
 
 void display_LTDC_init() {
+    // // print actual memory addresses of framebuffers
+    // console_println("FRAMEBUFFER1_ADDR :: %p", FRAMEBUFFER1_ADDR);
+    // console_println("FRAMEBUFFER2_ADDR :: %p", FRAMEBUFFER2_ADDR);
+    // // print actual memory addresses of framebuffers for `ltdc_framebuffers`
+    // console_println("FRAMEBUFFER1_ADDR :: %p", fFrameBuffers[0]);
+    // console_println("FRAMEBUFFER2_ADDR :: %p", fFrameBuffers[1]);
+
     /* fill framebuffers with black */
     for (int i = 0; i < KLST_DISPLAY_FRAMEBUFFER_SIZE; i++) {
         reinterpret_cast<uint8_t*>(FRAMEBUFFER1_ADDR)[i] = 0x00;
         reinterpret_cast<uint8_t*>(FRAMEBUFFER2_ADDR)[i] = 0x00;
     }
 
-    hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
-    hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
+    // hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
+    // hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
+    display_LTDC_init_DMA2D();
 }
 
 #ifdef __cplusplus

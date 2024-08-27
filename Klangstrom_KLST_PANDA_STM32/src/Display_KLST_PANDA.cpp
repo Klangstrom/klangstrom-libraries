@@ -28,7 +28,7 @@
 #include "main.h"
 #include "tim.h"
 #include "ltdc.h"
-#include "dma2d.h"
+// #include "dma2d.h"
 #include "Display.h"
 #include "Console.h"
 
@@ -39,7 +39,7 @@ extern "C" {
 bool display_init_BSP(const bool has_touchpanel) {
     /* display = LTDC + backlight + touch panel */
     MX_LTDC_Init();
-    MX_DMA2D_Init();
+    // MX_DMA2D_Init();
     MX_TIM3_Init(); // backlight
 
     display_switch_off();
