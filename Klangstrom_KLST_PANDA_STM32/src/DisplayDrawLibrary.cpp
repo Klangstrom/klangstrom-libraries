@@ -29,14 +29,6 @@
 
 /* NOTE these functions are deliberately not placed in `extern "C" {}` block to allow overloading */
 
-int16_t display_get_width() {
-    return KLST_DISPLAY_WIDTH;
-}
-
-int16_t display_get_height() {
-    return KLST_DISPLAY_HEIGHT;
-}
-
 void display_pixel(const uint16_t x, const uint16_t y, const uint32_t color) {
     if (x < KLST_DISPLAY_WIDTH && y < KLST_DISPLAY_HEIGHT) {
         const uint32_t offset                                                       = x + y * KLST_DISPLAY_WIDTH;
@@ -383,27 +375,24 @@ static void DrawChar(BitmapFont*    font,
     const uint16_t width  = font->Width;
     const uint8_t  offset = 8 * ((width + 7) / 8) - width;
 
-    for (uint32_t i = 0; i < height; i++) {
-        const uint8_t* pchar = (const_cast<uint8_t*>(c) + (width + 7) / 8 * i);
-        switch (((width + 7) / 8)) {
-
+    for (uint16_t i = 0; i < height; i++) {
+        const uint8_t* pchar = const_cast<uint8_t*>(c) + (width + 7) / 8 * i;
+        switch ((width + 7) / 8) {
             case 1:
                 line = pchar[0];
                 break;
-
             case 2:
                 line = pchar[0] << 8 | pchar[1];
                 break;
-
             case 3:
             default:
                 line = pchar[0] << 16 | (pchar[1] << 8) | pchar[2];
                 break;
         }
 
-        for (uint32_t j = 0; j < width; j++) {
+        for (uint16_t j = 0; j < width; j++) {
             if (line & (1 << (width - j + offset - 1))) {
-                display_pixel((x + j), y, color);
+                display_pixel(x + j, y, color);
             } else {
                 if (GET_ALPHA(background_color) > 0x00) {
                     display_pixel((x + j), y, background_color);

@@ -32,6 +32,14 @@
 #include "Display.h"
 #include "Console.h"
 
+int16_t display_get_width() {
+    return KLST_DISPLAY_WIDTH;
+}
+
+int16_t display_get_height() {
+    return KLST_DISPLAY_HEIGHT;
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
