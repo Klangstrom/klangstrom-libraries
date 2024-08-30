@@ -1,7 +1,7 @@
 # Klangstrom Libraries Coding Style
 
 ==@TODO(update BSP function naming)==
-==@TODO(update C-style implementatino)==
+==@TODO(update C-style implementation)==
 ==@TODO(remove "Callback Dispatcher Pattern" and classes)==
 
 - favor `#pragma once`  over classic include guard in header files 
