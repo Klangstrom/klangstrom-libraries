@@ -28,7 +28,6 @@
 #include "main.h"
 #include "tim.h"
 #include "ltdc.h"
-// #include "dma2d.h"
 #include "Display.h"
 #include "Console.h"
 

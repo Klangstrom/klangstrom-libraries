@@ -17,6 +17,8 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO this is a mess and needs some serious cleaning and refactoring
+
 #include "Klangstrom.h"
 #ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
 #ifdef KLST_PANDA_STM32
@@ -167,7 +169,7 @@ void display_deinit() {
     HAL_LTDC_DeInit(&hltdc);
 }
 
-volatile uint32_t LTDC_get_backbuffer_address(void) {
+volatile uint32_t display_get_backbuffer_address(void) {
     if (!display_is_double_buffered()) {
         return FRAMEBUFFER1_ADDR;
     }
