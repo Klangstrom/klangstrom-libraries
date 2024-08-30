@@ -4002,7 +4002,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C3015151"
+		(property "JLCPCB" "C24497"
 			(at 176.53 132.715 0)
 			(effects
 				(font
@@ -5113,7 +5113,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C3015151"
+		(property "JLCPCB" "C24497"
 			(at 189.23 132.715 0)
 			(effects
 				(font

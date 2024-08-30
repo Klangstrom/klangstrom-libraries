@@ -3795,7 +3795,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "alternative part at JLCPCB C2891434"
 			(at 119.38 48.895 0)
 			(effects
 				(font
@@ -3804,7 +3804,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C2891434"
+		(property "JLCPCB" "C24154"
 			(at 119.38 48.895 0)
 			(effects
 				(font
@@ -4552,7 +4552,7 @@
 				(hide yes)
 			)
 		)
-		(property "JLCPCB" "C963208"
+		(property "JLCPCB" "C843366"
 			(at 41.91 102.87 0)
 			(effects
 				(font
