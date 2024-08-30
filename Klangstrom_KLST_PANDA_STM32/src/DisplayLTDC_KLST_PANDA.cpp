@@ -17,7 +17,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO this is a mess and needs some serious cleaning and refactoring
+// TODO this is a mess and needs some serious cleaning and refactoring. maybe merge with `Display_KLST_PANDA.cpp`
 
 #include "Klangstrom.h"
 #ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
@@ -25,6 +25,7 @@
 
 #include "main.h"
 #include "Display.h"
+#include "Display_KLST_PANDA.h"
 #include "Console.h"
 
 #ifdef __cplusplus
@@ -169,7 +170,7 @@ void display_deinit() {
     HAL_LTDC_DeInit(&hltdc);
 }
 
-volatile uint32_t display_get_backbuffer_address(void) {
+volatile uint32_t display_get_buffer_address() {
     if (!display_is_double_buffered()) {
         return FRAMEBUFFER1_ADDR;
     }
@@ -177,6 +178,16 @@ volatile uint32_t display_get_backbuffer_address(void) {
         return FRAMEBUFFER2_ADDR;
     }
     return FRAMEBUFFER1_ADDR;
+}
+
+volatile uint32_t* display_get_buffer() {
+    if (!display_is_double_buffered()) {
+        return reinterpret_cast<uint32_t*>(FRAMEBUFFER1_ADDR);
+    }
+    if (active_framebuffer == FRAMEBUFFER1) {
+        return reinterpret_cast<uint32_t*>(FRAMEBUFFER2_ADDR);
+    }
+    return reinterpret_cast<uint32_t*>(FRAMEBUFFER1_ADDR);
 }
 
 void display_swap_buffer(void) {
@@ -195,26 +206,6 @@ void display_swap_buffer(void) {
     }
 }
 
-// void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
-//     /* USER CODE BEGIN DMA2D_XferCpltCallback */
-//     // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
-//     // to flush the Dcache prior to letting DMA2D accessing it. That's done
-//     // using SCB_CleanInvalidateDCache().
-//     // SCB_CleanInvalidateDCache(); // TODO is this necessary see also `flushLine`
-//     /* USER CODE END DMA2D_XferCpltCallback */
-//     console_println("Xfer complete");
-//     // // TODO is this the right location
-//     // WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
-//     // while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
-//     //     ;
-//     // TODO this is still broken :(
-//     fDMA2DTransferComplete = true;
-// }
-//
-// void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle) {
-//     console_error("DMA2D_XferErrorCallback");
-// }
-
 extern void display_LTDC_init_DMA2D(); // TODO this should be handled differently
 
 void display_LTDC_init() {
@@ -230,10 +221,6 @@ void display_LTDC_init() {
         reinterpret_cast<uint8_t*>(FRAMEBUFFER1_ADDR)[i] = 0x00;
         reinterpret_cast<uint8_t*>(FRAMEBUFFER2_ADDR)[i] = 0x00;
     }
-
-    // hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
-    // hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
-    display_LTDC_init_DMA2D();
 }
 
 #ifdef __cplusplus

@@ -19,7 +19,7 @@
 
 #include "Klangstrom.h"
 #ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
-#if defined(KLST_PANDA_STM32)
+#ifdef KLST_PANDA_STM32
 
 #ifndef KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
 #error "KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY must be defined for display"
@@ -29,7 +29,22 @@
 #include "tim.h"
 #include "ltdc.h"
 #include "Display.h"
-#include "Console.h"
+#include "Display_KLST_PANDA.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef MAX
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef MIN
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
+
+extern TIM_HandleTypeDef htim3;
+
+static uint32_t frame_counter = 0;
 
 int16_t display_get_width() {
     return KLST_DISPLAY_WIDTH;
@@ -39,23 +54,31 @@ int16_t display_get_height() {
     return KLST_DISPLAY_HEIGHT;
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void display_backlight_init() {
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+}
+
+void display_set_backlight(const float brightness) {
+    const uint32_t mPeriod = htim3.Init.Period;
+    uint32_t       mPhase  = static_cast<uint32_t>(mPeriod * brightness);
+    mPhase                 = MAX(1, MIN(mPeriod, mPhase));
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
+}
 
 bool display_init_BSP(const TouchPanelMode touch_panel_mode) {
-    /* display = LTDC + backlight + touch panel */
+    /* display = LTDC + DMA2D + backlight + touch panel */
     MX_LTDC_Init();
     // MX_DMA2D_Init();
     MX_TIM3_Init(); // backlight
 
     display_switch_off();
     display_LTDC_init();
+    display_renderer_init();
     display_switch_on();
 
     touch_init(touch_panel_mode);
 
-    backlight_init();
+    display_backlight_init();
     display_set_backlight(0.5f);
 
     return true;
@@ -73,5 +96,5 @@ void display_switch_off() {
 }
 #endif
 
-#endif
 #endif // KLST_PANDA_STM32
+#endif // KLST_PERIPHERAL_ENABLE_DISPLAY

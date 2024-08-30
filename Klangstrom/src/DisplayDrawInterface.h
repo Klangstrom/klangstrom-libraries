@@ -25,6 +25,7 @@
 
 void     display_clear_BSP(uint32_t color);
 void     display_set_pixel_BSP(uint16_t x, uint16_t y, uint32_t color);
+void     display_set_pixel_alpha_BSP(uint16_t x, uint16_t y, uint32_t color);
 uint32_t display_get_pixel_BSP(uint16_t x, uint16_t y);
 void     display_rect_fill_BSP(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color); // BSP
 void     display_line_horizontal_BSP(uint16_t x, uint16_t y, uint16_t length, uint32_t color);

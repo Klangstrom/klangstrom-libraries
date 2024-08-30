@@ -38,7 +38,7 @@ extern DMA2D_HandleTypeDef hdma2d;
 static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
 static void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
 
-void display_LTDC_init_DMA2D() {
+static void display_LTDC_DMA2D_init() {
     // NOTE not calling `MX_DMA2D_Init()`
     hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
     hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
@@ -66,6 +66,11 @@ void display_LTDC_init_DMA2D() {
     }
 }
 
+void display_renderer_init() {
+    display_LTDC_DMA2D_init();
+}
+
+
 static void DMA2D_FillRect(const uint32_t color, const uint32_t x, const uint32_t y, const uint32_t width, const uint32_t height) {
     hdma2d.Init.Mode         = DMA2D_R2M;
     hdma2d.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
@@ -74,7 +79,7 @@ static void DMA2D_FillRect(const uint32_t color, const uint32_t x, const uint32_
 #define RECT_HAS_ALPHA 0 // TODO alpha with filled rects is not working yet WIP
 #if RECT_HAS_ALPHA
     const uint32_t offset      = (x + y * display_get_width()) * BYTES_PER_PIXEL;
-    const uint32_t destination = display_get_backbuffer_address() + offset;
+    const uint32_t destination = display_get_buffer_address() + offset;
 
     // Foreground
     hdma2d.LayerCfg[1].AlphaMode      = DMA2D_NO_MODIF_ALPHA;
@@ -101,7 +106,7 @@ static void DMA2D_FillRect(const uint32_t color, const uint32_t x, const uint32_
     HAL_DMA2D_Start(
         &hdma2d,
         color,
-        display_get_backbuffer_address() + (x + y * display_get_width()) * 4,
+        display_get_buffer_address() + (x + y * display_get_width()) * 4,
         width,
         height);
 #endif
@@ -118,7 +123,7 @@ void DMA2D_DrawImage(uint32_t*      data,
     hdma2d.Init.OutputOffset = display_get_width() - width;
 
     const uint32_t offset      = (x + y * display_get_width()) * BYTES_PER_PIXEL;
-    const uint32_t destination = display_get_backbuffer_address() + offset;
+    const uint32_t destination = display_get_buffer_address() + offset;
 
     HAL_DMA2D_Init(&hdma2d);
     HAL_DMA2D_Start(&hdma2d,
@@ -131,7 +136,7 @@ void DMA2D_DrawImage(uint32_t*      data,
 
 void DMA2D_DrawImageAlpha(uint32_t* data, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     const uint32_t offset      = (x + y * display_get_width()) * BYTES_PER_PIXEL;
-    const uint32_t destination = display_get_backbuffer_address() + offset;
+    const uint32_t destination = display_get_buffer_address() + offset;
 
     hdma2d.Init.Mode         = DMA2D_M2M_BLEND;
     hdma2d.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
@@ -194,15 +199,47 @@ void display_set_pixel_BSP(const uint16_t x,
                            const uint16_t y,
                            const uint32_t color) {
     if (x < display_get_width() && y < display_get_height()) {
-        const uint32_t offset                                                          = x + y * display_get_width();
-        reinterpret_cast<volatile uint32_t*>(display_get_backbuffer_address())[offset] = color;
+        const uint32_t offset                                                      = x + y * display_get_width();
+        reinterpret_cast<volatile uint32_t*>(display_get_buffer_address())[offset] = color;
+    }
+}
+
+static uint32_t blend_colors(const uint32_t color_a, const uint32_t color_b, const uint8_t alpha) {
+    const float   a     = alpha / 255.0f;
+    const float   a_inv = 1.0f - a;
+    const uint8_t r     = GET_RED(color_a) * a_inv + GET_RED(color_b) * a;
+    const uint8_t g     = GET_GREEN(color_a) * a_inv + GET_GREEN(color_b) * a;
+    const uint8_t b     = GET_BLUE(color_a) * a_inv + GET_BLUE(color_b) * a;
+    // const uint8_t  inv   = 0xFF - alpha;
+    // const uint8_t  r     = (GET_RED(color_a) * inv + GET_RED(color_b) * alpha) >> 8;
+    // const uint8_t  g     = (GET_GREEN(color_a) * inv + GET_GREEN(color_b) * alpha) >> 8;
+    // const uint8_t  b     = (GET_BLUE(color_a) * inv + GET_BLUE(color_b) * alpha) >> 8;
+    const uint32_t blend = RGBA(r, g, b, 0xFF);
+    return blend;
+}
+
+void display_set_pixel_alpha_BSP(const uint16_t x,
+                                 const uint16_t y,
+                                 const uint32_t color) {
+    if (x < display_get_width() && y < display_get_height()) {
+        const uint8_t alpha = GET_ALPHA(color);
+        if (alpha == 0x00) {
+        } else if (alpha == 0xFF) {
+            display_set_pixel_BSP(x, y, color);
+        } else if (alpha > 0x00) {
+            const uint32_t offset = x + y * display_get_width();
+            const auto     buffer = reinterpret_cast<volatile uint32_t*>(display_get_buffer_address());
+            const uint32_t pixel  = buffer[offset];
+            const uint32_t mColor = blend_colors(pixel, color, alpha);
+            buffer[offset]        = mColor;
+        }
     }
 }
 
 uint32_t display_get_pixel_BSP(const uint16_t x, const uint16_t y) {
     if (x < display_get_width() && y < display_get_height()) {
         const uint32_t offset = x + y * display_get_width();
-        return reinterpret_cast<volatile uint32_t*>(display_get_backbuffer_address())[offset];
+        return reinterpret_cast<volatile uint32_t*>(display_get_buffer_address())[offset];
     }
     return 0;
 }
@@ -265,19 +302,16 @@ static void DrawChar(BitmapFont*    font,
         }
 
         for (uint16_t j = 0; j < width; j++) {
-            if (line & (1 << (width - j + offset - 1))) {
-                display_set_pixel_BSP(x + j, y, color);
-            } else {
-                const uint8_t alpha = GET_ALPHA(background_color);
-                if (alpha == 0xFF) {
-                    display_set_pixel_BSP((x + j), y, background_color);
-                } else if (alpha > 0x00) {
-                    const uint32_t pixel = display_get_pixel_BSP((x + j), y);
-                    const uint8_t  red   = (GET_RED(background_color) * (0xFF - alpha) + GET_RED(pixel) * alpha) / 0xFF;
-                    const uint8_t  green = (GET_GREEN(background_color) * (0xFF - alpha) + GET_GREEN(pixel) * alpha) / 0xFF;
-                    const uint8_t  blue  = (GET_BLUE(background_color) * (0xFF - alpha) + GET_BLUE(pixel) * alpha) / 0xFF;
-                    display_set_pixel_BSP((x + j), y, RGBA(red, green, blue, 0xFF));
-                }
+            const bool     mIsForeGroundColor = line & (1 << (width - j + offset - 1));
+            const uint32_t mColor             = mIsForeGroundColor ? color : background_color;
+            const uint8_t  alpha              = GET_ALPHA(mColor);
+            if (alpha == 0x00) {
+            } else if (alpha == 0xFF) {
+                display_set_pixel_BSP(x + j, y, mColor);
+            } else if (alpha > 0x00) {
+                const uint32_t pixel       = display_get_pixel_BSP(x + j, y);
+                const uint32_t mBlendColor = blend_colors(pixel, mColor, alpha);
+                display_set_pixel_BSP(x + j, y, mBlendColor);
             }
         }
         y++;

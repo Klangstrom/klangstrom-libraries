@@ -30,33 +30,35 @@
 #define KLST_DISPLAY_RENDERER_DMA2D 2
 #define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_DMA2D
 
+#define BLACK 0xFF000000
+#define WHITE 0xFFFFFFFF
+#define RED 0xFFFF0000
+#define GREEN 0xFF00FF00
+#define BLUE 0xFF0000FF
+#define YELLOW 0xFFFFFF00
+#define CYAN 0xFF00FFFF
+#define MAGENTA 0xFFFF00FF
+
 #define ARGB_TO_RGBA(argb)             \
     (((argb) & 0xFF000000) >> 24) |    \
         (((argb) & 0x00FF0000) >> 8) | \
         (((argb) & 0x0000FF00) << 8) | \
         (((argb) & 0x000000FF) << 24)
-
 #define RGBA_TO_ARGB(rgba)             \
     (((rgba) & 0xFF000000) >> 24) |    \
         (((rgba) & 0x00FF0000) >> 8) | \
         (((rgba) & 0x0000FF00) << 8) | \
         (((rgba) & 0x000000FF) << 24)
-
 #define RGB_ALPHA_TO_ARGB(rgb, alpha) \
     (((alpha) << 24) | ((rgb) & 0x00FFFFFF))
-
 #define RGBA(r, g, b, a) \
     (((uint32_t) (a) << 24) | ((uint32_t) (r) << 16) | ((uint32_t) (g) << 8) | ((uint32_t) (b)))
-
 #define RGB(r, g, b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (r) << 16) | ((uint32_t) (g) << 8) | ((uint32_t) (b)))
-
-#define BRIGHTNESS(b) \
+#define GRAY(b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
-
-#define BRIGHTNESS_ALPHA(b, a) \
+#define GRAY_ALPHA(b, a) \
     (((uint32_t) (a) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
-
 #define GET_ALPHA(argb) ((uint8_t) ((argb) >> 24))
 #define GET_RED(argb) ((uint8_t) ((argb) >> 16))
 #define GET_GREEN(argb) ((uint8_t) ((argb) >> 8))
@@ -87,24 +89,23 @@ typedef void (*Callback_1_TOUCHEVENTPTR)(TouchEvent*);
 WEAK void display_update_event();
 WEAK void display_touch_event(TouchEvent* touchevent);
 
-bool              display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT); // implemented as BSP
-void              display_deinit();                                                                        // implemented as BSP
-void              display_set_backlight(float brightness);                                                 // implemented as BSP
-void              display_enable_automatic_update(bool sync_to_v_blank);                                   // implemented as BSP
-void              display_swap_buffer();                                                                   // implemented as BSP
-void              display_switch_on();                                                                     // implemented as BSP
-void              display_switch_off();                                                                    // implemented as BSP
-bool              display_is_double_buffered();
-void              display_set_update_callback(Callback_0_VOID callback);
-void              display_fire_update_callback();
-void              display_set_touch_callback(Callback_1_TOUCHEVENTPTR callback);
-void              display_fire_touch_callback(TouchEvent* touchevent);
-bool              display_init_BSP(TouchPanelMode touch_panel_mode);
-volatile uint32_t display_get_backbuffer_address(void);
-int16_t           display_get_width();
-int16_t           display_get_height();
-
-void display_LTDC_init(); // TODO rework this as BSP
+bool               display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT); // implemented as BSP
+void               display_deinit();                                                                        // implemented as BSP
+int16_t            display_get_width();
+int16_t            display_get_height();
+void               display_set_backlight(float brightness);               // implemented as BSP
+void               display_enable_automatic_update(bool sync_to_v_blank); // implemented as BSP
+void               display_swap_buffer();                                 // implemented as BSP
+void               display_switch_on();                                   // implemented as BSP
+void               display_switch_off();                                  // implemented as BSP
+bool               display_is_double_buffered();
+void               display_set_update_callback(Callback_0_VOID callback);
+void               display_fire_update_callback();
+void               display_set_touch_callback(Callback_1_TOUCHEVENTPTR callback);
+void               display_fire_touch_callback(TouchEvent* touchevent);
+bool               display_init_BSP(TouchPanelMode touch_panel_mode);
+volatile uint32_t  display_get_buffer_address(); // implemented as BSP
+volatile uint32_t* display_get_buffer();         // implemented as BSP
 
 // TODO add option to use touchscreen in polling mode
 //     `bool touch_has_event();` + `void touch_mode(uint8_t mode);`, `mode=polling` or `mode=interrupt`
@@ -113,7 +114,6 @@ void touch_init(TouchPanelMode touch_panel_mode); // implemented as BSP
 void touch_read(TouchEvent* touchevent);          // implemented as BSP
 bool touch_has_event();                           // implemented as BSP
 
-void backlight_init(); // implemented as BSP
 
 #ifdef __cplusplus
 }

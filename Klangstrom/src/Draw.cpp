@@ -24,7 +24,6 @@
 #include <stdint.h>
 #include <vector>
 
-#include "Console.h"
 #include "Draw.h"
 #include "DisplayDrawInterface.h"
 #include "Display.h"
@@ -49,7 +48,8 @@ static uint32_t    fStrokeColor     = 0xFFFFFFFF;
 static bool        fHasStroke       = false;
 static uint32_t    fBackgroundColor = 0x000000FF;
 static BitmapFont* fFont            = nullptr;
-static TextAlign   fTextAlign       = TextAlign::LEFT;
+static TextAlign   fTextAlign       = LEFT;
+static KLSTFont*   fKLSTFont        = nullptr;
 
 /* NOTE these functions are deliberately NOT placed in `extern "C" {}` block to allow overloading */
 
@@ -79,6 +79,18 @@ void draw_set_pixel(const int16_t  x,
                     const int16_t  y,
                     const uint32_t color) {
     display_set_pixel_BSP(x, y, color);
+}
+
+void draw_set_pixel_alpha(const int16_t x, const int16_t y, const uint32_t color) {
+    const uint8_t alpha = GET_ALPHA(color);
+    if (alpha == 0x00) {
+    } else if (alpha == 0xFF) {
+        display_set_pixel_BSP(x, y, color);
+    } else if (alpha > 0x00) {
+        const uint32_t pixel       = display_get_pixel_BSP(x, y);
+        const uint32_t mBlendColor = draw_blend_colors(pixel, color, alpha);
+        display_set_pixel_BSP(x, y, mBlendColor);
+    }
 }
 
 uint32_t draw_get_pixel(const int16_t x, const int16_t y) {
@@ -196,6 +208,61 @@ void draw_line(const int16_t  x0,
 //     }
 // }
 
+#ifndef _swap_int16_t
+#define _swap_int16_t(a, b) \
+    {                       \
+        int16_t t = a;      \
+        a         = b;      \
+        b         = t;      \
+    }
+#endif
+
+void _draw_line_arbitrary(int16_t        x0,
+                          int16_t        y0,
+                          int16_t        x1,
+                          int16_t        y1,
+                          const uint32_t color) {
+    /*
+     * @brief "Write a line.  Bresenham's algorithm - thx wikpedia" thx adafruit
+     *
+     */
+    const bool steep = ABS(y1 - y0) > ABS(x1 - x0);
+    if (steep) {
+        _swap_int16_t(x0, y0);
+        _swap_int16_t(x1, y1);
+    }
+
+    if (x0 > x1) {
+        _swap_int16_t(x0, x1);
+        _swap_int16_t(y0, y1);
+    }
+
+    const int16_t dx = x1 - x0;
+    const int16_t dy = ABS(y1 - y0);
+
+    int16_t err = dx / 2;
+    int16_t ystep;
+
+    if (y0 < y1) {
+        ystep = 1;
+    } else {
+        ystep = -1;
+    }
+
+    for (; x0 <= x1; x0++) {
+        if (steep) {
+            display_set_pixel_BSP(y0, x0, color);
+        } else {
+            display_set_pixel_BSP(x0, y0, color);
+        }
+        err -= dy;
+        if (err < 0) {
+            y0 += ystep;
+            err += dx;
+        }
+    }
+}
+
 void draw_line_arbitrary(const int16_t  x0,
                          const int16_t  y0,
                          const int16_t  x1,
@@ -274,19 +341,47 @@ void draw_line_horizontal(const int16_t  x,
     display_line_horizontal_BSP(x, y, length, color);
 }
 
-auto draw_line_vertical(const int16_t  x,
+static bool evaluatePattern(const uint8_t pIndex, const uint8_t pPattern) {
+    const uint8_t mMask = static_cast<uint8_t>(1 << pIndex);
+    return (mMask & pPattern) > 0;
+}
+
+void draw_line_horizontal_pattern(const int16_t x, const int16_t y, const uint16_t length, const uint8_t pattern) {
+    for (uint16_t i = 0; i < length; i++) {
+        const uint8_t mPatternID = i % 8;
+        const int16_t mX         = x + i;
+        if (evaluatePattern(mPatternID, pattern)) {
+            display_set_pixel_BSP(mX, y, fStrokeColor);
+        } else {
+            display_set_pixel_alpha_BSP(mX, y, fBackgroundColor);
+        }
+    }
+}
+
+void draw_line_vertical(const int16_t  x,
                         const int16_t  y,
                         const uint16_t length,
-                        const uint32_t color) -> void {
+                        const uint32_t color) {
     display_line_vertical_BSP(x, y, length, color);
+}
+
+void draw_line_vertical_pattern(const int16_t x, const int16_t y, const uint16_t length, const uint8_t pattern) {
+    for (uint16_t i = 0; i < length; i++) {
+        const uint8_t mPatternID = i % 8;
+        const int16_t mY         = y + i;
+        if (evaluatePattern(mPatternID, pattern)) {
+            display_set_pixel_BSP(x, mY, fStrokeColor);
+        } else {
+            display_set_pixel_alpha_BSP(x, mY, fBackgroundColor);
+        }
+    }
 }
 
 void draw_rect(const int16_t  x,
                const int16_t  y,
                const uint16_t width,
                const uint16_t height,
-               const uint32_t color,
-               const bool     filled) {
+               const uint32_t color, const bool filled) {
     // TODO check bounds and clamp values
     // TODO remove color and filled parameters and use global color variables
     if (filled) {
@@ -325,7 +420,7 @@ void draw_circle(const int16_t  x,
         draw_circle_stroke(x, y, radius, fStrokeColor);
     }
     if (fHasFill) {
-        draw_circle_fill(x, y, radius);
+        draw_circle_fill(x, y, radius, fFillColor);
     }
 }
 
@@ -356,8 +451,36 @@ void draw_circle_stroke(const int16_t  x,
     }
 }
 
-void draw_circle_fill(int16_t x, int16_t y, uint16_t radius) {
-    // TODO
+void draw_circle_fill(int16_t x0, int16_t y0, uint16_t r,
+                      const uint32_t color) {
+    int16_t f     = 1 - r;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * r;
+    int16_t x     = 0;
+    int16_t y     = r;
+
+    display_set_pixel_BSP(x0, y0 + r, color);
+    display_set_pixel_BSP(x0, y0 - r, color);
+    display_set_pixel_BSP(x0 + r, y0, color);
+    display_set_pixel_BSP(x0 - r, y0, color);
+    display_line_horizontal_BSP(x0 - r, y0, 2 * r, color);
+
+    while (x < y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
+
+        display_line_horizontal_BSP(x0 - x, y0 + y, 2 * x, color);
+        display_line_horizontal_BSP(x0 - x, y0 - y, 2 * x, color);
+
+        display_line_horizontal_BSP(x0 - y, y0 + x, 2 * y, color);
+        display_line_horizontal_BSP(x0 - y, y0 - x, 2 * y, color);
+    }
 }
 
 void draw_triangle(const int16_t x0, const int16_t y0,
@@ -451,23 +574,25 @@ void draw_triangle_fill(const int16_t x0, const int16_t y0,
     }
 }
 
-void draw_polygon(const std::vector<Point>& points) {
+void draw_polygon(const std::vector<Point>& points, const bool closed = true) {
     if (fHasStroke) {
-        draw_polygon_stroke(points, fStrokeColor);
+        draw_polygon_stroke(points, closed, fStrokeColor);
     }
     if (fHasFill) {
         draw_polygon_fill(points, fFillColor);
     }
 }
 
-void draw_polygon_stroke(const std::vector<Point>& points, const uint32_t color) {
+void draw_polygon_stroke(const std::vector<Point>& points, const bool closed, const uint32_t color) {
     if (points.size() < 2) {
         return;
     }
     for (uint16_t i = 0; i < points.size() - 1; i++) {
         draw_line(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y, color);
     }
-    draw_line(points[0].x, points[0].y, points[points.size() - 1].x, points[points.size() - 1].y, color);
+    if (closed) {
+        draw_line(points[0].x, points[0].y, points[points.size() - 1].x, points[points.size() - 1].y, color);
+    }
 }
 
 void draw_polygon_fill(const std::vector<Point>& points, const uint32_t color) {
@@ -522,10 +647,10 @@ void draw_polygon_fill(const std::vector<Point>& points, const uint32_t color) {
     draw_triangle_fill(X_center, x1, X_first, Y_center, y1, Y_first, color);
 }
 
-void draw_ellipse(const int x,
-                  const int y,
-                  const int radius_x,
-                  const int radius_y) {
+void draw_ellipse(const int16_t  x,
+                  const int16_t  y,
+                  const uint16_t radius_x,
+                  const uint16_t radius_y) {
     if (fHasStroke) {
         draw_ellipse_stroke(x, y, radius_x, radius_y, fStrokeColor);
     }
@@ -534,25 +659,25 @@ void draw_ellipse(const int x,
     }
 }
 
-void draw_ellipse_stroke(const int      x,
-                         const int      y,
-                         const int      radius_x,
-                         const int      radius_y,
+void draw_ellipse_stroke(const int16_t  x,
+                         const int16_t  y,
+                         const uint16_t radius_x,
+                         const uint16_t radius_y,
                          const uint32_t color) {
-    int         xx   = 0;
-    int         yy   = -radius_y;
-    int         err  = 2 - 2 * radius_x;
+    int16_t     xx   = 0;
+    int16_t     yy   = -radius_y;
+    int16_t     err  = 2 - 2 * radius_x;
     const float rad1 = radius_x;
     const float rad2 = radius_y;
     const float k    = rad2 / rad1;
 
     do {
-        display_set_pixel_BSP(x - static_cast<int16_t>(xx / k), y + yy, color);
-        display_set_pixel_BSP(x + static_cast<int16_t>(xx / k), y + yy, color);
-        display_set_pixel_BSP(x + static_cast<int16_t>(xx / k), y - yy, color);
-        display_set_pixel_BSP(x - static_cast<int16_t>(xx / k), y - yy, color);
+        display_set_pixel_BSP(x - xx / k, y + yy, color);
+        display_set_pixel_BSP(x + xx / k, y + yy, color);
+        display_set_pixel_BSP(x + xx / k, y - yy, color);
+        display_set_pixel_BSP(x - xx / k, y - yy, color);
 
-        int e2 = err;
+        int16_t e2 = err;
         if (e2 <= xx) {
             err += ++xx * 2 + 1;
             if (-yy == xx && e2 <= yy) {
@@ -565,23 +690,22 @@ void draw_ellipse_stroke(const int      x,
     } while (yy <= 0);
 }
 
-void draw_ellipse_fill(const int      x,
-                       const int      y,
-                       const int      radius_x,
-                       const int      radius_y,
+void draw_ellipse_fill(const int16_t  x,
+                       const int16_t  y,
+                       const uint16_t radius_x,
+                       const uint16_t radius_y,
                        const uint32_t color) {
-    int         xx   = 0;
-    int         yy   = -radius_y;
-    int         err  = 2 - 2 * radius_x;
+    int16_t     xx   = 0;
+    int16_t     yy   = -radius_y;
+    int16_t     err  = 2 - 2 * radius_x;
     const float rad1 = radius_x;
     const float rad2 = radius_y;
     const float k    = rad2 / rad1;
 
     do {
-        display_line_horizontal_BSP(x - static_cast<int16_t>(xx / k), y + yy, (2 * static_cast<int16_t>(xx / k) + 1), color);
-        display_line_horizontal_BSP(x - static_cast<int16_t>(xx / k), y - yy, 2 * static_cast<int16_t>(xx / k) + 1, color);
-
-        int e2 = err;
+        display_line_horizontal_BSP(x - xx / k, y + yy, 2 * (xx / k) + 1, color);
+        display_line_horizontal_BSP(x - xx / k, y - yy, 2 * (xx / k) + 1, color);
+        int16_t e2 = err;
         if (e2 <= xx) {
             err += ++xx * 2 + 1;
             if (-yy == xx && e2 <= yy) {
@@ -606,7 +730,7 @@ void draw_set_text(BitmapFont* font) {
     fFont = font;
 }
 
-void draw_set_text_background_color(const uint32_t color) {
+void draw_set_background_color(const uint32_t color) {
     fBackgroundColor = color;
 }
 
@@ -677,6 +801,87 @@ void draw_text(BitmapFont*     font,
         text++;
         i++;
     }
+}
+
+void draw_set_text(KLSTFont* font) {
+    fKLSTFont = font;
+}
+
+void draw_char(const int16_t x, const int16_t y, const char ascii_char) {
+    if (ascii_char < 32 || ascii_char > 126) {
+        return;
+    }
+    if (fKLSTFont == nullptr) {
+        return;
+    }
+    for (uint32_t i = 0; i < fKLSTFont->height; i++) {
+        const uint32_t b = fKLSTFont->data[(ascii_char - 32) * fKLSTFont->height + i];
+        for (uint32_t j = 0; j < fKLSTFont->width; j++) {
+            const uint32_t mColor = b << j & 0x8000 ? fFillColor : fBackgroundColor;
+            display_set_pixel_alpha_BSP(x + j, y + i, mColor);
+        }
+    }
+}
+
+void draw_char(const int16_t x, const int16_t y, const char ascii_char, const uint8_t scale) {
+    if (scale == 1) {
+        draw_char(x, y, ascii_char);
+        return;
+    }
+    if (ascii_char < 32 || ascii_char > 126) {
+        return;
+    }
+    if (fKLSTFont == nullptr) {
+        return;
+    }
+    for (uint32_t i = 0; i < fKLSTFont->height; i++) {
+        const uint32_t b = fKLSTFont->data[(ascii_char - 32) * fKLSTFont->height + i];
+        for (uint32_t j = 0; j < fKLSTFont->width; j++) {
+            const uint32_t mColor = b << j & 0x8000 ? fFillColor : fBackgroundColor;
+            const uint8_t  alpha  = GET_ALPHA(mColor);
+            if (alpha != 0x00) {
+                display_rect_fill_BSP(x + j * scale, y + i * scale, scale, scale, mColor);
+            }
+        }
+    }
+}
+
+void draw_text(const int16_t x, const int16_t y, const std::string& text) {
+    if (text.empty()) {
+        return;
+    }
+    if (fKLSTFont == nullptr) {
+        return;
+    }
+    for (uint32_t i = 0; i < text.size(); i++) {
+        draw_char(x + i * fKLSTFont->width, y, text[i]);
+    }
+}
+
+void draw_text(const int16_t x, const int16_t y, const std::string& text, const uint8_t scale) {
+    if (scale == 1) {
+        draw_text(x, y, text);
+        return;
+    }
+    if (text.empty()) {
+        return;
+    }
+    if (fKLSTFont == nullptr) {
+        return;
+    }
+    for (uint32_t i = 0; i < text.size(); i++) {
+        draw_char(x + i * fKLSTFont->width * scale, y, text[i], scale);
+    }
+}
+
+
+uint32_t draw_blend_colors(const uint32_t color_a, const uint32_t color_b, const uint8_t alpha) {
+    const uint8_t  inv   = 0xFF - alpha;
+    const uint8_t  r     = (GET_RED(color_a) * inv + GET_RED(color_b) * alpha) >> 8;
+    const uint8_t  g     = (GET_GREEN(color_a) * inv + GET_GREEN(color_b) * alpha) >> 8;
+    const uint8_t  b     = (GET_BLUE(color_a) * inv + GET_BLUE(color_b) * alpha) >> 8;
+    const uint32_t blend = RGBA(r, g, b, 0xFF);
+    return blend;
 }
 
 #endif // KLST_PERIPHERAL_ENABLE_DISPLAY

@@ -17,40 +17,16 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Klangstrom.h"
-#ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
-#ifdef KLST_PANDA_STM32
-
-#include <stdio.h>
-
-#include "main.h"
-#include "Display.h"
-#include "Console.h"
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-
-extern TIM_HandleTypeDef htim3;
-
-static uint32_t frame_counter = 0;
-
-void backlight_init() {
-    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
-}
-
-void display_set_backlight(const float brightness) {
-    const uint32_t mPeriod = htim3.Init.Period;
-    uint32_t       mPhase  = static_cast<uint32_t>(mPeriod * brightness);
-    mPhase                 = MAX(1, MIN(mPeriod, mPhase));
-    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
-}
+void display_LTDC_init();
+void display_renderer_init();
+void display_backlight_init();
 
 #ifdef __cplusplus
 }
 #endif
-#endif // KLST_PANDA_STM32
-#endif // KLST_PERIPHERAL_ENABLE_DISPLAY
