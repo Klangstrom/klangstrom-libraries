@@ -65,8 +65,8 @@ void MX_LTDC_Init(void) {
     pLayerCfg.PixelFormat     = LTDC_PIXEL_FORMAT_ARGB8888;
     pLayerCfg.Alpha           = 255;
     pLayerCfg.Alpha0          = 0;
-    pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_CA;
-    pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_CA;
+    pLayerCfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+    pLayerCfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
     pLayerCfg.FBStartAdress   = KLST_DISPLAY_FRAMEBUFFER_ADDRESS;
     pLayerCfg.ImageWidth      = KLST_DISPLAY_WIDTH;
     pLayerCfg.ImageHeight     = KLST_DISPLAY_HEIGHT;
@@ -191,9 +191,9 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle) {
         HAL_GPIO_Init(_DISPLAY_LTDC_B5_GPIO_Port, &GPIO_InitStruct);
 
         /* LTDC interrupt Init */
-        HAL_NVIC_SetPriority(LTDC_IRQn, 0, 0);
+        HAL_NVIC_SetPriority(LTDC_IRQn, 3, 0);
         HAL_NVIC_EnableIRQ(LTDC_IRQn);
-        HAL_NVIC_SetPriority(LTDC_ER_IRQn, 0, 0);
+        HAL_NVIC_SetPriority(LTDC_ER_IRQn, 15, 0);
         HAL_NVIC_EnableIRQ(LTDC_ER_IRQn);
         /* USER CODE BEGIN LTDC_MspInit 1 */
 

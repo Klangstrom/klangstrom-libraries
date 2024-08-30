@@ -74,7 +74,8 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
 #if defined(KLST_PERIPHERAL_ENABLE_AUDIODEVICE) || \
     defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) ||  \
     defined(KLST_PERIPHERAL_ENABLE_SD_CARD) ||     \
-    defined(KLST_PERIPHERAL_ENABLE_MIDI)
+    defined(KLST_PERIPHERAL_ENABLE_MIDI) ||\
+    defined(KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC)
     MX_DMA_Init();
 #endif // defined(KLST_PERIPHERAL_ENABLE_AUDIODEVICE) || defined(KLST_PERIPHERAL_ENABLE_IDC_SERIAL) || defined(KLST_PERIPHERAL_ENABLE_MIDI)
 
@@ -84,18 +85,6 @@ static void system_init_BSP_KLST_PANDA_MX_Init_Modules() {
     externalmemory_init(); // TODO move somewhere better
 //    externalmemory_test();
 #endif // KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-
-#ifdef KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-    // MX_BDMA_Init();
-    MX_CRC_Init();
-    MX_PDM2PCM_Init();
-    // MX_SAI4_Init();
-#endif // KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-
-#ifdef KLST_PERIPHERAL_ENABLE_ADC_DAC
-    MX_ADC3_Init();
-    MX_DAC1_Init();
-#endif // KLST_PERIPHERAL_ENABLE_ADC_DAC
 }
 
 static void system_init_BSP_KLST_PANDA() {

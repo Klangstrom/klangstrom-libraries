@@ -40,7 +40,7 @@ void MX_DFSDM1_Init(void) {
     /* USER CODE END DFSDM1_Init 0 */
 
     /* USER CODE BEGIN DFSDM1_Init 1 */
-
+    // `OutputClock.Divider` = `DFSDM_CLOCK` / ( `AUDIO_FREQ` * `DECIMATION` ) = 12288000Hz / ( 48000Hz * 64 ) = 4
     /* USER CODE END DFSDM1_Init 1 */
     hdfsdm1_filter0.Instance                         = DFSDM1_Filter0;
     hdfsdm1_filter0.Init.RegularParam.Trigger        = DFSDM_FILTER_SW_TRIGGER;
@@ -69,12 +69,12 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel0.Init.Input.Multiplexer        = DFSDM_CHANNEL_EXTERNAL_INPUTS;
     hdfsdm1_channel0.Init.Input.DataPacking        = DFSDM_CHANNEL_STANDARD_MODE;
     hdfsdm1_channel0.Init.Input.Pins               = DFSDM_CHANNEL_FOLLOWING_CHANNEL_PINS;
-    hdfsdm1_channel0.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
+    hdfsdm1_channel0.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
     hdfsdm1_channel0.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel0.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hdfsdm1_channel0.Init.Awd.Oversampling         = 10;
+    hdfsdm1_channel0.Init.Awd.Oversampling         = 1;
     hdfsdm1_channel0.Init.Offset                   = 0;
-    hdfsdm1_channel0.Init.RightBitShift            = 0x02;
+    hdfsdm1_channel0.Init.RightBitShift            = 0x00;
     if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel0) != HAL_OK) {
         Error_Handler();
     }
@@ -85,12 +85,12 @@ void MX_DFSDM1_Init(void) {
     hdfsdm1_channel1.Init.Input.Multiplexer        = DFSDM_CHANNEL_EXTERNAL_INPUTS;
     hdfsdm1_channel1.Init.Input.DataPacking        = DFSDM_CHANNEL_STANDARD_MODE;
     hdfsdm1_channel1.Init.Input.Pins               = DFSDM_CHANNEL_SAME_CHANNEL_PINS;
-    hdfsdm1_channel1.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
+    hdfsdm1_channel1.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
     hdfsdm1_channel1.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hdfsdm1_channel1.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hdfsdm1_channel1.Init.Awd.Oversampling         = 10;
+    hdfsdm1_channel1.Init.Awd.Oversampling         = 1;
     hdfsdm1_channel1.Init.Offset                   = 0;
-    hdfsdm1_channel1.Init.RightBitShift            = 0x02;
+    hdfsdm1_channel1.Init.RightBitShift            = 0x00;
     if (HAL_DFSDM_ChannelInit(&hdfsdm1_channel1) != HAL_OK) {
         Error_Handler();
     }

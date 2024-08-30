@@ -34,21 +34,37 @@ extern "C" {
 
 extern I2C_HandleTypeDef hi2c4;
 
-static GPIOListener fGPIOListener; // TODO could be moved to `Display.cpp`
-static uint16_t     fGPIOPin = _DISPLAY_TOUCH_INTERRUPT_Pin;
+static GPIOListener   fGPIOListener; // TODO could be moved to `Display.cpp`
+static uint16_t       fGPIOPin = _DISPLAY_TOUCH_INTERRUPT_Pin;
+static TouchEvent     fTouchEvent;
+static TouchPanelMode fTouchPanelMode = INTERRUPT;
+static bool           fHasTouchEvent  = false;
 
-static void touch_callback(uint16_t GPIO_Pin) {
+bool touch_has_event() {
+    return fHasTouchEvent;
+}
+
+static void touch_callback(const uint16_t GPIO_Pin) {
     if (GPIO_Pin == fGPIOPin) {
-        console_println("TOUCH (TODO)");
+        fHasTouchEvent = true;
+        if (fTouchPanelMode == INTERRUPT) {
+            touch_read(&fTouchEvent);
+            display_fire_touch_callback(&fTouchEvent);
+        }
     }
 }
 
-void touch_setup() {
+void touch_init(const TouchPanelMode touch_panel_mode) {
+    fTouchPanelMode = touch_panel_mode;
+    if (fTouchPanelMode == NO_TOUCHPANEL) {
+        return;
+    }
+
     MX_I2C4_Init();
     HAL_Delay(100);
     FT5206_init(&hi2c4);
-    FT5206_print_info();
 
+    fGPIOPin               = _DISPLAY_TOUCH_INTERRUPT_Pin;
     fGPIOListener.callback = touch_callback;
     system_register_gpio_listener(&fGPIOListener);
 
@@ -68,12 +84,25 @@ void touch_setup() {
 #endif
 }
 
-void touch_read() {
-    // TODO return values
-    //	if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
-    //		FT5206_read();
-    //	}
-    FT5206_read();
+void touch_read(TouchEvent* touchevent) {
+#ifdef KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
+    if (!HAL_GPIO_ReadPin(_DISPLAY_TOUCH_INTERRUPT_GPIO_Port, _DISPLAY_TOUCH_INTERRUPT_Pin)) {
+        const bool ok = FT5206_read();
+        if (!ok) {
+            console_error("touch read failed … trying to reset FT5206");
+            MX_I2C4_Init();
+            FT5206_init(&hi2c4);
+        }
+    }
+#else
+    const bool ok = FT5206_read(touchevent);
+    if (!ok) {
+        console_error("touch read failed … trying to reset FT5206");
+        MX_I2C4_Init();
+        FT5206_init(&hi2c4);
+    }
+#endif // KLST_TOUCH_CONFIGURE_TOUCH_AS_NORMAL_GPIO
+    fHasTouchEvent = false;
 }
 
 #ifdef __cplusplus

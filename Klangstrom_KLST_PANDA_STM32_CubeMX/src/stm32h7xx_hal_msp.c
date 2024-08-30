@@ -71,6 +71,18 @@ void HAL_MspInit(void) {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
 
     /* System interrupt init*/
+    /* MemoryManagement_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(MemoryManagement_IRQn, 15, 0);
+    /* BusFault_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(BusFault_IRQn, 15, 0);
+    /* UsageFault_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(UsageFault_IRQn, 15, 0);
+    /* SVCall_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(SVCall_IRQn, 15, 0);
+    /* DebugMonitor_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(DebugMonitor_IRQn, 15, 0);
+    /* PendSV_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
 
     /* USER CODE BEGIN MspInit 1 */
 

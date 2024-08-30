@@ -24,15 +24,17 @@ extern "C" {
 #endif
 
 #ifndef KLST_DMA_POOL_SIZE
-#define KLST_DMA_POOL_SIZE (128 * 2 * 2 * 2 * 2) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
+#define KLST_MAX_DMA_POOL_SIZE (16384) // 16KB as defined in linker script for RAM_D3 : ORIGIN = 0x38000000
+#define KLST_DMA_POOL_SIZE KLST_MAX_DMA_POOL_SIZE // (2048) // 128 blocksize * 2 double buffer * 2 channels * 2 bytes per sample
 #endif
 
 #ifndef KLST_DMA_SECTION_NAME
 #define KLST_DMA_SECTION_NAME ".dma_buffer"
 #endif
 
-__attribute__((section(KLST_DMA_SECTION_NAME)))
-uint8_t dma_memory_pool[KLST_DMA_POOL_SIZE];
+uint8_t dma_memory_pool[KLST_DMA_POOL_SIZE]
+    __attribute__((section(KLST_DMA_SECTION_NAME)))
+    __attribute__((aligned(32)));
 
 typedef struct {
     uint8_t* base;
@@ -46,10 +48,14 @@ static MemoryPool dma_pool = {
     .size = KLST_DMA_POOL_SIZE};
 
 void* dma_malloc(size_t size) {
+    /* align the next pointer to the nearest 32-byte boundary */
+    dma_pool.next = reinterpret_cast<uint8_t*>(reinterpret_cast<uintptr_t>(dma_pool.next + 31) & ~static_cast<uintptr_t>(31));
+
     if ((dma_pool.next + size) > (dma_pool.base + dma_pool.size)) {
-        // Not enough memory in the pool
-        return NULL;
+        /* Not enough memory in the pool */
+        return nullptr;
     }
+
     void* ptr = dma_pool.next;
     dma_pool.next += size;
     return ptr;

@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -36,7 +38,8 @@ void console_set_color_red();
 void console_set_color_green();
 void console_reset_color();
 void console_clear();
-void console_timestamp(bool newline = false); // NOTE implemented this ASP for now
+void console_timestamp(bool newline);   // NOTE implemented this ASP for now
+// void console_timestamp(bool newline=false);   // NOTE implemented this ASP for now
 void console_system_info();                   // NOTE implemented this BSP for now
 
 /*

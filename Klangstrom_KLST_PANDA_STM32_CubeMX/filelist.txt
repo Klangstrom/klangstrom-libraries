@@ -1,5 +1,5 @@
 Core/Inc/adc.h
-Core/Inc/crc.h
+Core/Inc/bdma.h
 Core/Inc/dac.h
 Core/Inc/dfsdm.h
 Core/Inc/dma.h
@@ -18,7 +18,7 @@ Core/Inc/stm32h7xx_it.h
 Core/Inc/tim.h
 Core/Inc/usart.h
 Core/Src/adc.c
-Core/Src/crc.c
+Core/Src/bdma.c
 Core/Src/dac.c
 Core/Src/dfsdm.c
 Core/Src/dma.c
@@ -55,8 +55,3 @@ Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
 Middlewares/Third_Party/FatFs/src/integer.h
 Middlewares/Third_Party/FatFs/src/option/syscall.c
-PDM2PCM/App/pdm2pcm.c
-PDM2PCM/App/pdm2pcm.h
-Middlewares/ST/STM32_Audio/Addons/PDM/Inc/pdm2pcm_glo.h
-Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_GCC_wc32.a
-Middlewares/ST/STM32_Audio/Addons/PDM/Lib/libPDMFilter_CM7_IAR_wc32.a

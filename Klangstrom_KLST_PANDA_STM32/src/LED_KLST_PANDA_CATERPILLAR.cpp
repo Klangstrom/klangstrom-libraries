@@ -21,8 +21,6 @@
 #ifdef KLST_PERIPHERAL_ENABLE_LEDS
 #if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 
-#define KLST_PANDA_STM32_NUM_LEDS 2
-
 #include <cinttypes>
 #include "tim.h"
 

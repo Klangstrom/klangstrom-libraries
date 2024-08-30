@@ -17,16 +17,23 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO this is a mess and needs some serious cleaning and refactoring. maybe merge with `Display_KLST_PANDA.cpp`
+
 #include "Klangstrom.h"
 #ifdef KLST_PERIPHERAL_ENABLE_DISPLAY
 #ifdef KLST_PANDA_STM32
 
 #include "main.h"
 #include "Display.h"
+#include "Display_KLST_PANDA.h"
 #include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#ifndef KLST_EXTERNAL_MEMORY_SECTION_NAME
+#define KLST_EXTERNAL_MEMORY_SECTION_NAME ".external_memory"
 #endif
 
 // from main
@@ -34,14 +41,28 @@ extern "C" {
 //#define KLST_DISPLAY_WIDTH 480
 //#define KLST_DISPLAY_HEIGHT 272
 
-#define KLST_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4)
+// TODO so here is the hypothesis: this only allocates framebuffer memory for a single layer but LTDC is configured to use 2 layers. investigate!
+#define KLST_DISPLAY_FRAMEBUFFER_SIZE (KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 4) // TODO added `*2` for both layers
 #define FRAMEBUFFER1_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS)
-#define FRAMEBUFFER2_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE)
+#define FRAMEBUFFER2_ADDR (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + KLST_DISPLAY_FRAMEBUFFER_SIZE) // TODO check actual addresses
 #define FRAMEBUFFER1 0
 #define FRAMEBUFFER2 1
 
-/* FB1 :: 0x90000000
- * FB2 :: 0x9007F800
+#define BYTES_PER_PIXEL ((uint8_t) 4)
+
+// reserve memory for framebuffers ( double buffer )
+static uint32_t fFrameBuffers[2][KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 2]
+    __attribute__((section(KLST_EXTERNAL_MEMORY_SECTION_NAME)))
+    __attribute__((aligned(32)));
+static uint8_t            fCurrentFrameBuffer = 0;
+static constexpr uint32_t fFrameBufferLength  = KLST_DISPLAY_WIDTH * KLST_DISPLAY_HEIGHT * 2;
+
+/*
+ * framebuffer addresses:
+ *
+ * FRAMEBUFFER1_ADDR :: 0x90000000
+ * FRAMEBUFFER2_ADDR :: 0x9007F800 ( 1 layers, double buffer )
+ * FRAMEBUFFER2_ADDR :: 0x900FF000 ( 2 layers, double buffer )
  */
 
 //  values for ER-TFT043A2-3 display with ST7282 driver
@@ -68,126 +89,144 @@ extern "C" {
 extern LTDC_HandleTypeDef  hltdc;
 extern DMA2D_HandleTypeDef hdma2d;
 
-void          HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle);
-__IO uint32_t LTDC_get_backbuffer_address(void);
-void          DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-void          DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
-void          DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
+// void        HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle);
+// static void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+// static void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle);
+// static void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle);
 
 static uint32_t fVSYNCDuration     = 0;
 static uint32_t fVSYNCStart        = 0;
 static uint8_t  active_framebuffer = FRAMEBUFFER1;
-static uint32_t frame_counter      = 0;
+static bool     fSyncToVBlank      = false;
+// volatile bool   fDMA2DTransferComplete = false;
 
-void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
-    fVSYNCDuration = HAL_GetTick() - fVSYNCStart;
-    HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-    // switch and redraw framebuffer
-    HAL_LTDC_Reload(hltdc_handle, LTDC_RELOAD_VERTICAL_BLANKING);
-    fVSYNCStart = HAL_GetTick();
+#define KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+
+// static void cleanup_dma2d() {
+//     /* Wait for DMA2D to finish last run */
+//     while ((READ_REG(DMA2D->CR) & DMA2D_CR_START) != 0U)
+//         ;
+//
+//     /* Clear transfer flags */
+//     WRITE_REG(DMA2D->IFCR, DMA2D_FLAG_TC | DMA2D_FLAG_CE | DMA2D_FLAG_TE);
+// }
+//
+// static void cleanup_memory() {
+//     if (SCB->CCR & SCB_CCR_DC_Msk) {
+//         SCB_CleanInvalidateDCache();
+//     }
+// }
+
+static void enable_reload() {
+#ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+    HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
+#else
+    HAL_LTDC_ProgramLineEvent(&hltdc, 0);
+#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
 }
 
-__IO uint32_t LTDC_get_backbuffer_address(void) {
-    if (active_framebuffer == FRAMEBUFFER1) {
-        return (__IO uint32_t) FRAMEBUFFER2_ADDR;
-    } else {
-        return (__IO uint32_t) FRAMEBUFFER1_ADDR;
+
+void display_enable_automatic_update(const bool sync_to_v_blank) {
+    if (!fSyncToVBlank && sync_to_v_blank) {
+        enable_reload();
+    }
+    fSyncToVBlank = sync_to_v_blank;
+}
+
+#include "stm32h7xx_hal_def.h"
+
+static bool skip_every_other_frame = true;
+#ifdef KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+void HAL_LTDC_ReloadEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
+#else
+void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef* hltdc_handle) {
+#endif // KLST_USE_SYNC_TO_V_BLANK_AS_UPDATE_TRIGGER
+    if (hltdc_handle->Instance == LTDC) {
+        // skip_every_other_frame = !skip_every_other_frame;
+        if (skip_every_other_frame) {
+            display_fire_update_callback();
+
+            // hltdc_handle->Lock = HAL_LOCKED;
+            // hdma2d.Lock        = HAL_LOCKED;
+            // __HAL_LTDC_DISABLE_IT(hltdc_handle, LTDC_IT_LI);
+            // __HAL_DMA2D_DISABLE_IT(&hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
+            //
+            // cleanup_memory();
+            // cleanup_dma2d();
+            display_swap_buffer();
+            //
+            // __HAL_DMA2D_ENABLE_IT(&hdma2d, DMA2D_IT_TC | DMA2D_IT_TE | DMA2D_IT_CE);
+            // __HAL_LTDC_ENABLE_IT(hltdc_handle, LTDC_IT_LI);
+            // hdma2d.Lock        = HAL_UNLOCKED;
+            // hltdc_handle->Lock = HAL_UNLOCKED;
+        }
+        if (fSyncToVBlank) {
+            enable_reload();
+        }
     }
 }
 
-void LTDC_switch_framebuffer(void) {
+void display_deinit() {
+    HAL_LTDC_DeInit(&hltdc);
+}
+
+volatile uint32_t display_get_buffer_address() {
+    if (!display_is_double_buffered()) {
+        return FRAMEBUFFER1_ADDR;
+    }
+    if (active_framebuffer == FRAMEBUFFER1) {
+        return FRAMEBUFFER2_ADDR;
+    }
+    return FRAMEBUFFER1_ADDR;
+}
+
+volatile uint32_t* display_get_buffer() {
+    if (!display_is_double_buffered()) {
+        return reinterpret_cast<uint32_t*>(FRAMEBUFFER1_ADDR);
+    }
+    if (active_framebuffer == FRAMEBUFFER1) {
+        return reinterpret_cast<uint32_t*>(FRAMEBUFFER2_ADDR);
+    }
+    return reinterpret_cast<uint32_t*>(FRAMEBUFFER1_ADDR);
+}
+
+void display_swap_buffer(void) {
+    if (!display_is_double_buffered()) {
+        return;
+    }
     //	LTDC->SRCR = LTDC_SRCR_VBR;
     if (active_framebuffer == FRAMEBUFFER1) {
-        LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
+        // LTDC_Layer1->CFBAR = FRAMEBUFFER2_ADDR;
         //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER2, 1);
         active_framebuffer = FRAMEBUFFER2;
     } else {
-        LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
+        // LTDC_Layer1->CFBAR = FRAMEBUFFER1_ADDR;
         //		HAL_LTDC_SetAddress(&hltdc, FRAMEBUFFER1, 1);
         active_framebuffer = FRAMEBUFFER1;
     }
-    // `HAL_LTDC_Reload` keeps loop on vertical blanking alive.
-    //	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING);
-    LTDC->SRCR = LTDC_SRCR_VBR; // not sure if it is better to first switch buffer and the reload or viceversa
-    //	while ((LTDC->CDSR & LTDC_CDSR_VSYNCS) == 0)
-    //		;
 }
 
-void DMA2D_FillRect(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-    hdma2d.Instance          = DMA2D;
-    hdma2d.Init.Mode         = DMA2D_R2M;
-    hdma2d.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
-    hdma2d.Init.OutputOffset = KLST_DISPLAY_WIDTH - width;
-    HAL_DMA2D_Init(&hdma2d);
-    HAL_DMA2D_ConfigLayer(&hdma2d, 0);
-    HAL_DMA2D_ConfigLayer(&hdma2d, 1);
-    HAL_DMA2D_Start(&hdma2d, color, LTDC_get_backbuffer_address() + (x + y * KLST_DISPLAY_WIDTH) * 4, width, height);
-    HAL_DMA2D_PollForTransfer(&hdma2d, 10);
-}
+extern void display_LTDC_init_DMA2D(); // TODO this should be handled differently
 
-void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef* handle) {
-    /* USER CODE BEGIN DMA2D_XferCpltCallback */
-    // If the framebuffer is placed in Write Through cached memory (e.g. SRAM) then we need
-    // to flush the Dcache prior to letting DMA2D accessing it. That's done
-    // using SCB_CleanInvalidateDCache().
-    //	SCB_CleanInvalidateDCache(); // todo is this necessary
-    /* USER CODE END DMA2D_XferCpltCallback */
-    HAL_GPIO_TogglePin(_LED_01_GPIO_Port, _LED_01_Pin);
-    console_println("DMA2D_XferCpltCallback");
-}
+void display_LTDC_init() {
+    // // print actual memory addresses of framebuffers
+    // console_println("FRAMEBUFFER1_ADDR :: %p", FRAMEBUFFER1_ADDR);
+    // console_println("FRAMEBUFFER2_ADDR :: %p", FRAMEBUFFER2_ADDR);
+    // // print actual memory addresses of framebuffers for `ltdc_framebuffers`
+    // console_println("FRAMEBUFFER1_ADDR :: %p", fFrameBuffers[0]);
+    // console_println("FRAMEBUFFER2_ADDR :: %p", fFrameBuffers[1]);
 
-void DMA2D_XferErrorCallback(DMA2D_HandleTypeDef* handle) {
-    console_error("DMA2D_XferErrorCallback");
-}
-
-void LTDC_setup() {
     /* fill framebuffers with black */
     for (int i = 0; i < KLST_DISPLAY_FRAMEBUFFER_SIZE; i++) {
-        ((volatile uint8_t*) FRAMEBUFFER1_ADDR)[i] = 0x88;
-        ((volatile uint8_t*) FRAMEBUFFER2_ADDR)[i] = 0x88;
+        reinterpret_cast<uint8_t*>(FRAMEBUFFER1_ADDR)[i] = 0x00;
+        reinterpret_cast<uint8_t*>(FRAMEBUFFER2_ADDR)[i] = 0x00;
     }
-
-    hdma2d.XferCpltCallback  = DMA2D_XferCpltCallback;
-    hdma2d.XferErrorCallback = DMA2D_XferErrorCallback;
-
-    // `HAL_LTDC_Reload` starts loop synced vertical blanking
-    //	HAL_LTDC_Reload(&hltdc, LTDC_RELOAD_VERTICAL_BLANKING); // start reload look at 60Hz
-}
-
-void LTDC_loop() {
-    frame_counter++;
-    //		const uint32_t mStartFillBuffer = HAL_GetTick();
-    //		for (uint32_t counter = 0x00; counter < KLST_DISPLAY_FRAMEBUFFER_SIZE; counter += 4) {
-    //			uint8_t rgb = (uint8_t) (rand());
-    //			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 0) = rgb; // B
-    //			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 1) = rgb; // G
-    //			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 2) = rgb; // R
-    //			*(__IO uint8_t*) (KLST_DISPLAY_FRAMEBUFFER_ADDRESS + counter + 3) = 0; // A
-    //		}
-    //		const uint32_t mFillBufferDuration = HAL_GetTick() - mStartFillBuffer;
-    //		printf("             frame fill duration    : %li\n\r", mFillBufferDuration);
-
-    DMA2D_FillRect(0xFF000000, // ARGB
-                   0,
-                   0,
-                   KLST_DISPLAY_WIDTH,
-                   KLST_DISPLAY_HEIGHT);
-    const uint32_t x = (frame_counter * 10) % KLST_DISPLAY_WIDTH;
-    const uint32_t y = ((frame_counter * 10) / KLST_DISPLAY_WIDTH * 20) % KLST_DISPLAY_HEIGHT;
-    DMA2D_FillRect(0xFFFFFF00, // ARGB
-                   x,
-                   y,
-                   KLST_DISPLAY_WIDTH / 2,
-                   KLST_DISPLAY_HEIGHT / 2);
-
-    /* schedule redraw */
-    LTDC_switch_framebuffer(); // manually trigger frame redraw
-
-    //	println("VSYNC duration: %li\n\r", fVSYNCDuration);
 }
 
 #ifdef __cplusplus
 }
 #endif
+
+
 #endif // KLST_PANDA_STM32
 #endif // KLST_PERIPHERAL_ENABLE_DISPLAY
