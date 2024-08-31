@@ -42,41 +42,75 @@ public:
                                                      height(display_height), mBuffers{} {
         mBuffers[0] = new PImage(display_width, display_height, 4);
         mBuffers[1] = new PImage(display_width, display_height, 4);
+
+        // subscribe to `mouseMoved()`
     }
 
     void draw(PGraphics* g_ptr) override {
+        mouseMoved(); // TODO move this to subscription model
+
         PGraphics& g      = *g_ptr;
-        PImage&    buffer = *mBuffers[0];
+        PImage&    buffer = *mBuffers[fActiveBuffer];
 
         g.pushMatrix();
         g.translate(position.x, position.y);
 
         g.fill(1);
         g.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
-        g.text("DISPLAY", 0, 0);
+        g.text("DISPLAY", -1, -2);
         g.noFill();
 
-        const uint32_t length = buffer.width * buffer.height * buffer.channels;
-        for (uint32_t i = 0; i < length; i++) {
-            buffer.color_data()[i] = 0xFF;
-        }
+        display_update_event();
         buffer.update();
         g.image(&buffer, 0, 0);
 
         g.stroke(1, 0.5f);
-        g.rect(0, 0, width, height);
+        g.rect(-1, -1, width + 2, height + 2);
 
         g.popMatrix();
+    }
+
+    void mouseMoved() const {
+        TouchEvent touchevent;
+        touchevent.number_of_touches = 1;
+        touchevent.gesture_id        = 0;
+        touchevent.x[0]              = KlangstromEmulator::instance()->mouseX - position.x;
+        touchevent.y[0]              = KlangstromEmulator::instance()->mouseY - position.y;
+        display_touch_event(&touchevent);
     }
 
     void set_position(const float x, const float y) {
         position.set(x, y);
     }
 
+    uint32_t* get_buffer() const {
+        return mBuffers[fActiveBuffer]->pixels;
+    }
+
+    void clear(const uint32_t color) const {
+        const PImage&  buffer       = *mBuffers[fActiveBuffer];
+        uint32_t*      pixel_buffer = buffer.pixels;
+        const uint32_t length       = buffer.width * buffer.height;
+        for (uint32_t i = 0; i < length; i++) {
+            pixel_buffer[i] = color;
+        }
+    }
+
+    void set_pixel(const uint16_t x, const uint16_t y, const uint32_t color) const {
+        const PImage& buffer = *mBuffers[fActiveBuffer];
+        buffer.set(x, y, color);
+    }
+
+    uint32_t get_pixel(const uint16_t x, const uint16_t y) const {
+        const PImage& buffer = *mBuffers[fActiveBuffer];
+        return buffer.get(x, y);
+    }
+
 private:
             DrawableDisplay() = delete;
     PVector position;
     PImage* mBuffers[2];
+    uint8_t fActiveBuffer = 0;
 };
 
 #ifdef __cplusplus
@@ -139,7 +173,7 @@ void display_switch_off() { // TODO implement
 
 volatile uint32_t display_get_buffer_address() { return 0; }
 
-volatile uint32_t* display_get_buffer() { return nullptr; }
+volatile uint32_t* display_get_buffer() { return display->get_buffer(); }
 
 void touch_init(TouchPanelMode touch_panel_mode) { // TODO implement
     (void) touch_panel_mode;
@@ -157,15 +191,48 @@ bool touch_has_event() { // TODO implement
 }
 #endif
 
-void display_clear_BSP(uint32_t color) {}
+/* ----------------------------------- DRAW LIBRARY ----------------------------------- */
 
-void display_set_pixel_BSP(uint16_t x, uint16_t y, uint32_t color) {}
+// note that display works internally with ARGB while OpenGL require ABGR ( = RGBA in little endian?!? )
 
-void display_set_pixel_alpha_BSP(uint16_t x, uint16_t y, uint32_t color) {}
+void display_clear_BSP(const uint32_t color) { // ARGB
+    display->clear(ARGB_TO_ABGR(color));
+}
 
-uint32_t display_get_pixel_BSP(uint16_t x, uint16_t y) { return 0; }
+void display_set_pixel_BSP(const uint16_t x, const uint16_t y, const uint32_t color) {
+    if (display == nullptr) {
+        return;
+    }
+    display->set_pixel(x, y, ARGB_TO_ABGR(color));
+}
 
-void display_rect_fill_BSP(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {}
+void display_set_pixel_alpha_BSP(const uint16_t x, const uint16_t y, const uint32_t color) {
+    if (display == nullptr) {
+        return;
+    }
+    const uint32_t color_ARGB         = color;
+    const uint32_t current_color_ARGB = display_get_pixel_BSP(x, y);
+    const float    alpha              = static_cast<float>(GET_ALPHA(color_ARGB)) / 255.0f;
+    const float    inv_alpha          = 1.0f - alpha;
+    const uint8_t  r                  = static_cast<uint8_t>((GET_RED(color_ARGB) * alpha + GET_RED(current_color_ARGB) * inv_alpha));
+    const uint8_t  g                  = static_cast<uint8_t>((GET_GREEN(color_ARGB) * alpha + GET_GREEN(current_color_ARGB) * inv_alpha));
+    const uint8_t  b                  = static_cast<uint8_t>((GET_BLUE(color_ARGB) * alpha + GET_BLUE(current_color_ARGB) * inv_alpha));
+    display->set_pixel(x, y, umgebung::color(r / 255.0f, g / 255.0f, b / 255.0f));
+}
+
+uint32_t display_get_pixel_BSP(const uint16_t x, const uint16_t y) { return ABGR_TO_ARGB(display->get_pixel(x, y)); }
+
+void display_rect_fill_BSP(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint32_t color) {
+    if (display == nullptr) {
+        return;
+    }
+    const uint32_t color_rgba = ARGB_TO_ABGR(color);
+    for (uint16_t i = 0; i < width; i++) {
+        for (uint16_t j = 0; j < height; j++) {
+            display->set_pixel(x + i, y + j, color_rgba);
+        }
+    }
+}
 
 void display_line_horizontal_BSP(uint16_t x, uint16_t y, uint16_t length, uint32_t color) {}
 
