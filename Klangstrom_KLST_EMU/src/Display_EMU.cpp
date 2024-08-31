@@ -39,30 +39,36 @@ public:
 
     DrawableDisplay(const uint16_t display_width,
                     const uint16_t display_height) : width(display_width),
-                                                     height(display_height), mBuffers{} {
-        mBuffers[0] = new PImage(display_width, display_height, 4);
-        mBuffers[1] = new PImage(display_width, display_height, 4);
+                                                     height(display_height), fFrameBuffers{} {
+        fFrameBuffers[0] = new PImage(display_width, display_height, 4);
+        fFrameBuffers[1] = new PImage(display_width, display_height, 4);
 
         // subscribe to `mouseMoved()`
     }
 
     void draw(PGraphics* g_ptr) override {
-        mouseMoved(); // TODO move this to subscription model
-
         PGraphics& g      = *g_ptr;
-        PImage&    buffer = *mBuffers[fActiveBuffer];
+        PImage&    buffer = *fFrameBuffers[fActiveBuffer];
 
         g.pushMatrix();
-        g.translate(position.x, position.y);
+        g.translate(fPosition.x, fPosition.y);
 
         g.fill(1);
         g.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
         g.text("DISPLAY", -1, -2);
         g.noFill();
 
-        display_update_event();
-        buffer.update();
-        g.image(&buffer, 0, 0);
+        if (!fDisplayOn) {
+            g.fill(0);
+            g.noStroke();
+            g.rect(0, 0, width, height);
+        } else {
+            display_swap_buffer();
+            mouseMoved(); // TODO move this to subscription model
+            display_update_event();
+            buffer.update();
+            g.image(&buffer, 0, 0);
+        }
 
         g.stroke(1, 0.5f);
         g.rect(-1, -1, width + 2, height + 2);
@@ -74,21 +80,21 @@ public:
         TouchEvent touchevent;
         touchevent.number_of_touches = 1;
         touchevent.gesture_id        = 0;
-        touchevent.x[0]              = KlangstromEmulator::instance()->mouseX - position.x;
-        touchevent.y[0]              = KlangstromEmulator::instance()->mouseY - position.y;
+        touchevent.x[0]              = KlangstromEmulator::instance()->mouseX - fPosition.x;
+        touchevent.y[0]              = KlangstromEmulator::instance()->mouseY - fPosition.y;
         display_touch_event(&touchevent);
     }
 
     void set_position(const float x, const float y) {
-        position.set(x, y);
+        fPosition.set(x, y);
     }
 
     uint32_t* get_buffer() const {
-        return mBuffers[fActiveBuffer]->pixels;
+        return fFrameBuffers[fActiveBuffer]->pixels;
     }
 
     void clear(const uint32_t color) const {
-        const PImage&  buffer       = *mBuffers[fActiveBuffer];
+        const PImage&  buffer       = *fFrameBuffers[fActiveBuffer];
         uint32_t*      pixel_buffer = buffer.pixels;
         const uint32_t length       = buffer.width * buffer.height;
         for (uint32_t i = 0; i < length; i++) {
@@ -97,20 +103,25 @@ public:
     }
 
     void set_pixel(const uint16_t x, const uint16_t y, const uint32_t color) const {
-        const PImage& buffer = *mBuffers[fActiveBuffer];
+        const PImage& buffer = *fFrameBuffers[fActiveBuffer];
         buffer.set(x, y, color);
     }
 
     uint32_t get_pixel(const uint16_t x, const uint16_t y) const {
-        const PImage& buffer = *mBuffers[fActiveBuffer];
+        const PImage& buffer = *fFrameBuffers[fActiveBuffer];
         return buffer.get(x, y);
+    }
+
+    void swap_buffer() {
+        fActiveBuffer = (fActiveBuffer + 1) % 2;
     }
 
 private:
             DrawableDisplay() = delete;
-    PVector position;
-    PImage* mBuffers[2];
+    PVector fPosition;
+    PImage* fFrameBuffers[2];
     uint8_t fActiveBuffer = 0;
+    bool    fDisplayOn    = true;
 };
 
 #ifdef __cplusplus
@@ -162,7 +173,11 @@ void display_enable_automatic_update(const bool sync_to_v_blank) { // TODO imple
     (void) sync_to_v_blank;
 }
 
-void display_swap_buffer() { // TODO implement
+void display_swap_buffer() {
+    if (display == nullptr) {
+        return;
+    }
+    display->swap_buffer();
 }
 
 void display_switch_on() { // TODO implement

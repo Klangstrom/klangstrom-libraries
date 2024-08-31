@@ -25,14 +25,14 @@ void setup() {
 void loop() {}
 
 void display_update_event() {
-    draw_clear(GRAY(0x20));
+    draw_clear(GRAY(0x50));
 
     draw_fill(color(0xFF));
     draw_set_background_color(color(0xFF, 0x00));
     draw_text(20, display_get_height() / 2 - 25, "HELLO WORLD", 8);
 
     draw_fill(color(0x00, 0x00));
-    draw_set_background_color(color(0xFF, 0x80, 0x00));
+    draw_set_background_color(color(0x00, 0x80, 0xFF));
     draw_char(x, y, '2', 4);
     draw_set_background_color(color(0xFF, 0x80, 0x00, 0x80)); // TODO alpha blending does not work
     draw_text(x + Font_5x8.width * 4, y, "3 or 42 ... not sure");
