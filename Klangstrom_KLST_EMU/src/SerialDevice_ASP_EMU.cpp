@@ -54,7 +54,7 @@ typedef struct SerialPeripherals {
     uint32_t    port;
 } SerialPeripherals;
 
-void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t length) {
+void serialdevice_send(const SerialDevice* serialdevice, const uint8_t* data, const uint16_t length) {
     // TODO could interprete IP + port
     OscMessage msg(KLST_EMU_SERIAL_ADDRESS_PATTERN);
     msg.add(serialdevice->device_type);
@@ -65,9 +65,7 @@ void serialdevice_send(SerialDevice* serialdevice, const uint8_t* data, uint16_t
 }
 
 bool serialdevice_init_BSP(SerialDevice* serialdevice) {
-    if (serialdevice->peripherals == nullptr) {
-        println("ERROR: peripherals not initialized");
-    }
+    if (serialdevice->peripherals == nullptr) { println("ERROR: peripherals not initialized"); }
 
     println("serialdevice_init_BSP");
     println("buffer_size: ", serialdevice->data_buffer_size);
@@ -96,8 +94,7 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
             //                uint8_t*            tx_buffer; // from pool with `__attribute__((section(".dma_buffer")))`
             //            } SerialPeripherals;
             mDeviceInitialized = true;
-        } else if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_IN ||
-                   serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI_OUT) {
+        } else if (serialdevice->device_type == SERIAL_DEVICE_TYPE_MIDI) {
             console_status("device type: is MIDI");
             mDeviceInitialized = true;
         }

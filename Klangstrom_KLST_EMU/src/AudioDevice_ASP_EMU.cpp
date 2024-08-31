@@ -24,7 +24,7 @@
 #include "Console.h"
 #include "KlangstromEmulator.h"
 
-class DrawableAudioDevice : public Drawable {
+class DrawableAudioDevice final : public Drawable {
 public:
     explicit DrawableAudioDevice(AudioDevice* audiodevice) : fAudioDevice(audiodevice) {}
 
@@ -35,9 +35,9 @@ public:
         g.noFill();
         g.pushMatrix();
         g.translate(20, 200);
-        const int   mStrafe = 16;
-        const float mHeight = 150;
-        const float mWidth  = 512 - 20;
+        constexpr int   mStrafe = 16;
+        constexpr float mHeight = 150;
+        constexpr float mWidth  = 512 - 20;
 
         if (fAudioDevice->peripherals->is_paused) {
             g.fill(1);
@@ -54,8 +54,8 @@ public:
             g.line(0, ii * mHeight, mWidth, ii * mHeight);
             g.stroke(1);
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
-                float       mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
-                float       mSample1 = mBuffers[i][j] * 0.5f;
+                const float mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
+                const float mSample1 = mBuffers[i][j] * 0.5f;
                 const float x0       = mWidth * (float) (j - mStrafe) / DEFAULT_FRAMES_PER_BUFFER;
                 const float y0       = ii * mHeight + mSample0 * mHeight;
                 const float x1       = mWidth * (float) j / DEFAULT_FRAMES_PER_BUFFER;
@@ -73,11 +73,11 @@ public:
             g.stroke(1);
             mBuffers = KlangstromEmulator::instance()->get_audio_input_buffers();
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
-                float       mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
-                float       mSample1 = mBuffers[i][j] * 0.5f;
-                const float x0       = mWidth * (float) (j - mStrafe) / DEFAULT_FRAMES_PER_BUFFER;
+                const float mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
+                const float mSample1 = mBuffers[i][j] * 0.5f;
+                const float x0       = mWidth * static_cast<float>(j - mStrafe) / DEFAULT_FRAMES_PER_BUFFER;
                 const float y0       = ii * mHeight + mSample0 * mHeight;
-                const float x1       = mWidth * (float) j / DEFAULT_FRAMES_PER_BUFFER;
+                const float x1       = mWidth * static_cast<float>(j) / DEFAULT_FRAMES_PER_BUFFER;
                 const float y1       = ii * mHeight + mSample1 * mHeight;
                 g.line(x0, y0, x1, y1);
                 g.line(x0, y0, x0, ii * mHeight);
@@ -122,7 +122,7 @@ static void rx_input_callback(AudioDevice* audiodevice, uint8_t callback_type) {
     (void) audiodevice; // TODO maybe copy input data to audioblock?
 }
 
-static void tx_output_callback(AudioDevice* audiodevice, uint8_t callback_type) {
+static void tx_output_callback(AudioDevice* audiodevice, const uint8_t callback_type) {
     if (callback_type == CALLBACK_FULL_COMPLETE) {
     } else if (callback_type == CALLBACK_HALF_COMPLETE) {
     }

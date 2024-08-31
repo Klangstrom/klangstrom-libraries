@@ -89,10 +89,11 @@ typedef void (*Callback_1_TOUCHEVENTPTR)(TouchEvent*);
 WEAK void display_update_event();
 WEAK void display_touch_event(TouchEvent* touchevent);
 
-bool               display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT); // implemented as BSP
-void               display_deinit();                                                                        // implemented as BSP
-int16_t            display_get_width();
-int16_t            display_get_height();
+bool               display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT);
+bool               display_init_BSP(TouchPanelMode touch_panel_mode);
+void               display_deinit();                                      // implemented as BSP
+int16_t            display_get_width();                                   // implemented as BSP
+int16_t            display_get_height();                                  // implemented as BSP
 void               display_set_backlight(float brightness);               // implemented as BSP
 void               display_enable_automatic_update(bool sync_to_v_blank); // implemented as BSP
 void               display_swap_buffer();                                 // implemented as BSP
@@ -103,7 +104,6 @@ void               display_set_update_callback(Callback_0_VOID callback);
 void               display_fire_update_callback();
 void               display_set_touch_callback(Callback_1_TOUCHEVENTPTR callback);
 void               display_fire_touch_callback(TouchEvent* touchevent);
-bool               display_init_BSP(TouchPanelMode touch_panel_mode);
 volatile uint32_t  display_get_buffer_address(); // implemented as BSP
 volatile uint32_t* display_get_buffer();         // implemented as BSP
 
@@ -113,7 +113,6 @@ volatile uint32_t* display_get_buffer();         // implemented as BSP
 void touch_init(TouchPanelMode touch_panel_mode); // implemented as BSP
 void touch_read(TouchEvent* touchevent);          // implemented as BSP
 bool touch_has_event();                           // implemented as BSP
-
 
 #ifdef __cplusplus
 }

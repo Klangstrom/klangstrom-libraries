@@ -23,12 +23,11 @@
 #ifdef KLST_ARCH_IS_EMU
 #ifndef KLST_CLIENT_PERIPHERAL_CONFIGURATION
 
-// TODO how do we handle this? is there a `PeripheralConfiguration_KLST_PANDA_EMU.h` file?
-//#if defined(KLST_PANDA_STM32)
-//#include "PeripheralConfiguration_KLST_PANDA_STM32.h"
-//#elif defined(KLST_CATERPILLAR_STM32)
-//#include "PeripheralConfiguration_KLST_CATERPILLAR_STM32.h"
-//#endif // KLST_PANDA_STM32
+#if defined(KLST_PANDA_EMU)
+#include "PeripheralConfiguration_KLST_PANDA_EMU.h"
+#elif defined(KLST_CATERPILLAR_EMU)
+#include "PeripheralConfiguration_KLST_CATERPILLAR_EMU.h"
+#endif // KLST_PANDA_EMU
 
 #else // KLST_CLIENT_PERIPHERAL_CONFIGURATION
 

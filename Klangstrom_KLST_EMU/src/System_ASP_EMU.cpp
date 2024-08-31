@@ -68,7 +68,7 @@ AudioDevice* system_init_audiocodec() { // TOOD this is BSP
     audioinfo.bit_depth       = 16;
     AudioDevice* audiodevice  = audiodevice_init_audiocodec(&audioinfo);
     if (audioinfo.device_id == AUDIO_DEVICE_INIT_ERROR) {
-        console_timestamp();
+        console_timestamp(false );
         console_error("error initializing audio device");
     }
     audiodevice_resume(audiodevice);

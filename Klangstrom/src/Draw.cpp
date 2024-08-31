@@ -28,12 +28,6 @@
 #include "DisplayDrawInterface.h"
 #include "Display.h"
 
-// uses from `Display.h`:
-//
-// display_get_height()
-// display_get_width()
-// display_get_backbuffer_address()
-
 #ifndef ABS
 #define ABS(X) ((X) > 0 ? (X) : -(X))
 #endif
