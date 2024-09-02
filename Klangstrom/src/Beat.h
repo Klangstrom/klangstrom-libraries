@@ -19,11 +19,9 @@
 
 #pragma once
 
-
 #include <functional>
 #include <stdint.h>
-
-#include "HardwareTimer.h"
+#include "TimeTimer.h"
 
 #ifndef WEAK
 #define WEAK __attribute__((weak))
@@ -43,13 +41,16 @@ typedef void (*Callback_2_UI8_UI16)(uint8_t, uint16_t);
 
 class Beat {
 public:
-    explicit Beat(const uint8_t beat_id) : device_id(beat_id),
-                                           callback_beat(nullptr),
-                                           beat_counter(0) {
-        timer = new HardwareTimer(TIM5); // TODO this needs to be configured elsewhere
-                                         //     ... maybe as constructor parameter
+    explicit Beat() : callback_beat(nullptr),
+                      beat_counter(0) {
+        timer = TimeTimer::instance();
         timer->attachInterrupt(std::bind(&Beat::beat_event, this));
         set_callback(beat);
+    }
+
+    void init(const uint8_t beat_id) {
+        device_id = beat_id;
+        timer->init(device_id);
     }
 
     void bpm(const float beats_per_minute) const {
@@ -89,8 +90,8 @@ public:
     }
 
 private:
-    HardwareTimer*      timer;
-    const uint8_t       device_id;
+    TimeTimer*          timer;
+    uint8_t             device_id;
     Callback_2_UI8_UI16 callback_beat;
     uint32_t            beat_counter;
 };

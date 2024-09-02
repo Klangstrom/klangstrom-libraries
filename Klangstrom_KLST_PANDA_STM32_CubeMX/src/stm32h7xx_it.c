@@ -71,6 +71,9 @@ extern SAI_HandleTypeDef   hsai_BlockB1;
 extern SD_HandleTypeDef    hsd2;
 extern TIM_HandleTypeDef   htim1;
 extern TIM_HandleTypeDef   htim2;
+extern TIM_HandleTypeDef   htim7;
+extern TIM_HandleTypeDef   htim13;
+extern TIM_HandleTypeDef   htim14;
 extern DMA_HandleTypeDef   hdma_uart4_rx;
 extern DMA_HandleTypeDef   hdma_uart4_tx;
 extern DMA_HandleTypeDef   hdma_uart8_rx;
@@ -385,6 +388,32 @@ void EXTI15_10_IRQHandler(void) {
 }
 
 /**
+  * @brief This function handles TIM8 update interrupt and TIM13 global interrupt.
+  */
+void TIM8_UP_TIM13_IRQHandler(void) {
+    /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
+
+    /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
+    HAL_TIM_IRQHandler(&htim13);
+    /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
+
+    /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 trigger and commutation interrupts and TIM14 global interrupt.
+  */
+void TIM8_TRG_COM_TIM14_IRQHandler(void) {
+    /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 0 */
+
+    /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 0 */
+    HAL_TIM_IRQHandler(&htim14);
+    /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
+
+    /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
+}
+
+/**
   * @brief This function handles DMA1 stream7 global interrupt.
   */
 void DMA1_Stream7_IRQHandler(void) {
@@ -408,6 +437,19 @@ void UART4_IRQHandler(void) {
     /* USER CODE BEGIN UART4_IRQn 1 */
 
     /* USER CODE END UART4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM7 global interrupt.
+  */
+void TIM7_IRQHandler(void) {
+    /* USER CODE BEGIN TIM7_IRQn 0 */
+
+    /* USER CODE END TIM7_IRQn 0 */
+    HAL_TIM_IRQHandler(&htim7);
+    /* USER CODE BEGIN TIM7_IRQn 1 */
+
+    /* USER CODE END TIM7_IRQn 1 */
 }
 
 /**

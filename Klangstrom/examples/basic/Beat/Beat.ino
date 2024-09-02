@@ -9,23 +9,24 @@
 
 uint8_t counter = 0;
 
-Beat fBeat{23};
+Beat beat_event;
 
 void setup() {
     system_init();
 
-    fBeat.bpm(120);
-    fBeat.start();
+    beat_event.init(7);
+    beat_event.bpm(120);
+    beat_event.start();
 }
 
 void loop() {
     counter++;
     if (counter == 16) {
-        fBeat.pause();
+        beat_event.pause();
         console_println("pausing beat");
     }
     if (counter == 32) {
-        fBeat.resume();
+        beat_event.resume();
         counter = 0;
         console_println("resuming beat");
     }

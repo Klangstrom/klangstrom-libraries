@@ -18,10 +18,10 @@
 */
 
 #include "Klangstrom.h"
-
-#include <string>
 #ifdef KLST_PERIPHERAL_ENABLE_ENCODER
 #ifdef KLST_ARCH_IS_STM32
+
+#include <string>
 
 #include "main.h"
 #include "tim.h"

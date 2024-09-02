@@ -181,7 +181,7 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef* hsai) {
 
 /* ----------------- GPIO --------------- */
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin) {
     ArrayList_GPIOListenerPtr* fGPIOListeners = system_get_registered_gpio_listener();
     for (size_t i = 0; i < fGPIOListeners->size; i++) {
         const GPIOListener* gpio = arraylist_GPIOListenerPtr_get(fGPIOListeners, i);
@@ -193,6 +193,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     // - EXTI13 for touch display
     // - EXTI14 for mechanical key 00
     // - EXTI15 for mechanical key 01
+    // maybe use
+    // - EXTI12 for programmer button
 }
 
 /* --------------- U(S)ART -------------- */
