@@ -32,7 +32,7 @@ typedef void (*Callback_1_UI8)(uint8_t);
 typedef void (*Callback_1_UI16)(uint16_t);
 
 typedef void (*Callback_2_UI8)(uint8_t, uint8_t);
-typedef void (*Callback_2_UI8_I16)(uint8_t, uint16_t);
+typedef void (*Callback_2_UI8_UI16)(uint8_t, uint16_t);
 typedef void (*Callback_2_UI8_VOIDPTR)(const uint8_t, const void*);
 
 typedef void (*Callback_3_UI8)(uint8_t, uint8_t, uint8_t);

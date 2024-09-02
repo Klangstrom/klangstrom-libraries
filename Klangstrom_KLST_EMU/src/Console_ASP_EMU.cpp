@@ -41,8 +41,8 @@ void console_timestamp(bool newline) {
 void console_init_BSP() {}
 
 static void rainbow(const char* text) {
-    static const uint8_t num_colors = 7;
-    const char*          colors[]   = {
+    static constexpr uint8_t num_colors = 7;
+    const char*              colors[]   = {
         "\033[31m", // Red
         "\033[32m", // Green
         "\033[33m", // Yellow
