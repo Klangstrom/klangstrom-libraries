@@ -21,7 +21,7 @@
 
 #include <functional>
 #include <stdint.h>
-#include "TimeTimer.h"
+#include "Timer_.h"
 
 #ifndef WEAK
 #define WEAK __attribute__((weak))
@@ -42,34 +42,46 @@ typedef void (*Callback_2_UI8_UI16)(uint8_t, uint16_t);
 class Beat {
 public:
     explicit Beat() : callback_beat(nullptr),
-                      beat_counter(0) {
-        timer = TimeTimer::instance();
-        timer->attachInterrupt(std::bind(&Beat::beat_event, this));
+                      beat_counter(0),
+                      fIsRunning(false) {
         set_callback(beat);
     }
 
     void init(const uint8_t beat_id) {
         device_id = beat_id;
-        timer->init(device_id);
-    }
-
-    void bpm(const float beats_per_minute) const {
-        if (beats_per_minute == 0) {
-            return;
+        timer     = timer_create(device_id);
+        if (timer) {
+            timer->callback = std::bind(&Beat::beat_event, this, std::placeholders::_1);
         }
-        const uint32_t duration_us = (60.0f / beats_per_minute) * 1000000;
-        timer->setOverflow(duration_us, MICROSEC_FORMAT);
-        timer->resume();
     }
 
-    void beat_event() {
+    void beat_event(const Timer* timer) {
         beat_counter++;
         if (callback_beat != nullptr) {
             callback_beat(device_id, beat_counter);
         }
     }
-    void pause() const {
-        timer->pause();
+
+    void bpm(const float beats_per_minute) const {
+        if (timer == nullptr) {
+            return;
+        }
+        if (beats_per_minute == 0) {
+            return;
+        }
+        const uint32_t duration_us = (60.0f / beats_per_minute) * 1000000;
+        timer_set_overflow(timer, duration_us);
+    }
+
+    void pause() {
+        if (timer == nullptr) {
+            return;
+        }
+        if (!fIsRunning) {
+            return;
+        }
+        fIsRunning = false;
+        timer_pause(timer);
     }
 
     void start() {
@@ -77,8 +89,15 @@ public:
         resume();
     }
 
-    void resume() const {
-        timer->resume();
+    void resume() {
+        if (timer == nullptr) {
+            return;
+        }
+        if (fIsRunning) {
+            return;
+        }
+        fIsRunning = true;
+        timer_resume(timer);
     }
 
     void reset() {
@@ -90,8 +109,9 @@ public:
     }
 
 private:
-    TimeTimer*          timer;
+    Timer*              timer;
     uint8_t             device_id;
     Callback_2_UI8_UI16 callback_beat;
     uint32_t            beat_counter;
+    bool                fIsRunning;
 };

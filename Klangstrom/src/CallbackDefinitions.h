@@ -28,6 +28,7 @@ extern "C" {
 struct AudioBlock;
 
 typedef void (*Callback_0_VOID)();
+typedef void (*Callback_1_I8)(int8_t);
 typedef void (*Callback_1_UI8)(uint8_t);
 typedef void (*Callback_1_UI16)(uint16_t);
 

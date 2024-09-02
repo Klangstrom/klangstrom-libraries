@@ -19,20 +19,27 @@
 
 #pragma once
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
-#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-#define KLST_PERIPHERAL_ENABLE_TIMERS
+#include "Klangstrom.h"
+#ifdef KLST_ARCH_IS_STM32
 
-/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
+#include "main.h"
+#include "tim.h"
 
-#define KLST_PERIPHERAL_ENABLE_ENCODER
-#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-#define KLST_PERIPHERAL_ENABLE_MIDI
-#define KLST_PERIPHERAL_ENABLE_ADC_DAC
-#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-#define KLST_PERIPHERAL_ENABLE_DISPLAY
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef void (*Callback_0_VOID)();
+
+typedef struct TimerPeripherals {
+    uint16_t      timer_number;
+    TIM_HandleTypeDef* timer_handle;
+    uint32_t period;
+    uint32_t prescaler;
+} TimerPeripherals;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // KLST_ARCH_IS_STM32

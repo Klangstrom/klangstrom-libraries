@@ -30,7 +30,7 @@
 extern "C" {
 #endif
 
-void key_callback_BSP(uint16_t GPIO_Pin) {
+void key_callback_BSP(const uint16_t GPIO_Pin) {
     ArrayList_KeyPtr* fKeyListeners = key_get_listeners();
     for (size_t i = 0; i < fKeyListeners->size; i++) {
         Key* key = arraylist_KeyPtr_get(fKeyListeners, i);

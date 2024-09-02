@@ -17,22 +17,34 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "System.h"
+#include "Timer_.h"
 
-#define KLST_PERIPHERAL_ENABLE_GPIO
-#define KLST_PERIPHERAL_ENABLE_SERIAL_DEBUG
-#define KLST_PERIPHERAL_ENABLE_AUDIODEVICE
-#define KLST_PERIPHERAL_ENABLE_LEDS
-#define KLST_PERIPHERAL_ENABLE_SD_CARD
-#define KLST_PERIPHERAL_ENABLE_IDC_SERIAL
-#define KLST_PERIPHERAL_ENABLE_ON_BOARD_MIC
-#define KLST_PERIPHERAL_ENABLE_TIMERS
+WEAK void timer_event(Timer* timer) {
+    (void) timer;
+}
 
-/* KLST_PANDA_STM32 exclusive i.e not built into KLST_CATERPILLAR */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#define KLST_PERIPHERAL_ENABLE_ENCODER
-#define KLST_PERIPHERAL_ENABLE_MECHANICAL_KEYS
-#define KLST_PERIPHERAL_ENABLE_MIDI
-#define KLST_PERIPHERAL_ENABLE_ADC_DAC
-#define KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY
-#define KLST_PERIPHERAL_ENABLE_DISPLAY
+Timer* timer_create(const uint8_t timer_id) {
+    auto* timer     = new Timer();
+    timer->timer_id = timer_id;
+    timer->callback = timer_event;
+    if (timer_init_peripherals_BSP(timer)) {
+        system_register_timer(timer);
+    } else {
+        timer->timer_id = TIMER_INIT_INCOMPLETE;
+    }
+    return timer;
+}
+
+void timer_delete(Timer* timer) {
+    timer_deinit_peripherals_BSP(timer);
+    delete timer;
+}
+
+#ifdef __cplusplus
+}
+#endif

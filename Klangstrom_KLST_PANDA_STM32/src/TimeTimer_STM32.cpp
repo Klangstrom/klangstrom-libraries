@@ -21,9 +21,9 @@
 #ifdef KLST_ARCH_IS_STM32
 
 #include <stdint.h>
-#include "tim.h"
 #include "Console.h"
 #include "TimeTimer.h"
+#include "tim.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,9 +32,9 @@ extern "C" {
 /**
  * TODO maybe move this to System if other peripherals need timer interrupts too
  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-    console_status("HAL_TIM_PeriodElapsedCallback");
-}
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+//     console_status("HAL_TIM_PeriodElapsedCallback");
+// }
 
 #ifdef __cplusplus
 }

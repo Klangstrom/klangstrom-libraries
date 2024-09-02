@@ -27,6 +27,7 @@
 #include "ArrayList.h"
 #include "Tools.h"
 #include "GPIOListener.h"
+#include "Timer_.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +36,7 @@ extern "C" {
 DEFINE_ARRAYLIST(GPIOListener*, GPIOListenerPtr)
 DEFINE_ARRAYLIST(AudioDevice*, AudioDevicePtr)
 DEFINE_ARRAYLIST(SerialDevice*, SerialDevicePtr)
+DEFINE_ARRAYLIST(Timer*, TimerPtr)
 
 void                       system_init();
 void                       system_register_audiodevice(AudioDevice* audiodevice);
@@ -43,13 +45,15 @@ void                       system_register_serialdevice(SerialDevice* serialdevi
 ArrayList_SerialDevicePtr* system_get_registered_serialdevices();
 void                       system_register_gpio_listener(GPIOListener* gpio_listener);
 ArrayList_GPIOListenerPtr* system_get_registered_gpio_listener();
+void                       system_register_timer(Timer* timer);
+ArrayList_TimerPtr*        system_get_registered_timer();
 uint16_t                   system_get_unique_device_ID();
 bool                       system_is_initialized();
 uint32_t                   system_get_ticks();
 void                       system_enable_cycle_counter(bool enable); // implemented as BSP
 void                       system_reset_cycles();                    // implemented as BSP
 uint32_t                   system_get_cycles();                      // implemented as BSP
-uint32_t                   system_clock_frequency();                 // implemented as BSP
+uint64_t                   system_clock_frequency();                 // implemented as BSP
 float                      system_cycles_to_micros(uint32_t cycles);
 
 /**

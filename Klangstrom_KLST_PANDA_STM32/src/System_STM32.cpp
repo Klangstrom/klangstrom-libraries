@@ -25,6 +25,7 @@
 #include "stm32h7xx_hal.h"
 #include "AudioDevice_STM32.h"
 #include "SerialDevice_STM32.h"
+#include "Timer_STM32.h"
 #include "Console.h"
 
 #ifdef __cplusplus
@@ -104,7 +105,7 @@ uint32_t system_get_cycles() {
 }
 #endif // KLST_USE_ARM_REGISTERS_FOR_CYCLE_COUNTER
 
-uint32_t system_clock_frequency() {
+uint64_t system_clock_frequency() {
     return HAL_RCC_GetSysClockFreq();
 }
 
@@ -261,6 +262,19 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
 }
 #endif // KLST_PERIPHERAL_ENABLE_UART
 
+#ifdef KLST_PERIPHERAL_ENABLE_TIMERS
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+    ArrayList_TimerPtr* mTimers = system_get_registered_timer();
+    for (size_t i = 0; i < mTimers->size; i++) {
+        Timer* t = arraylist_TimerPtr_get(mTimers, i);
+        if (t != nullptr) {
+            if (t->peripherals->timer_handle->Instance == htim->Instance) {
+                t->callback(t);
+            }
+        }
+    }
+}
+#endif // KLST_PERIPHERAL_ENABLE_TIMERS
 
 #ifdef SYSTEM_HANDLE_TIMEOFDAY_WARNING
 #include <sys/time.h>
