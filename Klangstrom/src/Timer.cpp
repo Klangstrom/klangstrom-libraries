@@ -17,8 +17,34 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+#include "System.h"
+#include "Timer.h"
 
-#include "TimeTimer.h"
+WEAK void timer_event(Timer* timer) {
+    (void) timer;
+}
 
-class TimeTimer_STM32 : public TimeTimer {};
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+Timer* timer_create(const uint8_t timer_id) {
+    auto* timer     = new Timer();
+    timer->timer_id = timer_id;
+    timer->callback = timer_event;
+    if (timer_init_peripherals_BSP(timer)) {
+        system_register_timer(timer);
+    } else {
+        timer->timer_id = TIMER_INIT_INCOMPLETE;
+    }
+    return timer;
+}
+
+void timer_delete(Timer* timer) {
+    timer_deinit_peripherals_BSP(timer);
+    delete timer;
+}
+
+#ifdef __cplusplus
+}
+#endif

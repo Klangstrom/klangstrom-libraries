@@ -1,12 +1,12 @@
 /**
- * this example demonstrates how to use the debugging console to print messages to the serial console.
+ * this example demonstrates how to use timers and beat.
 */
 
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
 #include "Beat.h"
-#include "Timer_.h"
+#include "Timer.h"
 
 uint8_t counter = 0;
 
