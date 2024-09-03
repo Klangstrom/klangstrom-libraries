@@ -19,25 +19,27 @@
 
 #pragma once
 
-#include "KlangstromEnvironment.h"
-#include "KlangstromConfiguration.h"
+#include "Klangstrom.h"
+#ifdef KLST_ARCH_IS_EMU
 
-/* include client configuration, if present */
+#include <stdint.h>
+#include "HardwareTimer.h"
 
-#if __has_include("PeripheralConfiguration.h")
-
-#warning "Klangstrom peripherals are configured by client via external file."
-#include "KlangstromPeripheralConfiguration.h"
-#define KLST_CLIENT_PERIPHERAL_CONFIGURATION
-
-#endif // KlangstromPeripheralConfiguration.h
-
-/* include architecture / plattform specific implementation + configuration */
-
-#ifdef KLST_ARCH_IS_STM32
-#include "PeripheralConfiguration_STM32.h"
-#elif defined(KLST_ARCH_IS_EMU)
-#include "PeripheralConfiguration_EMU.h"
-#else
-#warning "no implementation for Klangstrom found ( this might be intentional )"
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+typedef void (*Callback_0_VOID)();
+typedef void (*Callback_1_TIMERPTR)(Timer*);
+
+typedef struct TimerPeripherals {
+    uint16_t       timer_number;
+    HardwareTimer* timer_handle;
+    // Callback_1_TIMERPTR callback;
+} TimerPeripherals;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // KLST_ARCH_IS_EMU

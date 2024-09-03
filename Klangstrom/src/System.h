@@ -53,7 +53,7 @@ uint32_t                   system_get_ticks();
 void                       system_enable_cycle_counter(bool enable); // implemented as BSP
 void                       system_reset_cycles();                    // implemented as BSP
 uint32_t                   system_get_cycles();                      // implemented as BSP
-uint64_t                   system_clock_frequency();                 // implemented as BSP
+uint32_t                   system_clock_frequency();                 // implemented as BSP
 float                      system_cycles_to_micros(uint32_t cycles);
 
 /**

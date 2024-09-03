@@ -20,7 +20,7 @@
 #include "KlangstromEnvironment.h"
 #ifdef KLST_ARCH_IS_EMU
 
-#include "AudioDevice_ASP_EMU.h"
+#include "AudioDevice_EMU.h"
 #include "Console.h"
 #include "KlangstromEmulator.h"
 

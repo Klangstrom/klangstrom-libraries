@@ -31,6 +31,8 @@
 #include "Console.h"
 #include "stm32.h"
 
+#include <iostream>
+
 typedef enum {
     TICK_FORMAT, // default
     MICROSEC_FORMAT,
@@ -48,8 +50,10 @@ public:
           fRunning(false),
           fPaused(false) {}
 
-    void attachInterrupt(const callback_function_t& callback_beat) {
-        fCallback = callback_beat;
+    void attachInterrupt(const callback_function_t& callback) {
+        fCallback = callback;
+        // fCallback = std::move(callback);
+        // TOOD ^^^ check if `move` might be better, safer, ...
     }
 
     void setOverflow(const uint32_t duration, const TimerFormat_t format) {
@@ -104,7 +108,9 @@ private:
             }
 
             nextCallTime += std::chrono::microseconds(fDuration_us);
-            fCallback();
+            if (fCallback) {
+                fCallback();
+            }
             std::this_thread::sleep_until(nextCallTime);
         }
     }

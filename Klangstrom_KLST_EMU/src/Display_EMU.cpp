@@ -66,7 +66,7 @@ public:
             display_swap_buffer();
             mouseMoved(); // TODO move this to subscription model
             display_update_event();
-            buffer.update();
+            buffer.updatePixels();
             g.image(&buffer, 0, 0);
         }
 
