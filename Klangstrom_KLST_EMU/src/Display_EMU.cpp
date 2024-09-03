@@ -23,6 +23,15 @@
 #ifdef KLST_PANDA_EMU
 #define KLST_EMU_DISPLAY_WIDTH 480
 #define KLST_EMU_DISPLAY_HEIGHT 272
+#else
+#ifndef KLST_EMU_DISPLAY_WIDTH
+#warning "KLST_EMU_DISPLAY_WIDTH not defined, using default value"
+#define KLST_EMU_DISPLAY_WIDTH 480
+#endif // KLST_EMU_DISPLAY_WIDTH
+#ifndef KLST_EMU_DISPLAY_HEIGHT
+#warning "KLST_EMU_DISPLAY_HEIGHT not defined, using default value"
+#define KLST_EMU_DISPLAY_HEIGHT 272
+#endif // KLST_EMU_DISPLAY_HEIGHT
 #endif // KLST_PANDA_EMU
 
 #include "Console.h"
