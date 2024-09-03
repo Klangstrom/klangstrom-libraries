@@ -105,7 +105,7 @@ uint32_t system_get_cycles() {
 }
 #endif // KLST_USE_ARM_REGISTERS_FOR_CYCLE_COUNTER
 
-uint64_t system_clock_frequency() {
+uint32_t system_clock_frequency() {
     return HAL_RCC_GetSysClockFreq();
 }
 
@@ -261,6 +261,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
     }
 }
 #endif // KLST_PERIPHERAL_ENABLE_UART
+
+/* ---------------- TIMER --------------- */
 
 #ifdef KLST_PERIPHERAL_ENABLE_TIMERS
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
