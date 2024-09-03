@@ -59,6 +59,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef   hdma_adc3;
+extern ADC_HandleTypeDef   hadc3;
 extern DMA_HandleTypeDef   hdma_dfsdm1_flt0;
 extern DMA_HandleTypeDef   hdma_dfsdm1_flt1;
 extern DMA2D_HandleTypeDef hdma2d;
@@ -568,6 +569,19 @@ void SDMMC2_IRQHandler(void) {
     /* USER CODE BEGIN SDMMC2_IRQn 1 */
 
     /* USER CODE END SDMMC2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC3 global interrupt.
+  */
+void ADC3_IRQHandler(void) {
+    /* USER CODE BEGIN ADC3_IRQn 0 */
+
+    /* USER CODE END ADC3_IRQn 0 */
+    HAL_ADC_IRQHandler(&hadc3);
+    /* USER CODE BEGIN ADC3_IRQn 1 */
+
+    /* USER CODE END ADC3_IRQn 1 */
 }
 
 /**

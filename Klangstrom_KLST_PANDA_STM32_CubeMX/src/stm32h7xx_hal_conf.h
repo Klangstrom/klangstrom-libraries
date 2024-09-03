@@ -136,8 +136,8 @@ extern "C" {
   *        This value is used by the UART, RTC HAL module to compute the system frequency
   */
 #if !defined(LSE_VALUE)
-#define LSE_VALUE (32768UL) /*!< Value of the External oscillator in Hz*/
-#endif                      /* LSE_VALUE */
+#define LSE_VALUE (32UL) /*!< Value of the External oscillator in Hz*/
+#endif                   /* LSE_VALUE */
 
 #if !defined(LSE_STARTUP_TIMEOUT)
 #define LSE_STARTUP_TIMEOUT (5000UL) /*!< Time out for LSE start up, in ms */

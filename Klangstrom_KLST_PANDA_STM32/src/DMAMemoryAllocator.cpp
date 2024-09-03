@@ -47,7 +47,7 @@ static MemoryPool dma_pool = {
     .next = dma_memory_pool,
     .size = KLST_DMA_POOL_SIZE};
 
-void* dma_malloc(size_t size) {
+void* dma_malloc(const size_t size) {
     /* align the next pointer to the nearest 32-byte boundary */
     dma_pool.next = reinterpret_cast<uint8_t*>(reinterpret_cast<uintptr_t>(dma_pool.next + 31) & ~static_cast<uintptr_t>(31));
 
