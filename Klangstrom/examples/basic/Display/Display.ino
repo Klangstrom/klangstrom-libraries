@@ -8,6 +8,7 @@
 #include "System.h"
 #include "Console.h"
 #include "Display.h"
+#include "Draw.h"
 
 void setup() {
     system_init();
@@ -22,15 +23,15 @@ void loop() {
 
 void display_touch_event(TouchEvent* touchevent) {
     for (int i = 0; i < touchevent->number_of_touches; ++i) {
-        display_rect(touchevent->x[i], touchevent->y[i], 8, 8, GRAY(0xFF));
+        draw_rect_fill(touchevent->x[i], touchevent->y[i], 8, 8, GRAY(0xFF));
     }
 
     if (touchevent->number_of_touches == 4) {
-        display_clear(GRAY(0x00));
+        draw_clear(GRAY(0x00));
     }
 
     if (touchevent->number_of_touches == 5) {
-        display_clear(RGB(0xFF, 0x80, 0x00));
+        draw_clear(RGB(0xFF, 0x80, 0x00));
     }
 
     console_clear();
