@@ -1,16 +1,21 @@
 /**
- * this example demonstrates how to setup the audio code and generate a sine wave sound.
+ * this example demonstrates how to setup the audio code and generate a sine wave sound with the klangwellen library.
  */
+
+#define KLANGWELLEN_WAVETABLE_INTERPOLATE_SAMPLES 1
 
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
 #include "AudioDevice.h"
-#include "MWavetable.h"
+#include "Wavetable.h"
+#include "OscillatorFunction.h"
 
-float     wavetable[512];
-MWavetable oscillator_left{wavetable, 512, 48000};
-MWavetable oscillator_right{wavetable, 512, 48000};
+using namespace klangwellen;
+
+float              wavetable[512];
+Wavetable          oscillator_left{wavetable, 512, 48000};
+OscillatorFunction oscillator_right{};
 
 AudioDevice* audiodevice;
 
@@ -20,9 +25,11 @@ bool  audiocodec_paused = false;
 void setup() {
     system_init();
 
-    MWavetable::fill(wavetable, 512, MWavetable::WAVEFORM_SINE);
-    oscillator_left.set_amplitude(0.1f);
-    oscillator_right.set_amplitude(0.15f);
+    Wavetable::fill(wavetable, 512, KlangWellen::WAVEFORM_SINE);
+    oscillator_left.set_amplitude(0.5f);
+
+    oscillator_right.set_amplitude(0.5f);
+    oscillator_right.set_waveform(KlangWellen::WAVEFORM_SINE);
 
     // long init section ...
     AudioInfo audioinfo;
@@ -46,24 +53,15 @@ void loop() {
         osc_frequency = 220.0f;
     }
     oscillator_left.set_frequency(osc_frequency);
-    oscillator_right.set_frequency(osc_frequency * 0.495f);
+    oscillator_right.set_frequency(osc_frequency * 0.49f);
     console_println("frequency: %f", osc_frequency);
-
-    if ((audiocodec_paused = !audiocodec_paused)) {
-        audiodevice_pause(audiodevice);
-    } else {
-        audiodevice_resume(audiodevice);
-    }
 
     delay(1000);
 }
 
 void audioblock(AudioBlock* audio_block) {
     for (int i = 0; i < audio_block->block_size; ++i) {
-        audio_block->output[0][i] = audio_block->input[0][i] + oscillator_left.process();
-        audio_block->output[1][i] = audio_block->input[1][i] + oscillator_right.process();
+        audio_block->output[0][i] = oscillator_left.process();
+        audio_block->output[1][i] = oscillator_right.process();
     }
 }
-
-// arduino-cli compile -u -b klangstrom:emulator:KLST_EMU:board=KLST_PANDA AudioCodec
-// arduino-cli compile -u -b STMicroelectronics:stm32:KLST_PANDA AudioCodec
