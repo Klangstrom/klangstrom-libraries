@@ -43,12 +43,13 @@ using callback_function_t = std::function<void()>;
 
 class HardwareTimer {
 public:
-    explicit HardwareTimer(TIM_TypeDef* instance)
-        : fTimerInstance(instance),
-          fCallback(nullptr),
-          fDuration_us(0),
-          fRunning(false),
-          fPaused(false) {}
+    explicit HardwareTimer(TIM_TypeDef* instance) : fTimerInstance(instance),
+                                                    fCallback(nullptr),
+                                                    fDuration_us(0),
+                                                    fRunning(false),
+                                                    fPaused(false) {
+        (void) fTimerInstance;
+    }
 
     void attachInterrupt(const callback_function_t& callback) {
         fCallback = callback;

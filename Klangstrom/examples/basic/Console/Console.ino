@@ -11,7 +11,7 @@ int counter = 0;
 void setup() {
     system_init();
 
-    console_timestamp();
+    console_timestamp(false);
     console_print("Hello,");
     console_println("World!");
 
