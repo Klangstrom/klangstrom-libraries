@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "KlangstromEnvironment.h"
-#if defined(KLST_PANDA_STM32)
+#if defined(KLST_PANDA_STM32) || defined(KLST_CATERPILLAR_STM32)
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -376,5 +376,5 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle) {
 }
 
 /* USER CODE BEGIN 1 */
-#endif // defined(ARDUINO_KLST_PANDA)
+#endif // KLST_PANDA_STM32 || KLST_CATERPILLAR_STM32
 /* USER CODE END 1 */
