@@ -42,21 +42,36 @@ extern ADC_HandleTypeDef hadc3;
 static constexpr uint16_t DAC_RESOLUTION = 1 << 12;
 static constexpr float    ADC_RESOLUTION = 1.0f / static_cast<float>(DAC_RESOLUTION);
 
-// #define KLST_ADC_CONTINOUS_MODE
+#define KLST_ADC_CONTINOUS_MODE
 
 #ifdef KLST_ADC_CONTINOUS_MODE
-uint32_t* fADCBuffer;
+uint16_t*          fADCBuffer;
+constexpr uint32_t ADC_BUFFER_SIZE = 128;
+float              fADCValue;
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
+    if (hadc == &hadc3) {
+        uint32_t sum = 0;
+        for (uint32_t i = 0; i < ADC_BUFFER_SIZE; i+=8) {
+            sum += fADCBuffer[i];
+        }
+        sum /= ADC_BUFFER_SIZE / 8;
+        fADCValue = static_cast<float>(sum) * ADC_RESOLUTION;
+    }
+}
 #endif // KLST_ADC_CONTINOUS_MODE
 
 void adc_init() {
 #ifdef KLST_ADC_CONTINOUS_MODE
+    MX_BDMA_Init();
 #endif // KLST_ADC_CONTINOUS_MODE
     MX_ADC3_Init();
     // HAL_ADCEx_Calibration_Start(&hadc3, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
 #ifdef KLST_ADC_CONTINOUS_MODE
-    MX_BDMA_Init();
-    fADCBuffer                  = static_cast<uint32_t*>(dma_malloc(4));
-    const HAL_StatusTypeDef ret = HAL_ADC_Start_DMA(&hadc3, fADCBuffer, 1);
+    // ADC_CLK/PRESCALE = SAMPLING_RATE
+    // 16000000Hz/256   = 62500Hz
+    fADCBuffer                  = static_cast<uint16_t*>(dma_malloc(ADC_BUFFER_SIZE * sizeof(uint16_t)));
+    const HAL_StatusTypeDef ret = HAL_ADC_Start_DMA(&hadc3, reinterpret_cast<uint32_t*>(fADCBuffer), ADC_BUFFER_SIZE);
     if (ret) {
         console_error("ADC: error at start time: %i", ret);
     }
@@ -95,7 +110,7 @@ void adc_stop() {}
 
 float adc_read() {
 #ifdef KLST_ADC_CONTINOUS_MODE
-    return static_cast<float>(fADCBuffer[0]) * ADC_RESOLUTION;
+    return fADCValue;
 #else
     // TODO consider using DMA and run in background
     HAL_ADC_Start(&hadc3);

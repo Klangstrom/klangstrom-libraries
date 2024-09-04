@@ -165,7 +165,7 @@ void PeriphCommonClock_Config(void) {
     PeriphClkInitStruct.PLL3.PLL3RGE         = RCC_PLL3VCIRANGE_0;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL      = RCC_PLL3VCOMEDIUM;
     PeriphClkInitStruct.PLL3.PLL3FRACN       = 0;
-    PeriphClkInitStruct.CkperClockSelection  = RCC_CLKPSOURCE_HSI;
+    PeriphClkInitStruct.CkperClockSelection  = RCC_CLKPSOURCE_HSE;
     PeriphClkInitStruct.Sai1ClockSelection   = RCC_SAI1CLKSOURCE_PLL3;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK) {
         Error_Handler();

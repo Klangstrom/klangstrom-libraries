@@ -4,7 +4,6 @@
 
 #include <vector>
 
-#include "main.h"
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
