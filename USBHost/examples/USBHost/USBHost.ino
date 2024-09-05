@@ -12,7 +12,7 @@ void setup() {
     usb_host_init();
     usb_host_callback_mouse_moved(mouse_moved);
 
-    console_timestamp();
+    console_timestamp(false);
     console_println("USBHost");
 }
 

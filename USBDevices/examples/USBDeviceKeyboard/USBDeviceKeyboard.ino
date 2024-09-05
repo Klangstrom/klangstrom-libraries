@@ -11,7 +11,7 @@ void setup() {
     system_init();
     usb_devices_init();
 
-    console_timestamp();
+    console_timestamp(false);
     console_println("USBDevicesKeyboard");
 }
 
