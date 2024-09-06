@@ -19,8 +19,6 @@
 
 #include "Klangstrom.h"
 
-#include <DMAMemoryAllocator.h>
-
 #ifdef KLST_PERIPHERAL_ENABLE_ADC_DAC
 #ifdef KLST_PANDA_STM32
 
@@ -30,6 +28,7 @@
 #include "dac.h"
 #include "DACADC.h"
 #include "Console.h"
+#include "DMAMemoryAllocator.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,7 +45,7 @@ static constexpr float    ADC_RESOLUTION = 1.0f / static_cast<float>(DAC_RESOLUT
 
 #ifdef KLST_ADC_CONTINOUS_MODE
 uint16_t*          fADCBuffer;
-constexpr uint32_t ADC_BUFFER_SIZE = 128;
+constexpr uint32_t ADC_BUFFER_SIZE = KLST_ADC_BUFFER_SIZE;
 float              fADCValue;
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {

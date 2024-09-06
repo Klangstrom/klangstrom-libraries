@@ -1,5 +1,5 @@
 /**
- * this example demonstrates how to setup the audio code and generate a sine wave sound.
+ * this example demonstrates how to set up the audio code and generate a sine wave sound.
  */
 
 #include "Arduino.h"
@@ -8,7 +8,7 @@
 #include "AudioDevice.h"
 #include "MWavetable.h"
 
-float     wavetable[512];
+float      wavetable[512];
 MWavetable oscillator_left{wavetable, 512, 48000};
 MWavetable oscillator_right{wavetable, 512, 48000};
 

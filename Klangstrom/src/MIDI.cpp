@@ -91,7 +91,7 @@ void midi_deinit() {
 
 static void parse_data(KlangstromMIDIParser& pMIDIParser, uint8_t* data, const uint8_t DATA_LENGTH) {
     // For commands of 0xf0 and greater (Both SYS and RS names)
-    char const midi_sysmsg_names[][7] = {
+    constexpr char midi_sysmsg_names[][7] = {
         "SYSEX ",
         "TMCODE",
         "SNGPOS",
@@ -111,7 +111,7 @@ static void parse_data(KlangstromMIDIParser& pMIDIParser, uint8_t* data, const u
     };
 
     // Otherwise, these are channel messages
-    char const midi_msg_names[][8] = {
+    constexpr char midi_msg_names[][8] = {
         "NOTOFF ",
         "NOTEON ",
         "ATOUCH ",

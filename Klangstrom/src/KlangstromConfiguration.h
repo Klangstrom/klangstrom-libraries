@@ -38,6 +38,12 @@
 #define KLST_DEFAULT_NUMBER_OF_KEYS 2           // used in `Key.h`
 #define KLST_PANDA_STM32_NUM_LEDS 2
 // #define KLST_ENABLE_FIRE_EVENT_FOR_ALL_KEYS
+#ifndef KLST_ADC_BUFFER_SIZE
+#define KLST_ADC_BUFFER_SIZE 128
+#endif
+#ifndef KLST_AUDIO_CODEC_AUDIO_BUFFER_SIZE
+#define KLST_AUDIO_CODEC_AUDIO_BUFFER_SIZE 128
+#endif
 
 #if __has_include("KlangstromConfigurationCustom.h")
 #include "KlangstromConfigurationCustom.h"

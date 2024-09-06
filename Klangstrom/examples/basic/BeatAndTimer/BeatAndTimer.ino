@@ -1,5 +1,5 @@
 /**
- * this example demonstrates how to use timers and beat.
+ * this example demonstrates how to use beat and timer.
 */
 
 #include "Arduino.h"

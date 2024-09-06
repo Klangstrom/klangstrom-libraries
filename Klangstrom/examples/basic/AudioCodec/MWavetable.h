@@ -31,7 +31,6 @@
 
 #include <stdint.h>
 #include <math.h>
-#include <algorithm>
 
 #ifndef PI
 #define PI M_PI
@@ -61,7 +60,6 @@ public:
 
     MWavetable(float* wavetable, const uint32_t wavetable_size, const uint32_t sampling_rate) : mWavetableSize(wavetable_size),
                                                                                                mSamplingRate(sampling_rate),
-                                                                                               fInterpolationType(WAVESHAPE_INTERPOLATE_NONE),
                                                                                                mFrequency(0) {
         mWavetable                = wavetable;
         fDeleteWavetable          = false;
@@ -198,7 +196,7 @@ public:
 
     /**
      * alternative version of `set_amplitude` which takes a second paramter that specifies the duration in samples from
-     * current to new value. this can prevents unwanted artifacts ( e.g crackling noise when changing amplitude quickly
+     * current to new value. this can prevent unwanted artifacts ( e.g crackling noise when changing amplitude quickly
      * especially on smoother wave shape like sine waves ). it can also be used to create glissando or portamento
      * effects.
      *
@@ -327,7 +325,6 @@ private:
     float                  mPhaseOffset;
     float                  mSignal;
     float                  mStepSize;
-    uint8_t                fInterpolationType;
 
     void advance_array_ptr() {
         // mArrayPtr += mStepSize * (mEnableJitter ? (klangwellen::KlangWellen::random() * mJitterRange + 1.0f) : 1.0f);

@@ -91,6 +91,7 @@ void _console_println_(const char* format, ...) {
     vprintf(format, args);
     va_end(args);
     printf(KLST_CONSOLE_LINE_ENDING);
+    fflush(stdout);
 
     //    char    buffer[CONSOLE_PRINT_BUFFER_SIZE];
     //    va_list args;
@@ -109,6 +110,7 @@ void _console_print_(const char* format, ...) {
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
+    fflush(stdout);
 
     //    char    buffer[CONSOLE_PRINT_BUFFER_SIZE];
     //    va_list args;
@@ -133,6 +135,7 @@ void _console_status_(const char* format, ...) {
     vprintf(format, args);
     va_end(args);
     printf(KLST_CONSOLE_LINE_ENDING);
+    fflush(stdout);
 
     console_reset_color();
 }
@@ -150,6 +153,7 @@ void _console_error_(const char* format, ...) {
     vprintf(format, args);
     va_end(args);
     printf(KLST_CONSOLE_LINE_ENDING);
+    fflush(stdout);
 
     console_reset_color();
 }

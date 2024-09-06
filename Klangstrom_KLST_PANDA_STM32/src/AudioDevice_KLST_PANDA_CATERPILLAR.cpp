@@ -60,7 +60,7 @@ uint16_t* mCurrentOutputTXBuffer;
 #define M_SAMPLE_RATE 48000
 #define M_TX_OUTPUT_CHANNELS 2
 #define M_RX_INPUT_CHANNELS 2
-#define M_SAMPLES_PER_AUDIO_BLOCK 128
+#define M_SAMPLES_PER_AUDIO_BLOCK KLST_AUDIO_CODEC_AUDIO_BUFFER_SIZE
 #define M_DOUBLE_BUFFER_SIZE (M_SAMPLES_PER_AUDIO_BLOCK * 2)
 
 static void check_audiodevice_config(AudioDevice* audiodevice) {
