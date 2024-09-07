@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-WEAK void beat(uint8_t beat_id, uint16_t beat_counter);
+WEAK void beat_event(uint8_t beat_id, uint16_t beat_counter);
 
 #ifdef __cplusplus
 }
@@ -44,25 +44,25 @@ public:
     explicit Beat() : callback_beat(nullptr),
                       beat_counter(0),
                       fIsRunning(false) {
-        set_callback(beat);
+        set_callback(beat_event);
     }
 
     void init(const uint8_t beat_id) {
         device_id = beat_id;
         timer     = timer_create(device_id);
         if (timer) {
-            timer->callback = std::bind(&Beat::beat_event, this, std::placeholders::_1);
+            timer->callback = std::bind(&Beat::beat_timer_event, this, std::placeholders::_1);
         }
     }
 
-    void beat_event(const Timer* timer) {
+    void beat_timer_event(const Timer* timer) {
         beat_counter++;
         if (callback_beat != nullptr) {
             callback_beat(device_id, beat_counter);
         }
     }
 
-    void bpm(const float beats_per_minute) const {
+    void set_bpm(const float beats_per_minute) const {
         if (timer == nullptr) {
             return;
         }
@@ -98,6 +98,10 @@ public:
         }
         fIsRunning = true;
         timer_resume(timer);
+    }
+
+    bool is_running() const {
+        return fIsRunning;
     }
 
     void reset() {

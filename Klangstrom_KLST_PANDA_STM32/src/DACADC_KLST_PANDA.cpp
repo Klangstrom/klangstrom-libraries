@@ -51,7 +51,7 @@ float              fADCValue;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     if (hadc == &hadc3) {
         uint32_t sum = 0;
-        for (uint32_t i = 0; i < ADC_BUFFER_SIZE; i+=8) {
+        for (uint32_t i = 0; i < ADC_BUFFER_SIZE; i += 8) {
             sum += fADCBuffer[i];
         }
         sum /= ADC_BUFFER_SIZE / 8;
@@ -99,7 +99,7 @@ void dac_write(float value) {
     } else if (value < 0.0) {
         value = 0.0;
     }
-    const uint32_t mData = value * DAC_RESOLUTION;
+    const uint32_t mData = value * (DAC_RESOLUTION - 1);
     HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, mData);
 }
 

@@ -724,6 +724,10 @@ void draw_set_text(BitmapFont* font) {
     fFont = font;
 }
 
+KLSTFont* draw_get_text() {
+    return fKLSTFont;
+}
+
 void draw_set_background_color(const uint32_t color) {
     fBackgroundColor = color;
 }

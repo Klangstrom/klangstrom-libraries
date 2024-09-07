@@ -10,7 +10,7 @@
 
 uint8_t counter = 0;
 
-Beat   beat_event;
+Beat   beat;
 Timer* timer;
 
 void setup() {
@@ -20,19 +20,19 @@ void setup() {
     timer_resume(timer);
     timer_set_overflow(timer, 1000000 / 10);
 
-    beat_event.init(7);
-    beat_event.bpm(60);
-    beat_event.start();
+    beat.init(7);
+    beat.bpm(60);
+    beat.start();
 }
 
 void loop() {
     counter++;
     if (counter == 16) {
-        beat_event.pause();
+        beat.pause();
         console_println("pausing beat");
     }
     if (counter == 32) {
-        beat_event.resume();
+        beat.resume();
         counter = 0;
         console_println("resuming beat");
     }
@@ -41,7 +41,7 @@ void loop() {
     delay(500);
 }
 
-void beat(const uint8_t beat_id, const uint16_t beat_counter) {
+void beat_event(const uint8_t beat_id, const uint16_t beat_counter) {
     console_println("beat: ID %i, counter %03i", beat_id, beat_counter);
 }
 

@@ -2,10 +2,10 @@
  * this example demonstrates how to use the display with touch panel
  */
 
-#include <Console.h>
 
 #include "Arduino.h"
 #include "System.h"
+#include "Console.h"
 #include "Display.h"
 #include "Draw.h"
 #include "KLSTFont_5x8.h"

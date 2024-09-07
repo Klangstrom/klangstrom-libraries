@@ -21,6 +21,7 @@
 #include <cmath>
 
 #include "LED.h"
+#include "Console.h"
 
 #ifdef __cplusplus
 extern "C" {

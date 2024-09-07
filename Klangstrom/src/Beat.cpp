@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-WEAK void beat(const uint8_t beat_id, const uint16_t beat_counter) {
+WEAK void beat_event(const uint8_t beat_id, const uint16_t beat_counter) {
     (void) beat_id;
     (void) beat_counter;
 }

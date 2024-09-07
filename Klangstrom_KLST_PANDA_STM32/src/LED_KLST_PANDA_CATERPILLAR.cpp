@@ -64,7 +64,7 @@ uint8_t led_total_BSP() {
 }
 
 void led_set_BSP(const int id, float intensity) {
-    uint32_t mDutyCycle = static_cast<uint32_t>(65535 * intensity);
+    const uint32_t mDutyCycle = static_cast<uint32_t>(65535 * intensity);
     if (id == 0) {
         __HAL_TIM_SET_COMPARE(&htim12, TIM_CHANNEL_1, mDutyCycle);
     } else if (id == 1) {
