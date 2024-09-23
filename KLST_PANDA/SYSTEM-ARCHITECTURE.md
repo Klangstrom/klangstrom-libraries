@@ -113,11 +113,11 @@ two serial ports are available as 6-pin shrouded IDC connectors. ports can be co
 the pins of the connectors are assigned as follows:
 
 ```
-+---------------+
-|  GND 1  2 TX  |
- | PWR 3  4 PWR |
-|  RX  5  6 GND |
-+---------------+
++--------------+
+| GND 1  2 TX  |
+| PWR 3  4 PWR |
+| RX  5  6 GND |
++--------------+
 ```
 
 ## Programmer
@@ -161,17 +161,18 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 
 ==@TODO==
 
-| TIMER | CHANNEL         | DESCRIPTION             |
-|-------|-----------------|-------------------------|
-| TIM1  | CH1+CH2+CH3     | ENCODER_00(+BUTTON)     | @TODO(could be EXTI10)
-| TIM2  | CH1+CH2+CH4     | ENCODER_01(+BUTTON)     | @TODO(could be EXTI11)
-| TIM3  | CH3             | DISPLAY_BACKLIGHT_PWM   |
-| TIM4  | CH2             | DISPLAY_TOUCH_INTERRUPT | @TODO(moved to EXTI13)
-| TIM4  | CH3+CH4         | MECH_BUTTON_00+01       | @TODO(moved to EXTI14+15)
-| TIM12 | CH1+CH2         | LED_00+01               |
-| TIM15 | CH1             | GPIO_19_INT             |
-| TIM23 | CH1+CH2+CH3+CH4 | GPIO_00+01+02+03_PWM    |
-| TIM24 | CH2             | BUTTON_PROGRAMMER       |
+| TIMER | CHANNEL         | DESCRIPTION                      |
+|-------|-----------------|----------------------------------|
+| TIM1  | CH1+CH2+CH3     | ENCODER_00(+BUTTON)              |
+| TIM2  | CH1+CH2+CH4     | ENCODER_01(+BUTTON)              |
+| TIM3  | CH3             | DISPLAY_BACKLIGHT_PWM            |
+| TIM7  |                 | BEAT  @(optional)                |
+| TIM12 | CH1+CH2         | LED_00+01                        |
+| TIM13 |                 | BEAT  @(optional)                |
+| TIM14 |                 | BEAT  @(optional)                |
+| TIM15 | CH1             | GPIO_19_INT @(optional)          |
+| TIM23 | CH1+CH2+CH3+CH4 | GPIO_00+01+02+03_PWM @(optional) |
+| TIM24 | CH2             | BUTTON_PROGRAMMER                |
 
 ## Buses
 
