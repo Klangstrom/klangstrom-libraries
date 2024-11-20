@@ -400,13 +400,13 @@
 	)
 	(model "${KIPRJMOD}/library/MP34DT05TR-A/3D/MP34DT05TR-A.x3d"
 		(offset
-			(xyz -0.25 0 -0.2)
+			(xyz 0.25 0 -0.2)
 		)
 		(scale
 			(xyz 0.11 0.11 0.11)
 		)
 		(rotate
-			(xyz -90 0 90)
+			(xyz -90 0 -90)
 		)
 	)
 )
