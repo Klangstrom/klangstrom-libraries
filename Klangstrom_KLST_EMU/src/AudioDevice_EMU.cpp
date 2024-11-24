@@ -31,7 +31,7 @@ public:
     void draw(PGraphics* g_ptr) override {
         PGraphics& g = *g_ptr;
 
-        g.stroke(1);
+        g.stroke(1.0f);
         g.noFill();
         g.pushMatrix();
         g.translate(20, 200);
@@ -40,7 +40,7 @@ public:
         constexpr float mWidth  = 512 - 20;
 
         if (fAudioDevice->peripherals->is_paused) {
-            g.fill(1);
+            g.fill(1.0f);
             g.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
             g.text("PAUSED", 3, -mHeight / 2 + KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f + 2);
             g.noFill();
@@ -52,7 +52,7 @@ public:
             g.stroke(1, 0.5f);
             g.rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
             g.line(0, ii * mHeight, mWidth, ii * mHeight);
-            g.stroke(1);
+            g.stroke(1.0f);
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
                 const float mSample0 = mBuffers[i][j - mStrafe] * 0.5f;
                 const float mSample1 = mBuffers[i][j] * 0.5f;
@@ -70,7 +70,7 @@ public:
             g.stroke(1, 0.5f);
             g.rect(0, ii * mHeight - mHeight * 0.5f, mWidth, mHeight);
             g.line(0, ii * mHeight, mWidth, ii * mHeight);
-            g.stroke(1);
+            g.stroke(1.0f);
             mBuffers = KlangstromEmulator::instance()->get_audio_input_buffers();
             for (int j = mStrafe; j < DEFAULT_FRAMES_PER_BUFFER; j += mStrafe) {
                 const float mSample0 = mBuffers[i][j - mStrafe] * 0.5f;

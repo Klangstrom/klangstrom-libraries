@@ -40,7 +40,7 @@ public:
             g->noStroke();
             g->ellipse(x, y, mRadius, mRadius);
             g->noFill();
-            g->stroke(1);
+            g->stroke(1.0f);
             g->ellipse(x, y, mRadius, mRadius);
         }
         g->popMatrix();

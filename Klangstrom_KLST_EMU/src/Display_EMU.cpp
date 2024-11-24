@@ -62,13 +62,13 @@ public:
         g.pushMatrix();
         g.translate(fPosition.x, fPosition.y);
 
-        g.fill(1);
+        g.fill(1.0f);
         g.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
         g.text("DISPLAY", -1, -2);
         g.noFill();
 
         if (!fDisplayOn) {
-            g.fill(0);
+            g.fill(0.0f);
             g.noStroke();
             g.rect(0, 0, width, height);
         } else {
