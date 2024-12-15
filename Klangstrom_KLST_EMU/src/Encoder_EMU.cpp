@@ -18,6 +18,10 @@
 */
 
 #include "Klangstrom.h"
+
+#define KLST_PERIPHERAL_ENABLE_ENCODER
+#warning "KLST_PERIPHERAL_ENABLE_ENCODER is currently always defined for KLST_EMU … this needs to be fixed"
+
 #ifdef KLST_PERIPHERAL_ENABLE_ENCODER
 #ifdef KLST_ARCH_IS_EMU
 
