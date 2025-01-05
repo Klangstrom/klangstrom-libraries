@@ -22,7 +22,7 @@
 
 ## Core
 
-the core is a `‌STM32H723ZGT` by ST, a 32-bit Arm® Cortex®-M7 CPU ( or MCU ) with 550MHz, 564KB RAM, 1024KB Flash, and FPU that comes in a LQFP-144 ( 20x20x1.4mm ) package.
+the core is a `STM32H723ZGT` by ST, a 32-bit Arm® Cortex®-M7 CPU ( or MCU ) with 550MHz, 564KB RAM, 1024KB Flash, and FPU that comes in a LQFP-144 ( 20x20x1.4mm ) package.
 
 - [STM32H723ZG](https://www.st.com/resource/en/datasheet/stm32h723zg.pdf) ( datasheet )
 
@@ -34,13 +34,13 @@ external memory is provided by `S70KL1282` by Infineon ( or more specifically `S
 
 ## Audio Codec
 
-the audio codec is a `‌WM8904` by Cirrus Logic. it features stereo headphone amplifiers in a QFN-32 package. it can be interface via a stereo line-in ( 3.5mm, TRS ), a stereo line-out ( 3.5mm, TRS ) or a 3-ring audio connector ( 3.5mm, TRRS with CTIA allocation ) for stereo headphones and mono microphone.
+the audio codec is a `WM8904` by Cirrus Logic. it features stereo headphone amplifiers in a QFN-32 package. it can be interface via a stereo line-in ( 3.5mm, TRS ), a stereo line-out ( 3.5mm, TRS ) or a 3-ring audio connector ( 3.5mm, TRRS with CTIA allocation ) for stereo headphones and mono microphone.
 
 - [WM8904 ( datasheet )](https://statics.cirrus.com/pubs/proDatasheet/WM8904_Rev4.1.pdf)
 
 ## Display
 
-the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272px, 24Bit colors. it is connected via a 40-pin FPC connector and features a capacitive touch surface ( interfaced via an `‌FT5206` I2C-based controller ) and dimmable a backlight ( via `CAT4139‌` + PWM ).
+the display is a 4.3" TFT LCD ( `ER-TFT043A2-3` ) with a resolution of 480×272px, 24Bit colors. it is connected via a 40-pin FPC connector and features a capacitive touch surface ( interfaced via an `FT5206` I2C-based controller ) and dimmable a backlight ( via `CAT4139` + PWM ).
 
 the display is interfaced with the CPU via a parallel LTDC interface.
 
@@ -50,7 +50,7 @@ the display is interfaced with the CPU via a parallel LTDC interface.
 
 ## On-Board Microphone
 
-the on-board microphones are two mono MEMS microphone ( `‌MP34DT05TR-A` ) fitted directly onto the board and interfaced via a PDM interface. they can be used in parallel with an external microphone or line-in signals from the audio codec.
+the on-board microphones are two mono MEMS microphone ( `MP34DT05TR-A` ) fitted directly onto the board and interfaced via a PDM interface. they can be used in parallel with an external microphone or line-in signals from the audio codec.
 
 ## SD Card
 
@@ -70,7 +70,7 @@ the board also features an on-off switch.
 
 ## Rotary Encoder
 
-two rotary encoders `‌PEC11R-4015F-S0024` by Bourns feature a 6mm diameter metal shaft, a metal case, a push button and 24 pulses per 360° rotation but no detents.
+two rotary encoders `PEC11R-4015F-S0024` by Bourns feature a 6mm diameter metal shaft, a metal case, a push button and 24 pulses per 360° rotation but no detents.
 
 the encoder body is 6.5mm high, the shaft is 15mm long of which 5mm feature an M7 thread and the top 7mm are D-shaped.
 
@@ -120,7 +120,7 @@ the pins of the connectors are assigned as follows:
 +--------------+
 ```
 
-## Programmer
+## Programmer Interface
 
 the programmer interface features two options. on one side of the board there is a standard STD14 connector ( a SWD connector extended by a dedicated serial port for debugging ), while on the other side there is a PCB-only ( no extra hardware components required ) footprint to be used with a [TC2070-IDC-NL-050](https://www.tag-connect.com/product/tc2070-idc-nl-050) by Tag-Connect.
 
@@ -196,7 +196,7 @@ the board features two user-programmable mechanical Cherry MX keys. both can be 
 | I2C4    | AUDIO_CODEC_I2C    |
 | I2C4    | DISPLAY_TOUCH      |
 
-@NOTE(`‌AUDIO_CODEC_I2C` and `DISPLAY_TOUCH‌` are both interfaced via `‌I2C4`, however, `I2C5` could be an alternative for one of them. `I2C5` pins are currently used for `GPIO_02+03_PWM+GPIO_03_PWM`. )
+@NOTE(`AUDIO_CODEC_I2C` and `DISPLAY_TOUCH` are both interfaced via `I2C4`, however, `I2C5` could be an alternative for one of them. `I2C5` pins are currently used for `GPIO_02+03_PWM+GPIO_03_PWM`. )
 
 ### SPI
 
