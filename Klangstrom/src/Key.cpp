@@ -32,21 +32,25 @@ WEAK void key_event(const Key* key) {
 }
 
 static ArrayList_KeyPtr fKeyListeners;
+static bool             is_initialized = false;
 
 void key_init(const uint8_t number_of_keys) {
     arraylist_GPIOListenerPtr_init(system_get_registered_gpio_listener(), number_of_keys);
     fGPIOListener.callback = key_callback_BSP;
     system_register_gpio_listener(&fGPIOListener);
+    is_initialized = true;
 }
 
-Key* key_create(uint8_t device_type) {
-    auto* key        = new Key();
-    key->device_type = device_type;
-    key->device_id   = system_get_unique_device_ID();
-    key->callback    = key_event;
-    // const bool init_peripherals_ok = key_init_peripherals_BSP(key);
-    // const bool init_ok             = key_init_BSP(key);
-    if (key_init_peripherals_BSP(key)) {
+Key* key_create(const uint8_t device_type) {
+    if (!is_initialized) {
+        key_init();
+    }
+    auto* key          = new Key();
+    key->device_type   = device_type;
+    key->device_id     = system_get_unique_device_ID();
+    key->callback      = key_event;
+    const bool init_ok = key_init_BSP(key);
+    if (init_ok && key_init_peripherals_BSP(key)) {
         key_register_listener(key);
     } else {
         key->device_type = KEY_INIT_INCOMPLETE;

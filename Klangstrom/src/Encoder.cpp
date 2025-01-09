@@ -31,7 +31,7 @@ WEAK void encoder_event(Encoder* encoder, uint8_t event) {
 
 static ArrayList_EncoderPtr fEncoderListeners;
 
-Encoder* encoder_create(uint8_t device_type) {
+Encoder* encoder_create(const uint8_t device_type) {
     auto* encoder                  = new Encoder();
     encoder->device_type           = device_type;
     encoder->device_id             = system_get_unique_device_ID();

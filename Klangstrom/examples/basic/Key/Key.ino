@@ -13,7 +13,6 @@ Key* key_right;
 void setup() {
     system_init();
 
-    key_init();
     key_left  = key_create(KEY_LEFT);
     key_right = key_create(KEY_RIGHT);
 }

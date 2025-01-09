@@ -34,7 +34,7 @@ void key_callback_BSP(const uint16_t GPIO_Pin) {
     ArrayList_KeyPtr* fKeyListeners = key_get_listeners();
     for (size_t i = 0; i < fKeyListeners->size; i++) {
         Key* key = arraylist_KeyPtr_get(fKeyListeners, i);
-        if (key != nullptr) {
+        if (key != nullptr && key->peripherals != nullptr) {
             if (key->peripherals->gpio_pin == GPIO_Pin) {
                 key->pressed = !HAL_GPIO_ReadPin(key->peripherals->gpio_port, key->peripherals->gpio_pin);
                 key_event(key);

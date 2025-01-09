@@ -28,7 +28,7 @@
 #include "Console.h"
 
 void KlangstromEmulatorClient::process_device(KlangstromEmulatorAudioDevice* device) {
-    // TODO if use double buffering here or if we just use normal buffer i.e `CALLBACK_FULL_COMPLETE`
+    // TODO check if we should use double buffering here or if we just use normal buffer i.e `CALLBACK_FULL_COMPLETE`
     device->get_audiodevice()->peripherals->callback_tx(device->get_audiodevice(), CALLBACK_FULL_COMPLETE);
 }
 

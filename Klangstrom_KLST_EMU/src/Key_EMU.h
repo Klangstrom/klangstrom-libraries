@@ -19,8 +19,26 @@
 
 #pragma once
 
+#include "KlangstromEnvironment.h"
+#ifdef KLST_ARCH_IS_EMU
+
+// TODO this can be made much more platform specific
 #include <stdint.h>
+#include "stm32.h"
+
+#include "KLST_EMU_PANDA_Peripheral_Defines.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct KeyPeripherals {
     uint16_t      gpio_pin;
+    GPIO_TypeDef* gpio_port;
 } KeyPeripherals;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // KLST_ARCH_IS_EMU

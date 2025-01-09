@@ -107,6 +107,18 @@ void HAL_TIM_PeriodElapsedCallback(Timer* htim) {
     }
 }
 
+/* ----------------- GPIO --------------- */
+
+void HAL_GPIO_EXTI_Callback(const uint16_t GPIO_Pin) {
+    ArrayList_GPIOListenerPtr* fGPIOListeners = system_get_registered_gpio_listener();
+    for (size_t i = 0; i < fGPIOListeners->size; i++) {
+        const GPIOListener* gpio = arraylist_GPIOListenerPtr_get(fGPIOListeners, i);
+        if (gpio != nullptr) {
+            gpio->callback(GPIO_Pin);
+        }
+    }
+}
+
 #ifdef __cplusplus
 }
 #endif

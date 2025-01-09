@@ -66,13 +66,8 @@ void              key_delete(Key* key);
 void              key_register_listener(Key* key);
 ArrayList_KeyPtr* key_get_listeners();
 
-// bool key_init_BSP(Key* key); // TODO maybe remove this.
+bool key_init_BSP(Key* key);
 // void key_deinit_BSP(Key* key); // TODO maybe remove this.
-/**
- * 
- * @param key 
- * @return 
- */
 bool key_init_peripherals_BSP(Key* key);
 void key_deinit_peripherals_BSP(Key* key);
 void key_callback_BSP(uint16_t GPIO_Pin);
