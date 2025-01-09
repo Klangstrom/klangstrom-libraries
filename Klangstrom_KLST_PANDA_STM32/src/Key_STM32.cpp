@@ -71,6 +71,10 @@ void key_deinit_peripherals_BSP(Key* key) {
     }
 }
 
+bool key_init_BSP(Key* key) {
+    return true;
+}
+
 #ifdef __cplusplus
 }
 #endif
