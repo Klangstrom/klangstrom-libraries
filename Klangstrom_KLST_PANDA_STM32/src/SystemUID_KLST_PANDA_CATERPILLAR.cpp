@@ -27,12 +27,11 @@
 extern "C" {
 #endif
 
-
 /* UIDs */
 
-#define KLST_NUM_OF_U_ID (1 + 10 + 5 + 10)
-static const int16_t  KLST_NO_ID                     = -1;
-static const uint32_t KLST_U_ID[KLST_NUM_OF_U_ID][3] = {
+#define KLST_NUM_OF_U_ID (1 + 10 + 5 + 10 + 10) // NO BOARD + 10 TINY + 5 CORE + 10 SHEEP + 10 PANDA
+static constexpr int16_t KLST_NO_ID                     = -1;
+static const uint32_t    KLST_U_ID[KLST_NUM_OF_U_ID][3] = {
     {0x00000000, 0x00000000, 0x00000000}, // NO BOARD
     {0x0040001D, 0x0200C000, 0x445243EC}, // KLST_TINY_01
     {0x003D0010, 0x0200C000, 0x445243EC}, // KLST_TINY_02
@@ -59,9 +58,19 @@ static const uint32_t KLST_U_ID[KLST_NUM_OF_U_ID][3] = {
     {0x002E0022, 0xFFFFFFFF, 0x00002FE8}, // KLST_SHEEP_23
     {0x001A003D, 0xFFFFFFFF, 0x00003031}, // KLST_SHEEP_24
     {0x00300040, 0xFFFFFFFF, 0x00003073}, // KLST_SHEEP_25 (BUTTONS)
+    {0x0021003E, 0xFFFFFFFF, 0x00000304}, // KLST_PANDA_26
+    {0x000A0032, 0xFFFFFFFF, 0x000002FF}, // KLST_PANDA_27
+    {0x00210038, 0xFFFFFFFF, 0x00000309}, // KLST_PANDA_28
+    {0x00210039, 0xFFFFFFFF, 0x000002F8}, // KLST_PANDA_29
+    {0x0021001E, 0xFFFFFFFF, 0x00000305}, // KLST_PANDA_30
+    {0x00050033, 0xFFFFFFFF, 0x00000309}, // KLST_PANDA_31
+    {0x00210032, 0xFFFFFFFF, 0x00000301}, // KLST_PANDA_32
+    {0x00050032, 0xFFFFFFFF, 0x00000303}, // KLST_PANDA_33
+    {0x000A0033, 0xFFFFFFFF, 0x000002FB}, // KLST_PANDA_34
+    {0x00140043, 0xFFFFFFFF, 0x000002FE}, // KLST_PANDA_35
 };
 
-int16_t ID() {
+int16_t system_get_UID_index() {
     for (uint8_t i = 0; i < KLST_NUM_OF_U_ID; ++i) {
         if (system_check_UID(KLST_U_ID[i])) {
             return i;
@@ -79,9 +88,9 @@ uint32_t KLST_BSP_UID_address() {
     return 0x1FF1E800;
 }
 
-unsigned long system_get_UID(uint8_t offset) {
+unsigned long system_get_UID(const uint8_t offset) {
     static const uint32_t UID_ADDR = KLST_BSP_UID_address();
-    return *((unsigned long*) UID_ADDR + offset * 0x04);
+    return *(reinterpret_cast<unsigned long*>(UID_ADDR) + offset * 0x04);
 }
 
 bool system_check_UID(const uint32_t UID[]) {

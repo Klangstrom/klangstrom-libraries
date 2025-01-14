@@ -28,6 +28,7 @@
 #include "Tools.h"
 #include "GPIOListener.h"
 #include "Timer.h"
+#include "SystemUID.h"
 
 #ifdef __cplusplus
 extern "C" {

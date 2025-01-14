@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-int16_t       ID();
+int16_t       system_get_UID_index();
 unsigned long system_get_UID(uint8_t offset);
 bool          system_check_UID(const uint32_t UID[]);
 
