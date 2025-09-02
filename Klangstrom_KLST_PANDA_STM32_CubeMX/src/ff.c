@@ -1,5 +1,3 @@
-#if defined(ARDUINO_KLST_PANDA)
-
 /*----------------------------------------------------------------------------/
 /  FatFs - Generic FAT file system module  R0.12c                             /
 /-----------------------------------------------------------------------------/
@@ -6140,5 +6138,3 @@ int f_printf (
 
 #endif /* !_FS_READONLY */
 #endif /* _USE_STRFUNC */
-
-#endif // defined(ARDUINO_KLST_PANDA)

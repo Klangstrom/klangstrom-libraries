@@ -22,7 +22,7 @@
 #define __STM32H7xx_IT_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Private includes ----------------------------------------------------------*/
@@ -67,15 +67,14 @@ void TIM1_UP_IRQHandler(void);
 void TIM1_TRG_COM_IRQHandler(void);
 void TIM1_CC_IRQHandler(void);
 void TIM2_IRQHandler(void);
-void TIM4_IRQHandler(void);
 void EXTI15_10_IRQHandler(void);
+void TIM8_UP_TIM13_IRQHandler(void);
+void TIM8_TRG_COM_TIM14_IRQHandler(void);
 void DMA1_Stream7_IRQHandler(void);
 void UART4_IRQHandler(void);
+void TIM7_IRQHandler(void);
 void DMA2_Stream0_IRQHandler(void);
 void DMA2_Stream1_IRQHandler(void);
-void OTG_HS_EP1_OUT_IRQHandler(void);
-void OTG_HS_EP1_IN_IRQHandler(void);
-void OTG_HS_IRQHandler(void);
 void UART8_IRQHandler(void);
 void SAI1_IRQHandler(void);
 void LTDC_IRQHandler(void);
@@ -83,6 +82,8 @@ void LTDC_ER_IRQHandler(void);
 void DMA2D_IRQHandler(void);
 void OCTOSPI1_IRQHandler(void);
 void SDMMC2_IRQHandler(void);
+void ADC3_IRQHandler(void);
+void BDMA_Channel0_IRQHandler(void);
 void UART9_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 

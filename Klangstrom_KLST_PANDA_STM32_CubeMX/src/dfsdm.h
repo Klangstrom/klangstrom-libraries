@@ -55,4 +55,3 @@ void MX_DFSDM1_Init(void);
 #endif
 
 #endif /* __DFSDM_H__ */
-

@@ -20,7 +20,6 @@
   *
  ******************************************************************************
  */
-#if defined(ARDUINO_KLST_PANDA)
 /* USER CODE END Header */
 
 /* USER CODE BEGIN FirstSection */
@@ -40,27 +39,23 @@ extern SD_HandleTypeDef hsd2;
   * @brief  Initializes the SD card device.
   * @retval SD status
   */
-__weak uint8_t BSP_SD_Init(void)
-{
-  uint8_t sd_state = MSD_OK;
-  /* Check if the SD card is plugged in the slot */
-  if (BSP_SD_IsDetected() != SD_PRESENT)
-  {
-    return MSD_ERROR_SD_NOT_PRESENT;
-  }
-  /* HAL SD initialization */
-  sd_state = HAL_SD_Init(&hsd2);
-  /* Configure SD Bus width (4 bits mode selected) */
-  if (sd_state == MSD_OK)
-  {
-    /* Enable wide operation */
-    if (HAL_SD_ConfigWideBusOperation(&hsd2, SDMMC_BUS_WIDE_4B) != HAL_OK)
-    {
-      sd_state = MSD_ERROR;
+__weak uint8_t BSP_SD_Init(void) {
+    uint8_t sd_state = MSD_OK;
+    /* Check if the SD card is plugged in the slot */
+    if (BSP_SD_IsDetected() != SD_PRESENT) {
+        return MSD_ERROR_SD_NOT_PRESENT;
     }
-  }
+    /* HAL SD initialization */
+    sd_state = HAL_SD_Init(&hsd2);
+    /* Configure SD Bus width (4 bits mode selected) */
+    if (sd_state == MSD_OK) {
+        /* Enable wide operation */
+        if (HAL_SD_ConfigWideBusOperation(&hsd2, SDMMC_BUS_WIDE_4B) != HAL_OK) {
+            sd_state = MSD_ERROR;
+        }
+    }
 
-  return sd_state;
+    return sd_state;
 }
 /* USER CODE BEGIN AfterInitSection */
 /* can be used to modify previous code / undefine following code / add code */
@@ -71,11 +66,10 @@ __weak uint8_t BSP_SD_Init(void)
   * @brief  Configures Interrupt mode for SD detection pin.
   * @retval Returns 0
   */
-__weak uint8_t BSP_SD_ITConfig(void)
-{
-  /* Code to be updated by the user or replaced by one from the FW pack (in a stmxxxx_sd.c file) */
+__weak uint8_t BSP_SD_ITConfig(void) {
+    /* Code to be updated by the user or replaced by one from the FW pack (in a stmxxxx_sd.c file) */
 
-  return (uint8_t)0;
+    return (uint8_t) 0;
 }
 
 /* USER CODE END InterruptMode */
@@ -91,16 +85,14 @@ __weak uint8_t BSP_SD_ITConfig(void)
   * @param  Timeout: Timeout for read operation
   * @retval SD status
   */
-__weak uint8_t BSP_SD_ReadBlocks(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks, uint32_t Timeout)
-{
-  uint8_t sd_state = MSD_OK;
+__weak uint8_t BSP_SD_ReadBlocks(uint32_t* pData, uint32_t ReadAddr, uint32_t NumOfBlocks, uint32_t Timeout) {
+    uint8_t sd_state = MSD_OK;
 
-  if (HAL_SD_ReadBlocks(&hsd2, (uint8_t *)pData, ReadAddr, NumOfBlocks, Timeout) != HAL_OK)
-  {
-    sd_state = MSD_ERROR;
-  }
+    if (HAL_SD_ReadBlocks(&hsd2, (uint8_t*) pData, ReadAddr, NumOfBlocks, Timeout) != HAL_OK) {
+        sd_state = MSD_ERROR;
+    }
 
-  return sd_state;
+    return sd_state;
 }
 
 /* USER CODE BEGIN BeforeWriteBlocksSection */
@@ -114,16 +106,14 @@ __weak uint8_t BSP_SD_ReadBlocks(uint32_t *pData, uint32_t ReadAddr, uint32_t Nu
   * @param  Timeout: Timeout for write operation
   * @retval SD status
   */
-__weak uint8_t BSP_SD_WriteBlocks(uint32_t *pData, uint32_t WriteAddr, uint32_t NumOfBlocks, uint32_t Timeout)
-{
-  uint8_t sd_state = MSD_OK;
+__weak uint8_t BSP_SD_WriteBlocks(uint32_t* pData, uint32_t WriteAddr, uint32_t NumOfBlocks, uint32_t Timeout) {
+    uint8_t sd_state = MSD_OK;
 
-  if (HAL_SD_WriteBlocks(&hsd2, (uint8_t *)pData, WriteAddr, NumOfBlocks, Timeout) != HAL_OK)
-  {
-    sd_state = MSD_ERROR;
-  }
+    if (HAL_SD_WriteBlocks(&hsd2, (uint8_t*) pData, WriteAddr, NumOfBlocks, Timeout) != HAL_OK) {
+        sd_state = MSD_ERROR;
+    }
 
-  return sd_state;
+    return sd_state;
 }
 
 /* USER CODE BEGIN BeforeReadDMABlocksSection */
@@ -136,17 +126,15 @@ __weak uint8_t BSP_SD_WriteBlocks(uint32_t *pData, uint32_t WriteAddr, uint32_t 
   * @param  NumOfBlocks: Number of SD blocks to read
   * @retval SD status
   */
-__weak uint8_t BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks)
-{
-  uint8_t sd_state = MSD_OK;
+__weak uint8_t BSP_SD_ReadBlocks_DMA(uint32_t* pData, uint32_t ReadAddr, uint32_t NumOfBlocks) {
+    uint8_t sd_state = MSD_OK;
 
-  /* Read block(s) in DMA transfer mode */
-  if (HAL_SD_ReadBlocks_DMA(&hsd2, (uint8_t *)pData, ReadAddr, NumOfBlocks) != HAL_OK)
-  {
-    sd_state = MSD_ERROR;
-  }
+    /* Read block(s) in DMA transfer mode */
+    if (HAL_SD_ReadBlocks_DMA(&hsd2, (uint8_t*) pData, ReadAddr, NumOfBlocks) != HAL_OK) {
+        sd_state = MSD_ERROR;
+    }
 
-  return sd_state;
+    return sd_state;
 }
 
 /* USER CODE BEGIN BeforeWriteDMABlocksSection */
@@ -159,17 +147,15 @@ __weak uint8_t BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_
   * @param  NumOfBlocks: Number of SD blocks to write
   * @retval SD status
   */
-__weak uint8_t BSP_SD_WriteBlocks_DMA(uint32_t *pData, uint32_t WriteAddr, uint32_t NumOfBlocks)
-{
-  uint8_t sd_state = MSD_OK;
+__weak uint8_t BSP_SD_WriteBlocks_DMA(uint32_t* pData, uint32_t WriteAddr, uint32_t NumOfBlocks) {
+    uint8_t sd_state = MSD_OK;
 
-  /* Write block(s) in DMA transfer mode */
-  if (HAL_SD_WriteBlocks_DMA(&hsd2, (uint8_t *)pData, WriteAddr, NumOfBlocks) != HAL_OK)
-  {
-    sd_state = MSD_ERROR;
-  }
+    /* Write block(s) in DMA transfer mode */
+    if (HAL_SD_WriteBlocks_DMA(&hsd2, (uint8_t*) pData, WriteAddr, NumOfBlocks) != HAL_OK) {
+        sd_state = MSD_ERROR;
+    }
 
-  return sd_state;
+    return sd_state;
 }
 
 /* USER CODE BEGIN BeforeEraseSection */
@@ -181,16 +167,14 @@ __weak uint8_t BSP_SD_WriteBlocks_DMA(uint32_t *pData, uint32_t WriteAddr, uint3
   * @param  EndAddr: End byte address
   * @retval SD status
   */
-__weak uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr)
-{
-  uint8_t sd_state = MSD_OK;
+__weak uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr) {
+    uint8_t sd_state = MSD_OK;
 
-  if (HAL_SD_Erase(&hsd2, StartAddr, EndAddr) != HAL_OK)
-  {
-    sd_state = MSD_ERROR;
-  }
+    if (HAL_SD_Erase(&hsd2, StartAddr, EndAddr) != HAL_OK) {
+        sd_state = MSD_ERROR;
+    }
 
-  return sd_state;
+    return sd_state;
 }
 
 /* USER CODE BEGIN BeforeGetCardStateSection */
@@ -205,9 +189,8 @@ __weak uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr)
   *            @arg  SD_TRANSFER_OK: No data transfer is acting
   *            @arg  SD_TRANSFER_BUSY: Data transfer is acting
   */
-__weak uint8_t BSP_SD_GetCardState(void)
-{
-  return ((HAL_SD_GetCardState(&hsd2) == HAL_SD_CARD_TRANSFER ) ? SD_TRANSFER_OK : SD_TRANSFER_BUSY);
+__weak uint8_t BSP_SD_GetCardState(void) {
+    return ((HAL_SD_GetCardState(&hsd2) == HAL_SD_CARD_TRANSFER) ? SD_TRANSFER_OK : SD_TRANSFER_BUSY);
 }
 
 /**
@@ -215,10 +198,9 @@ __weak uint8_t BSP_SD_GetCardState(void)
   * @param  CardInfo: Pointer to HAL_SD_CardInfoTypedef structure
   * @retval None
   */
-__weak void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo)
-{
-  /* Get SD card Information */
-  HAL_SD_GetCardInfo(&hsd2, CardInfo);
+__weak void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef* CardInfo) {
+    /* Get SD card Information */
+    HAL_SD_GetCardInfo(&hsd2, CardInfo);
 }
 
 /* USER CODE BEGIN BeforeCallBacksSection */
@@ -229,9 +211,8 @@ __weak void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo)
   * @param hsd: SD handle
   * @retval None
   */
-void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
-{
-  BSP_SD_AbortCallback();
+void HAL_SD_AbortCallback(SD_HandleTypeDef* hsd) {
+    BSP_SD_AbortCallback();
 }
 
 /**
@@ -239,9 +220,8 @@ void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
   * @param hsd: SD handle
   * @retval None
   */
-void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
-{
-  BSP_SD_WriteCpltCallback();
+void HAL_SD_TxCpltCallback(SD_HandleTypeDef* hsd) {
+    BSP_SD_WriteCpltCallback();
 }
 
 /**
@@ -249,9 +229,8 @@ void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
   * @param hsd: SD handle
   * @retval None
   */
-void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
-{
-  BSP_SD_ReadCpltCallback();
+void HAL_SD_RxCpltCallback(SD_HandleTypeDef* hsd) {
+    BSP_SD_ReadCpltCallback();
 }
 
 /* USER CODE BEGIN CallBacksSection_C */
@@ -260,9 +239,7 @@ void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
   * @retval None
   * @note empty (up to the user to fill it in or to remove it if useless)
   */
-__weak void BSP_SD_AbortCallback(void)
-{
-
+__weak void BSP_SD_AbortCallback(void) {
 }
 
 /**
@@ -270,9 +247,7 @@ __weak void BSP_SD_AbortCallback(void)
   * @retval None
   * @note empty (up to the user to fill it in or to remove it if useless)
   */
-__weak void BSP_SD_WriteCpltCallback(void)
-{
-
+__weak void BSP_SD_WriteCpltCallback(void) {
 }
 
 /**
@@ -280,9 +255,7 @@ __weak void BSP_SD_WriteCpltCallback(void)
   * @retval None
   * @note empty (up to the user to fill it in or to remove it if useless)
   */
-__weak void BSP_SD_ReadCpltCallback(void)
-{
-
+__weak void BSP_SD_ReadCpltCallback(void) {
 }
 /* USER CODE END CallBacksSection_C */
 
@@ -291,18 +264,16 @@ __weak void BSP_SD_ReadCpltCallback(void)
  * @param  None
  * @retval Returns if SD is detected or not
  */
-__weak uint8_t BSP_SD_IsDetected(void)
-{
-  __IO uint8_t status = SD_PRESENT;
+__weak uint8_t BSP_SD_IsDetected(void) {
+    __IO uint8_t status = SD_PRESENT;
 
-  if (BSP_PlatformIsDetected() == 0x0)
-  {
-    status = SD_NOT_PRESENT;
-  }
+    if (BSP_PlatformIsDetected() == 0x0) {
+        status = SD_NOT_PRESENT;
+    }
 
-  return status;
+    return status;
 }
 
 /* USER CODE BEGIN AdditionalCode */
-#endif // defined(ARDUINO_KLST_PANDA)
+/* user code can be inserted here */
 /* USER CODE END AdditionalCode */
