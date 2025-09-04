@@ -37,12 +37,6 @@
 #ifndef KLST_EMU_SCREEN_HEIGHT
 #define KLST_EMU_SCREEN_HEIGHT 768
 #endif
-#ifndef DEFAULT_FRAMES_PER_BUFFER
-#define DEFAULT_FRAMES_PER_BUFFER KLST_EMU_AUDIO_BLOCK
-#endif
-#ifndef DEFAULT_SAMPLE_RATE
-#define DEFAULT_SAMPLE_RATE KLST_EMU_SAMPLE_RATE
-#endif
 
 static void sketch_setup() {
     ::setup();
@@ -64,10 +58,18 @@ void umfeld::KlangstromEmulator::arguments(std::vector<std::string> args) {
     }
 }
 
+int umfeld::KlangstromEmulator::getWidth() {
+    return umfeld::width;
+}
+
+int umfeld::KlangstromEmulator::getHeight() {
+    return umfeld::height;
+}
+
 void umfeld::KlangstromEmulator::setup() {
     println("sketchpath: ", sketchPath());
-    println("width     : ", width);
-    println("height    : ", height);
+    println("width     : ", umfeld::width);
+    println("height    : ", umfeld::height);
 
     std::string font_file;
 #ifdef KLST_EMULATOR_FONT_PATH
@@ -115,15 +117,17 @@ void umfeld::KlangstromEmulator::setup() {
 void umfeld::KlangstromEmulator::settings() {
     // TODO this needs to be handled BETTER:
     size(KLST_EMU_SCREEN_WIDTH, KLST_EMU_SCREEN_HEIGHT);
+    // TODO use KLST_EMU_AUDIO_BLOCK to configure audio
+    // TODO use KLST_EMU_SAMPLE_RATE to configure audio
     audio(1, 2);
-
+    
     mOutputBuffers = new float*[audio_output_channels];
     for (int i = 0; i < audio_output_channels; i++) {
-        mOutputBuffers[i] = new float[DEFAULT_FRAMES_PER_BUFFER];
+        mOutputBuffers[i] = new float[KLST_EMU_AUDIO_BLOCK];
     }
     mInputBuffers = new float*[audio_input_channels];
     for (int i = 0; i < audio_input_channels; i++) {
-        mInputBuffers[i] = new float[DEFAULT_FRAMES_PER_BUFFER];
+        mInputBuffers[i] = new float[KLST_EMU_AUDIO_BLOCK];
     }
 }
 

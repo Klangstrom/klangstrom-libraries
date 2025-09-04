@@ -24,7 +24,7 @@
 namespace umfeld {
     class PApplet {
     public:
-        ~PApplet();
+        virtual ~PApplet() noexcept = default;
         virtual void arguments(std::vector<std::string> args) = 0;
         virtual void settings() = 0;
         virtual void setup() = 0;
@@ -32,5 +32,7 @@ namespace umfeld {
         virtual void audioblock(float** input, float** output, int length) = 0;
         virtual void keyPressed() = 0;
         virtual void keyReleased() = 0;
+        virtual int  getWidth() = 0;
+        virtual int  getHeight() = 0;
     };
 }

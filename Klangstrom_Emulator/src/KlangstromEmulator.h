@@ -92,6 +92,7 @@ namespace umfeld {
             }
             task.stop();
         }
+        
         static KlangstromEmulator* instance();
         void                       arguments(std::vector<std::string> args) override;
         void                       settings() override;
@@ -113,7 +114,9 @@ namespace umfeld {
         uint8_t                    register_serial_device(SerialDevice* serialdevice);
         uint8_t                    unregister_serial_device(SerialDevice* serialdevice);
         void                       register_client(KlangstromEmulatorClient* client) { this->client = client; }
-    
+        int                        getWidth() override;
+        int                        getHeight() override;
+
         static constexpr float DEFAULT_FONT_SIZE = 24;
     
     private:
