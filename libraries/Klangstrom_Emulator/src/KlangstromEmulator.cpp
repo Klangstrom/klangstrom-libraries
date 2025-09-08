@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+#include "Arduino.h"
 #include "ArduinoFunctions.h"
 #include "KlangstromEnvironment.h"
 #include "KlangstromEmulator.h"
@@ -73,7 +74,7 @@ void umfeld::KlangstromEmulator::setup() {
 
     std::string font_file;
 #ifdef KLST_EMULATOR_FONT_PATH
-    println("fontfile  : ", KLST_EMULATOR_FONT_PATH);
+    println("font file : ", KLST_EMULATOR_FONT_PATH);
     if (exists(KLST_EMULATOR_FONT_PATH)) {
         font_file = KLST_EMULATOR_FONT_PATH;
     } else {
@@ -87,7 +88,7 @@ void umfeld::KlangstromEmulator::setup() {
         } else if (file_exists(mFontPath + "/../" + mFontName)) {
             font_file = mFontPath + "/../" + mFontName;
         }
-        println("fontfile  : ", font_file);
+        println("font file : ", font_file);
     }
 
     if (!font_file.empty()) {
@@ -146,6 +147,7 @@ void umfeld::KlangstromEmulator::draw() {
     // rect(20, 20, width / 2 - 40, height / 2 - 40);
 
     fill(1.0f);
+    noStroke();
     textSize(DEFAULT_FONT_SIZE);
     text(get_emulator_name(), 25, 10 + DEFAULT_FONT_SIZE);
 
@@ -164,11 +166,13 @@ static inline void copy_float_array_2D(float** src, float** dest, int rows, int 
     }
 }
 bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device) {
-    if (client == nullptr) {
-        println("ERROR: client not initialized");
-        return false;
-    }
-    return client->handle_audiodevice(input, output, length, device);
+    println("ERROR: emulator not handling audio devices … WIP");
+
+//     if (client == nullptr) {
+//         println("ERROR: client not initialized");
+//         return false;
+//     }
+//     return client->handle_audiodevice(input, output, length, device);
 }
 /**
  * called from umfeld to request and process audio data
@@ -371,11 +375,14 @@ void umfeld::KlangstromEmulator::delay_loop(uint32_t microseconds) {
 // }
 
 void umfeld::KlangstromEmulator::receive(const OscMessage& msg) {
-    if (client == nullptr) {
-        println("ERROR: client not initialized");
-        return;
-    }
-    client->receive(msg);
+    println("ERROR: emlator not handling OSC messages … WIP");
+
+//     if (client == nullptr) {
+//         println("ERROR: client not initialized");
+//         return;
+//     }
+//     client->receive(msg);
+
     // //    println("app: received OSC message: ", msg.typetag());
     // ArrayList_SerialDevicePtr* sd = system_get_registered_serialdevices();
     // for (int i = 0; i < sd->size; i++) {
