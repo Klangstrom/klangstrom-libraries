@@ -25,6 +25,9 @@
 #error "KLST_PERIPHERAL_ENABLE_EXTERNAL_MEMORY must be defined for display"
 #endif
 
+#include <math.h>
+#include <float.h>
+
 #include "main.h"
 #include "tim.h"
 #include "ltdc.h"
@@ -58,11 +61,30 @@ void display_backlight_init() {
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 }
 
-void display_set_backlight(const float brightness) {
-    const uint32_t mPeriod = htim3.Init.Period;
-    uint32_t       mPhase  = static_cast<uint32_t>(mPeriod * brightness);
-    mPhase                 = MAX(1, MIN(mPeriod, mPhase));
-    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, mPhase > 0 ? mPhase : 1);
+static inline float clamp01(float x) {
+    if (!(x >= 0.0f)) return 0.0f;   // catches NaN and negatives
+    if (x > 1.0f) return 1.0f;
+    return x;
+}
+
+// set to 0 for allow-off, or to >=1 to enforce Tmin_ON
+#ifndef BL_MIN_ON_TICKS
+#define BL_MIN_ON_TICKS 4  // ~0.52 µs at 30 kHz, ARR=255
+#endif
+
+void display_set_backlight(float brightness) {
+    brightness = clamp01(brightness);
+#ifndef KLST_DISPLAY_LINEAR_BRIGHTNESS
+    const float gamma = 2.2f;
+    brightness = powf(brightness, gamma);
+#endif
+
+    const uint32_t arr   = htim3.Init.Period;      // e.g., 255
+    uint32_t ticks       = (uint32_t)lrintf(brightness * (arr + 1.0f));
+    if (ticks > arr) ticks = arr;                  // CCR must be ≤ ARR
+
+    if (ticks < BL_MIN_ON_TICKS) ticks = BL_MIN_ON_TICKS; // 0 if you want OFF
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_3, ticks);
 }
 
 bool display_init_BSP(const TouchPanelMode touch_panel_mode) {
