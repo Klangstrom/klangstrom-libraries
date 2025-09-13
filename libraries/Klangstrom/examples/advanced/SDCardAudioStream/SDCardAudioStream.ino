@@ -46,15 +46,15 @@ void setup() {
     /* read entire file */
     uint32_t time;
     console_println("start reading entire file from SD card ...");
-    time = system_get_tick();
+    time = system_get_ticks();
     sdcard_file_read(read_file_buffer, 131072);
-    console_println("... done in %i ms", (system_get_tick() - time)); // 71 ms ≈ 1803 KB/s OR 12 ms ≈ 10667 KB/s
+    console_println("... done in %i ms", (system_get_ticks() - time)); // 71 ms ≈ 1803 KB/s OR 12 ms ≈ 10667 KB/s
     sdcard_file_seek(0);
 
     /* read entire file in chunks */
     static const uint32_t buffer_size = 512;
     console_println("start reading entire file in chunks of %i from SD card ...", buffer_size);
-    time = system_get_tick();
+    time = system_get_ticks();
     while (!sdcard_file_eof()) {
         uint8_t buffer[buffer_size];
         sdcard_file_read(buffer, buffer_size);
@@ -62,7 +62,7 @@ void setup() {
     }
     sdcard_file_seek(0);
     console_println("!");
-    console_println("... done in %i ms", (system_get_tick() - time)); // 552 ms ≈ 232 KB/s
+    console_println("... done in %i ms", (system_get_ticks() - time)); // 552 ms ≈ 232 KB/s
 
     audiodevice = system_init_audiocodec();
     audiodevice_pause(audiodevice);

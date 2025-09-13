@@ -2,7 +2,7 @@
 * Klangstrom
 *
 * This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
-* Copyright (c) 2024 Dennis P Paul.
+* Copyright (c) 2025 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,13 +24,13 @@
 
 /* include client configuration, if present */
 
-#if __has_include("PeripheralConfiguration.h")
+#if __has_include("PeripheralConfiguration_CUSTOM.h")
 
-#warning "Klangstrom peripherals are configured by client via external file."
-#include "KlangstromPeripheralConfiguration.h"
+#warning "Klangstrom peripherals are configured by client via external file: 'PeripheralConfiguration_CUSTOM.h'"
+#include "PeripheralConfiguration_CUSTOM.h"
 #define KLST_CLIENT_PERIPHERAL_CONFIGURATION
 
-#endif // KlangstromPeripheralConfiguration.h
+#else
 
 /* include architecture / plattform specific implementation + configuration */
 
@@ -39,5 +39,7 @@
 #elif defined(KLST_ARCH_IS_EMU)
 #include "PeripheralConfiguration_EMU.h"
 #else
-#warning "no implementation for Klangstrom found ( this might be intentional )"
+#warning "No peripheral configuration for Klangstrom found ( this might be intentional )"
 #endif
+
+#endif // PeripheralConfiguration_CUSTOM.h

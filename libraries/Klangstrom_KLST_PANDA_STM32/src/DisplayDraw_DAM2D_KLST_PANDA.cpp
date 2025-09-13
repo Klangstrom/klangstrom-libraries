@@ -2,7 +2,7 @@
 * Klangstrom
 *
 * This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
-* Copyright (c) 2024 Dennis P Paul.
+* Copyright (c) 2025 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -207,14 +207,14 @@ void display_set_pixel_BSP(const uint16_t x,
 static uint32_t blend_colors(const uint32_t color_a, const uint32_t color_b, const uint8_t alpha) {
     const float   a     = alpha / 255.0f;
     const float   a_inv = 1.0f - a;
-    const uint8_t r     = GET_RED(color_a) * a_inv + GET_RED(color_b) * a;
-    const uint8_t g     = GET_GREEN(color_a) * a_inv + GET_GREEN(color_b) * a;
-    const uint8_t b     = GET_BLUE(color_a) * a_inv + GET_BLUE(color_b) * a;
+    const uint8_t r     = KLST_DISPLAY_GET_RED(color_a) * a_inv + KLST_DISPLAY_GET_RED(color_b) * a;
+    const uint8_t g     = KLST_DISPLAY_GET_GREEN(color_a) * a_inv + KLST_DISPLAY_GET_GREEN(color_b) * a;
+    const uint8_t b     = KLST_DISPLAY_GET_BLUE(color_a) * a_inv + KLST_DISPLAY_GET_BLUE(color_b) * a;
     // const uint8_t  inv   = 0xFF - alpha;
-    // const uint8_t  r     = (GET_RED(color_a) * inv + GET_RED(color_b) * alpha) >> 8;
-    // const uint8_t  g     = (GET_GREEN(color_a) * inv + GET_GREEN(color_b) * alpha) >> 8;
-    // const uint8_t  b     = (GET_BLUE(color_a) * inv + GET_BLUE(color_b) * alpha) >> 8;
-    const uint32_t blend = RGBA(r, g, b, 0xFF);
+    // const uint8_t  r     = (KLST_DISPLAY_GET_RED(color_a) * inv + KLST_DISPLAY_GET_RED(color_b) * alpha) >> 8;
+    // const uint8_t  g     = (KLST_DISPLAY_GET_GREEN(color_a) * inv + KLST_DISPLAY_GET_GREEN(color_b) * alpha) >> 8;
+    // const uint8_t  b     = (KLST_DISPLAY_GET_BLUE(color_a) * inv + KLST_DISPLAY_GET_BLUE(color_b) * alpha) >> 8;
+    const uint32_t blend = KLST_DISPLAY_RGBA(r, g, b, 0xFF);
     return blend;
 }
 
@@ -222,7 +222,7 @@ void display_set_pixel_alpha_BSP(const uint16_t x,
                                  const uint16_t y,
                                  const uint32_t color) {
     if (x < display_get_width() && y < display_get_height()) {
-        const uint8_t alpha = GET_ALPHA(color);
+        const uint8_t alpha = KLST_DISPLAY_GET_ALPHA(color);
         if (alpha == 0x00) {
         } else if (alpha == 0xFF) {
             display_set_pixel_BSP(x, y, color);
@@ -304,7 +304,7 @@ static void DrawChar(BitmapFont*    font,
         for (uint16_t j = 0; j < width; j++) {
             const bool     mIsForeGroundColor = line & (1 << (width - j + offset - 1));
             const uint32_t mColor             = mIsForeGroundColor ? color : background_color;
-            const uint8_t  alpha              = GET_ALPHA(mColor);
+            const uint8_t  alpha              = KLST_DISPLAY_GET_ALPHA(mColor);
             if (alpha == 0x00) {
             } else if (alpha == 0xFF) {
                 display_set_pixel_BSP(x + j, y, mColor);
