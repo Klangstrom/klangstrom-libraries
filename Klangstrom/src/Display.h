@@ -2,7 +2,7 @@
 * Klangstrom
 *
 * This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
-* Copyright (c) 2024 Dennis P Paul.
+* Copyright (c) 2025 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,51 +22,51 @@
 #include <stdint.h>
 
 #include "TouchEvent.h"
-#include "BitmapFont.h"
-#include "Point.h"
-#include "DisplayDrawInterface.h"
+#include "BitmapFont.h"           // TODO maybe remove from header
+#include "Point.h"                // TODO maybe remove from header
+#include "DisplayDrawInterface.h" // TODO maybe remove from header
 
 #define KLST_DISPLAY_RENDERER_SOFTWARE 1
-#define KLST_DISPLAY_RENDERER_DMA2D 2
-#define KLST_DISPLAY_RENDERER KLST_DISPLAY_RENDERER_DMA2D
+#define KLST_DISPLAY_RENDERER_DMA2D    2
+#define KLST_DISPLAY_RENDERER          KLST_DISPLAY_RENDERER_DMA2D
 
-#define BLACK 0xFF000000
-#define WHITE 0xFFFFFFFF
-#define RED 0xFFFF0000
-#define GREEN 0xFF00FF00
-#define BLUE 0xFF0000FF
-#define YELLOW 0xFFFFFF00
-#define CYAN 0xFF00FFFF
-#define MAGENTA 0xFFFF00FF
+#define KLST_DISPLAY_BLACK   0xFF000000
+#define KLST_DISPLAY_WHITE   0xFFFFFFFF
+#define KLST_DISPLAY_RED     0xFFFF0000
+#define KLST_DISPLAY_GREEN   0xFF00FF00
+#define KLST_DISPLAY_BLUE    0xFF0000FF
+#define KLST_DISPLAY_YELLOW  0xFFFFFF00
+#define KLST_DISPLAY_CYAN    0xFF00FFFF
+#define KLST_DISPLAY_MAGENTA 0xFFFF00FF
 
-#define ARGB_TO_RGBA(argb)             \
+#define KLST_DISPLAY_ARGB_TO_RGBA(argb)             \
     (((argb) & 0xFF000000) >> 24) |    \
         (((argb) & 0x00FF0000) >> 8) | \
         (((argb) & 0x0000FF00) << 8) | \
         (((argb) & 0x000000FF) << 24)
-#define RGBA_TO_ARGB(rgba)             \
+#define KLST_DISPLAY_RGBA_TO_ARGB(rgba)             \
     (((rgba) & 0xFF000000) >> 24) |    \
         (((rgba) & 0x00FF0000) >> 8) | \
         (((rgba) & 0x0000FF00) << 8) | \
         (((rgba) & 0x000000FF) << 24)
-#define ARGB_TO_ABGR(argb) (((argb & 0xFF000000)) | ((argb & 0x00FF0000) >> 16) | ((argb & 0x0000FF00)) | ((argb & 0x000000FF) << 16))
+#define KLST_DISPLAY_ARGB_TO_ABGR(argb) (((argb & 0xFF000000)) | ((argb & 0x00FF0000) >> 16) | ((argb & 0x0000FF00)) | ((argb & 0x000000FF) << 16))
 #define ABGR_TO_ARGB(abgr) (((abgr & 0xFF000000)) | ((abgr & 0x00FF0000) >> 16) | ((abgr & 0x0000FF00)) | ((abgr & 0x000000FF) << 16))
-#define RGB_ALPHA_TO_ARGB(rgb, alpha) \
+#define KLST_DISPLAY_RGB_ALPHA_TO_ARGB(rgb, alpha) \
     (((alpha) << 24) | ((rgb) & 0x00FFFFFF))
-#define RGBA(r, g, b, a) \
+#define KLST_DISPLAY_RGBA(r, g, b, a) \
     (((uint32_t) (a) << 24) | ((uint32_t) (r) << 16) | ((uint32_t) (g) << 8) | ((uint32_t) (b)))
-#define RGB(r, g, b) \
+#define KLST_DISPLAY_RGB(r, g, b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (r) << 16) | ((uint32_t) (g) << 8) | ((uint32_t) (b)))
-#define GRAY(b) \
+#define KLST_DISPLAY_GRAY(b) \
     (((uint32_t) (0xFF) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
-#define GRAY_ALPHA(b, a) \
+#define KLST_DISPLAY_GRAY_ALPHA(b, a) \
     (((uint32_t) (a) << 24) | ((uint32_t) (b) << 16) | ((uint32_t) (b) << 8) | ((uint32_t) (b)))
-#define GET_ALPHA(argb) ((uint8_t) ((argb) >> 24))
-#define GET_RED(argb) ((uint8_t) ((argb) >> 16))
-#define GET_GREEN(argb) ((uint8_t) ((argb) >> 8))
-#define GET_BLUE(argb) ((uint8_t) (argb))
+#define KLST_DISPLAY_GET_ALPHA(argb) ((uint8_t) ((argb) >> 24))
+#define KLST_DISPLAY_GET_RED(argb) ((uint8_t) ((argb) >> 16))
+#define KLST_DISPLAY_GET_GREEN(argb) ((uint8_t) ((argb) >> 8))
+#define KLST_DISPLAY_GET_BLUE(argb) ((uint8_t) (argb))
 
-static constexpr uint8_t BYTES_PER_PIXEL = 4;
+// static constexpr uint8_t BYTES_PER_PIXEL = 4;
 
 typedef enum {
     INTERRUPT,

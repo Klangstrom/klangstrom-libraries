@@ -2,7 +2,7 @@
 * Klangstrom
 *
 * This file is part of the *Klangstrom* library (https://github.com/dennisppaul/klangstrom-libraries).
-* Copyright (c) 2024 Dennis P Paul.
+* Copyright (c) 2025 Dennis P Paul.
 *
 * This library is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ void draw_set_pixel(const int16_t  x,
 }
 
 void draw_set_pixel_alpha(const int16_t x, const int16_t y, const uint32_t color) {
-    const uint8_t alpha = GET_ALPHA(color);
+    const uint8_t alpha = KLST_DISPLAY_GET_ALPHA(color);
     if (alpha == 0x00) {
     } else if (alpha == 0xFF) {
         display_set_pixel_BSP(x, y, color);
@@ -836,7 +836,7 @@ void draw_char(const int16_t x, const int16_t y, const char ascii_char, const ui
         const uint32_t b = fKLSTFont->data[(ascii_char - 32) * fKLSTFont->height + i];
         for (uint32_t j = 0; j < fKLSTFont->width; j++) {
             const uint32_t mColor = b << j & 0x8000 ? fFillColor : fBackgroundColor;
-            const uint8_t  alpha  = GET_ALPHA(mColor);
+            const uint8_t  alpha  = KLST_DISPLAY_GET_ALPHA(mColor);
             if (alpha != 0x00) {
                 display_rect_fill_BSP(x + j * scale, y + i * scale, scale, scale, mColor);
             }
@@ -875,10 +875,10 @@ void draw_text(const int16_t x, const int16_t y, const std::string& text, const 
 
 uint32_t draw_blend_colors(const uint32_t color_a, const uint32_t color_b, const uint8_t alpha) {
     const uint8_t  inv   = 0xFF - alpha;
-    const uint8_t  r     = (GET_RED(color_a) * inv + GET_RED(color_b) * alpha) >> 8;
-    const uint8_t  g     = (GET_GREEN(color_a) * inv + GET_GREEN(color_b) * alpha) >> 8;
-    const uint8_t  b     = (GET_BLUE(color_a) * inv + GET_BLUE(color_b) * alpha) >> 8;
-    const uint32_t blend = RGBA(r, g, b, 0xFF);
+    const uint8_t  r     = (KLST_DISPLAY_GET_RED(color_a) * inv + KLST_DISPLAY_GET_RED(color_b) * alpha) >> 8;
+    const uint8_t  g     = (KLST_DISPLAY_GET_GREEN(color_a) * inv + KLST_DISPLAY_GET_GREEN(color_b) * alpha) >> 8;
+    const uint8_t  b     = (KLST_DISPLAY_GET_BLUE(color_a) * inv + KLST_DISPLAY_GET_BLUE(color_b) * alpha) >> 8;
+    const uint32_t blend = KLST_DISPLAY_RGBA(r, g, b, 0xFF);
     return blend;
 }
 
