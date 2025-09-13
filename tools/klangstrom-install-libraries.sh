@@ -1,6 +1,10 @@
 #!/bin/zsh
 
-# TODO WIP this os macOS only for now
-# TODO lib path is adapted from `../libraries/klangstrom-libraries` to `../libraries`
+# TODO WIP this is macOS only for now
 
-./link_libraries.sh klangstrom-libraries.config ../libraries "$HOME/Documents/Arduino/libraries"
+SRC="../libraries"
+DST="$HOME/Documents/Arduino/libraries"
+echo
+echo "linking libraries from '$SRC' into '$DST'"
+echo 
+./link_libraries.sh klangstrom-libraries.config $SRC $DST
