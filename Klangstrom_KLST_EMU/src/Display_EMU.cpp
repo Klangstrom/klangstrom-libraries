@@ -220,14 +220,14 @@ bool touch_has_event() { // TODO implement
 // note that display works internally with ARGB while OpenGL require ABGR ( = RGBA in little endian?!? )
 
 void display_clear_BSP(const uint32_t color) { // ARGB
-    display->clear(ARGB_TO_ABGR(color));
+    display->clear(KLST_DISPLAY_ARGB_TO_ABGR(color));
 }
 
 void display_set_pixel_BSP(const uint16_t x, const uint16_t y, const uint32_t color) {
     if (display == nullptr) {
         return;
     }
-    display->set_pixel(x, y, ARGB_TO_ABGR(color));
+    display->set_pixel(x, y, KLST_DISPLAY_ARGB_TO_ABGR(color));
 }
 
 void display_set_pixel_alpha_BSP(const uint16_t x, const uint16_t y, const uint32_t color) {
@@ -236,21 +236,21 @@ void display_set_pixel_alpha_BSP(const uint16_t x, const uint16_t y, const uint3
     }
     const uint32_t color_ARGB         = color;
     const uint32_t current_color_ARGB = display_get_pixel_BSP(x, y);
-    const float    alpha              = static_cast<float>(GET_ALPHA(color_ARGB)) / 255.0f;
+    const float    alpha              = static_cast<float>(KLST_DISPLAY_GET_ALPHA(color_ARGB)) / 255.0f;
     const float    inv_alpha          = 1.0f - alpha;
-    const uint8_t  r                  = static_cast<uint8_t>((GET_RED(color_ARGB) * alpha + GET_RED(current_color_ARGB) * inv_alpha));
-    const uint8_t  g                  = static_cast<uint8_t>((GET_GREEN(color_ARGB) * alpha + GET_GREEN(current_color_ARGB) * inv_alpha));
-    const uint8_t  b                  = static_cast<uint8_t>((GET_BLUE(color_ARGB) * alpha + GET_BLUE(current_color_ARGB) * inv_alpha));
+    const uint8_t  r                  = static_cast<uint8_t>((KLST_DISPLAY_GET_RED(color_ARGB) * alpha + KLST_DISPLAY_GET_RED(current_color_ARGB) * inv_alpha));
+    const uint8_t  g                  = static_cast<uint8_t>((KLST_DISPLAY_GET_GREEN(color_ARGB) * alpha + KLST_DISPLAY_GET_GREEN(current_color_ARGB) * inv_alpha));
+    const uint8_t  b                  = static_cast<uint8_t>((KLST_DISPLAY_GET_BLUE(color_ARGB) * alpha + KLST_DISPLAY_GET_BLUE(current_color_ARGB) * inv_alpha));
     display->set_pixel(x, y, umgebung::color(r / 255.0f, g / 255.0f, b / 255.0f));
 }
 
-uint32_t display_get_pixel_BSP(const uint16_t x, const uint16_t y) { return ABGR_TO_ARGB(display->get_pixel(x, y)); }
+uint32_t display_get_pixel_BSP(const uint16_t x, const uint16_t y) { return KLST_DISPLAY_ABGR_TO_ARGB(display->get_pixel(x, y)); }
 
 void display_rect_fill_BSP(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint32_t color) {
     if (display == nullptr) {
         return;
     }
-    const uint32_t color_rgba = ARGB_TO_ABGR(color);
+    const uint32_t color_rgba = KLST_DISPLAY_ARGB_TO_ABGR(color);
     for (uint16_t i = 0; i < width; i++) {
         for (uint16_t j = 0; j < height; j++) {
             display->set_pixel(x + i, y + j, color_rgba);

@@ -58,18 +58,18 @@ void display_set_pixel_alpha_BSP(const uint16_t x,
                                  const uint16_t y,
                                  const uint32_t color) {
     if (x < display_get_width() && y < display_get_height()) {
-        const uint8_t alpha = GET_ALPHA(color);
+        const uint8_t alpha = KLST_DISPLAY_GET_ALPHA(color);
         if (alpha == 0x00) {
         } else if (alpha == 0xFF) {
             const uint32_t offset                                                      = x + y * display_get_width();
             reinterpret_cast<volatile uint32_t*>(display_get_buffer_address())[offset] = color;
         } else if (alpha > 0x00) {
             const uint32_t pixel                                                       = display_get_pixel_BSP(x, y);
-            const uint8_t  red                                                         = (GET_RED(color) * (0xFF - alpha) + GET_RED(pixel) * alpha) / 0xFF;
-            const uint8_t  green                                                       = (GET_GREEN(color) * (0xFF - alpha) + GET_GREEN(pixel) * alpha) / 0xFF;
-            const uint8_t  blue                                                        = (GET_BLUE(color) * (0xFF - alpha) + GET_BLUE(pixel) * alpha) / 0xFF;
+            const uint8_t  red                                                         = (KLST_DISPLAY_GET_RED(color) * (0xFF - alpha) + KLST_DISPLAY_GET_RED(pixel) * alpha) / 0xFF;
+            const uint8_t  green                                                       = (KLST_DISPLAY_GET_GREEN(color) * (0xFF - alpha) + KLST_DISPLAY_GET_GREEN(pixel) * alpha) / 0xFF;
+            const uint8_t  blue                                                        = (KLST_DISPLAY_GET_BLUE(color) * (0xFF - alpha) + KLST_DISPLAY_GET_BLUE(pixel) * alpha) / 0xFF;
             const uint32_t offset                                                      = x + y * display_get_width();
-            reinterpret_cast<volatile uint32_t*>(display_get_buffer_address())[offset] = RGBA(red, green, blue, 0xFF);
+            reinterpret_cast<volatile uint32_t*>(display_get_buffer_address())[offset] = KLST_DISPLAY_RGBA(red, green, blue, 0xFF);
         }
     }
 }
@@ -85,10 +85,10 @@ uint32_t display_get_pixel_BSP(const uint16_t x, const uint16_t y) {
 
 static uint32_t blend_colors(const uint32_t original_color, const uint32_t color, const uint8_t alpha) {
     const uint8_t  inv   = 0xFF - alpha;
-    const uint8_t  r     = (GET_RED(original_color) * inv + GET_RED(color) * alpha) >> 8;
-    const uint8_t  g     = (GET_GREEN(original_color) * inv + GET_GREEN(color) * alpha) >> 8;
-    const uint8_t  b     = (GET_BLUE(original_color) * inv + GET_BLUE(color) * alpha) >> 8;
-    const uint32_t blend = RGBA(r, g, b, 0xFF);
+    const uint8_t  r     = (KLST_DISPLAY_GET_RED(original_color) * inv + KLST_DISPLAY_GET_RED(color) * alpha) >> 8;
+    const uint8_t  g     = (KLST_DISPLAY_GET_GREEN(original_color) * inv + KLST_DISPLAY_GET_GREEN(color) * alpha) >> 8;
+    const uint8_t  b     = (KLST_DISPLAY_GET_BLUE(original_color) * inv + KLST_DISPLAY_GET_BLUE(color) * alpha) >> 8;
+    const uint32_t blend = KLST_DISPLAY_RGBA(r, g, b, 0xFF);
     return blend;
 }
 
@@ -101,7 +101,7 @@ static void DrawImage(uint32_t*      data,
     for (uint32_t i = 0; i < height; i++) {
         for (uint32_t j = 0; j < width; j++) {
             const uint32_t color = data[j + i * width];
-            const uint8_t  alpha = GET_ALPHA(color);
+            const uint8_t  alpha = KLST_DISPLAY_GET_ALPHA(color);
             if (alpha == 0xFF) {
                 display_set_pixel_BSP(x + j, y + i, color);
             } else {
@@ -118,7 +118,7 @@ static void FillRect(const uint32_t color,
                      const uint16_t y,
                      const uint16_t width,
                      const uint16_t height) {
-    const uint8_t alpha = GET_ALPHA(color);
+    const uint8_t alpha = KLST_DISPLAY_GET_ALPHA(color);
     for (uint32_t i = 0; i < height; i++) {
         for (uint32_t j = 0; j < width; j++) {
             if (alpha == 0xFF) {
