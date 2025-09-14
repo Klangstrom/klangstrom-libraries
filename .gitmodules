@@ -1,3 +1,0 @@
-[submodule "KLST_PANDA/firmware/Middlewares/klangstrom-libraries"]
-	path = KLST_PANDA/firmware/Middlewares/klangstrom-libraries
-	url = https://github.com/dennisppaul/klangstrom-libraries.git
