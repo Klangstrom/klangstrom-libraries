@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name KLST_CORE)(type KiCad)(uri ${KIPRJMOD}/library)(options "")(descr ""))
-)
