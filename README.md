@@ -1,18 +1,121 @@
-# Klangstrom Hardware 
+# klangstrom-libraries
 
-![KLST--app-icon](./assets/KLST--logotype.png)    
+all libraries are maintained in one repository called `klangstrom-libraries` which may be cloned as a submodule into architectures:
 
-*Klangstrom* (KLST) is a subtractive infrastructure design framework to facilitate generative, networked, embedded sound + music + composition. *klangstrom* is comprised of two software libraries ( *klang* a node+text-based sound synthesis library and *strom* a node+text-based generative composition library ), an embedded hardware platform, and a programming environment to allow seamless development of generative, networked, embedded sound + music + composition applications.
+```
+.
+├── Klangstrom
+├── KlangWellen
+├── ...
+└── USBHost
+```
 
-this repository hosts the hardware designs of *Klangstrom* boards:
+## notes ==@todo==
 
-![KLST_PANDA](./assets/KLST_PANDA.jpg)    
-KLST_PANDA (v1.0a) :: handheld-style development board with audio in-+output, MIDI in-+output, 2 on-board microphones, 4.3" TFT display, SD card reader, 16 MB external memory, 2 encoders, 2 mechanical keys, rechargeable battery ( based on STM32H723ZGT )
+- first initialize the hardware layer with `.init()` then setup device and peripherals with `.setup()` ( e.g start timers, data transfer, and callbacks )
+- each board-specific (BSP) implementation is stored in it’s own library ( e.g `‌Klangstrom_KLST_PANDA_STM32` )
 
-![KLST_SHEEP](./assets/KLST_SHEEP.jpg)    
-KLST_SHEEP (v0.1) :: handheld-style development board with 16 LEDs, 2 encoders, display ( based on STM32H743VI )
+## environment
 
-![KLST_TINY](./assets/KLST_TINY.jpg)    
-KLST_TINY (v0.1) :: pocket-calculator-sized development board with 3 LEDs, 3 encoders ( based on STM32F446RE )
+==@todo==
 
-for more information on the project visit [documentations](https://klangstrom-for-arduino.dennisppaul.de) or follow the development process at [Klangstrom Developer Diary](https://klangstrom.dennisppaul.de).
+## Klangstrom
+
+==@todo==
+```
+### File Naming Conventions
+
+- `BSP` == Board Specific  > `KlangstromApplication_KLST_SHEEP-BSP`
+- `SAB` == Shared Across Boards ( within an Architexture ) > `Klangstrom_ARDUINO-SAB.cpp`
+```
+
+==@todo("Klangstrom requires to set the environment in `KLST_ENV` at compile time. `KLST_ENV` defines architecture (`KLST_ARCH`) and board (`KLST_BOARD`):")==
+
+```
+KLST_ENV = KLST_ARCH + KLST_BOARD
+
+.
+├── KLST_ARCH                       (=0x10)
+│   ├── KLST_ARCH_STM32             (=0x20) (Arduino,MCU) + (STM32CubeIDE,MCU)
+│   └── KLST_ARCH_EMU               (=0x30) (Arduino,CPU)
+└── KLST_BOARD                      (=0x01)
+    ├── KLST_BOARD_KLST_CORE        (=0x02) (STM32H743+WM8731)
+    ├── KLST_BOARD_KLST_TINY        (=0x03) (STM32F446+WM8731)
+    ├── KLST_BOARD_KLST_SHEEP       (=0x04) (STM32H743+WM8731)
+    ├── KLST_BOARD_KLST_PANDA       (=0x05) (STM32H723+WM8904)
+    └── KLST_BOARD_KLST_CATERPILLAR (=0x06) (STM32H723+WM8904)
+```
+
+the following prepocessor conditionals can be used:
+
+```
+#if ((KLST_ENV & KLST_ARCH) == KLST_ARCH_STM32)
+// running on STM32
+#endif
+
+#if ((KLST_ENV & KLST_BOARD) == KLST_BOARD_KLST_PANDA)
+// running on KLST_PANDA
+#endif
+```
+
+there are common files ( e.g `Klangstrom.cpp` ) and board-specific (BSP) files ( `Klangstrom-BSP-KLST_PANDA.cpp` ). the common files are used by all boards and architectures.
+
+- `Klangstrom.h`
+- `Klangstrom.cpp`
+- `Klangstrom-KLST_PANDA.h`
+- `Klangstrom-KLST_PANDA.cpp`
+- `Klangstrom-Display.h`
+- `Klangstrom-Display.cpp`
+- `Klangstrom-KLST_PANDA-Display.h`
+- `Klangstrom-KLST_PANDA-Display.cpp`
+- ...
+
+### architectures ==@todo==
+
+available architectures are:
+
+- SOFT/DESKTOP @TODO(need to decide on name)
+- METAL/STM32 @TODO(need to decide on name)
+
+programatically identifiable e.g
+
+```
+#if (KLST_ARCHITECTURE_METAL)
+#endif // KLST_ARCHITECTURE_METAL
+```
+
+### boards ==@todo==
+
+available boards are for `METAL`:
+
+- `KLST_PANDA`
+- `KLST_SHEEP`
+- `KLST_TINY`
+
+and for `SOFT`:
+
+- `KLST_EMU`
+- `KLST_STANDALONE` ==@todo== @NOTE(not sure about this one)
+
+programatically identifiable e.g
+
+```
+#if defined(KLST_BOARD_KLST_PANDA)
+#endif // KLST_BOARD_KLST_PANDA
+```
+
+## Board-Specific (BSP) implementations
+
+all boards need to implement the following functions
+
+```
+KLST_BSP_init()
+KLST_BSP_setup()
+KLST_BSP_loop()
+```
+
+in a file called `Klangstrom_BSP_XXX.cpp` where `XXX` is the board and architecture ( e.g `KLST_PANDA_STM32` ).
+
+### STM32
+
+on `STM32` architecture this file usually also includes the HAL callbacks.

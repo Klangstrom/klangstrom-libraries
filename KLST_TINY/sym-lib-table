@@ -1,8 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "STX-3680-5NB")(type "Legacy")(uri "${KIPRJMOD}/library/STX-3680-5NB.lib")(options "")(descr ""))
-  (lib (name "G-107-0513")(type "Legacy")(uri "${KIPRJMOD}/library/G-107-0513.lib")(options "")(descr ""))
-  (lib (name "KLST_TINY--graphics")(type "Legacy")(uri "${KIPRJMOD}/library/KLST_TINY--graphics.lib")(options "")(descr ""))
-  (lib (name "USB_B_Micro_MICROXNJ")(type "Legacy")(uri "${KIPRJMOD}/library/MICROXNJ.lib")(options "")(descr ""))
-  (lib (name "KLST_TINY-rescue")(type "KiCad")(uri "${KIPRJMOD}/KLST_TINY-rescue.kicad_sym")(options "")(descr ""))
-)

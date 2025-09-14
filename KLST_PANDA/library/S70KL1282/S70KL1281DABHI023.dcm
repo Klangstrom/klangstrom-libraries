@@ -1,9 +1,0 @@
-EESchema-DOCLIB  Version 2.0
-#
-$CMP S70KL1281DABHI023
-D DRAM Chip DDR SDRAM 128Mbit 16Mx8 3V/3.3V 24-Pin Fortified BGA T/R
-K
-F https://www.cypress.com/file/183506/download
-$ENDCMP
-#
-#End Doc Library
