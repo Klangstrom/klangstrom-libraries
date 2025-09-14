@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 #
-# e.g collect_variant_files.sh $HOME/Documents/dennisppaul/projects/klangstrom/git/klangstrom-hardware/KLST_PANDA/firmware/KLST_PANDA-variant-files.txt $HOME/Documents/dennisppaul/projects/klangstrom/git/klangstrom-hardware/KLST_PANDA/firmware $HOME/Documents/dennisppaul/projects/klangstrom/git/klangstrom-hardware/KLST_PANDA/variant
+# e.g collect_variant_files.sh $KLST_ORG/klangstrom-hardware/KLST_PANDA/firmware/KLST_PANDA-variant-files.txt $KLST_ORG/klangstrom-hardware/KLST_PANDA/firmware $KLST_ORG/klangstrom-hardware/KLST_PANDA/variant
 #
 
 # Check if correct number of arguments is passed
