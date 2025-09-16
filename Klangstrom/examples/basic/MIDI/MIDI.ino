@@ -8,7 +8,6 @@
 #include "System.h"
 #include "Console.h"
 #include "MIDI.h"
-#include "KlangstromMIDIParser.h"
 
 SerialDevice* serial_IDC_01;
 
