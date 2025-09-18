@@ -19,13 +19,16 @@
 
 #include "KlangstromEmulatorClient.h"
 #include "KlangstromEmulator.h"
-#include "PApplet.h"
 
 #include "AudioDevice.h"
 #include "AudioDevice_EMU.h"
 #include "SerialDevice.h"
 #include "System.h"
+
+#include "Umfeld.h"
 #include "Console.h"
+
+using namespace umfeld;
 
 void KlangstromEmulatorClient::process_device(KlangstromEmulatorAudioDevice* device) {
     // TODO check if we should use double buffering here or if we just use normal buffer i.e `CALLBACK_FULL_COMPLETE`
@@ -34,8 +37,8 @@ void KlangstromEmulatorClient::process_device(KlangstromEmulatorAudioDevice* dev
 
 bool KlangstromEmulatorClient::evaluate_serial_msg(const OscMessage& msg, SerialDevice* device) {
     //    println("app: evaluate_serial_msg");
-    if (PApplet::begins_with(msg.addrPattern(), KLST_EMU_SERIAL_ADDRESS_PATTERN)) {
-        if (PApplet::begins_with(msg.typetag(), KLST_EMU_SERIAL_TYPETAG)) {
+    if (begins_with(msg.addrPattern(), KLST_EMU_SERIAL_ADDRESS_PATTERN)) {
+        if (begins_with(msg.typetag(), KLST_EMU_SERIAL_TYPETAG)) {
             const int         msg_device_type = msg.get(KLST_EMU_SERIAL_DEVICE_MSG_POSITION_TYPE).intValue();
             const int         msg_device_id   = msg.get(KLST_EMU_SERIAL_DEVICE_MSG_POSITION_ID).intValue();
             const std::string msg_data_str    = msg.get(KLST_EMU_SERIAL_DEVICE_MSG_POSITION_DATA).stringValue();

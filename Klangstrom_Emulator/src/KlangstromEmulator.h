@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Arduino.h"
+// #include "Arduino.h"
 #include <vector>
 
 #include "Umfeld.h"
@@ -74,6 +74,18 @@ namespace umfeld {
         }
 
     public:
+        static float mouseX() {
+            return umfeld::mouseX;
+        }
+
+        static float mouseY() {
+            return umfeld::mouseY;
+        }
+
+        static float width() {
+            return umfeld::width;
+        }
+
         template<typename... Args>
         void osc_send(const std::string& addr_pattern, Args... args) {
             mOSC.send(addr_pattern, args...);

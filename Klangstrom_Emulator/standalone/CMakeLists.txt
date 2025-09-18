@@ -30,7 +30,7 @@ file(GLOB KLST_EMU_VARIANT_SOURCES
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${KLST_EMU_VARIANT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${KLST_EMU_VARIANT_PATH}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${KLST_EMU_UMFELD_PATH}/..")
-target_include_directories(${PROJECT_NAME} PRIVATE "src/.")
+target_include_directories(${PROJECT_NAME} PRIVATE "src")
 
 # set definitions
 
@@ -42,7 +42,7 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC
         KLST_EMU_AUDIO_BLOCK=2048
 )
 
-# add umfeld
+# add Umfeld
 
 add_subdirectory("${KLST_EMU_UMFELD_PATH}" ${CMAKE_BINARY_DIR}/umfeld-lib-${PROJECT_NAME})
 add_umfeld_libs()
@@ -63,3 +63,23 @@ target_include_directories(klangstrom-emulator PRIVATE "${KLST_EMU_UMFELD_PATH}/
 target_include_directories(klangstrom-emulator PRIVATE "${KLST_EMU_VARIANT_PATH}")
 target_link_libraries(klangstrom-emulator PRIVATE umfeld-lib-interface umfeld-lib)
 target_link_libraries(${PROJECT_NAME} PRIVATE klangstrom-emulator)
+
+# add Klangstrom_KLST_EMU
+
+add_subdirectory("../../Klangstrom_KLST_EMU" ${CMAKE_BINARY_DIR}/klangstrom_KLST_EMU-lib-${PROJECT_NAME})
+target_compile_definitions(klangstrom_KLST_EMU PRIVATE
+        KLST_ENV=${KLST_ENV}
+        KLST_EMU_AUDIO_BLOCK=2048
+)
+target_link_libraries(klangstrom_KLST_EMU PRIVATE umfeld-lib-interface umfeld-lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE klangstrom_KLST_EMU)
+
+# add Klangstrom
+
+add_subdirectory("../../Klangstrom" ${CMAKE_BINARY_DIR}/klangstrom-lib-${PROJECT_NAME})
+target_compile_definitions(klangstrom PRIVATE
+        KLST_ENV=${KLST_ENV}
+        KLST_EMU_AUDIO_BLOCK=2048
+)
+target_link_libraries(klangstrom PRIVATE klangstrom_KLST_EMU)
+target_link_libraries(${PROJECT_NAME} PRIVATE klangstrom)

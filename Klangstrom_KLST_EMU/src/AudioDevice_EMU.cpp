@@ -24,6 +24,11 @@
 #include "Console.h"
 #include "KlangstromEmulator.h"
 
+#include "PGraphics.h"
+using namespace umfeld;
+
+#define DEFAULT_FRAMES_PER_BUFFER 2
+
 class DrawableAudioDevice final : public Drawable {
 public:
     explicit DrawableAudioDevice(AudioDevice* audiodevice) : fAudioDevice(audiodevice) {}

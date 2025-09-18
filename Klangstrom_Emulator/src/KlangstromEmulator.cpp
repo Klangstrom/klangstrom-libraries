@@ -87,6 +87,8 @@ void umfeld::KlangstromEmulator::setup() {
             font_file = mFontPath + "/" + mFontName;
         } else if (file_exists(mFontPath + "/../" + mFontName)) {
             font_file = mFontPath + "/../" + mFontName;
+        } else if (file_exists(mFontPath + "/data/" + mFontName)) {
+            font_file = mFontPath + "/data/" + mFontName;
         }
         println("font file : ", font_file);
     }
@@ -98,7 +100,9 @@ void umfeld::KlangstromEmulator::setup() {
         println("could not load font: ",
                 (mFontPath + "/" + mFontName),
                 " or ",
-                (mFontPath + "/../" + mFontName)
+                (mFontPath + "/../" + mFontName),
+                " or ",
+                (mFontPath + "/data/" + mFontName)
 #ifdef KLST_EMULATOR_FONT_PATH
                     ,
                 " or ",
