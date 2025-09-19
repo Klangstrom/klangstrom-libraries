@@ -124,8 +124,14 @@ void umfeld::KlangstromEmulator::settings() {
     size(KLST_EMU_SCREEN_WIDTH, KLST_EMU_SCREEN_HEIGHT);
     // TODO use KLST_EMU_AUDIO_BLOCK to configure audio
     // TODO use KLST_EMU_SAMPLE_RATE to configure audio
-    audio(2, 2);
-    // audio(1, 2, 48000, 2048, DEFAULT_AUDIO_DEVICE, DEFAULT_AUDIO_DEVICE, true);
+    // audio(2, 2);
+    subsystem_audio = umfeld_create_subsystem_audio_portaudio();
+    audio(2, 2,
+        48000,
+        2048,
+        DEFAULT_AUDIO_DEVICE,
+        DEFAULT_AUDIO_DEVICE,
+        true);
 
     mOutputBuffers = new float*[audio_output_channels];
     for (int i = 0; i < audio_output_channels; i++) {

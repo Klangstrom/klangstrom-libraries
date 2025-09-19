@@ -71,7 +71,7 @@ void klst_emulator_audioEvent() {
     // NOTE copy samples into de-interleaved buffer
     for (int i = 0; i < a->buffer_size; ++i) {
         for (int ch = 0; ch < a->input_channels; ++ch) {
-            // _input_buffer[ch][i] = a->input_buffer[i * a->input_channels + ch];
+            _input_buffer[ch][i] = a->input_buffer[i * a->input_channels + ch];
         }
     }
     for (int ch = 0; ch < a->output_channels; ++ch) {
@@ -79,7 +79,7 @@ void klst_emulator_audioEvent() {
     }
     KlangstromEmulator::instance()->audioblock(_input_buffer, _output_buffer, a->buffer_size);
     // NOTE copy samples back into interleaved buffer
-#define KLST_EMU_ADAPTER_TEST_SOUND
+// #define KLST_EMU_ADAPTER_TEST_SOUND
 #ifdef KLST_EMU_ADAPTER_TEST_SOUND
     static int count = 0;
 #endif

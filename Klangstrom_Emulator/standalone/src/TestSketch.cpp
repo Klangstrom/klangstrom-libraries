@@ -29,7 +29,7 @@ void setup() {
     // long init section ...
     AudioInfo audioinfo;
     audioinfo.sample_rate     = 48000;
-    audioinfo.output_channels = 2;
+    audioinfo.output_channels = 2; // TODO test with 1
     audioinfo.input_channels  = 2;
     audioinfo.block_size      = 128;
     audioinfo.bit_depth       = 16;
@@ -43,8 +43,8 @@ void setup() {
 }
 
 void loop() {
-    osc_frequency += 0.0001f;
-    // osc_frequency += 10.0f;
+    // osc_frequency += 0.0001f;
+    osc_frequency += 10.0f;
     if (osc_frequency > 880.0f) {
         osc_frequency = 220.0f;
     }
@@ -58,7 +58,7 @@ void loop() {
     //     audiodevice_resume(audiodevice);
     // }
 
-    // delay(100);
+    delay(100);
 }
 
 void audioblock(AudioBlock* audio_block) {

@@ -103,16 +103,16 @@ bool KlangstromEmulatorClient::update_serial_data(SerialDevice* device, const ch
 }
 
 bool KlangstromEmulatorClient::handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device) {
-    AudioBlock& audioblock = *device->get_audiodevice()->audioblock;
-    const int   block_size = audioblock.block_size;
+    const AudioBlock& audioblock = *device->get_audiodevice()->audioblock;
+    const int         block_size = audioblock.block_size;
 
     if (block_size > length) {
-        println("block size mismatch: reduce device block size (", block_size, ") to either equal or smaller multiple of ", length);
+        error("block size mismatch: reduce device block size (", block_size, ") to either equal or smaller multiple of ", length);
         return true;
     }
 
     if (length % block_size != 0) {
-        println("block size mismatch: device block size (", block_size, ") must be multiple of ", length);
+        error("block size mismatch: device block size (", block_size, ") must be multiple of ", length);
         return true;
     }
 
@@ -121,12 +121,12 @@ bool KlangstromEmulatorClient::handle_audiodevice(float** input, float** output,
     // TODO handle cases where number of output and input channels do not match.
     // TODO especially when device has or expects more channels than audio system
     if (audioblock.output_channels > audio_output_channels) {
-        println("output channels mismatch: device output channels (", static_cast<int>(audioblock.output_channels), ") must match audio system output channels (", audio_output_channels, ")");
+        error("output channels mismatch: device output channels (", static_cast<int>(audioblock.output_channels), ") must match audio system output channels (", audio_output_channels, ")");
         return true;
     }
 
     if (audioblock.input_channels > audio_input_channels && audioblock.input_channels > 2) {
-        println("input channels mismatch: device input channels (", static_cast<int>(audioblock.input_channels), ") must match audio system input channels (", audio_input_channels, ")");
+        error("input channels mismatch: device input channels (", static_cast<int>(audioblock.input_channels), ") must match audio system input channels (", audio_input_channels, ")");
         return true;
     }
 
@@ -149,8 +149,8 @@ bool KlangstromEmulatorClient::handle_audiodevice(float** input, float** output,
         for (int ch = 0; ch < audioblock.input_channels; ++ch) {
             // TODO if audio system ( i.e SDL ) provides only mono input,
             //  then we map all input channels to the same channel
-            int    actual_channel = audio_input_channels == 1 ? 0 : ch;
-            float* input_ptr      = input[actual_channel] + i * block_size;
+            const int    actual_channel = audio_input_channels == 1 ? 0 : ch;
+            const float* input_ptr      = input[actual_channel] + i * block_size;
             memcpy(audioblock.input[ch], input_ptr, block_size * sizeof(float));
         }
 
