@@ -44,7 +44,7 @@ void setup() {
     console_println("found %s", filename.c_str());
     if (filename != "") {
         WAVE::open(filename);
-        console_println("%i samples in WAV file", WAVE::num_samples());
+        console_println("%i samples in WAV file", WAVE::num_frames());
     } else {
         console_println("no WAV file found on SD card");
     }

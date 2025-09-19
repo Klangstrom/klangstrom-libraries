@@ -1,62 +1,102 @@
-
-#include "Umfeld.h"
-
 /**
-* this example demonstrates how to set up the audio code and generate a sine wave sound.
+ * this example demonstrates load and play a WAV file from an SD card.
  */
 
 #include "Arduino.h"
 #include "System.h"
 #include "Console.h"
 #include "AudioDevice.h"
-#include "MWavetable.h"
+#include "SDCard.h"
+#include "WAVE.h"
+#include "Key.h"
 
-float      wavetable[512];
-MWavetable oscillator_left{wavetable, 512, 48000};
-MWavetable oscillator_right{wavetable, 512, 48000};
-AudioDevice* audiodevice;
+Key* key_left;
 
-float osc_frequency     = 440.0f;
-bool  audiocodec_paused = false;
+int    sample_buffer_size;
+float* sample_buffer;
+bool   update_audio_block = false;
 
 void setup() {
     system_init();
+    console_init();
+    sdcard_init();
 
-    MWavetable::fill(wavetable, 512, MWavetable::WAVEFORM_SINE);
-    oscillator_left.set_amplitude(0.1f);
-    oscillator_right.set_amplitude(0.15f);
+    key_left = key_create(KEY_LEFT);
 
-    // long init section ...
-    AudioInfo audioinfo;
-    audioinfo.sample_rate     = 48000;
-    audioinfo.output_channels = 2;
-    audioinfo.input_channels  = 0;
-    audioinfo.block_size      = 128;
-    audioinfo.bit_depth       = 16;
-    audiodevice               = audiodevice_init_audiocodec(&audioinfo);
-    if (audiodevice->audioinfo->device_id == AUDIO_DEVICE_INIT_ERROR) {
-        console_error("error initializing audio device");
+    while (!sdcard_detected()) {
+        console_println("SD card not detected");
+        delay(1000);
     }
-    audiodevice_resume(audiodevice);
-    // ... or for short with default values and auto start
-    audiodevice = system_init_audiocodec();
+    sdcard_status();
+
+    sdcard_mount();
+    std::vector<std::string> files;
+    std::vector<std::string> directories;
+    sdcard_list("", files, directories);
+    console_println("SD card detected");
+    console_println("Files      : %i", files.size());
+    for (std::string file: files) {
+        console_println("             %s", file.c_str());
+    }
+    std::string filename = "";
+    for (std::string file: files) {
+        if (file.substr(file.find_last_of(".") + 1) == "WAV") {
+            console_println("found WAV file: %s", file.c_str());
+            filename = file;
+            break;
+        }
+    }
+    console_println("found %s", filename.c_str());
+    if (filename != "") {
+        WAVE::open(filename);
+        console_println("%i samples in WAV file", WAVE::num_frames());
+    } else {
+        console_println("no WAV file found on SD card");
+    }
+
+    if (WAVE::is_open()) {
+        console_println("start playing WAV file ...");
+    } else {
+        console_println("no WAV file opened");
+    }
+
+    sample_buffer_size = WAVE::num_frames();
+    sample_buffer      = new float[sample_buffer_size];
+    WAVE::load_samples(sample_buffer, WAVE::ALL_SAMPLES);
+    WAVE::looping(false);
+
+    system_init_audiocodec();
 }
 
 void loop() {
-    osc_frequency += 10.0f;
-    if (osc_frequency > 880.0f) {
-        osc_frequency = 220.0f;
+    if (update_audio_block) {
+        update_audio_block = false;
+        if (WAVE::is_open()) {
+            //WAVE::load_samples(rows, audio_block_size);
+        }
     }
-    oscillator_left.set_frequency(osc_frequency);
-    oscillator_right.set_frequency(osc_frequency * 0.495f);
-
-    delay(1000);
-    console_println("frequency: %f", osc_frequency);
 }
+
+uint32_t sample_buffer_counter = 0;
 
 void audioblock(AudioBlock* audio_block) {
     for (int i = 0; i < audio_block->block_size; ++i) {
-        audio_block->output[0][i] = oscillator_left.process();
-        audio_block->output[1][i] = oscillator_right.process();
+        float sample = 0.0f;
+        if (sample_buffer_counter < sample_buffer_size) {
+            sample_buffer_counter++;
+            sample = sample_buffer[sample_buffer_counter];
+        }
+        for (int c = 0; c < audio_block->output_channels; ++c) {
+            audio_block->output[c][i] = sample;
+        }
+    }
+    update_audio_block = true;
+}
+
+void key_event(const Key* key) {
+    if (key->device_id == key_left->device_id) {
+        if (key->pressed) {
+            sample_buffer_counter = 0;
+        }
     }
 }

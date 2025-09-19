@@ -214,6 +214,18 @@ void umfeld::KlangstromEmulator::audioblock(float** input, float** output, const
         }
     }
 
+    /* sanitze and clamp output samples */
+    for (int ch = 0; ch < audio_output_channels; ++ch) {
+        for (int i = 0; i < length; i++) {
+            constexpr float audio_sample_clamp_range = 0.95f;
+            // NOTE clamp to [-1.0, 1.0]
+            float s       = output[ch][i];
+            s             = std::isnan(s) ? 0.0f : s;
+            s             = std::max(-audio_sample_clamp_range, std::min(audio_sample_clamp_range, s));
+            output[ch][i] = s;
+        }
+    }
+
     /* fill buffers for oscilloscope visualization */
     if (mOutputBuffers == nullptr || mInputBuffers == nullptr) {
         return;
