@@ -1,3 +1,4 @@
+#ifdef SKETCH_AUDIO_OSCILLATOR_PASSTHROUGH
 #include "Umfeld.h"
 
 /**
@@ -79,3 +80,4 @@ void audioblock(AudioBlock* audio_block) {
         // audio_block->output[1][i] = audio_block->input[0][i] + oscillator_right.process();
     }
 }
+#endif
