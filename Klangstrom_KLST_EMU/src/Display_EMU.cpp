@@ -148,7 +148,7 @@ bool display_init_BSP(TouchPanelMode touch_panel_mode) {
     if (!initialized) {
         initialized = true;
         display_ptr = new DrawableDisplay(KLST_EMU_DISPLAY_WIDTH, KLST_EMU_DISPLAY_HEIGHT);
-        display_ptr->set_position(KlangstromEmulator::instance()->width() - (KLST_EMU_DISPLAY_WIDTH + 20), 50);
+        display_ptr->set_position(KlangstromEmulator::instance()->get_width() - (KLST_EMU_DISPLAY_WIDTH + 20), 50);
         KlangstromEmulator::instance()->register_drawable(display_ptr);
     }
     return true;

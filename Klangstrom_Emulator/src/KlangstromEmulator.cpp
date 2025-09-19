@@ -59,11 +59,11 @@ void umfeld::KlangstromEmulator::arguments(const std::vector<std::string> args) 
     }
 }
 
-int umfeld::KlangstromEmulator::getWidth() {
+int umfeld::KlangstromEmulator::get_width() {
     return umfeld::width;
 }
 
-int umfeld::KlangstromEmulator::getHeight() {
+int umfeld::KlangstromEmulator::get_height() {
     return umfeld::height;
 }
 
@@ -120,6 +120,8 @@ void umfeld::KlangstromEmulator::setup() {
 }
 
 void umfeld::KlangstromEmulator::settings() {
+    run_update_in_thread = true;
+
     // TODO this needs to be handled BETTER:
     size(KLST_EMU_SCREEN_WIDTH, KLST_EMU_SCREEN_HEIGHT);
     // TODO use KLST_EMU_AUDIO_BLOCK to configure audio

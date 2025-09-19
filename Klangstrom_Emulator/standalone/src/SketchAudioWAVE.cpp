@@ -14,7 +14,6 @@
 float      wavetable[512];
 MWavetable oscillator_left{wavetable, 512, 48000};
 MWavetable oscillator_right{wavetable, 512, 48000};
-
 AudioDevice* audiodevice;
 
 float osc_frequency     = 440.0f;
@@ -44,12 +43,15 @@ void setup() {
 }
 
 void loop() {
-    osc_frequency += 0.0001f;
+    osc_frequency += 10.0f;
     if (osc_frequency > 880.0f) {
         osc_frequency = 220.0f;
     }
     oscillator_left.set_frequency(osc_frequency);
     oscillator_right.set_frequency(osc_frequency * 0.495f);
+
+    delay(1000);
+    console_println("frequency: %f", osc_frequency);
 }
 
 void audioblock(AudioBlock* audio_block) {

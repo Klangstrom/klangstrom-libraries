@@ -104,10 +104,6 @@ namespace umfeld {
             return umfeld::mouseY;
         }
 
-        static float width() {
-            return umfeld::width;
-        }
-
         template<typename... Args>
         void osc_send(const std::string& addr_pattern, Args... args) {
             mOSC.send(addr_pattern, args...);
@@ -149,8 +145,8 @@ namespace umfeld {
         static uint8_t             register_serial_device(SerialDevice* serialdevice);
         static uint8_t             unregister_serial_device(SerialDevice* serialdevice);
         void                       register_client(KlangstromEmulatorClient* client) { this->client = client; }
-        int                        getWidth() override;
-        int                        getHeight() override;
+        int                        get_width() override;
+        int                        get_height() override;
 
         static constexpr float DEFAULT_FONT_SIZE = 24;
 
