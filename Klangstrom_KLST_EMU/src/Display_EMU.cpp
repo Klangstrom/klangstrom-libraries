@@ -130,7 +130,7 @@ public:
     }
 
 private:
-            DrawableDisplay() = delete;
+    DrawableDisplay() = delete;
     PVector fPosition;
     PImage* fFrameBuffers[2];
     uint8_t fActiveBuffer = 0;
@@ -141,13 +141,13 @@ private:
 extern "C" {
 #endif
 
-static DrawableDisplay* display_ptr     = nullptr;
+static DrawableDisplay* display_ptr = nullptr;
 static bool             initialized = false;
 
 bool display_init_BSP(TouchPanelMode touch_panel_mode) {
     if (!initialized) {
         initialized = true;
-        display_ptr     = new DrawableDisplay(KLST_EMU_DISPLAY_WIDTH, KLST_EMU_DISPLAY_HEIGHT);
+        display_ptr = new DrawableDisplay(KLST_EMU_DISPLAY_WIDTH, KLST_EMU_DISPLAY_HEIGHT);
         display_ptr->set_position(KlangstromEmulator::instance()->width() - (KLST_EMU_DISPLAY_WIDTH + 20), 50);
         KlangstromEmulator::instance()->register_drawable(display_ptr);
     }
@@ -242,9 +242,9 @@ void display_set_pixel_alpha_BSP(const uint16_t x, const uint16_t y, const uint3
     const uint32_t current_color_ARGB = display_get_pixel_BSP(x, y);
     const float    alpha              = static_cast<float>(KLST_DISPLAY_GET_ALPHA(color_ARGB)) / 255.0f;
     const float    inv_alpha          = 1.0f - alpha;
-    const uint8_t  r                  = static_cast<uint8_t>((KLST_DISPLAY_GET_RED(color_ARGB) * alpha + KLST_DISPLAY_GET_RED(current_color_ARGB) * inv_alpha));
-    const uint8_t  g                  = static_cast<uint8_t>((KLST_DISPLAY_GET_GREEN(color_ARGB) * alpha + KLST_DISPLAY_GET_GREEN(current_color_ARGB) * inv_alpha));
-    const uint8_t  b                  = static_cast<uint8_t>((KLST_DISPLAY_GET_BLUE(color_ARGB) * alpha + KLST_DISPLAY_GET_BLUE(current_color_ARGB) * inv_alpha));
+    const auto     r                  = static_cast<uint8_t>((KLST_DISPLAY_GET_RED(color_ARGB) * alpha + KLST_DISPLAY_GET_RED(current_color_ARGB) * inv_alpha));
+    const auto     g                  = static_cast<uint8_t>((KLST_DISPLAY_GET_GREEN(color_ARGB) * alpha + KLST_DISPLAY_GET_GREEN(current_color_ARGB) * inv_alpha));
+    const auto     b                  = static_cast<uint8_t>((KLST_DISPLAY_GET_BLUE(color_ARGB) * alpha + KLST_DISPLAY_GET_BLUE(current_color_ARGB) * inv_alpha));
     display_ptr->set_pixel(x, y, umfeld::color(r / 255.0f, g / 255.0f, b / 255.0f));
 }
 

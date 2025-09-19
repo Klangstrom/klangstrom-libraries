@@ -103,6 +103,18 @@ bool KlangstromEmulatorClient::update_serial_data(SerialDevice* device, const ch
 }
 
 bool KlangstromEmulatorClient::handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device) {
+    if (device == nullptr) {
+        error_in_function("device not initialized");
+        return false;
+    }
+    if (device->get_audiodevice() == nullptr) {
+        error_in_function("audiodevice not initialized");
+        return false;
+    }
+    if (device->get_audiodevice()->audioblock == nullptr) {
+        error_in_function("audioblock not initialized");
+    }
+
     const AudioBlock& audioblock = *device->get_audiodevice()->audioblock;
     const int         block_size = audioblock.block_size;
 

@@ -49,7 +49,7 @@ static void sketch_loop() {
 
 umfeld::KlangstromEmulator* umfeld::KlangstromEmulator::fInstance = nullptr;
 
-void umfeld::KlangstromEmulator::arguments(std::vector<std::string> args) {
+void umfeld::KlangstromEmulator::arguments(const std::vector<std::string> args) {
     for (auto& s: args) {
         println("> ", s);
         if (begins_with(s, "--fontpath=")) {
@@ -126,12 +126,13 @@ void umfeld::KlangstromEmulator::settings() {
     // TODO use KLST_EMU_SAMPLE_RATE to configure audio
     // audio(2, 2);
     subsystem_audio = umfeld_create_subsystem_audio_portaudio();
-    audio(2, 2,
-        48000,
-        2048,
-        DEFAULT_AUDIO_DEVICE,
-        DEFAULT_AUDIO_DEVICE,
-        true);
+    audio(KLST_EMU_AUDIO_INPUT_CHANNELS,
+          KLST_EMU_AUDIO_OUTPUT_CHANNELS,
+          KLST_EMU_SAMPLE_RATE,
+          KLST_EMU_AUDIO_BLOCK,
+          KLST_EMU_AUDIO_INPUT_DEVICE,
+          KLST_EMU_AUDIO_OUTPUT_DEVICE,
+          KLST_EMU_AUDIO_THREADED);
 
     mOutputBuffers = new float*[audio_output_channels];
     for (int i = 0; i < audio_output_channels; i++) {
@@ -176,12 +177,13 @@ void umfeld::KlangstromEmulator::update() {
 //     client->process_device(device);
 // }
 
-static void copy_float_array_2D(float** src, float** dest, int rows, int cols) {
+static void copy_float_array_2D(float** src, float** dest, const int rows, const int cols) {
     for (int i = 0; i < rows; ++i) {
         memcpy(dest[i], src[i], cols * sizeof(float));
     }
 }
-bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device) {
+
+bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** output, const int length, KlangstromEmulatorAudioDevice* device) {
     if (client == nullptr) {
         error_in_function("client not initialized");
         return false;
@@ -195,7 +197,7 @@ bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** outpu
  * @param output
  * @param length
  */
-void umfeld::KlangstromEmulator::audioblock(float** input, float** output, int length) {
+void umfeld::KlangstromEmulator::audioblock(float** input, float** output, const int length) {
     if (fAudioDevices.size() > 1) {
         warning_in_function_once("multiple audio devices detected. currently only one device supported. only the last audio device will be audible ...");
     }
@@ -297,7 +299,7 @@ void umfeld::KlangstromEmulator::unregister_drawable(Drawable* drawable) {
 }
 
 uint8_t umfeld::KlangstromEmulator::unregister_audio_device(AudioDevice* audiodevice) {
-    println("TODO unregister audio device at emulator");
+    warning("TODO unregister audio device at emulator");
     return 0;
 }
 
@@ -314,16 +316,16 @@ uint8_t umfeld::KlangstromEmulator::register_serial_device(SerialDevice* seriald
     //    fAudioDevices.push_back(mAudioDevice);
     //    audio_device_id++;
     //    return mAudioDevice->get_id();
-    println("TODO register serial device at emulator");
+    warning("TODO register serial device at emulator");
     return 0;
 }
 
 uint8_t umfeld::KlangstromEmulator::unregister_serial_device(SerialDevice* serialdevice) {
-    println("TODO unregister serial device at emulator");
+    warning("TODO unregister serial device at emulator");
     return 0;
 }
 
-void umfeld::KlangstromEmulator::delay_loop(uint32_t microseconds) {
+void umfeld::KlangstromEmulator::delay_loop(const uint32_t microseconds) {
     //    task.sleep_for(microseconds); // TODO check what s the problem with this
     // std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); // NOTE this stalls the entire system
 
@@ -343,7 +345,6 @@ void umfeld::KlangstromEmulator::delay_loop(uint32_t microseconds) {
         // this->update(); // if appropriate
         // this->redraw(); // if appropriate
         // ... existing code ...
-
         std::this_thread::sleep_for(slice);
     }
 }
@@ -407,7 +408,7 @@ void umfeld::KlangstromEmulator::delay_loop(uint32_t microseconds) {
 // }
 
 void umfeld::KlangstromEmulator::receive(const OscMessage& msg) {
-    println("ERROR: emlator not handling OSC messages … WIP");
+    error("emulator not handling OSC messages … WIP");
 
     //     if (client == nullptr) {
     //         println("ERROR: client not initialized");

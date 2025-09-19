@@ -31,6 +31,28 @@
 #include "KlangstromEmulatorClient.h"
 #include "KlangstromEmulatorAudioDevice.h"
 
+#ifndef KLST_EMU_AUDIO_BLOCK
+#define KLST_EMU_AUDIO_BLOCK 128
+#endif
+#ifndef KLST_EMU_AUDIO_INPUT_CHANNELS
+#define KLST_EMU_AUDIO_INPUT_CHANNELS 2
+#endif
+#ifndef KLST_EMU_AUDIO_OUTPUT_CHANNELS
+#define KLST_EMU_AUDIO_OUTPUT_CHANNELS 2
+#endif
+#ifndef KLST_EMU_SAMPLE_RATE
+#define KLST_EMU_SAMPLE_RATE 48000
+#endif
+#ifndef KLST_EMU_AUDIO_INPUT_DEVICE
+#define KLST_EMU_AUDIO_INPUT_DEVICE DEFAULT_AUDIO_DEVICE
+#endif
+#ifndef KLST_EMU_AUDIO_OUTPUT_DEVICE
+#define KLST_EMU_AUDIO_OUTPUT_DEVICE DEFAULT_AUDIO_DEVICE
+#endif
+#ifndef KLST_EMU_AUDIO_THREADED
+#define KLST_EMU_AUDIO_THREADED true
+#endif
+
 #define KLST_EMULATE_SERIAL_VIA_OSC
 
 #ifdef KLST_EMULATE_SERIAL_VIA_OSC
@@ -110,7 +132,7 @@ namespace umfeld {
         void                       settings() override;
         void                       setup() override;
         void                       draw() override;
-        void                       update();
+        static void                update();
         bool                       handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device);
         void                       audioblock(float** input, float** output, int length) override;
         void                       keyPressed() override;
@@ -118,14 +140,14 @@ namespace umfeld {
         static std::string         get_emulator_name();
         void                       register_drawable(Drawable* drawable);
         void                       unregister_drawable(Drawable* drawable);
-        void                       delay_loop(uint32_t ms);
+        static void                delay_loop(uint32_t microseconds);
         void                       set_emulator_speed(float loop_frequency_hz) { task.set_frequency(loop_frequency_hz); }
         float**                    get_audio_output_buffers() const { return mOutputBuffers; }
         float**                    get_audio_input_buffers() const { return mInputBuffers; }
         uint8_t                    register_audio_device(AudioDevice* audiodevice);
-        uint8_t                    unregister_audio_device(AudioDevice* audiodevice);
-        uint8_t                    register_serial_device(SerialDevice* serialdevice);
-        uint8_t                    unregister_serial_device(SerialDevice* serialdevice);
+        static uint8_t             unregister_audio_device(AudioDevice* audiodevice);
+        static uint8_t             register_serial_device(SerialDevice* serialdevice);
+        static uint8_t             unregister_serial_device(SerialDevice* serialdevice);
         void                       register_client(KlangstromEmulatorClient* client) { this->client = client; }
         int                        getWidth() override;
         int                        getHeight() override;
