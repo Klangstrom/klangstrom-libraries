@@ -58,7 +58,48 @@ void klst_emulator_audioEvent() {
     warning_in_function_once("INFO :: library implementation -> 'klst_emulator_audioEvent()'");
     // TODO `audioblock` or `handle_audiodevice`
     // TODO rework this into single float array strcture like `umfeld`:
+
+    // TODO  `audioblock` expects de-interleaved buffers
+    // e.g. `a->output_buffer[0]` is left channel, `a->output_buffer[1]` is right channel
+    // but `a->input_buffer` and `a->output_buffer` are interleaved buffers
     // KlangstromEmulator::instance()->audioblock(a->input_buffer, a->output_buffer, a->buffer_size);
+    const auto _input_buffer  = new float*[a->input_channels];
+    const auto _output_buffer = new float*[a->output_channels];
+    for (int ch = 0; ch < a->input_channels; ++ch) {
+        _input_buffer[ch] = new float[a->buffer_size];
+    }
+    // NOTE copy samples into de-interleaved buffer
+    for (int i = 0; i < a->buffer_size; ++i) {
+        for (int ch = 0; ch < a->input_channels; ++ch) {
+            // _input_buffer[ch][i] = a->input_buffer[i * a->input_channels + ch];
+        }
+    }
+    for (int ch = 0; ch < a->output_channels; ++ch) {
+        _output_buffer[ch] = new float[a->buffer_size];
+    }
+    KlangstromEmulator::instance()->audioblock(_input_buffer, _output_buffer, a->buffer_size);
+    // NOTE copy samples back into interleaved buffer
+#define KLST_EMU_ADAPTER_TEST_SOUND
+#ifdef KLST_EMU_ADAPTER_TEST_SOUND
+    static int count = 0;
+#endif
+    for (int i = 0; i < a->buffer_size; ++i) {
+#ifdef KLST_EMU_ADAPTER_TEST_SOUND
+        // produce sin wave with 220Hz @ 48KHz
+        count++;
+        const float s = 0.1f * sinf(TWO_PI * 220.0f * static_cast<float>(count) / 48000.0f);
+#endif
+        for (int ch = 0; ch < a->output_channels; ++ch) {
+#ifdef KLST_EMU_ADAPTER_TEST_SOUND
+            a->output_buffer[i * a->output_channels + ch] = s;
+            // a->output_buffer[i * a->output_channels + ch] = random(-0.1f, 0.1f); // TODO remove this test noise
+#else
+            a->output_buffer[i * a->output_channels + ch] = _output_buffer[ch][i];
+#endif
+        }
+    }
+    delete[] _input_buffer;
+    delete[] _output_buffer;
 }
 
 void klst_emulator_keyPressed() {

@@ -130,10 +130,18 @@ bool KlangstromEmulatorClient::handle_audiodevice(float** input, float** output,
         return true;
     }
 
-    const bool mIsPaused = device->get_audiodevice()->peripherals->is_paused;
-    if (mIsPaused) {
+    if (device->get_audiodevice()->peripherals->is_paused) {
         return true;
     }
+
+    // warning_in_function_once("audio system");
+    // console_once("audioblock block size     : ", audioblock.block_size);
+    // console_once("audioblock input channels : ", audioblock.input_channels);
+    // console_once("audioblock output channels: ", audioblock.output_channels);
+    // console_once("system block size         : ", umfeld::a->buffer_size);
+    // console_once("system input channels     : ", umfeld::a->input_channels);
+    // console_once("system output channels    : ", umfeld::a->output_channels);
+    // console_once("length / block_size       : ", length / block_size);
 
     /* process audio data ( if need be in multiple passes ) */
     const uint8_t mPasses = length / block_size;

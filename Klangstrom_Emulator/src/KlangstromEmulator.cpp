@@ -124,7 +124,8 @@ void umfeld::KlangstromEmulator::settings() {
     size(KLST_EMU_SCREEN_WIDTH, KLST_EMU_SCREEN_HEIGHT);
     // TODO use KLST_EMU_AUDIO_BLOCK to configure audio
     // TODO use KLST_EMU_SAMPLE_RATE to configure audio
-    audio(1, 2);
+    audio(2, 2);
+    // audio(1, 2, 48000, 2048, DEFAULT_AUDIO_DEVICE, DEFAULT_AUDIO_DEVICE, true);
 
     mOutputBuffers = new float*[audio_output_channels];
     for (int i = 0; i < audio_output_channels; i++) {
@@ -155,12 +156,13 @@ void umfeld::KlangstromEmulator::draw() {
     textSize(DEFAULT_FONT_SIZE);
     text(get_emulator_name(), 25, 10 + DEFAULT_FONT_SIZE);
 
-    for (auto& drawable: drawables) {
+    for (const auto& drawable: drawables) {
         drawable->draw(g);
     }
 }
 
 void umfeld::KlangstromEmulator::update() {
+    // TODO only call loop if not delayed
     loop();
 }
 
@@ -174,13 +176,11 @@ static void copy_float_array_2D(float** src, float** dest, int rows, int cols) {
     }
 }
 bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** output, int length, KlangstromEmulatorAudioDevice* device) {
-    println("ERROR: emulator not handling audio devices … WIP");
-    return false;
-    //     if (client == nullptr) {
-    //         println("ERROR: client not initialized");
-    //         return false;
-    //     }
-    //     return client->handle_audiodevice(input, output, length, device);
+    if (client == nullptr) {
+        error_in_function("client not initialized");
+        return false;
+    }
+    return client->handle_audiodevice(input, output, length, device);
 }
 
 /**
@@ -191,7 +191,7 @@ bool umfeld::KlangstromEmulator::handle_audiodevice(float** input, float** outpu
  */
 void umfeld::KlangstromEmulator::audioblock(float** input, float** output, int length) {
     if (fAudioDevices.size() > 1) {
-        println("multiple audio devices detected. currently only one device supported. only the last audio device will be audible ...");
+        warning_in_function_once("multiple audio devices detected. currently only one device supported. only the last audio device will be audible ...");
     }
 
     for (int ch = 0; ch < audio_output_channels; ++ch) {
@@ -319,7 +319,27 @@ uint8_t umfeld::KlangstromEmulator::unregister_serial_device(SerialDevice* seria
 
 void umfeld::KlangstromEmulator::delay_loop(uint32_t microseconds) {
     //    task.sleep_for(microseconds); // TODO check what s the problem with this
-    std::this_thread::sleep_for(std::chrono::microseconds(microseconds));
+    // std::this_thread::sleep_for(std::chrono::microseconds(microseconds)); // NOTE this stalls the entire system
+
+    // Cooperative delay: break into small slices to keep SDL responsive
+    using clock    = std::chrono::steady_clock;
+    const auto end = clock::now() + std::chrono::microseconds(microseconds);
+
+    // Slice length ~0.1 ms; adjust as needed
+    // constexpr auto slice = std::chrono::milliseconds(1);
+    constexpr auto slice = std::chrono::microseconds(100);
+
+    while (clock::now() < end) {
+        // Let SDL process events and render between slices
+        // ... existing code ...
+        // If you have a centralized place that already pumps SDL each frame,
+        // you can call a lightweight tick here, e.g.:
+        // this->update(); // if appropriate
+        // this->redraw(); // if appropriate
+        // ... existing code ...
+
+        std::this_thread::sleep_for(slice);
+    }
 }
 
 // bool KlangstromEmulator::update_serial_data(SerialDevice* device, const char* msg_data, const int msg_data_length) {
