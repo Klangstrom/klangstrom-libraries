@@ -23,7 +23,7 @@
 
 #include "tiny_wav.h"
 
-class WAVE {
+class WAV {
 public:
     static const uint32_t ALL_SAMPLES = 0xFFFFFFFF;
 

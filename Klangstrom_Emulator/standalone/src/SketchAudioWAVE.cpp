@@ -7,7 +7,7 @@
 #include "Console.h"
 #include "AudioDevice.h"
 #include "SDCard.h"
-#include "WAVE.h"
+#include "WAV.h"
 #include "Key.h"
 
 Key* key_left;
@@ -48,22 +48,22 @@ void setup() {
     }
     console_println("found %s", filename.c_str());
     if (filename != "") {
-        WAVE::open(filename);
-        console_println("%i samples in WAV file", WAVE::num_frames());
+        WAV::open(filename);
+        console_println("%i samples in WAV file", WAV::num_frames());
     } else {
         console_println("no WAV file found on SD card");
     }
 
-    if (WAVE::is_open()) {
+    if (WAV::is_open()) {
         console_println("start playing WAV file ...");
     } else {
         console_println("no WAV file opened");
     }
 
-    sample_buffer_size = WAVE::num_frames();
+    sample_buffer_size = WAV::num_frames();
     sample_buffer      = new float[sample_buffer_size];
-    WAVE::load_samples(sample_buffer, WAVE::ALL_SAMPLES);
-    WAVE::looping(false);
+    WAV::load_samples(sample_buffer, WAV::ALL_SAMPLES);
+    WAV::looping(false);
 
     system_init_audiocodec();
 }
@@ -71,8 +71,8 @@ void setup() {
 void loop() {
     if (update_audio_block) {
         update_audio_block = false;
-        if (WAVE::is_open()) {
-            //WAVE::load_samples(rows, audio_block_size);
+        if (WAV::is_open()) {
+            //WAV::load_samples(rows, audio_block_size);
         }
     }
 }

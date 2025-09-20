@@ -20,7 +20,7 @@
 #include "SDCard.h"
 #include "Console.h"
 
-#include "WAVE.h"
+#include "WAV.h"
 
 static size_t file_read(void* user, void* dst, size_t bytes) {
     return sdcard_file_read(reinterpret_cast<uint8_t*>(dst), bytes);
@@ -33,7 +33,7 @@ static bool file_seek(void* user, uint32_t abs_offset) {
     return true;
 }
 
-bool WAVE::open(std::string& filename) {
+bool WAV::open(std::string& filename) {
     console_println("open %s", filename.c_str());
     if (sdcard_file_open(filename.c_str(), FILE_READ_ONLY)) {
         console_println("sdcard open %s", filename.c_str());
@@ -66,9 +66,9 @@ bool WAVE::open(std::string& filename) {
  * and end of file is reached, it will continue reading from the beginning.
  * @returns number of samples read
  */
-uint32_t WAVE::load_samples(float* buffer, uint32_t num_frames) {
+uint32_t WAV::load_samples(float* buffer, uint32_t num_frames) {
     if (wav.num_channels > 1) {
-        console_println("WAVE::load_samples: warning: only mono WAV files are supported, but file has %u channels", wav.num_channels);
+        console_println("WAV::load_samples: warning: only mono WAV files are supported, but file has %u channels", wav.num_channels);
     }
     if (!_is_open) {
         return 0;
@@ -92,19 +92,19 @@ uint32_t WAVE::load_samples(float* buffer, uint32_t num_frames) {
     return _num_frames_read;
 }
 
-void WAVE::close() {
+void WAV::close() {
     _is_open = false;
     sdcard_file_close(); // TODO handle result?!?
 }
 
-uint32_t WAVE::num_frames() {
+uint32_t WAV::num_frames() {
     if (!_is_open) {
         return 0;
     }
     return wav_num_frames(&wav);
 }
 
-wav_reader_t WAVE::wav;
-std::string  WAVE::_filename;
-bool         WAVE::_is_open    = false;
-bool         WAVE::_is_looping = false;
+wav_reader_t WAV::wav;
+std::string  WAV::_filename;
+bool         WAV::_is_open    = false;
+bool         WAV::_is_looping = false;
