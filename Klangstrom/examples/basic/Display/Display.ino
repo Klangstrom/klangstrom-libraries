@@ -14,6 +14,7 @@ void setup() {
     system_init();
 
     display_init(false);
+    display_set_backlight(0.9f);
 }
 
 void loop() {

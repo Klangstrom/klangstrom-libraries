@@ -1,6 +1,5 @@
-#ifdef SKETCH_AUDIO_WAV
 /**
- * this example demonstrates how to load and play a WAV file from an SD card.
+ * this example demonstrates how to stream a WAV file from an SD card.
  */
 
 #include "Arduino.h"
@@ -15,6 +14,7 @@ Key*   key_left              = nullptr;
 int    sample_buffer_size    = 0;
 float* sample_buffer         = nullptr;
 int    sample_buffer_counter = 0;
+bool   update_audio_block    = false;
 
 void filter_wav_files(std::vector<std::string>& result_files) {
     std::vector<std::string> files;
@@ -33,7 +33,7 @@ void filter_wav_files(std::vector<std::string>& result_files) {
     }
 }
 
-void load_header(const std::string& filename) {
+void open_file_and_load_header(const std::string& filename) {
     if (wav_load_header(filename)) {
         console_println("%i samples in WAV file", wav_num_sample_frames());
         if (wav_is_open()) {
@@ -73,14 +73,21 @@ void setup() {
             console_println(" - %s", file.c_str());
         }
         console_println("loading first WAV file: %s", wav_files[0].c_str());
-        load_header(wav_files[0]);
+        open_file_and_load_header(wav_files[0]);
         load_all_samples();
     }
 
     system_init_audiocodec();
 }
 
-void loop() {}
+void loop() {
+    if (update_audio_block) {
+        update_audio_block = false;
+        if (wav_is_open()) {
+            // load_samples(...);
+        }
+    }
+}
 
 void audioblock(AudioBlock* audio_block) {
     if (sample_buffer == nullptr) {
@@ -96,6 +103,7 @@ void audioblock(AudioBlock* audio_block) {
             audio_block->output[c][i] = sample;
         }
     }
+    update_audio_block = true;
 }
 
 void key_event(const Key* key) {
@@ -105,4 +113,3 @@ void key_event(const Key* key) {
         }
     }
 }
-#endif

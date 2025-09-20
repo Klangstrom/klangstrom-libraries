@@ -186,6 +186,10 @@ void display_enable_automatic_update(const bool sync_to_v_blank) { // TODO imple
     (void) sync_to_v_blank;
 }
 
+void display_request_reload() {
+    warning_in_function_once("display_request_reload() called … not implement in KLST_EMU (WIP)");
+}
+
 void display_swap_buffer() {
     if (display_ptr == nullptr) {
         return;
