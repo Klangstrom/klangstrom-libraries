@@ -1,3 +1,4 @@
+#ifdef SKETCH_AUDIO_WAV_STREAM
 /**
  * this example demonstrates how to stream a WAV file from an SD card.
  */
@@ -113,3 +114,4 @@ void key_event(const Key* key) {
         }
     }
 }
+#endif
