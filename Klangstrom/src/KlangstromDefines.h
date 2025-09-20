@@ -19,16 +19,9 @@
 
 #pragma once
 
-#include <string>
-
-#include "tiny_wav.h"
-
-static constexpr uint32_t WAV_ALL_SAMPLES = 0xFFFFFFFF;
-
-bool         wav_load_header(const std::string& filename);
-uint32_t     wav_load_sample_frames(float* buffer, uint32_t num_frames);
-uint32_t     wav_num_sample_frames();
-wav_reader_t wav_header();
-bool         wav_is_open();
-bool         wav_looping(bool loop);
-void         wav_close();
+#ifndef TRUE
+#define TRUE 1
+#endif
+#ifndef FALSE
+#define FALSE 0
+#endif
