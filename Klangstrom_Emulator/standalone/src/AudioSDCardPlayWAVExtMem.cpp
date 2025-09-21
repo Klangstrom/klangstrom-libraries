@@ -1,6 +1,6 @@
-#ifdef SKETCH_AUDIO_WAV
+#ifdef SKETCH_AUDIO_WAV_EXT_MEM
 /**
- * this example demonstrates how to load and play a WAV file from an SD card.
+ * this example demonstrates load and play a WAV file from external memory.
  */
 
 #include "Arduino.h"
@@ -33,7 +33,7 @@ void filter_wav_files(std::vector<std::string>& result_files) {
     }
 }
 
-void load_header(const std::string& filename) {
+void open_file_and_load_header(const std::string& filename) {
     if (wav_load_header(filename)) {
         console_println("%i samples in WAV file", wav_num_sample_frames());
         if (wav_is_open()) {
@@ -46,7 +46,7 @@ void load_header(const std::string& filename) {
 
 void load_all_samples() {
     sample_buffer_size = wav_num_sample_frames();
-    sample_buffer      = new float[sample_buffer_size];
+    sample_buffer      = system_external_memory_allocate_float_array(sample_buffer_size);
     wav_load_sample_frames(sample_buffer, WAV_ALL_SAMPLES);
 }
 
@@ -72,8 +72,10 @@ void setup() {
         for (std::string file: wav_files) {
             console_println(" - %s", file.c_str());
         }
-        console_println("loading first WAV file: %s", wav_files[0].c_str());
-        load_header(wav_files[0]);
+        // console_println("loading first WAV file: %s", wav_files[0].c_str());
+        // load_header(wav_files[0]);
+        // open_file_and_load_header("LINSE.WAV");
+        open_file_and_load_header("TEILCHEN.WAV");
         load_all_samples();
     }
 

@@ -71,6 +71,7 @@ public:
         graphics.translate(fPosition.x, fPosition.y);
 
         graphics.fill(1.0f);
+        graphics.noStroke();
         graphics.textSize(KlangstromEmulator::DEFAULT_FONT_SIZE * 0.5f);
         graphics.text("DISPLAY", -1, -2);
         graphics.noFill();
