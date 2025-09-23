@@ -7,7 +7,7 @@ project(klangstrom-emulator-standalone LANGUAGES C CXX)
 # -------------------------
 
 if (NOT ARDUINO_SKETCH_FILE)
-    set(ARDUINO_SKETCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/src/DisplayAnimation.ino")
+    set(ARDUINO_SKETCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../../Klangstrom/examples/basic/Encoder/Encoder.ino")
 endif ()
 set(HOME_DIR $ENV{HOME})
 set(UMFELD_PATH $ENV{UMFELD_PATH})
