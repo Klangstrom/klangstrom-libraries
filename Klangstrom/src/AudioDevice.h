@@ -23,6 +23,8 @@
 #include "AudioBlock.h"
 #include "AudioInfo.h"
 
+inline void audioblock(AudioBlock* audio_block) {} // NOTE prevent non const override
+
 #ifdef __cplusplus
 extern "C" {
 #endif

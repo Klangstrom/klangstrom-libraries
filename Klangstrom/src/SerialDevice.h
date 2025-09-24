@@ -72,7 +72,7 @@ void          serialdevice_send(const SerialDevice* serialdevice, const uint8_t*
  * @return returns true if initialization was successful, if false client needs to initialize manually
  */
 bool serialdevice_init_BSP(SerialDevice* serialdevice);
-void serialdevice_deinit_BSP(const SerialDevice* serialdevice);
+void serialdevice_deinit_BSP(SerialDevice* serialdevice);
 /**
  * initializes peripherals on board-specific level. needs to decide if device type is supported.
  * @param serialdevice

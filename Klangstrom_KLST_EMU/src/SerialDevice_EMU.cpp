@@ -112,7 +112,7 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
     return mDeviceInitialized;
 }
 
-void serialdevice_deinit_BSP(const SerialDevice* serialdevice) {
+void serialdevice_deinit_BSP(SerialDevice* serialdevice) {
     delete[] serialdevice->data;
     // TODO unregister serial device
     // TODO unregister drawable

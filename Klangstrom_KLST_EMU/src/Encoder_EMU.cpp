@@ -37,7 +37,7 @@
 
 class DrawableEncoder final : public Drawable {
 public:
-    explicit DrawableEncoder(Encoder* encoder) : _encoder(encoder) {}
+    explicit DrawableEncoder(Encoder* encoder) : _encoder(encoder) { (void)_encoder; }
 
     void draw(umfeld::PGraphics* g) override {
 #ifdef KLST_ENCODER_WIP
@@ -66,8 +66,10 @@ public:
 
 private:
     Encoder*    _encoder;
-    std::string _name;
+#ifdef KLST_ENCODER_WIP
     float       _radius = 40;
+#endif
+    std::string _name;
     struct {
         float x{0};
         float y{0};
