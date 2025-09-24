@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-WEAK void beat_event(uint8_t beat_id, uint16_t beat_counter);
+void beat_event(uint8_t beat_id, uint16_t beat_counter);
 
 #ifdef __cplusplus
 }
@@ -106,12 +106,12 @@ public:
     }
 
 private:
-    PeriodicTimer*              timer;
+    PeriodicTimer*      timer;
     uint8_t             device_id;
     Callback_2_UI8_UI16 callback_beat;
     uint32_t            beat_counter;
     bool                fIsRunning;
-    
+
     void beat_timer_event(const PeriodicTimer* timer) {
         beat_counter++;
         if (callback_beat != nullptr) {

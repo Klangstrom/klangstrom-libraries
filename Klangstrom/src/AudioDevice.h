@@ -49,7 +49,7 @@ static constexpr uint8_t CALLBACK_HALF_COMPLETE = 3;
 
 struct AudioDevicePeripherals; /* BSP or ASP implementation */
 
-typedef void (*Callback_1_AUDIOBLOCKPTR)(AudioBlock*);
+typedef void (*Callback_1_AUDIOBLOCKPTR)(const AudioBlock*);
 
 typedef struct AudioDevice {
     AudioInfo*               audioinfo           = nullptr;
@@ -58,13 +58,13 @@ typedef struct AudioDevice {
     Callback_1_AUDIOBLOCKPTR callback_audioblock = nullptr;
 } AudioDevice;
 
-typedef void (*Callback_2_AUDIODEVICE_UI8)(AudioDevice*, uint8_t);
+typedef void (*Callback_2_AUDIODEVICE_UI8)(const AudioDevice*, uint8_t);
 
 /**
  * callback to be implemented by client application
  * @param audio_block
  */
-WEAK void audioblock(AudioBlock* audio_block);
+void audioblock(const AudioBlock* audio_block);
 
 /**
  * initializes audio device with info as specified in `audioinfo`.
@@ -74,19 +74,19 @@ WEAK void audioblock(AudioBlock* audio_block);
  * @param audioinfo
  * @return
  */
-AudioDevice* audiodevice_init_audiocodec(AudioInfo* audioinfo);
+AudioDevice* audiodevice_init_audiocodec(const AudioInfo* audioinfo);
 void         audiodevice_deinit(AudioDevice* audiodevice);
-void         audiodevice_resume(AudioDevice* audiodevice);
-void         audiodevice_pause(AudioDevice* audiodevice);
+void         audiodevice_resume(const AudioDevice* audiodevice);
+void         audiodevice_pause(const AudioDevice* audiodevice);
 void         audiodevice_setup_device(AudioDevice* audiodevice);
-AudioDevice* audiodevice_create_from_audioinfo(AudioInfo* audioinfo);
+AudioDevice* audiodevice_create_from_audioinfo(const AudioInfo* audioinfo);
 
 void audiodevice_init_peripherals_BSP(AudioDevice* audiodevice);
 void audiodevice_deinit_peripherals_BSP(AudioDevice* audiodevice);
 void audiodevice_init_device_BSP(AudioDevice* audiodevice);
-void audiodevice_deinit_BSP(AudioDevice* audiodevice);
+void audiodevice_deinit_BSP(const AudioDevice* audiodevice);
 
-void process_audioblock_data_16_2_2(AudioDevice* audiodevice, uint16_t* input, uint16_t* output);
+void process_audioblock_data_16_2_2(const AudioDevice* audiodevice, const uint16_t* input, uint16_t* output);
 
 #ifdef __cplusplus
 }

@@ -112,16 +112,16 @@ bool serialdevice_init_BSP(SerialDevice* serialdevice) {
     return mDeviceInitialized;
 }
 
-void serialdevice_deinit_BSP(SerialDevice* serialdevice) {
+void serialdevice_deinit_BSP(const SerialDevice* serialdevice) {
     delete[] serialdevice->data;
     // TODO unregister serial device
     // TODO unregister drawable
 }
 
 bool serialdevice_init_peripherals_BSP(SerialDevice* serialdevice) {
-    SerialPeripherals* peripherals = new SerialPeripherals();
-    peripherals->port              = 7000;
-    serialdevice->peripherals      = peripherals;
+    const auto peripherals    = new SerialPeripherals();
+    peripherals->port         = 7000;
+    serialdevice->peripherals = peripherals;
     return true;
 }
 

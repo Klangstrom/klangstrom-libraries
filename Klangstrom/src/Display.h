@@ -83,13 +83,13 @@ extern "C" {
 #endif
 
 typedef void (*Callback_0_VOID)();
-typedef void (*Callback_1_TOUCHEVENTPTR)(TouchEvent*);
+typedef void (*Callback_1_TOUCHEVENTPTR)(const TouchEvent*);
 
 /**
  * callback to be implemented by client application
  */
-WEAK void display_update_event();
-WEAK void display_touch_event(TouchEvent* touchevent);
+ void display_update_event();
+ void display_touch_event(const TouchEvent* touchevent);
 
 bool               display_init(bool double_buffered = false, TouchPanelMode touch_panel_mode = INTERRUPT);
 bool               display_init_BSP(TouchPanelMode touch_panel_mode);

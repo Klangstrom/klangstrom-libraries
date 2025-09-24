@@ -82,7 +82,7 @@ void loop() {
     }
 }
 
-void audioblock(AudioBlock* audio_block) {
+void audioblock(const AudioBlock* audio_block) {
     // at 48000 Hz audiorate a data rate of 48000 * 4 = 192000 bytes or 187.5KB per second is required by the SD card
     const int mBufferOffset = audio_block->block_size * buffer_read_counter;
     for (int i = 0; i < audio_block->block_size; ++i) {

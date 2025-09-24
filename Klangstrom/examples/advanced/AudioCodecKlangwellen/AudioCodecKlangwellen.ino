@@ -74,7 +74,7 @@ void loop() {
     delay(250);
 }
 
-void audioblock(AudioBlock* audio_block) {
+void audioblock(const AudioBlock* audio_block) {
     oscillator_left.set_frequency(osc_frequency + simplex_noise.process() * 200);
     for (int i = 0; i < audio_block->block_size; ++i) {
         audio_block->output[0][i] = KlangWellen::clamp(oscillator_left.process(), -1, 1) * 0.5f;
