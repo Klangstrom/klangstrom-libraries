@@ -71,8 +71,8 @@ void audioblock(const AudioBlock* audio_block);
 /**
  * initializes audio device with info as specified in `audioinfo`.
  * note, that `audioinfo` is copied.
- * after initialization `audioinfo.device_id` will contain the ID of the device.
- * if intialization fails, `audioinfo.device_id` will be set to `AUDIO_DEVICE_INIT_ERROR`.
+ * after initialization `audioinfo._device_id` will contain the ID of the device.
+ * if intialization fails, `audioinfo._device_id` will be set to `AUDIO_DEVICE_INIT_ERROR`.
  * @param audioinfo
  * @return
  */
