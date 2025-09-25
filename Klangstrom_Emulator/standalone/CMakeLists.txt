@@ -8,7 +8,7 @@ project(klangstrom-emulator-standalone LANGUAGES C CXX)
 
 option(ADD_KLANGWELLEN "Add Klangwellen library" ON)
 set(KLANGWELLEN_PATH "$ENV{HOME}/Documents/dennisppaul/projects/klangwellen/git/klangwellen/") # DEV default path
-set(ARDUINO_SKETCH_FILE "/Users/dennisppaul/Documents/dennisppaul/projects/klangwellen/git/klangwellen/examples/03.LowPassFilter/03.LowPassFilter.ino" CACHE PATH "Path to Arduino sketch file (.ino)")
+set(ARDUINO_SKETCH_FILE "/Users/dennisppaul/Documents/dennisppaul/projects/klangwellen/git/klangwellen/examples/05.FormantFilter/05.FormantFilter.ino" CACHE PATH "Path to Arduino sketch file (.ino)")
 
 if (ADD_KLANGWELLEN)
     message(STATUS "Klangwellen library will be included from: ${KLANGWELLEN_PATH}")
