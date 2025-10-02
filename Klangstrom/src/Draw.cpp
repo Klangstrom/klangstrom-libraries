@@ -767,7 +767,7 @@ void draw_text(BitmapFont*     font,
 
     switch (align) {
         case CENTERED: {
-            ref_column = x + (xsize - size) * font->Width / 2;
+            ref_column = x - size * font->Width / 2;
             break;
         }
         case LEFT: {
@@ -775,7 +775,7 @@ void draw_text(BitmapFont*     font,
             break;
         }
         case RIGHT: {
-            ref_column = -x + (xsize - size) * font->Width;
+            ref_column = x - size * font->Width;
             break;
         }
         default: {

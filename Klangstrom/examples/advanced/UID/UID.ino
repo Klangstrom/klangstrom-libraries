@@ -1,5 +1,5 @@
 /**
- * this example demonstrates how to use the display with touch panel
+ * this example demonstrates how to use the display and display the unique ID of the device
  */
 
 #include <iomanip>
